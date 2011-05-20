@@ -213,7 +213,15 @@ namespace WorldView
                 byte wallType = reader.ReadByte();
                 if (tileType == TileType.Unknown || tileType == TileType.Sky)
                 {
-                    tileType = WorldMapper.tileTypeDefs[(int)wallType + Constants.WallOffset].TileType;
+                    if (!WorldMapper.tileTypeDefs.ContainsKey((int)wallType + Constants.WallOffset))
+                    {
+                        tileType = TileType.Unknown;
+                    }
+                    else
+                    {
+                        tileType = WorldMapper.tileTypeDefs[(int)wallType + Constants.WallOffset].TileType;
+                    }
+                    
                 }
             }
             bool isLiquid = reader.ReadBoolean();
