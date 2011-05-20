@@ -71,6 +71,7 @@ namespace WorldView
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "PNG (*.png)|*.png";
             dialog.Title = "Select World File";
+            dialog.FileName = string.Format("{0}.png", System.IO.Path.GetFileNameWithoutExtension(this.worldFilePathTextBox.Text));
             string filePath = (dialog.ShowDialog() == DialogResult.OK) ? dialog.FileName : string.Empty;
             if (filePath == string.Empty)
             {

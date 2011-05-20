@@ -217,12 +217,15 @@ namespace WorldView
                 }
             }
             bool isLiquid = reader.ReadBoolean();
-
             if (isLiquid)
             {
                 byte liquidLevel = reader.ReadByte();
                 bool isLava = reader.ReadBoolean();
-                tileType = isLava ? TileType.Lava : TileType.Water;
+                if (isWall || tileType == TileType.Sky)
+                {
+                    tileType = isLava ? TileType.Lava : TileType.Water;
+                }
+                
             }
             return tileType;
         }
