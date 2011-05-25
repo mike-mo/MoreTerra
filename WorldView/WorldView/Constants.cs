@@ -15,9 +15,10 @@ namespace WorldView
 Vib Rib
 Infinite Monkeys
 Dr VideoGames 0031
+Musluk
 Sanktanglia
 Metamorf
-Most Importantly Goons";
+All Other Goons";
 
         public const int WallOffset = 258;
 
@@ -108,6 +109,7 @@ Most Importantly Goons";
             public static Color COPPER = Color.FromArgb(255, 149, 50);
             public static Color GOLD = Color.FromArgb(185, 164, 23);
             public static Color WOOD = Color.FromArgb(86, 62, 44);
+            public static Color WOOD_BLOCK = Color.FromArgb(168, 121, 87);
             public static Color SILVER = Color.FromArgb(217, 223, 223);
             public static Color DECORATIVE = Color.FromArgb(0, 255, 242);
             public static Color IMPORTANT = Color.FromArgb(255, 0, 0);
@@ -118,7 +120,9 @@ Most Importantly Goons";
             public static Color BLOCK = Color.FromArgb(178, 0, 255);
             public static Color METEORITE = Color.Magenta;//Color.FromArgb(223, 159, 137);
             public static Color CLAY = Color.FromArgb(216, 115, 101);
-            public static Color DUNGEON = Color.FromArgb(140, 0, 255);
+            public static Color DUNGEON_GREEN = Color.FromArgb(26, 136, 34);
+            public static Color DUNGEON_PINK = Color.FromArgb(169, 49, 117);
+            public static Color DUNGEON_BLUE = Color.FromArgb(66, 69, 194);
             public static Color SPIKES = Color.FromArgb(109, 109, 109);
             public static Color WEB = Color.FromArgb(255, 255, 255);
             public static Color SAND = Color.FromArgb(255, 218, 56);
@@ -145,6 +149,9 @@ Most Importantly Goons";
             public static Color WALL_WOOD = Color.FromArgb(73, 51, 36);
             public static Color WALL_BRICK = Color.FromArgb(60, 60, 60);
             public static Color WALL_BACKGROUND = Color.FromArgb(50, 50, 60);
+            public static Color WALL_DUNGEON_PINK = Color.FromArgb(84, 25, 60);
+            public static Color WALL_DUNGEON_BLUE = Color.FromArgb(29, 31, 72);
+            public static Color WALL_DUNGEON_GREEN = Color.FromArgb(14, 68, 16);
             public static Color UNKNOWN = Color.Magenta;
         }
 

@@ -36,32 +36,67 @@ namespace WorldView
             // Reset to origin
             stream.Seek(0, SeekOrigin.Begin);
 
-            WorldHeader header = new WorldHeader
+            int releaseNumber = this.reader.ReadInt32();
+            WorldHeader header;
+            if (releaseNumber == 38)
             {
-                ReleaseNumber = this.reader.ReadInt32(),
-                Name = this.reader.ReadString(),
-                Id = this.reader.ReadInt32(),
-                WorldCoords = new Rect(this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32()),
-                MaxTiles = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
-                SpawnPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
-                SurfaceLevel = this.reader.ReadDouble(),
-                RockLayer = this.reader.ReadDouble(),
-                TemporaryTime = this.reader.ReadDouble(),
-                IsDayTime = this.reader.ReadBoolean(),
-                MoonPhase = this.reader.ReadInt32(),
-                IsBloodMoon = this.reader.ReadBoolean(),
-                DungeonPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
-                IsBoss1Dead = this.reader.ReadBoolean(),
-                IsBoss2Dead = this.reader.ReadBoolean(),
-                IsBoss3Dead = this.reader.ReadBoolean(),
-                IsShadowOrbSmashed = this.reader.ReadBoolean(),
-                IsMeteorSpawned = this.reader.ReadBoolean(),
-                ShadowOrbsSmashed = this.reader.ReadByte(),
-                InvasionDelay = this.reader.ReadInt32(),
-                InvasionSize = this.reader.ReadInt32(),
-                InvasionType = this.reader.ReadInt32(),
-                InvasionPointX = this.reader.ReadDouble(),
-            };
+                header = new WorldHeader
+                {
+                    ReleaseNumber = releaseNumber,
+                    Name = this.reader.ReadString(),
+         //           Id = this.reader.ReadInt32(),
+                    WorldCoords = new Rect(this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    MaxTiles = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    SpawnPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    SurfaceLevel = this.reader.ReadDouble(),
+                    RockLayer = this.reader.ReadDouble(),
+                    TemporaryTime = this.reader.ReadDouble(),
+                    IsDayTime = this.reader.ReadBoolean(),
+                    MoonPhase = this.reader.ReadInt32(),
+                    IsBloodMoon = this.reader.ReadBoolean(),
+                    DungeonPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    IsBoss1Dead = this.reader.ReadBoolean(),
+                    IsBoss2Dead = this.reader.ReadBoolean(),
+                    IsBoss3Dead = this.reader.ReadBoolean(),
+                    IsShadowOrbSmashed = this.reader.ReadBoolean(),
+                    IsMeteorSpawned = this.reader.ReadBoolean(),
+                    ShadowOrbsSmashed = this.reader.ReadByte(),
+                    InvasionDelay = this.reader.ReadInt32(),
+                    InvasionSize = this.reader.ReadInt32(),
+                    InvasionType = this.reader.ReadInt32(),
+                    InvasionPointX = this.reader.ReadDouble(),
+                };
+            }
+            else
+            {
+                header = new WorldHeader
+                {
+                    ReleaseNumber = releaseNumber,
+                    Name = this.reader.ReadString(),
+                    Id = this.reader.ReadInt32(),
+                    WorldCoords = new Rect(this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    MaxTiles = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    SpawnPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    SurfaceLevel = this.reader.ReadDouble(),
+                    RockLayer = this.reader.ReadDouble(),
+                    TemporaryTime = this.reader.ReadDouble(),
+                    IsDayTime = this.reader.ReadBoolean(),
+                    MoonPhase = this.reader.ReadInt32(),
+                    IsBloodMoon = this.reader.ReadBoolean(),
+                    DungeonPoint = new Point(this.reader.ReadInt32(), this.reader.ReadInt32()),
+                    IsBoss1Dead = this.reader.ReadBoolean(),
+                    IsBoss2Dead = this.reader.ReadBoolean(),
+                    IsBoss3Dead = this.reader.ReadBoolean(),
+                    IsShadowOrbSmashed = this.reader.ReadBoolean(),
+                    IsMeteorSpawned = this.reader.ReadBoolean(),
+                    ShadowOrbsSmashed = this.reader.ReadByte(),
+                    InvasionDelay = this.reader.ReadInt32(),
+                    InvasionSize = this.reader.ReadInt32(),
+                    InvasionType = this.reader.ReadInt32(),
+                    InvasionPointX = this.reader.ReadDouble(),
+                };
+
+            }
 
             this.tileOffset = stream.Position;
             return header;

@@ -137,7 +137,6 @@
             this.browseForWorldButton.TabIndex = 0;
             this.browseForWorldButton.Text = "Browse";
             this.browseForWorldButton.UseVisualStyleBackColor = true;
-            
             // 
             // worldFilePathTextBox
             // 
@@ -200,7 +199,6 @@
             this.outputFileBrowseButton.TabIndex = 1;
             this.outputFileBrowseButton.Text = "Browse";
             this.outputFileBrowseButton.UseVisualStyleBackColor = true;
-
             // 
             // outputFileConfirmButton
             // 
@@ -213,7 +211,6 @@
             this.outputFileConfirmButton.TabIndex = 2;
             this.outputFileConfirmButton.Text = "Create Preview";
             this.outputFileConfirmButton.UseVisualStyleBackColor = true;
-            
             // 
             // progressBarOutputPreview
             // 
@@ -258,7 +255,6 @@
             this.checkBoxUseSymbols.TabIndex = 1;
             this.checkBoxUseSymbols.Text = "Use Symbols";
             this.checkBoxUseSymbols.UseVisualStyleBackColor = true;
-
             // 
             // checkBoxDrawWalls
             // 
@@ -407,6 +403,7 @@
             // 
             // checkedListBoxSymbols
             // 
+            this.checkedListBoxSymbols.CheckOnClick = true;
             this.checkedListBoxSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxSymbols.FormattingEnabled = true;
             this.checkedListBoxSymbols.Location = new System.Drawing.Point(3, 16);
@@ -445,6 +442,7 @@
             // 
             // checkedListBoxChestFilterWeapons
             // 
+            this.checkedListBoxChestFilterWeapons.CheckOnClick = true;
             this.checkedListBoxChestFilterWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxChestFilterWeapons.FormattingEnabled = true;
             this.checkedListBoxChestFilterWeapons.Location = new System.Drawing.Point(3, 3);
@@ -454,6 +452,7 @@
             // 
             // checkedListBoxChestFilterAccessories
             // 
+            this.checkedListBoxChestFilterAccessories.CheckOnClick = true;
             this.checkedListBoxChestFilterAccessories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxChestFilterAccessories.FormattingEnabled = true;
             this.checkedListBoxChestFilterAccessories.Location = new System.Drawing.Point(157, 3);

@@ -52,7 +52,7 @@
             
             tileTypeDefs[10] = new TileProperties(TileType.Door1, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[11] = new TileProperties(TileType.Door2, true, Constants.Colors.DECORATIVE);
-            tileTypeDefs[12] = new TileProperties(TileType.Heart, true, Constants.Colors.IMPORTANT);
+            tileTypeDefs[12] = new TileProperties(TileType.Heart, true, Constants.Colors.IMPORTANT, true);
             tileTypeDefs[13] = new TileProperties(TileType.Bottles, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[14] = new TileProperties(TileType.Table, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[15] = new TileProperties(TileType.Chair, true, Constants.Colors.DECORATIVE);
@@ -71,7 +71,7 @@
             tileTypeDefs[27] = new TileProperties(TileType.Sunflower, true, Constants.Colors.PLANTS);
             tileTypeDefs[28] = new TileProperties(TileType.Pot, true, Constants.Colors.IMPORTANT);
             tileTypeDefs[29] = new TileProperties(TileType.PiggyBank, true, Constants.Colors.DECORATIVE);
-            tileTypeDefs[30] = new TileProperties(TileType.BlockWood, false, Constants.Colors.BLOCK);
+            tileTypeDefs[30] = new TileProperties(TileType.BlockWood, false, Constants.Colors.WOOD_BLOCK);
 
             tileTypeDefs[31] = new TileProperties(TileType.ShadowOrb, true, Constants.Colors.IMPORTANT, true);
             tileTypeDefs[32] = new TileProperties(TileType.CorruptionVines, false, Constants.Colors.CORRUPTION_VINES);
@@ -84,10 +84,10 @@
             tileTypeDefs[39] = new TileProperties(TileType.BlockRedStone, false, Constants.Colors.BLOCK);
             tileTypeDefs[40] = new TileProperties(TileType.Clay, false, Constants.Colors.CLAY);
 
-            tileTypeDefs[41] = new TileProperties(TileType.BlockBlueStone, false, Constants.Colors.DUNGEON);
+            tileTypeDefs[41] = new TileProperties(TileType.BlockBlueStone, false, Constants.Colors.DUNGEON_BLUE);
             tileTypeDefs[42] = new TileProperties(TileType.LightGlobe, true, Constants.Colors.LIGHT_SOURCE);
-            tileTypeDefs[43] = new TileProperties(TileType.BlockGreenStone, false, Constants.Colors.DUNGEON);
-            tileTypeDefs[44] = new TileProperties(TileType.BlockPinkStone, false, Constants.Colors.DUNGEON);
+            tileTypeDefs[43] = new TileProperties(TileType.BlockGreenStone, false, Constants.Colors.DUNGEON_GREEN);
+            tileTypeDefs[44] = new TileProperties(TileType.BlockPinkStone, false, Constants.Colors.DUNGEON_PINK);
             tileTypeDefs[45] = new TileProperties(TileType.BlockGold, false, Constants.Colors.BLOCK);
             tileTypeDefs[46] = new TileProperties(TileType.BlockSilver, false, Constants.Colors.BLOCK);
             tileTypeDefs[47] = new TileProperties(TileType.BlockCopper, false, Constants.Colors.BLOCK);
@@ -144,9 +144,9 @@
             tileTypeDefs[262] = new TileProperties(TileType.WallWood, false, Constants.Colors.WALL_WOOD);
             tileTypeDefs[263] = new TileProperties(TileType.WallBrick, false, Constants.Colors.WALL_BRICK);
             tileTypeDefs[264] = new TileProperties(TileType.WallRed, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[265] = new TileProperties(TileType.WallBlue, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[266] = new TileProperties(TileType.WallGreen, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[267] = new TileProperties(TileType.WallPink, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[265] = new TileProperties(TileType.WallBlue, false, Constants.Colors.WALL_DUNGEON_BLUE);
+            tileTypeDefs[266] = new TileProperties(TileType.WallGreen, false, Constants.Colors.WALL_DUNGEON_GREEN);
+            tileTypeDefs[267] = new TileProperties(TileType.WallPink, false, Constants.Colors.WALL_DUNGEON_PINK);
             tileTypeDefs[268] = new TileProperties(TileType.WallGold, false, Constants.Colors.WALL_BRICK);
             tileTypeDefs[269] = new TileProperties(TileType.WallSilver, false, Constants.Colors.WALL_BRICK);
             tileTypeDefs[270] = new TileProperties(TileType.WallCopper, false, Constants.Colors.WALL_BRICK);
@@ -279,6 +279,10 @@
                     {
                         int x = Math.Max((int)p.X - (symbolBitmap.Width / 2), 0);
                         int y = Math.Max((int)p.Y - (symbolBitmap.Height / 2), 0);
+                        if (x > maxX || y > maxY)
+                        {
+                            continue;
+                        }
                         graphicsHandle.DrawImage(symbolBitmap, x, y);
                     }
                 }

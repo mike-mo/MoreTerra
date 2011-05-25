@@ -149,13 +149,14 @@ namespace WorldView
 
         private void outputFileConfirmButton_Click(object sender, EventArgs e)
         {
+            outputFileConfirmButton.Enabled = false;
+            outputFileConfirmButton.Text = "Writing Image File...";
+            mapper.CreatePreviewPNG(outputFileTextBox.Text, checkBoxDrawWalls.Checked, checkBoxUseSymbols.Checked, progressBarOutputPreview);
+            outputFileConfirmButton.Text = "File Written!";
+            outputFileBrowseButton.Enabled = false;
             try
             {
-                outputFileConfirmButton.Enabled = false;
-                outputFileConfirmButton.Text = "Writing Image File...";
-                mapper.CreatePreviewPNG(outputFileTextBox.Text, checkBoxDrawWalls.Checked, checkBoxUseSymbols.Checked, progressBarOutputPreview);
-                outputFileConfirmButton.Text = "File Written!";
-                outputFileBrowseButton.Enabled = false;
+
             }
             catch (Exception ex)
             {

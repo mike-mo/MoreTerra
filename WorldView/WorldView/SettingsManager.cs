@@ -26,15 +26,6 @@ namespace WorldView
         private static SettingsManager instance = null;
         private static readonly object mutex = new object();
         private UserSettings settings;
-        //private string inputWorldDirectory;
-        //private string outputPreviewDirectory;
-        //private bool isChestFilterEnabled;
-        //private bool isWallsDrawable;
-        //private bool isSymbolsDrawable;
-
-        //private SerializableDictionary<string, bool> symbolStates;
-        //private SerializableDictionary<string, bool> chestFilterWeaponStates;
-        //private SerializableDictionary<string, bool> chestFilterAccessoryStates;
 
         private SettingsManager()
         {
@@ -56,6 +47,13 @@ namespace WorldView
             foreach (string s in Constants.ChestFilterAccessories)
             {
                 this.settings.ChestFilterAccessoryStates.Add(s, false);
+            }
+            this.settings.IsWallsDrawable = true;
+            this.settings.IsSymbolsDrawable = true;
+            this.settings.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
+            if (!Directory.Exists(this.settings.InputWorldDirectory))
+            {
+                this.settings.InputWorldDirectory = string.Empty;
             }
         }
 
