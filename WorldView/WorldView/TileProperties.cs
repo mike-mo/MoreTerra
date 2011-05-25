@@ -11,14 +11,14 @@
         private bool isImportant;
         private TileType type;
         private Color colour;
-        private Symbol symbol;
+        private bool hasSymbol;
 
-        public TileProperties(TileType tileType, bool isTileImportant, Color colour, Symbol symbol = null)
+        public TileProperties(TileType tileType, bool isTileImportant, Color colour, bool hasSymbol = false)
         {
             this.type = tileType;
             this.isImportant = isTileImportant;
             this.colour = colour;
-            this.symbol = symbol;
+            this.hasSymbol = hasSymbol;
         }
 
         public TileType TileType
@@ -37,11 +37,11 @@
             }
         }
 
-        public Symbol Symbol
+        public bool HasSymbol
         {
             get
             {
-                return this.symbol;
+                return this.hasSymbol;
             }
         }
 

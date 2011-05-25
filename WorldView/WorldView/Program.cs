@@ -17,9 +17,15 @@
         [STAThread]
         static void Main()
         {
+            // Initialize Manager
+            ResourceManager.Instance.Initialize();
+            SettingsManager.Instance.Initialize();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new WorldViewForm());
+
+            SettingsManager.Instance.Shutdown();
         }
     }
 }

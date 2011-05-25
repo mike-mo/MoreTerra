@@ -6,13 +6,14 @@
     using System.Drawing.Imaging;
     using System.Linq;
     using System.Text;
-using System.Windows.Forms;
+    using System.Windows.Forms;
 
     public class WorldMapper
     {
         // It should be Tiletype enum but my hand hurts too much to fix.
         public static Dictionary<int, TileProperties> tileTypeDefs;
- 
+
+        private List<Chest> chests;
         private Dictionary<TileType, List<Point>> tilesToSymbolize;
 
         private WorldHeader worldHeader;
@@ -21,6 +22,7 @@ using System.Windows.Forms;
         public WorldMapper()
         {
             tileTypeDefs = new Dictionary<int, TileProperties>(255);
+            chests = new List<Chest>();
         }
 
         public WorldHeader Header
@@ -50,7 +52,7 @@ using System.Windows.Forms;
             
             tileTypeDefs[10] = new TileProperties(TileType.Door1, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[11] = new TileProperties(TileType.Door2, true, Constants.Colors.DECORATIVE);
-            tileTypeDefs[12] = new TileProperties(TileType.HeartStone, true, Constants.Colors.IMPORTANT, new Symbol("heart.png"));
+            tileTypeDefs[12] = new TileProperties(TileType.Heart, true, Constants.Colors.IMPORTANT);
             tileTypeDefs[13] = new TileProperties(TileType.Bottles, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[14] = new TileProperties(TileType.Table, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[15] = new TileProperties(TileType.Chair, true, Constants.Colors.DECORATIVE);
@@ -60,18 +62,18 @@ using System.Windows.Forms;
             tileTypeDefs[19] = new TileProperties(TileType.WoodenPlatform, false, Constants.Colors.WOOD);
             tileTypeDefs[20] = new TileProperties(TileType.PlantsDecorative, true, Constants.Colors.PLANTS);
 
-            tileTypeDefs[21] = new TileProperties(TileType.Chest, true, Constants.Colors.IMPORTANT, new Symbol("chest.png"));
+            tileTypeDefs[21] = new TileProperties(TileType.Chest, true, Constants.Colors.IMPORTANT, true);
             tileTypeDefs[22] = new TileProperties(TileType.CorruptionStone1, false, Constants.Colors.CORRUPTION_STONE);
             tileTypeDefs[23] = new TileProperties(TileType.CorruptionGrass, false, Constants.Colors.CORRUPTION_GRASS);
             tileTypeDefs[24] = new TileProperties(TileType.CorruptionPlants, true, Constants.Colors.CORRUPTION_GRASS);
             tileTypeDefs[25] = new TileProperties(TileType.CorruptionStone2, false, Constants.Colors.CORRUPTION_STONE2);
-            tileTypeDefs[26] = new TileProperties(TileType.Altar, true, Constants.Colors.IMPORTANT, new Symbol("altar.png"));
+            tileTypeDefs[26] = new TileProperties(TileType.Altar, true, Constants.Colors.IMPORTANT, true);
             tileTypeDefs[27] = new TileProperties(TileType.Sunflower, true, Constants.Colors.PLANTS);
             tileTypeDefs[28] = new TileProperties(TileType.Pot, true, Constants.Colors.IMPORTANT);
             tileTypeDefs[29] = new TileProperties(TileType.PiggyBank, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[30] = new TileProperties(TileType.BlockWood, false, Constants.Colors.BLOCK);
 
-            tileTypeDefs[31] = new TileProperties(TileType.ShadowOrb, true, Constants.Colors.IMPORTANT, new Symbol("shadow.png"));
+            tileTypeDefs[31] = new TileProperties(TileType.ShadowOrb, true, Constants.Colors.IMPORTANT, true);
             tileTypeDefs[32] = new TileProperties(TileType.CorruptionVines, false, Constants.Colors.CORRUPTION_VINES);
             tileTypeDefs[33] = new TileProperties(TileType.Candle, true, Constants.Colors.LIGHT_SOURCE);
             tileTypeDefs[34] = new TileProperties(TileType.ChandlerCopper, true, Constants.Colors.LIGHT_SOURCE);
@@ -106,12 +108,12 @@ using System.Windows.Forms;
 
             tileTypeDefs[61] = new TileProperties(TileType.UndergroundJunglePlants, true, Constants.Colors.UNDERGROUNDJUNGLE_PLANTS);
             tileTypeDefs[62] = new TileProperties(TileType.UndergroundJungleVines, false, Constants.Colors.UNDERGROUNDJUNGLE_VINES);
-            tileTypeDefs[63] = new TileProperties(TileType.GemSapphire, false, Constants.Colors.GEMS, new Symbol("gem_s.png"));
-            tileTypeDefs[64] = new TileProperties(TileType.GemRuby, false, Constants.Colors.GEMS, new Symbol("gem_r.png"));
-            tileTypeDefs[65] = new TileProperties(TileType.GemEmerald, false, Constants.Colors.GEMS, new Symbol("gem_e.png"));
-            tileTypeDefs[66] = new TileProperties(TileType.GemTopaz, false, Constants.Colors.GEMS, new Symbol("gem_t.png"));
-            tileTypeDefs[67] = new TileProperties(TileType.GemAmethyst, false, Constants.Colors.GEMS, new Symbol("gem_a.png"));
-            tileTypeDefs[68] = new TileProperties(TileType.GemDiamond, false, Constants.Colors.GEMS, new Symbol("gem_d.png"));
+            tileTypeDefs[63] = new TileProperties(TileType.Sapphire, false, Constants.Colors.GEMS, true);
+            tileTypeDefs[64] = new TileProperties(TileType.Ruby, false, Constants.Colors.GEMS, true);
+            tileTypeDefs[65] = new TileProperties(TileType.Emerald, false, Constants.Colors.GEMS, true);
+            tileTypeDefs[66] = new TileProperties(TileType.Topaz, false, Constants.Colors.GEMS, true);
+            tileTypeDefs[67] = new TileProperties(TileType.Amethyst, false, Constants.Colors.GEMS, true);
+            tileTypeDefs[68] = new TileProperties(TileType.Diamond, false, Constants.Colors.GEMS, true);
             tileTypeDefs[69] = new TileProperties(TileType.UndergroundJungleThorns, false, Constants.Colors.UNDERGROUNDJUNGLE_THORNS);
             tileTypeDefs[70] = new TileProperties(TileType.UndergroundMushroomGrass, false, Constants.Colors.UNDERGROUNDMUSHROOM_GRASS);
 
@@ -162,11 +164,11 @@ using System.Windows.Forms;
         public void CreatePreviewPNG(string outputPngPath, bool canDrawWalls, bool canDrawSymbols, ProgressBar progressBar)
         {
             // Reset Symbol List
-            tilesToSymbolize = new Dictionary<TileType, List<Point>>();
+            this.tilesToSymbolize = new Dictionary<TileType, List<Point>>();
+            this.chests = new List<Chest>();
 
             int maxX = (int)Header.MaxTiles.Y;
             int maxY = (int)Header.MaxTiles.X;
-            //byte[,] pixels = new byte[cols, rows];
 
             Bitmap bitmap = new Bitmap(maxX, maxY);
             Graphics graphicsHandle = Graphics.FromImage((Image)bitmap);
@@ -194,9 +196,15 @@ using System.Windows.Forms;
                         continue;
                     }
 
+                    // Skip chests because we read the coordinates later
+                    if (tileType == TileType.Chest)
+                    {
+                        continue;
+                    }
+
                     properties = tileTypeDefs[(int)tileType];
 
-                    if (properties.Symbol != null)
+                    if (properties.HasSymbol)
                     {
                         if (!tilesToSymbolize.ContainsKey(tileType))
                         {
@@ -211,29 +219,71 @@ using System.Windows.Forms;
                 }
             }
 
-            // Draw Symbols
-            if (canDrawSymbols)
+            // Add Chests
+            tilesToSymbolize.Add(TileType.Chest, new List<Point>());
+
+            //StringBuilder sb = new StringBuilder();
+            //Dictionary<string, string> ba = new Dictionary<string, string>();
+
+            Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemsStates;
+            // Read the Chests
+            for (int i = 0; i < Constants.ChestMaxNumber; i++)
             {
-                foreach (KeyValuePair<TileType, List<Point>> kv in tilesToSymbolize)
+                Chest chest = this.reader.GetNextChest(i);
+                if (chest == null)
                 {
-                    foreach (Point p in kv.Value)
+                    continue;
+                }
+                this.chests.Add(chest);
+                if (SettingsManager.Instance.IsChestFilterEnabled)
+                {
+                    foreach (Item item in chest.Items)
                     {
-                        Bitmap symbol = tileTypeDefs[(int)kv.Key].Symbol.BMP;
-                        int x = Math.Max((int)p.X - (symbol.Width / 2), 0);
-                        int y = Math.Max((int)p.Y - (symbol.Height / 2), 0);
-                        graphicsHandle.DrawImage(symbol, x, y);
+                        if (itemFilters.ContainsKey(item.Name))
+                        {
+                            // If we want it
+                            if (itemFilters[item.Name])
+                            {
+                                // Symbolize it
+                                tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
+                                break;
+                            }
+                        }
                     }
+                }
+                else
+                {
+                    tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
                 }
             }
 
+            //foreach (KeyValuePair<string, string> kvp in ba)
+            //{
+            //    sb.AppendLine(kvp.Value);
+            //}
 
-            // Spawn
-            Bitmap spawnSymbol = new Symbol("spawn.png").BMP;
-            int spawnX = Math.Max((int)this.Header.SpawnPoint.X - (spawnSymbol.Width / 2), 0);
-            int spawnY = Math.Max((int)this.Header.SpawnPoint.Y - (spawnSymbol.Height / 2), 0);
-            graphicsHandle.DrawImage(spawnSymbol, spawnX, spawnY);
+            //System.IO.File.WriteAllText(@"D:\Items.txt", sb.ToString());
 
-            
+            // Add Spawn
+            tilesToSymbolize.Add(TileType.Spawn, new List<Point>());
+            tilesToSymbolize[TileType.Spawn].Add(new Point(this.Header.SpawnPoint.X, this.Header.SpawnPoint.Y));
+
+            // Draw Symbols
+            foreach (KeyValuePair<TileType, List<Point>> kv in tilesToSymbolize)
+            {
+                bool isSymbolViewable = SettingsManager.Instance.IsSymbolViewable(kv.Key);
+                if (isSymbolViewable)
+                {
+                    Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
+                    foreach (Point p in kv.Value)
+                    {
+                        int x = Math.Max((int)p.X - (symbolBitmap.Width / 2), 0);
+                        int y = Math.Max((int)p.Y - (symbolBitmap.Height / 2), 0);
+                        graphicsHandle.DrawImage(symbolBitmap, x, y);
+                    }
+                }
+
+            }
             bitmap.Save(outputPngPath, ImageFormat.Png);
             progressBar.Value = 100;
         }
@@ -241,6 +291,14 @@ using System.Windows.Forms;
         public void CloseWorld()
         {
             reader.Close();
+        }
+
+        public List<Chest> Chests
+        {
+            get
+            {
+                return this.chests;
+            }
         }
         
 

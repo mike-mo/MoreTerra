@@ -11,13 +11,89 @@ namespace WorldView
         /// <summary>
         /// List of Credits
         /// </summary>
-        public const string Credits = @"Vib Rib
+        public const string Credits = @"TJChap2840
+Vib Rib
 Infinite Monkeys
 Dr VideoGames 0031
 Sanktanglia
+Metamorf
 Most Importantly Goons";
 
         public const int WallOffset = 258;
+
+        /// <summary>
+        /// Maximum Number of Items a Chest Can Contain
+        /// </summary>
+        public const int ChestMaxItems = 20;
+
+        /// <summary>
+        /// Maximum number of chests per world.
+        /// </summary>
+        public const int ChestMaxNumber = 1000;
+
+        /// <summary>
+        /// Points to the root directory for terraria world viewer
+        /// </summary>
+        public static string ApplicationRootDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TerrariaWorldViewer");
+
+        /// <summary>
+        /// Points to the application log directory
+        /// </summary>
+        public static string ApplicationLogDirectory = System.IO.Path.Combine(ApplicationRootDirectory, "Logs");
+        public static string ApplicationResourceDirectory = System.IO.Path.Combine(ApplicationRootDirectory, "Resources");
+
+        public static string ApplicationUserSettingsFile = System.IO.Path.Combine(ApplicationRootDirectory, "UserSettings.xml");
+
+
+        public static string[] ExternalSymbolNames = { "Altar", "Chest", "Heart", "ShadowOrb", "Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz", "Spawn" };
+
+        public static string[] ChestFilterWeapons = {
+                                                        "Muramasa",
+                                                        "Aqua Scepter",
+                                                        "Blue Moon",
+                                                        "Handgun",
+                                                        "Enchanted Boomerang",
+                                                        "Staff of Regrowth",
+                                                        "Starfury",
+                                                        "Grappling Hook",
+                                                        "Ivy Whip",
+                                                        "Flamelash",
+                                                        "Harpoon",
+                                                        "Flintlock Pistol",
+                                                        "Ball 'O Hurt",
+                                                        "Vilethorn",
+                                                        "Minishark",
+                                                        "Sunfury",
+                                                        "Flower of Fire",
+                                                        "Star Cannon",
+                                                        "Water Bolt",
+                                                        "Spiky Ball",
+                                                        "Meteor Shot",
+                                                        "Grenade",
+                                                        "Magic Missile",
+                                                  };
+
+        public static string[] ChestFilterAccessories = {
+                                                        "Cobalt Shield",
+                                                        "Band of Regeneration",
+                                                        "Angel Statue",
+                                                        "Hermes Boots",
+                                                        "Magic Mirror",
+                                                        "Cloud in a Bottle",
+                                                        "Feral Claws",
+                                                        "Anklet of the Wind",
+                                                        "Breathing Reed",
+                                                        "Flipper",
+                                                        "Shiny Red Balloon",
+                                                        "Lucky Horseshoe",
+                                                        "Dirt Rod",
+                                                        "Band of Starpower",
+                                                        "Nature's Gift",
+                                                        "Obsidian Skull",
+                                                        "Rocket Boots",
+                                                        "Whoopie Cushion",
+                                                        "Orb of Light",
+                                                        };
 
         // COLOR CONSTANTS
 
@@ -40,7 +116,7 @@ Most Importantly Goons";
             public static Color CORRUPTION_STONE2 = Color.FromArgb(75, 74, 130);
             public static Color CORRUPTION_VINES = Color.FromArgb(122, 97, 143);
             public static Color BLOCK = Color.FromArgb(178, 0, 255);
-            public static Color METEORITE = Color.FromArgb(223, 159, 137);
+            public static Color METEORITE = Color.Magenta;//Color.FromArgb(223, 159, 137);
             public static Color CLAY = Color.FromArgb(216, 115, 101);
             public static Color DUNGEON = Color.FromArgb(140, 0, 255);
             public static Color SPIKES = Color.FromArgb(109, 109, 109);

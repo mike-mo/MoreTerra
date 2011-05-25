@@ -63,14 +63,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chest.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="Rect.cs" />
-    <Compile Include="Symbol.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="SerializableDictionary.cs" />
     <Compile Include="TileProperties.cs" />
     <Compile Include="TileType.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="WorldHeader.cs" />
     <Compile Include="WorldMapper.cs" />
     <Compile Include="WorldReader.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="WorldViewForm.resx">
       <DependentUpon>WorldViewForm.cs</DependentUpon>
@@ -120,21 +125,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="chest.png" />
+    <EmbeddedResource Include="Resources\chest.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="gem_a.png" />
-    <EmbeddedResource Include="gem_d.png" />
-    <EmbeddedResource Include="gem_e.png" />
-    <EmbeddedResource Include="gem_r.png" />
-    <EmbeddedResource Include="gem_s.png" />
-    <EmbeddedResource Include="gem_t.png" />
-    <EmbeddedResource Include="heart.png" />
-    <EmbeddedResource Include="shadow.png" />
-    <EmbeddedResource Include="spawn.png" />
+    <EmbeddedResource Include="Resources\gem_a.png" />
+    <EmbeddedResource Include="Resources\gem_d.png" />
+    <EmbeddedResource Include="Resources\gem_e.png" />
+    <EmbeddedResource Include="Resources\gem_r.png" />
+    <EmbeddedResource Include="Resources\gem_s.png" />
+    <EmbeddedResource Include="Resources\gem_t.png" />
+    <EmbeddedResource Include="Resources\heart.png" />
+    <EmbeddedResource Include="Resources\shadow.png" />
+    <EmbeddedResource Include="Resources\spawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="altar.png" />
+    <EmbeddedResource Include="Resources\altar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

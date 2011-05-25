@@ -50,6 +50,17 @@
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPagePreview = new System.Windows.Forms.TabPage();
             this.tabPageWorldInformation = new System.Windows.Forms.TabPage();
+            this.tabPageChestInformation = new System.Windows.Forms.TabPage();
+            this.treeViewChestInformation = new System.Windows.Forms.TreeView();
+            this.tabPageAdvancedSettings = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxSymbols = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxSymbols = new System.Windows.Forms.CheckedListBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkedListBoxChestFilterWeapons = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxChestFilterAccessories = new System.Windows.Forms.CheckedListBox();
+            this.checkBoxUseChestFilter = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.selectWorldGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -62,6 +73,12 @@
             this.tabControlSettings.SuspendLayout();
             this.tabPagePreview.SuspendLayout();
             this.tabPageWorldInformation.SuspendLayout();
+            this.tabPageChestInformation.SuspendLayout();
+            this.tabPageAdvancedSettings.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.groupBoxSymbols.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -120,7 +137,7 @@
             this.browseForWorldButton.TabIndex = 0;
             this.browseForWorldButton.Text = "Browse";
             this.browseForWorldButton.UseVisualStyleBackColor = true;
-            this.browseForWorldButton.Click += new System.EventHandler(this.WorldViewForm_OpenWorldClicked);
+            
             // 
             // worldFilePathTextBox
             // 
@@ -183,7 +200,7 @@
             this.outputFileBrowseButton.TabIndex = 1;
             this.outputFileBrowseButton.Text = "Browse";
             this.outputFileBrowseButton.UseVisualStyleBackColor = true;
-            this.outputFileBrowseButton.Click += new System.EventHandler(this.outputFileBrowseButton_Click);
+
             // 
             // outputFileConfirmButton
             // 
@@ -196,7 +213,7 @@
             this.outputFileConfirmButton.TabIndex = 2;
             this.outputFileConfirmButton.Text = "Create Preview";
             this.outputFileConfirmButton.UseVisualStyleBackColor = true;
-            this.outputFileConfirmButton.Click += new System.EventHandler(this.outputFileConfirmButton_Click);
+            
             // 
             // progressBarOutputPreview
             // 
@@ -241,6 +258,7 @@
             this.checkBoxUseSymbols.TabIndex = 1;
             this.checkBoxUseSymbols.Text = "Use Symbols";
             this.checkBoxUseSymbols.UseVisualStyleBackColor = true;
+
             // 
             // checkBoxDrawWalls
             // 
@@ -299,6 +317,8 @@
             // 
             this.tabControlSettings.Controls.Add(this.tabPagePreview);
             this.tabControlSettings.Controls.Add(this.tabPageWorldInformation);
+            this.tabControlSettings.Controls.Add(this.tabPageChestInformation);
+            this.tabControlSettings.Controls.Add(this.tabPageAdvancedSettings);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlSettings.Location = new System.Drawing.Point(3, 3);
             this.tabControlSettings.Name = "tabControlSettings";
@@ -328,6 +348,131 @@
             this.tabPageWorldInformation.Text = "World Information";
             this.tabPageWorldInformation.UseVisualStyleBackColor = true;
             // 
+            // tabPageChestInformation
+            // 
+            this.tabPageChestInformation.Controls.Add(this.treeViewChestInformation);
+            this.tabPageChestInformation.Location = new System.Drawing.Point(4, 22);
+            this.tabPageChestInformation.Name = "tabPageChestInformation";
+            this.tabPageChestInformation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageChestInformation.Size = new System.Drawing.Size(480, 440);
+            this.tabPageChestInformation.TabIndex = 3;
+            this.tabPageChestInformation.Text = "Chest Information";
+            this.tabPageChestInformation.UseVisualStyleBackColor = true;
+            // 
+            // treeViewChestInformation
+            // 
+            this.treeViewChestInformation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewChestInformation.Location = new System.Drawing.Point(3, 3);
+            this.treeViewChestInformation.Name = "treeViewChestInformation";
+            this.treeViewChestInformation.Size = new System.Drawing.Size(474, 434);
+            this.treeViewChestInformation.TabIndex = 0;
+            // 
+            // tabPageAdvancedSettings
+            // 
+            this.tabPageAdvancedSettings.Controls.Add(this.tableLayoutPanel4);
+            this.tabPageAdvancedSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAdvancedSettings.Name = "tabPageAdvancedSettings";
+            this.tabPageAdvancedSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAdvancedSettings.Size = new System.Drawing.Size(480, 440);
+            this.tabPageAdvancedSettings.TabIndex = 2;
+            this.tabPageAdvancedSettings.Text = "Advanced Settings";
+            this.tabPageAdvancedSettings.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.groupBoxSymbols, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.groupBox2, 0, 1);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.16129F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.83871F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(474, 434);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // groupBoxSymbols
+            // 
+            this.groupBoxSymbols.Controls.Add(this.checkedListBoxSymbols);
+            this.groupBoxSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxSymbols.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxSymbols.Name = "groupBoxSymbols";
+            this.groupBoxSymbols.Size = new System.Drawing.Size(468, 189);
+            this.groupBoxSymbols.TabIndex = 0;
+            this.groupBoxSymbols.TabStop = false;
+            this.groupBoxSymbols.Text = "Symbols";
+            // 
+            // checkedListBoxSymbols
+            // 
+            this.checkedListBoxSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxSymbols.FormattingEnabled = true;
+            this.checkedListBoxSymbols.Location = new System.Drawing.Point(3, 16);
+            this.checkedListBoxSymbols.Name = "checkedListBoxSymbols";
+            this.checkedListBoxSymbols.Size = new System.Drawing.Size(462, 170);
+            this.checkedListBoxSymbols.TabIndex = 0;
+            this.checkedListBoxSymbols.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxSymbols_SelectedIndexChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tableLayoutPanel5);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(3, 198);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(468, 233);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Show Chests Containing Atleast One of the Following";
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel5.Controls.Add(this.checkedListBoxChestFilterWeapons, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.checkedListBoxChestFilterAccessories, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.checkBoxUseChestFilter, 2, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(462, 214);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // checkedListBoxChestFilterWeapons
+            // 
+            this.checkedListBoxChestFilterWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxChestFilterWeapons.FormattingEnabled = true;
+            this.checkedListBoxChestFilterWeapons.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxChestFilterWeapons.Name = "checkedListBoxChestFilterWeapons";
+            this.checkedListBoxChestFilterWeapons.Size = new System.Drawing.Size(148, 208);
+            this.checkedListBoxChestFilterWeapons.TabIndex = 0;
+            // 
+            // checkedListBoxChestFilterAccessories
+            // 
+            this.checkedListBoxChestFilterAccessories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxChestFilterAccessories.FormattingEnabled = true;
+            this.checkedListBoxChestFilterAccessories.Location = new System.Drawing.Point(157, 3);
+            this.checkedListBoxChestFilterAccessories.Name = "checkedListBoxChestFilterAccessories";
+            this.checkedListBoxChestFilterAccessories.Size = new System.Drawing.Size(148, 208);
+            this.checkedListBoxChestFilterAccessories.TabIndex = 1;
+            // 
+            // checkBoxUseChestFilter
+            // 
+            this.checkBoxUseChestFilter.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.checkBoxUseChestFilter.AutoSize = true;
+            this.checkBoxUseChestFilter.Location = new System.Drawing.Point(332, 3);
+            this.checkBoxUseChestFilter.Name = "checkBoxUseChestFilter";
+            this.checkBoxUseChestFilter.Padding = new System.Windows.Forms.Padding(3);
+            this.checkBoxUseChestFilter.Size = new System.Drawing.Size(106, 23);
+            this.checkBoxUseChestFilter.TabIndex = 2;
+            this.checkBoxUseChestFilter.Text = "Use Chest Filter";
+            this.checkBoxUseChestFilter.UseVisualStyleBackColor = true;
+            // 
             // WorldViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,6 +500,13 @@
             this.tabControlSettings.ResumeLayout(false);
             this.tabPagePreview.ResumeLayout(false);
             this.tabPageWorldInformation.ResumeLayout(false);
+            this.tabPageChestInformation.ResumeLayout(false);
+            this.tabPageAdvancedSettings.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.groupBoxSymbols.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -383,6 +535,17 @@
         private System.Windows.Forms.CheckBox checkBoxDrawWalls;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label labelSpecialThanks;
+        private System.Windows.Forms.TabPage tabPageAdvancedSettings;
+        private System.Windows.Forms.TabPage tabPageChestInformation;
+        private System.Windows.Forms.TreeView treeViewChestInformation;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.GroupBox groupBoxSymbols;
+        private System.Windows.Forms.CheckedListBox checkedListBoxSymbols;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterWeapons;
+        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterAccessories;
+        private System.Windows.Forms.CheckBox checkBoxUseChestFilter;
 
 
     }

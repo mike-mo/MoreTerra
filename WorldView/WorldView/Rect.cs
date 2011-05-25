@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using System.Text;
 
@@ -10,7 +11,7 @@
         private Point topLeft;
         private Point bottomRight;
 
-        public Rect(float left, float right, float top, float bottom)
+        public Rect(int left, int right, int top, int bottom)
         {
             this.topLeft = new Point(left, top);
             this.bottomRight = new Point(right, bottom);
@@ -34,7 +35,7 @@
 
         public override string ToString()
         {
-            return string.Format(string.Format("{0},{1}", topLeft, bottomRight));
+            return string.Format("{0},{1}", this.topLeft, this.bottomRight);
         }
 
     }
