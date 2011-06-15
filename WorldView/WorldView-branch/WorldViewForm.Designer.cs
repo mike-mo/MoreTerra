@@ -70,13 +70,16 @@
             this.tabPageAbout = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelHomepage = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.labelSpecialThanks = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelPercent = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBarDrawWorld = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabControlSettings.SuspendLayout();
             this.tabPagePreview.SuspendLayout();
             this.groupBoxOptions.SuspendLayout();
@@ -557,9 +560,12 @@
             // 
             // tabPageAbout
             // 
+            this.tabPageAbout.Controls.Add(this.label3);
+            this.tabPageAbout.Controls.Add(this.label2);
+            this.tabPageAbout.Controls.Add(this.lblVersion);
             this.tabPageAbout.Controls.Add(this.label1);
             this.tabPageAbout.Controls.Add(this.pictureBox1);
-            this.tabPageAbout.Controls.Add(this.linkLabel1);
+            this.tabPageAbout.Controls.Add(this.linkLabelHomepage);
             this.tabPageAbout.Controls.Add(this.groupBox1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
@@ -571,11 +577,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(165, 40);
+            this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(126, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(250, 33);
             this.label1.TabIndex = 12;
-            this.label1.Text = "label1";
+            this.label1.Text = "Terraria World Viewer";
             // 
             // pictureBox1
             // 
@@ -585,24 +592,25 @@
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
-            // linkLabel1
+            // linkLabelHomepage
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(145, 103);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel1.TabIndex = 10;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
+            this.linkLabelHomepage.AutoSize = true;
+            this.linkLabelHomepage.Location = new System.Drawing.Point(197, 103);
+            this.linkLabelHomepage.Name = "linkLabelHomepage";
+            this.linkLabelHomepage.Size = new System.Drawing.Size(200, 13);
+            this.linkLabelHomepage.TabIndex = 10;
+            this.linkLabelHomepage.TabStop = true;
+            this.linkLabelHomepage.Text = "http://terrariaworldviewer.codeplex.com/";
+            this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelSpecialThanks);
-            this.groupBox1.Location = new System.Drawing.Point(3, 395);
+            this.groupBox1.Location = new System.Drawing.Point(3, 421);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(479, 93);
+            this.groupBox1.Size = new System.Drawing.Size(479, 67);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Special Thanks To:";
@@ -612,7 +620,7 @@
             this.labelSpecialThanks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelSpecialThanks.Location = new System.Drawing.Point(3, 16);
             this.labelSpecialThanks.Name = "labelSpecialThanks";
-            this.labelSpecialThanks.Size = new System.Drawing.Size(473, 74);
+            this.labelSpecialThanks.Size = new System.Drawing.Size(473, 48);
             this.labelSpecialThanks.TabIndex = 0;
             this.labelSpecialThanks.Text = "SpecialThanks";
             // 
@@ -648,6 +656,33 @@
             this.progressBarDrawWorld.Size = new System.Drawing.Size(300, 16);
             this.progressBarDrawWorld.Visible = false;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(129, 70);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(72, 13);
+            this.lblVersion.TabIndex = 13;
+            this.lblVersion.Text = "Version: 8.8.8";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(129, 103);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Homepage:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(282, 70);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "by: fperks, noroom";
+            // 
             // WorldViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -659,6 +694,7 @@
             this.Name = "WorldViewForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Terraria World Viewer";
+            this.Load += new System.EventHandler(this.WorldViewForm_Load);
             this.tabControlSettings.ResumeLayout(false);
             this.tabPagePreview.ResumeLayout(false);
             this.groupBoxOptions.ResumeLayout(false);
@@ -722,7 +758,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabelHomepage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterWeapons;
         private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterAccessories;
@@ -742,6 +778,9 @@
         private System.Windows.Forms.LinkLabel linkLabelSelectAllAccessories;
         private System.Windows.Forms.LinkLabel linkLabelSelectNoneAccessories;
         private System.Windows.Forms.LinkLabel linkLabelInvertAccessories;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.Label label3;
 
 
     }

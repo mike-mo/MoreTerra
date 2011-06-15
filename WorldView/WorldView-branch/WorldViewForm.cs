@@ -260,6 +260,23 @@ namespace WorldView
             }
         }
 
+        private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://terrariaworldviewer.codeplex.com/");
+        }
+
+        private void WorldViewForm_Load(object sender, EventArgs e)
+        {
+            string ver = Application.ProductVersion;
+
+            while (ver.Length > 3 && ver.Substring(ver.Length - 2) == ".0")
+            {
+                ver = ver.Substring(0, ver.Length-2);
+            }
+
+            lblVersion.Text = "Version: " + ver;
+        }
+
      
           
 
