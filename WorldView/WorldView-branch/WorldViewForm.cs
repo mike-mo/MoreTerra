@@ -227,33 +227,30 @@ namespace WorldView
                 treeViewChestInformation.Invoke(del);
                 return;
             }
-
-            //see below, when set to true
-            treeViewChestInformation.SuspendLayout();
-            treeViewChestInformation.Scrollable = false;
             
+            List<Chest> chests = this.mapper.Chests;
 
+            treeViewChestInformation.SuspendLayout();
             treeViewChestInformation.Nodes.Clear();
 
-            List<Chest> chests = this.mapper.Chests;
-            TreeNodeCollection nodes = this.treeViewChestInformation.Nodes;
+            //nodes have to be added in this fairly awkward way, because this
+            //fixes a bug with the TreeView control that will cause the last node
+            //to have its lower half cut off at the bottom of the control,
+            //and it won't allow the user to scroll further down...
+
+            List<TreeNode> nodes = new List<TreeNode>(chests.Count);
+            
             foreach (Chest c in chests)
             {
-                TreeNode node = new TreeNode(string.Format("Chest #:{0}", c.ChestId));
-                node.Nodes.Add(string.Format("Coordinates: {0}", c.Coordinates));
-                TreeNode itemNode = new TreeNode("Items");
-
-                foreach (Item i in c.Items) itemNode.Nodes.Add(i.ToString());
-                itemNode.Expand();
-
-                node.Nodes.Add(itemNode);
+                TreeNode node = new TreeNode(string.Format("Chest at ({0},{0})", c.Coordinates.X, c.Coordinates.Y));
+                foreach (Item i in c.Items) node.Nodes.Add(i.ToString());
                 nodes.Add(node);
             }
 
+            TreeNode[] node_array = nodes.ToArray();
+            treeViewChestInformation.Nodes.AddRange(node_array);
 
-            //fixes a bug that will cause the last item to only show the top half, and you can't scroll further down
-            treeViewChestInformation.Scrollable = true;
-            treeViewChestInformation.ResumeLayout(true);
+            treeViewChestInformation.ResumeLayout(true);          
         }            
 
         private void checkedListBoxMarkers_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -371,9 +368,7 @@ namespace WorldView
 
                 tmrMapperProgress.Enabled = true;
             }    
-        }
-
-          
+        }        
 
         private bool checkValidPaths(bool checkOutput)
         {
