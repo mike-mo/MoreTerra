@@ -19,6 +19,9 @@
         private WorldHeader worldHeader;
         private WorldReader reader;
 
+        public int progress = 0;
+
+
         public WorldMapper()
         {
             tileTypeDefs = new Dictionary<int, TileProperties>(255);
@@ -159,14 +162,27 @@
             reader = new WorldReader(worldPath);
             this.worldHeader = reader.ReadHeader();
 
+            //this.chests = new List<Chest>();
+
+            //reader.SeekToChests();
+
+            //// Read the Chests
+            //for (int i = 0; i < Constants.ChestMaxNumber; i++)
+            //{
+            //    Chest chest = this.reader.GetNextChest(i);
+
+            //    if (chest == null) continue;
+            //    else this.chests.Add(chest);
+            //}
         }
 
-        public void CreatePreviewPNG(string outputPngPath, bool canDrawWalls, bool canDrawSymbols, ProgressBar progressBar)
+        public void CreatePreviewPNG(string outputPngPath, bool canDrawWalls, bool canDrawSymbols)
         {
+            reader.SeekToTiles();
+
             // Reset Symbol List
             this.tilesToSymbolize = new Dictionary<TileType, List<Point>>();
-            this.chests = new List<Chest>();
-
+      
             int maxX = (int)Header.MaxTiles.Y;
             int maxY = (int)Header.MaxTiles.X;
 
@@ -175,13 +191,14 @@
             graphicsHandle.FillRectangle(new SolidBrush(Constants.Colors.SKY), 0, 0, bitmap.Width, bitmap.Height);
 
             Dictionary<byte, Color> randomColors = new Dictionary<byte, Color>();
-            Random random = new Random();
+ 
             TileProperties properties;
             TileType tileType;
 
             for (int col = 0; col < maxX; col++)
             {
-                progressBar.Value = (int)(((float)col / (float)maxX) * 100.0f);
+                progress = (int)(((float)col / (float)maxX) * 100.0f);
+
                 for (int row = 0; row < maxY; row++)
                 {
                     tileType = reader.GetNextTile();
@@ -191,78 +208,53 @@
                     }
 
                     // Skip Walls
-                    if (!canDrawWalls && tileType >= TileType.WallStone)
-                    {
-                        continue;
-                    }
+                    if (!canDrawWalls && tileType >= TileType.WallStone) continue;
 
                     // Skip chests because we read the coordinates later
-                    if (tileType == TileType.Chest)
-                    {
-                        continue;
-                    }
+                    if (tileType == TileType.Chest) continue;
 
                     properties = tileTypeDefs[(int)tileType];
 
                     if (properties.HasSymbol)
                     {
-                        if (!tilesToSymbolize.ContainsKey(tileType))
-                        {
-                            tilesToSymbolize.Add(tileType, new List<Point>());
-                        }
+                        if (!tilesToSymbolize.ContainsKey(tileType)) tilesToSymbolize.Add(tileType, new List<Point>());
+         
                         tilesToSymbolize[tileType].Add(new Point(col, row));
-                        continue;
                     }
-
-                    // Else Set Pixel Value
-                    bitmap.SetPixel(col, row, tileTypeDefs[(int)tileType].Colour);
+                    else //Set Pixel Value
+                    {
+                        bitmap.SetPixel(col, row, tileTypeDefs[(int)tileType].Colour);
+                    }
                 }
             }
 
-            // Add Chests
-            tilesToSymbolize.Add(TileType.Chest, new List<Point>());
 
-            //StringBuilder sb = new StringBuilder();
-            //Dictionary<string, string> ba = new Dictionary<string, string>();
+            // Add an empty list of Chests to populate
+            tilesToSymbolize.Add(TileType.Chest, new List<Point>());
 
             Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemsStates;
             // Read the Chests
             for (int i = 0; i < Constants.ChestMaxNumber; i++)
             {
                 Chest chest = this.reader.GetNextChest(i);
-                if (chest == null)
-                {
-                    continue;
-                }
+               
+                if (chest == null) continue;
+               
                 this.chests.Add(chest);
-                if (SettingsManager.Instance.IsChestFilterEnabled)
+
+                // Find out if the chest is relevant to our interests
+                foreach (Item item in chest.Items)
                 {
-                    foreach (Item item in chest.Items)
+                    // If we want it
+                    if (itemFilters.ContainsKey(item.Name) && itemFilters[item.Name] == true)
                     {
-                        if (itemFilters.ContainsKey(item.Name))
-                        {
-                            // If we want it
-                            if (itemFilters[item.Name])
-                            {
-                                // Symbolize it
-                                tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
-                                break;
-                            }
-                        }
+                        // Draw the symbol
+                        tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
+                        break;
                     }
-                }
-                else
-                {
-                    tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
                 }
             }
 
-            //foreach (KeyValuePair<string, string> kvp in ba)
-            //{
-            //    sb.AppendLine(kvp.Value);
-            //}
-
-            //System.IO.File.WriteAllText(@"D:\Items.txt", sb.ToString());
 
             // Add Spawn
             tilesToSymbolize.Add(TileType.Spawn, new List<Point>());
@@ -272,7 +264,8 @@
             foreach (KeyValuePair<TileType, List<Point>> kv in tilesToSymbolize)
             {
                 bool isSymbolViewable = SettingsManager.Instance.IsSymbolViewable(kv.Key);
-                if (isSymbolViewable)
+
+                if (isSymbolViewable && canDrawSymbols)
                 {
                     Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
                     foreach (Point p in kv.Value)
@@ -289,7 +282,7 @@
 
             }
             bitmap.Save(outputPngPath, ImageFormat.Png);
-            progressBar.Value = 100;
+            progress = 100;
         }
 
         public void CloseWorld()
