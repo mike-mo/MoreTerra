@@ -36,9 +36,6 @@
             }
         }
 
-        /// <summary>
-        /// Intiialize and load tile types
-        /// </summary>
         public void Initialize()
         {
             // :OHGOD:
@@ -161,23 +158,32 @@
         {
             reader = new WorldReader(worldPath);
             this.worldHeader = reader.ReadHeader();
-
-            //this.chests = new List<Chest>();
-
-            //reader.SeekToChests();
-
-            //// Read the Chests
-            //for (int i = 0; i < Constants.ChestMaxNumber; i++)
-            //{
-            //    Chest chest = this.reader.GetNextChest(i);
-
-            //    if (chest == null) continue;
-            //    else this.chests.Add(chest);
-            //}
         }
 
-        public void CreatePreviewPNG(string outputPngPath, bool canDrawWalls, bool canDrawSymbols)
+        public void ReadChests()
         {
+            progress = 0;
+
+            this.chests = new List<Chest>();
+
+            reader.SeekToChests();
+
+            // Read the Chests
+            for (int i = 0; i < Constants.ChestMaxNumber; i++)
+            {
+                Chest chest = this.reader.GetNextChest(i);
+
+                if (chest == null) continue;
+                else this.chests.Add(chest);
+            }
+
+            progress = 100;
+        }
+
+        public void CreatePreviewPNG(string outputPngPath)
+        {
+            progress = 0;
+
             reader.SeekToTiles();
 
             // Reset Symbol List
@@ -208,7 +214,7 @@
                     }
 
                     // Skip Walls
-                    if (!canDrawWalls && tileType >= TileType.WallStone) continue;
+                    if (!SettingsManager.Instance.IsWallDrawable && tileType >= TileType.WallStone) continue;
 
                     // Skip chests because we read the coordinates later
                     if (tileType == TileType.Chest) continue;
@@ -265,7 +271,7 @@
             {
                 bool isSymbolViewable = SettingsManager.Instance.IsSymbolViewable(kv.Key);
 
-                if (isSymbolViewable && canDrawSymbols)
+                if (isSymbolViewable)
                 {
                     Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
                     foreach (Point p in kv.Value)
@@ -294,6 +300,7 @@
         {
             get
             {
+                if (this.chests.Count == 0) ReadChests();
                 return this.chests;
             }
         }

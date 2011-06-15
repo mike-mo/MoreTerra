@@ -20,7 +20,7 @@ namespace WorldView
         public WorldReader(string filePath)
         {
             this.filePath = filePath;
-            this.stream = new FileStream(this.filePath, FileMode.Open);
+            this.stream = new FileStream(this.filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             this.reader = new BinaryReader(stream);
             tileOffset = 0;
             chestOffset = 0;
@@ -29,6 +29,58 @@ namespace WorldView
         public void SeekToTiles()
         {
             this.stream.Seek(this.tileOffset, SeekOrigin.Begin);
+        }
+
+        public void SeekToChests()
+        {
+            if (chestOffset == 0)
+            {
+                WorldHeader header = ReadHeader();
+
+                int maxX = (int)header.MaxTiles.Y;
+                int maxY = (int)header.MaxTiles.X;
+
+                for (int col = 0; col < maxX; col++)
+                {
+                    for (int row = 0; row < maxY; row++)
+                    {
+                        GetNextTile();
+                    }
+                }
+
+                chestOffset = reader.BaseStream.Position;
+            }
+        }
+
+        private void SkipToNextTile()
+        {
+            bool isTileActive = reader.ReadBoolean();
+            TileType tileType = TileType.Unknown;
+            byte blockType = 0x00;
+            if (isTileActive)
+            {
+                blockType = reader.ReadByte();
+                if (WorldMapper.tileTypeDefs[blockType].IsImportant)
+                {
+                    reader.BaseStream.Seek(4, SeekOrigin.Current);
+                }
+                tileType = WorldMapper.tileTypeDefs[blockType].TileType;
+            }
+            else
+            {
+                tileType = TileType.Sky;
+            }
+    
+            bool isWall = reader.ReadBoolean();
+            if (isWall) reader.BaseStream.Seek(1, SeekOrigin.Current);
+            bool isLiquid = reader.ReadBoolean();
+            if (isLiquid)
+            {
+                byte liquidLevel = reader.ReadByte();
+                bool isLava = reader.ReadBoolean();
+              
+            }
+    
         }
 
         public WorldHeader ReadHeader()

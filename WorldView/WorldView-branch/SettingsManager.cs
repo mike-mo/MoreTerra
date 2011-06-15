@@ -15,9 +15,7 @@ namespace WorldView
         {
             public string InputWorldDirectory;
             public string OutputPreviewDirectory;
-            public bool IsChestFilterEnabled;
             public bool IsWallsDrawable;
-            public bool IsSymbolsDrawable;
             public SerializableDictionary<string, bool> SymbolStates;
             public SerializableDictionary<string, bool> ChestFilterWeaponStates;
             public SerializableDictionary<string, bool> ChestFilterAccessoryStates;
@@ -30,7 +28,6 @@ namespace WorldView
         private SettingsManager()
         {
             this.settings = new UserSettings();
-            this.settings.IsChestFilterEnabled = false;
             this.settings.SymbolStates = new SerializableDictionary<string, bool>();
             foreach (string s in Constants.ExternalSymbolNames)
             {
@@ -40,16 +37,15 @@ namespace WorldView
             this.settings.ChestFilterWeaponStates = new SerializableDictionary<string, bool>();
             foreach (string s in Constants.ChestFilterWeapons)
             {
-                this.settings.ChestFilterWeaponStates.Add(s, false);
+                this.settings.ChestFilterWeaponStates.Add(s, true);
             }
 
             this.settings.ChestFilterAccessoryStates = new SerializableDictionary<string, bool>();
             foreach (string s in Constants.ChestFilterAccessories)
             {
-                this.settings.ChestFilterAccessoryStates.Add(s, false);
+                this.settings.ChestFilterAccessoryStates.Add(s, true);
             }
             this.settings.IsWallsDrawable = true;
-            this.settings.IsSymbolsDrawable = true;
             this.settings.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
             if (!Directory.Exists(this.settings.InputWorldDirectory))
             {
@@ -101,18 +97,6 @@ namespace WorldView
             get
             {
                 return this.settings.SymbolStates;
-            }
-        }
-
-        public bool IsSymbolsDrawable
-        {
-            get
-            {
-                return this.settings.IsSymbolsDrawable;
-            }
-            set
-            {
-                this.settings.IsSymbolsDrawable = value;
             }
         }
 
@@ -173,18 +157,7 @@ namespace WorldView
             }
         }
 
-        public bool IsChestFilterEnabled
-        {
-            get
-            {
-                return this.settings.IsChestFilterEnabled;
-            }
-            set
-            {
-                this.settings.IsChestFilterEnabled = value;
-            }
-        }
-
+     
         public void Initialize()
         {
             // Initialization
