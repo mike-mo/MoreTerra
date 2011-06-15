@@ -1,19 +1,19 @@
 ﻿using System.Runtime.InteropServices;
 
-public class Win32
-{
-    /// <summary>
-    /// Allocates a new console for current process.
-    /// </summary>
-    [DllImport("kernel32.dll")]
-    public static extern bool AllocConsole();
+//public class Win32
+//{
+//    /// <summary>
+//    /// Allocates a new console for current process.
+//    /// </summary>
+//    [DllImport("kernel32.dll")]
+//    public static extern bool AllocConsole();
 
-    /// <summary>
-    /// Frees the console.
-    /// </summary>
-    [DllImport("kernel32.dll")]
-    public static extern bool FreeConsole();
-}
+//    /// <summary>
+//    /// Frees the console.
+//    /// </summary>
+//    [DllImport("kernel32.dll")]
+//    public static extern bool FreeConsole();
+//}
 
 
 namespace WorldView
@@ -30,17 +30,18 @@ namespace WorldView
     static class Program
     {
 
+        [DllImport("kernel32.dll")]
+        static extern bool AttachConsole(int dwProcessId);
+        private const int ATTACH_PARENT_PROCESS = -1;
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+
         static void Main(string[] args)
         {
             // Initialize Manager
             ResourceManager.Instance.Initialize();
-            SettingsManager.Instance.Initialize();
-         
+            SettingsManager.Instance.Initialize();        
+
+
             if (args.Length == 0)
             {
                 Application.EnableVisualStyles();
@@ -50,12 +51,13 @@ namespace WorldView
             }
             else
             {
-                Win32.AllocConsole();
-
+            
                 //for (int i = 1; i < args.Length; i += 2)
                 //{
                 //    MessageBox.Show(args[i - 1] + args[i]);
                 //}
+
+                AttachConsole(ATTACH_PARENT_PROCESS);
                 
                 bool show_help = false;
                 string worldPath = string.Empty;
@@ -108,10 +110,7 @@ namespace WorldView
                     mapper.CreatePreviewPNG(mapPath);
                     mapper.CloseWorld();
                     Console.WriteLine("Done! Saved to: " + mapPath);
-                }
-
-                //Console.ReadLine();
-                Win32.FreeConsole();
+                }    
             }          
         }
     }

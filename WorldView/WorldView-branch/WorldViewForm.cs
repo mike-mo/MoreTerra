@@ -88,9 +88,9 @@ namespace WorldView
         {
             worldPath = comboBoxWorldFilePath.Text;
 
-            if (File.Exists(comboBoxWorldFilePath.Text))
+            if (File.Exists(comboBoxWorldFilePath.Text) && SettingsManager.Instance.OutputPreviewDirectory != string.Empty)
             {
-                textBoxOutputFile.Text = Path.Combine( SettingsManager.Instance.OutputPreviewDirectory , Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text) + ".png");
+                textBoxOutputFile.Text = Path.Combine(SettingsManager.Instance.OutputPreviewDirectory, Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text) + ".png");
             }
         }
 
