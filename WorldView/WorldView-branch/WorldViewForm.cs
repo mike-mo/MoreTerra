@@ -141,6 +141,11 @@ namespace WorldView
                 labelStatus.Text = "Drawing World...";
                 progressBarDrawWorld.Visible = true;
 
+                if (textBoxOutputFile.Text.Substring(textBoxOutputFile.Text.Length - 4).CompareTo(".png") != 0)
+                {
+                    textBoxOutputFile.Text += ".png";
+                }
+
                 mapperWorker = new BackgroundWorker();
                 mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
                 mapperWorker.RunWorkerAsync(true);

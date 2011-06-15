@@ -34,7 +34,7 @@ namespace WorldView
         static extern bool AttachConsole(int dwProcessId);
         private const int ATTACH_PARENT_PROCESS = -1;
 
-
+        [STAThread]
         static void Main(string[] args)
         {
             // Initialize Manager
