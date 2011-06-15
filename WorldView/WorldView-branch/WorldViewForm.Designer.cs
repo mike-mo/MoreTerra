@@ -137,14 +137,15 @@
             // 
             // checkBoxOpenImage
             // 
+            this.checkBoxOpenImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxOpenImage.AutoSize = true;
             this.checkBoxOpenImage.Checked = true;
             this.checkBoxOpenImage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxOpenImage.Location = new System.Drawing.Point(12, 423);
             this.checkBoxOpenImage.Name = "checkBoxOpenImage";
-            this.checkBoxOpenImage.Size = new System.Drawing.Size(188, 17);
+            this.checkBoxOpenImage.Size = new System.Drawing.Size(170, 17);
             this.checkBoxOpenImage.TabIndex = 11;
-            this.checkBoxOpenImage.Text = "Launch finished image when done";
+            this.checkBoxOpenImage.Text = "Open World image when done";
             this.checkBoxOpenImage.UseVisualStyleBackColor = true;
             // 
             // buttonDrawWorld
