@@ -12,7 +12,7 @@ using WorldView.Properties;
 
 namespace WorldView
 {
-    public partial class WorldViewForm : Form
+    public partial class FormWorldView : Form
     {
         private delegate void PopulateWorldTreeDelegate();
         private delegate void PopulateChestTreeDelegate();     
@@ -26,7 +26,7 @@ namespace WorldView
 
 
 
-        public WorldViewForm()
+        public FormWorldView()
         {            
             InitializeComponent();
          
@@ -88,7 +88,7 @@ namespace WorldView
         {
             worldPath = comboBoxWorldFilePath.Text;
 
-            if (File.Exists(comboBoxWorldFilePath.Text) && SettingsManager.Instance.OutputPreviewDirectory != string.Empty)
+            if (File.Exists(comboBoxWorldFilePath.Text) && Directory.Exists(SettingsManager.Instance.OutputPreviewDirectory))
             {
                 textBoxOutputFile.Text = Path.Combine(SettingsManager.Instance.OutputPreviewDirectory, Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text) + ".png");
             }
@@ -160,7 +160,12 @@ namespace WorldView
             {
                 mapper = new WorldMapper();
                 mapper.Initialize();
-                mapper.OpenWorld(worldPath);
+
+                string tempFile = Path.GetTempPath() + Path.GetFileName(worldPath);
+
+                File.Copy(worldPath, tempFile, true);
+
+                mapper.OpenWorld(tempFile);
                 PopulateWorldTree();
 
                 if ((bool)e.Argument == true)
@@ -265,7 +270,7 @@ namespace WorldView
 
         private void checkedListBoxChestFilterWeapons_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            SettingsManager.Instance.ToggleFilterWeapon(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxChestFilterWeapons.Items[e.Index]), e.NewValue == CheckState.Checked);
+
         }
 
         private void checkedListBoxChestFilterAccessories_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -396,6 +401,12 @@ namespace WorldView
         private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
         {
             SettingsManager.Instance.IsWallDrawable = checkBoxDrawWalls.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormPreview f = new FormPreview(worldPath);
+            f.Show();
         }
 
     }

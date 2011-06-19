@@ -46,7 +46,7 @@ namespace WorldView
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new WorldViewForm());
+                Application.Run(new FormWorldView());
                 SettingsManager.Instance.Shutdown();                
             }
             else
