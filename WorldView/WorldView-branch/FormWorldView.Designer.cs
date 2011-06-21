@@ -354,6 +354,7 @@
             this.checkedListBoxChestFilterAccessories.CheckOnClick = true;
             this.checkedListBoxChestFilterAccessories.ContextMenuStrip = this.contextMenuStripListOperations;
             this.checkedListBoxChestFilterAccessories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxChestFilterAccessories.Enabled = false;
             this.checkedListBoxChestFilterAccessories.FormattingEnabled = true;
             this.checkedListBoxChestFilterAccessories.IntegralHeight = false;
             this.checkedListBoxChestFilterAccessories.Location = new System.Drawing.Point(230, 3);
@@ -367,6 +368,7 @@
             this.checkedListBoxChestFilterWeapons.CheckOnClick = true;
             this.checkedListBoxChestFilterWeapons.ContextMenuStrip = this.contextMenuStripListOperations;
             this.checkedListBoxChestFilterWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxChestFilterWeapons.Enabled = false;
             this.checkedListBoxChestFilterWeapons.FormattingEnabled = true;
             this.checkedListBoxChestFilterWeapons.IntegralHeight = false;
             this.checkedListBoxChestFilterWeapons.Location = new System.Drawing.Point(3, 3);
