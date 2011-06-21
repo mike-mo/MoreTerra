@@ -42,6 +42,10 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.checkedListBoxMarkers = new System.Windows.Forms.CheckedListBox();
+            this.contextMenuStripListOperations = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabPageChestFinder = new System.Windows.Forms.TabPage();
@@ -72,10 +76,6 @@
             this.groupBoxSelectWorld = new System.Windows.Forms.GroupBox();
             this.comboBoxWorldFilePath = new System.Windows.Forms.ComboBox();
             this.buttonBrowseWorld = new System.Windows.Forms.Button();
-            this.contextMenuStripListOperations = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlSettings.SuspendLayout();
             this.tabPageDrawWorld.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
@@ -83,6 +83,7 @@
             this.groupBoxSymbols.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.contextMenuStripListOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.tabPageChestFinder.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -95,7 +96,6 @@
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBoxSelectWorld.SuspendLayout();
-            this.contextMenuStripListOperations.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlSettings
@@ -254,6 +254,36 @@
             this.checkedListBoxMarkers.Size = new System.Drawing.Size(211, 225);
             this.checkedListBoxMarkers.TabIndex = 36;
             // 
+            // contextMenuStripListOperations
+            // 
+            this.contextMenuStripListOperations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.selectNoneToolStripMenuItem,
+            this.invertSelectionToolStripMenuItem});
+            this.contextMenuStripListOperations.Name = "contextMenuStripListOperations";
+            this.contextMenuStripListOperations.Size = new System.Drawing.Size(155, 70);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.selectAllToolStripMenuItem.Text = "Select all";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select none";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
+            // 
+            // invertSelectionToolStripMenuItem
+            // 
+            this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
+            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.invertSelectionToolStripMenuItem.Text = "Invert selection";
+            this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+            // 
             // checkBoxDrawWalls
             // 
             this.checkBoxDrawWalls.AutoSize = true;
@@ -315,7 +345,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 251F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(454, 251);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
@@ -593,36 +623,6 @@
             this.buttonBrowseWorld.UseVisualStyleBackColor = true;
             this.buttonBrowseWorld.Click += new System.EventHandler(this.buttonBrowseWorld_Click);
             // 
-            // contextMenuStripListOperations
-            // 
-            this.contextMenuStripListOperations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectAllToolStripMenuItem,
-            this.selectNoneToolStripMenuItem,
-            this.invertSelectionToolStripMenuItem});
-            this.contextMenuStripListOperations.Name = "contextMenuStripListOperations";
-            this.contextMenuStripListOperations.Size = new System.Drawing.Size(155, 70);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.selectAllToolStripMenuItem.Text = "Select all";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
-            // 
-            // selectNoneToolStripMenuItem
-            // 
-            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
-            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.selectNoneToolStripMenuItem.Text = "Select none";
-            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
-            // 
-            // invertSelectionToolStripMenuItem
-            // 
-            this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
-            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.invertSelectionToolStripMenuItem.Text = "Invert selection";
-            this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
-            // 
             // FormWorldView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,6 +647,7 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.contextMenuStripListOperations.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.tabPageChestFinder.ResumeLayout(false);
             this.tabPageChestFinder.PerformLayout();
@@ -662,7 +663,6 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBoxSelectWorld.ResumeLayout(false);
-            this.contextMenuStripListOperations.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

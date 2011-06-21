@@ -83,23 +83,29 @@ namespace TerrariaWorldViewer
                 }
 
 
-                if (show_help)
+
+                if (show_help || args.Contains<string>("-?") || worldPath == string.Empty || mapPath == string.Empty)
                 {
                     Console.WriteLine("Generates a PNG from a Terraria World file (*.wld).");
                     Console.WriteLine();
                     Console.WriteLine("Usage:");
-                    Console.WriteLine(" " + System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath).ToUpper() + " [option1] <path1> [option2] <path2>");
+                    Console.WriteLine(" " + System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath) + "NoGui.bat [option1] <path1> [option2] <path2>");
                     Console.WriteLine();
                     Console.WriteLine("Options:");
                     p.WriteOptionDescriptions(Console.Out);
+                    Console.WriteLine();
+                    Console.WriteLine("Example:");
+                    Console.WriteLine();
+                    Console.WriteLine(" " + System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath) + "NoGui.bat " +
+                                      "-w \"C:\\Terraria Worlds\\world1.wld\" -o \"C:\\Terraria Maps\\World 1.png\"");
                 }
                 else if (worldPath == string.Empty || !File.Exists(worldPath))
                 {
-                    Console.WriteLine("The World file could not be found.");
+                    Console.WriteLine("The World file could not be found: " + worldPath);
                 }
                 else
                 {
-                    Console.WriteLine("Generating map from: " + worldPath);                    
+                    Console.WriteLine("Generating map from:" + Environment.NewLine + " " + worldPath);                    
 
                     WorldMapper mapper = new WorldMapper();
 
@@ -112,13 +118,12 @@ namespace TerrariaWorldViewer
                         mapper.CloseWorld();
                         Console.WriteLine("World file closed. Generating PNG...");
                         mapper.CreatePreviewPNG(mapPath);
-                        Console.WriteLine("Done! Saved to: " + mapPath);
+                        Console.WriteLine("Done! Saved to: " + Environment.NewLine + " " + mapPath);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error: " + ex.ToString());
                     }
-                   
 
                 }    
             }          
