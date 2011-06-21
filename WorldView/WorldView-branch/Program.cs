@@ -16,7 +16,7 @@
 //}
 
 
-namespace WorldView
+namespace TerrariaWorldViewer
 {
     using System;
     using System.Collections.Generic;
@@ -24,8 +24,6 @@ namespace WorldView
     using System.Windows.Forms;
     using NDesk.Options;
     using System.IO;
-
-    using WorldView;
 
     static class Program
     {
@@ -37,12 +35,12 @@ namespace WorldView
         [STAThread]
         static void Main(string[] args)
         {
-            // Initialize Manager
+            // Initialize Managers
             ResourceManager.Instance.Initialize();
             SettingsManager.Instance.Initialize();        
 
 
-            if (args.Length == 0)
+            if (args.Length == 0) //started from windows
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -105,11 +103,23 @@ namespace WorldView
 
                     WorldMapper mapper = new WorldMapper();
 
-                    mapper.Initialize();
-                    mapper.OpenWorld(worldPath);
-                    mapper.CreatePreviewPNG(mapPath);
-                    mapper.CloseWorld();
-                    Console.WriteLine("Done! Saved to: " + mapPath);
+                    try
+                    {
+                        mapper.Initialize();
+                        Console.WriteLine("Reading World file...");
+                        mapper.OpenWorld(worldPath);
+                        mapper.ReadWorldTiles();
+                        mapper.CloseWorld();
+                        Console.WriteLine("World file closed. Generating PNG...");
+                        mapper.CreatePreviewPNG(mapPath);
+                        Console.WriteLine("Done! Saved to: " + mapPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.ToString());
+                    }
+                   
+
                 }    
             }          
         }

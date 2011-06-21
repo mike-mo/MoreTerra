@@ -1,15 +1,17 @@
 ﻿using System.Xml;
 using System.Drawing.Imaging;
 using System.Xml.Serialization;
-namespace WorldView
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Drawing;
+using System.Reflection;
+
+namespace TerrariaWorldViewer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Drawing;
-    using System.Reflection;
+
 
     public sealed class ResourceManager
     {

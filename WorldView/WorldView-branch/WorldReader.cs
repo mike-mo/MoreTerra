@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
-namespace WorldView
+namespace TerrariaWorldViewer
 {
     using System;
     using System.Collections.Generic;
@@ -231,7 +231,7 @@ namespace WorldView
         }
 
         public void Close()
-        {
+        {            
             this.reader.Close();
         }
   

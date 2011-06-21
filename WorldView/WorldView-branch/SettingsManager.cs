@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace WorldView
+namespace TerrariaWorldViewer
 {
     public sealed class SettingsManager
     {
@@ -15,6 +15,7 @@ namespace WorldView
         {
             public string InputWorldDirectory;
             public string OutputPreviewDirectory;
+            public bool IsChestFilterEnabled;
             public bool IsWallsDrawable;
             public SerializableDictionary<string, bool> SymbolStates;
             public SerializableDictionary<string, bool> ChestFilterWeaponStates;
@@ -68,6 +69,20 @@ namespace WorldView
             }
         }
 
+        public void Initialize()
+        {
+            // Initialization
+            if (!System.IO.File.Exists(Constants.ApplicationUserSettingsFile)) return;
+
+
+            // Load User Preference File
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(File.ReadAllText(Constants.ApplicationUserSettingsFile));
+            XmlNodeReader reader = new XmlNodeReader(xmlDoc.DocumentElement);
+            XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
+            this.settings = (UserSettings)inputSerializer.Deserialize(reader);
+        }
+
         public string InputWorldDirectory
         {
             get
@@ -100,7 +115,19 @@ namespace WorldView
             }
         }
 
-        public bool IsWallDrawable
+        public bool FilterChests
+        {
+            get
+            {
+                return this.settings.IsChestFilterEnabled;
+            }
+            set
+            {
+                this.settings.IsChestFilterEnabled = value;
+            }
+        }
+
+        public bool DrawWalls
         {
             get
             {
@@ -112,28 +139,28 @@ namespace WorldView
             }
         }
 
-        public bool IsSymbolViewable(TileType type)
+        public bool DrawSymbol(TileType type)
         {
             // convert to string index
             return this.settings.SymbolStates[Enum.GetName(typeof(TileType), type)];
         }
 
-        public void ToggleSymbolVisibility(string key, bool status)
+        public void SymbolVisible(string key, bool status)
         {
             this.settings.SymbolStates[key] = status;
         }
 
-        public void ToggleFilterWeapon(string weaponName, bool status)
+        public void FilterWeapon(string weaponName, bool status)
         {
             this.settings.ChestFilterWeaponStates[weaponName] = status;
         }
 
-        public void ToggleFilterAccessories(string accessoryName, bool status)
+        public void FilterAccessory(string accessoryName, bool status)
         {
             this.settings.ChestFilterAccessoryStates[accessoryName] = status;
         }
 
-        public Dictionary<string, bool> FilterItemsStates
+        public Dictionary<string, bool> FilterItemStates
         {
             get
             {
@@ -155,23 +182,6 @@ namespace WorldView
             {
                 return this.settings.ChestFilterAccessoryStates;
             }
-        }
-
-     
-        public void Initialize()
-        {
-            // Initialization
-            if (!System.IO.File.Exists(Constants.ApplicationUserSettingsFile))
-            {
-                return;
-            }
-
-            // Load User Preference File
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(File.ReadAllText(Constants.ApplicationUserSettingsFile));
-            XmlNodeReader reader = new XmlNodeReader(xmlDoc.DocumentElement);
-            XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
-            this.settings = (UserSettings)inputSerializer.Deserialize(reader);
         }
 
         public void Shutdown()

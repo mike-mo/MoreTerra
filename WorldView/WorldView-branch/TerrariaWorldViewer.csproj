@@ -88,10 +88,10 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TerrariaIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -101,28 +101,18 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chest.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="FormPreview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormPreview.Designer.cs">
-      <DependentUpon>FormPreview.cs</DependentUpon>
-    </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Render.cs" />
     <Compile Include="SettingsManager.cs" />
     <Compile Include="Rect.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="SerializableDictionary.cs" />
-    <Compile Include="Structs.cs" />
-    <Compile Include="Textures.cs" />
     <Compile Include="TileProperties.cs" />
     <Compile Include="TileType.cs" />
     <Compile Include="Util.cs" />
@@ -135,9 +125,6 @@
     <Compile Include="FormWorldView.Designer.cs">
       <DependentUpon>FormWorldView.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormPreview.resx">
-      <DependentUpon>FormPreview.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -201,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Changelog.txt" />
+    <Content Include="TerrariaIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

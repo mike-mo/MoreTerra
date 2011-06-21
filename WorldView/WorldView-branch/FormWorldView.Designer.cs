@@ -1,4 +1,4 @@
-﻿namespace WorldView
+﻿namespace TerrariaWorldViewer
 {
     partial class FormWorldView
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWorldView));
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPageDrawWorld = new System.Windows.Forms.TabPage();
@@ -39,26 +40,15 @@
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBoxSymbols = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkedListBoxMarkers = new System.Windows.Forms.CheckedListBox();
             this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.linkLabelSelectAllMarkers = new System.Windows.Forms.LinkLabel();
-            this.linkLabelSelectNoneMarkers = new System.Windows.Forms.LinkLabel();
-            this.linkLabelInvertMarkers = new System.Windows.Forms.LinkLabel();
-            this.checkedListBoxMarkers = new System.Windows.Forms.CheckedListBox();
             this.tabPageChestFinder = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxFilterChests = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.linkLabelSelectAllAccessories = new System.Windows.Forms.LinkLabel();
-            this.linkLabelSelectNoneAccessories = new System.Windows.Forms.LinkLabel();
-            this.linkLabelInvertAccessories = new System.Windows.Forms.LinkLabel();
             this.checkedListBoxChestFilterAccessories = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxChestFilterWeapons = new System.Windows.Forms.CheckedListBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.linkLabelSelectAllWeapons = new System.Windows.Forms.LinkLabel();
-            this.linkLabelSelectNoneWeapons = new System.Windows.Forms.LinkLabel();
-            this.linkLabelInvertWeapons = new System.Windows.Forms.LinkLabel();
             this.tabPageWorldInformation = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLoadInformation = new System.Windows.Forms.Button();
@@ -80,22 +70,22 @@
             this.labelPercent = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBarDrawWorld = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBoxSelectWorld = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.comboBoxWorldFilePath = new System.Windows.Forms.ComboBox();
             this.buttonBrowseWorld = new System.Windows.Forms.Button();
+            this.contextMenuStripListOperations = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlSettings.SuspendLayout();
             this.tabPageDrawWorld.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
             this.groupBoxSymbols.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.flowLayoutPanel3.SuspendLayout();
             this.tabPageChestFinder.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             this.tabPageWorldInformation.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.worldInfoGroupBox.SuspendLayout();
@@ -105,6 +95,7 @@
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBoxSelectWorld.SuspendLayout();
+            this.contextMenuStripListOperations.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlSettings
@@ -120,7 +111,7 @@
             this.tabControlSettings.Location = new System.Drawing.Point(6, 108);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(487, 312);
+            this.tabControlSettings.Size = new System.Drawing.Size(474, 312);
             this.tabControlSettings.TabIndex = 1;
             // 
             // tabPageDrawWorld
@@ -131,7 +122,7 @@
             this.tabPageDrawWorld.Location = new System.Drawing.Point(4, 22);
             this.tabPageDrawWorld.Name = "tabPageDrawWorld";
             this.tabPageDrawWorld.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDrawWorld.Size = new System.Drawing.Size(479, 286);
+            this.tabPageDrawWorld.Size = new System.Drawing.Size(466, 286);
             this.tabPageDrawWorld.TabIndex = 0;
             this.tabPageDrawWorld.Text = "Draw World";
             this.tabPageDrawWorld.UseVisualStyleBackColor = true;
@@ -156,7 +147,7 @@
             this.buttonDrawWorld.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDrawWorld.Location = new System.Drawing.Point(6, 241);
             this.buttonDrawWorld.Name = "buttonDrawWorld";
-            this.buttonDrawWorld.Size = new System.Drawing.Size(467, 39);
+            this.buttonDrawWorld.Size = new System.Drawing.Size(454, 39);
             this.buttonDrawWorld.TabIndex = 10;
             this.buttonDrawWorld.Text = "Draw World";
             this.buttonDrawWorld.UseVisualStyleBackColor = true;
@@ -170,7 +161,7 @@
             this.groupBoxImageOutput.Controls.Add(this.buttonBrowseOutput);
             this.groupBoxImageOutput.Location = new System.Drawing.Point(6, 6);
             this.groupBoxImageOutput.Name = "groupBoxImageOutput";
-            this.groupBoxImageOutput.Size = new System.Drawing.Size(467, 96);
+            this.groupBoxImageOutput.Size = new System.Drawing.Size(454, 96);
             this.groupBoxImageOutput.TabIndex = 9;
             this.groupBoxImageOutput.TabStop = false;
             this.groupBoxImageOutput.Text = "Image Output";
@@ -181,13 +172,13 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputFile.Location = new System.Drawing.Point(6, 32);
             this.textBoxOutputFile.Name = "textBoxOutputFile";
-            this.textBoxOutputFile.Size = new System.Drawing.Size(455, 20);
+            this.textBoxOutputFile.Size = new System.Drawing.Size(442, 20);
             this.textBoxOutputFile.TabIndex = 4;
             // 
             // buttonBrowseOutput
             // 
             this.buttonBrowseOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseOutput.Location = new System.Drawing.Point(343, 58);
+            this.buttonBrowseOutput.Location = new System.Drawing.Point(330, 58);
             this.buttonBrowseOutput.Name = "buttonBrowseOutput";
             this.buttonBrowseOutput.Size = new System.Drawing.Size(118, 28);
             this.buttonBrowseOutput.TabIndex = 5;
@@ -201,7 +192,7 @@
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(479, 286);
+            this.tabPageSettings.Size = new System.Drawing.Size(466, 286);
             this.tabPageSettings.TabIndex = 2;
             this.tabPageSettings.Text = "Settings";
             this.tabPageSettings.UseVisualStyleBackColor = true;
@@ -212,7 +203,7 @@
             this.groupBoxSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxSymbols.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSymbols.Name = "groupBoxSymbols";
-            this.groupBoxSymbols.Size = new System.Drawing.Size(473, 280);
+            this.groupBoxSymbols.Size = new System.Drawing.Size(460, 280);
             this.groupBoxSymbols.TabIndex = 7;
             this.groupBoxSymbols.TabStop = false;
             this.groupBoxSymbols.Text = "World Markers";
@@ -222,28 +213,55 @@
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 231F));
-            this.tableLayoutPanel4.Controls.Add(this.checkBoxDrawWalls, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pictureBox3, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.flowLayoutPanel3, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.checkedListBoxMarkers, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.pictureBox3, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(467, 261);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(454, 261);
             this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.checkedListBoxMarkers, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.checkBoxDrawWalls, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.59829F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.40171F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(217, 255);
+            this.tableLayoutPanel2.TabIndex = 42;
+            // 
+            // checkedListBoxMarkers
+            // 
+            this.checkedListBoxMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxMarkers.CheckOnClick = true;
+            this.checkedListBoxMarkers.ContextMenuStrip = this.contextMenuStripListOperations;
+            this.checkedListBoxMarkers.FormattingEnabled = true;
+            this.checkedListBoxMarkers.IntegralHeight = false;
+            this.checkedListBoxMarkers.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxMarkers.Name = "checkedListBoxMarkers";
+            this.checkedListBoxMarkers.Size = new System.Drawing.Size(211, 225);
+            this.checkedListBoxMarkers.TabIndex = 36;
             // 
             // checkBoxDrawWalls
             // 
             this.checkBoxDrawWalls.AutoSize = true;
             this.checkBoxDrawWalls.Checked = true;
             this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDrawWalls.Location = new System.Drawing.Point(239, 3);
+            this.checkBoxDrawWalls.Location = new System.Drawing.Point(3, 234);
             this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
-            this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 15);
+            this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
             this.checkBoxDrawWalls.TabIndex = 41;
             this.checkBoxDrawWalls.Text = "Draw Walls";
             this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
@@ -254,219 +272,78 @@
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(239, 24);
+            this.pictureBox3.Location = new System.Drawing.Point(226, 3);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(225, 234);
-            this.pictureBox3.TabIndex = 39;
+            this.pictureBox3.Size = new System.Drawing.Size(225, 255);
+            this.pictureBox3.TabIndex = 43;
             this.pictureBox3.TabStop = false;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Controls.Add(this.linkLabelSelectAllMarkers);
-            this.flowLayoutPanel3.Controls.Add(this.linkLabelSelectNoneMarkers);
-            this.flowLayoutPanel3.Controls.Add(this.linkLabelInvertMarkers);
-            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(230, 15);
-            this.flowLayoutPanel3.TabIndex = 37;
-            // 
-            // linkLabelSelectAllMarkers
-            // 
-            this.linkLabelSelectAllMarkers.AutoSize = true;
-            this.linkLabelSelectAllMarkers.Location = new System.Drawing.Point(3, 0);
-            this.linkLabelSelectAllMarkers.Name = "linkLabelSelectAllMarkers";
-            this.linkLabelSelectAllMarkers.Size = new System.Drawing.Size(50, 13);
-            this.linkLabelSelectAllMarkers.TabIndex = 0;
-            this.linkLabelSelectAllMarkers.TabStop = true;
-            this.linkLabelSelectAllMarkers.Text = "Select all";
-            this.linkLabelSelectAllMarkers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAllMarkers_LinkClicked);
-            // 
-            // linkLabelSelectNoneMarkers
-            // 
-            this.linkLabelSelectNoneMarkers.AutoSize = true;
-            this.linkLabelSelectNoneMarkers.Location = new System.Drawing.Point(59, 0);
-            this.linkLabelSelectNoneMarkers.Name = "linkLabelSelectNoneMarkers";
-            this.linkLabelSelectNoneMarkers.Size = new System.Drawing.Size(64, 13);
-            this.linkLabelSelectNoneMarkers.TabIndex = 1;
-            this.linkLabelSelectNoneMarkers.TabStop = true;
-            this.linkLabelSelectNoneMarkers.Text = "Select none";
-            this.linkLabelSelectNoneMarkers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectNoneMarkers_LinkClicked);
-            // 
-            // linkLabelInvertMarkers
-            // 
-            this.linkLabelInvertMarkers.AutoSize = true;
-            this.linkLabelInvertMarkers.Location = new System.Drawing.Point(129, 0);
-            this.linkLabelInvertMarkers.Name = "linkLabelInvertMarkers";
-            this.linkLabelInvertMarkers.Size = new System.Drawing.Size(34, 13);
-            this.linkLabelInvertMarkers.TabIndex = 2;
-            this.linkLabelInvertMarkers.TabStop = true;
-            this.linkLabelInvertMarkers.Text = "Invert";
-            this.linkLabelInvertMarkers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInvertMarkers_LinkClicked);
-            // 
-            // checkedListBoxMarkers
-            // 
-            this.checkedListBoxMarkers.CheckOnClick = true;
-            this.checkedListBoxMarkers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxMarkers.FormattingEnabled = true;
-            this.checkedListBoxMarkers.IntegralHeight = false;
-            this.checkedListBoxMarkers.Location = new System.Drawing.Point(3, 24);
-            this.checkedListBoxMarkers.Name = "checkedListBoxMarkers";
-            this.checkedListBoxMarkers.Size = new System.Drawing.Size(230, 234);
-            this.checkedListBoxMarkers.TabIndex = 36;
             // 
             // tabPageChestFinder
             // 
-            this.tabPageChestFinder.Controls.Add(this.groupBox2);
+            this.tabPageChestFinder.Controls.Add(this.checkBoxFilterChests);
+            this.tabPageChestFinder.Controls.Add(this.tableLayoutPanel3);
             this.tabPageChestFinder.Location = new System.Drawing.Point(4, 22);
             this.tabPageChestFinder.Name = "tabPageChestFinder";
             this.tabPageChestFinder.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageChestFinder.Size = new System.Drawing.Size(479, 286);
+            this.tabPageChestFinder.Size = new System.Drawing.Size(466, 286);
             this.tabPageChestFinder.TabIndex = 5;
             this.tabPageChestFinder.Text = "Chest Finder";
             this.tabPageChestFinder.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // checkBoxFilterChests
             // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel3);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(473, 280);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Only show Chests that contain at least one of";
+            this.checkBoxFilterChests.AutoSize = true;
+            this.checkBoxFilterChests.Location = new System.Drawing.Point(6, 8);
+            this.checkBoxFilterChests.Name = "checkBoxFilterChests";
+            this.checkBoxFilterChests.Size = new System.Drawing.Size(412, 17);
+            this.checkBoxFilterChests.TabIndex = 1;
+            this.checkBoxFilterChests.Text = "Only show Chests that contain one or more of the following weapons/accessories:";
+            this.checkBoxFilterChests.UseVisualStyleBackColor = true;
+            this.checkBoxFilterChests.CheckedChanged += new System.EventHandler(this.checkBoxFilterChests_CheckedChanged);
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 235F));
-            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel2, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.checkedListBoxChestFilterAccessories, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.checkedListBoxChestFilterWeapons, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel1, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.checkedListBoxChestFilterAccessories, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.checkedListBoxChestFilterWeapons, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 32);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(467, 261);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(454, 251);
             this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.linkLabelSelectAllAccessories);
-            this.flowLayoutPanel2.Controls.Add(this.linkLabelSelectNoneAccessories);
-            this.flowLayoutPanel2.Controls.Add(this.linkLabelInvertAccessories);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(235, 3);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(229, 14);
-            this.flowLayoutPanel2.TabIndex = 11;
-            // 
-            // linkLabelSelectAllAccessories
-            // 
-            this.linkLabelSelectAllAccessories.AutoSize = true;
-            this.linkLabelSelectAllAccessories.Location = new System.Drawing.Point(3, 0);
-            this.linkLabelSelectAllAccessories.Name = "linkLabelSelectAllAccessories";
-            this.linkLabelSelectAllAccessories.Size = new System.Drawing.Size(50, 13);
-            this.linkLabelSelectAllAccessories.TabIndex = 0;
-            this.linkLabelSelectAllAccessories.TabStop = true;
-            this.linkLabelSelectAllAccessories.Text = "Select all";
-            this.linkLabelSelectAllAccessories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAllAccessories_LinkClicked);
-            // 
-            // linkLabelSelectNoneAccessories
-            // 
-            this.linkLabelSelectNoneAccessories.AutoSize = true;
-            this.linkLabelSelectNoneAccessories.Location = new System.Drawing.Point(59, 0);
-            this.linkLabelSelectNoneAccessories.Name = "linkLabelSelectNoneAccessories";
-            this.linkLabelSelectNoneAccessories.Size = new System.Drawing.Size(64, 13);
-            this.linkLabelSelectNoneAccessories.TabIndex = 1;
-            this.linkLabelSelectNoneAccessories.TabStop = true;
-            this.linkLabelSelectNoneAccessories.Text = "Select none";
-            this.linkLabelSelectNoneAccessories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectNoneAccessories_LinkClicked);
-            // 
-            // linkLabelInvertAccessories
-            // 
-            this.linkLabelInvertAccessories.AutoSize = true;
-            this.linkLabelInvertAccessories.Location = new System.Drawing.Point(129, 0);
-            this.linkLabelInvertAccessories.Name = "linkLabelInvertAccessories";
-            this.linkLabelInvertAccessories.Size = new System.Drawing.Size(34, 13);
-            this.linkLabelInvertAccessories.TabIndex = 2;
-            this.linkLabelInvertAccessories.TabStop = true;
-            this.linkLabelInvertAccessories.Text = "Invert";
-            this.linkLabelInvertAccessories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInvertAccessories_LinkClicked);
             // 
             // checkedListBoxChestFilterAccessories
             // 
             this.checkedListBoxChestFilterAccessories.CheckOnClick = true;
+            this.checkedListBoxChestFilterAccessories.ContextMenuStrip = this.contextMenuStripListOperations;
             this.checkedListBoxChestFilterAccessories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxChestFilterAccessories.FormattingEnabled = true;
             this.checkedListBoxChestFilterAccessories.IntegralHeight = false;
-            this.checkedListBoxChestFilterAccessories.Location = new System.Drawing.Point(235, 23);
+            this.checkedListBoxChestFilterAccessories.Location = new System.Drawing.Point(230, 3);
             this.checkedListBoxChestFilterAccessories.Name = "checkedListBoxChestFilterAccessories";
-            this.checkedListBoxChestFilterAccessories.Size = new System.Drawing.Size(229, 235);
+            this.checkedListBoxChestFilterAccessories.Size = new System.Drawing.Size(221, 245);
             this.checkedListBoxChestFilterAccessories.Sorted = true;
             this.checkedListBoxChestFilterAccessories.TabIndex = 9;
             // 
             // checkedListBoxChestFilterWeapons
             // 
             this.checkedListBoxChestFilterWeapons.CheckOnClick = true;
+            this.checkedListBoxChestFilterWeapons.ContextMenuStrip = this.contextMenuStripListOperations;
             this.checkedListBoxChestFilterWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxChestFilterWeapons.FormattingEnabled = true;
             this.checkedListBoxChestFilterWeapons.IntegralHeight = false;
-            this.checkedListBoxChestFilterWeapons.Location = new System.Drawing.Point(3, 23);
+            this.checkedListBoxChestFilterWeapons.Location = new System.Drawing.Point(3, 3);
             this.checkedListBoxChestFilterWeapons.Name = "checkedListBoxChestFilterWeapons";
-            this.checkedListBoxChestFilterWeapons.Size = new System.Drawing.Size(226, 235);
+            this.checkedListBoxChestFilterWeapons.Size = new System.Drawing.Size(221, 245);
             this.checkedListBoxChestFilterWeapons.Sorted = true;
             this.checkedListBoxChestFilterWeapons.TabIndex = 5;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.linkLabelSelectAllWeapons);
-            this.flowLayoutPanel1.Controls.Add(this.linkLabelSelectNoneWeapons);
-            this.flowLayoutPanel1.Controls.Add(this.linkLabelInvertWeapons);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(226, 14);
-            this.flowLayoutPanel1.TabIndex = 7;
-            // 
-            // linkLabelSelectAllWeapons
-            // 
-            this.linkLabelSelectAllWeapons.AutoSize = true;
-            this.linkLabelSelectAllWeapons.Location = new System.Drawing.Point(3, 0);
-            this.linkLabelSelectAllWeapons.Name = "linkLabelSelectAllWeapons";
-            this.linkLabelSelectAllWeapons.Size = new System.Drawing.Size(50, 13);
-            this.linkLabelSelectAllWeapons.TabIndex = 0;
-            this.linkLabelSelectAllWeapons.TabStop = true;
-            this.linkLabelSelectAllWeapons.Text = "Select all";
-            this.linkLabelSelectAllWeapons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectAllWeapons_LinkClicked);
-            // 
-            // linkLabelSelectNoneWeapons
-            // 
-            this.linkLabelSelectNoneWeapons.AutoSize = true;
-            this.linkLabelSelectNoneWeapons.Location = new System.Drawing.Point(59, 0);
-            this.linkLabelSelectNoneWeapons.Name = "linkLabelSelectNoneWeapons";
-            this.linkLabelSelectNoneWeapons.Size = new System.Drawing.Size(64, 13);
-            this.linkLabelSelectNoneWeapons.TabIndex = 1;
-            this.linkLabelSelectNoneWeapons.TabStop = true;
-            this.linkLabelSelectNoneWeapons.Text = "Select none";
-            this.linkLabelSelectNoneWeapons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelSelectNoneWeapons_LinkClicked);
-            // 
-            // linkLabelInvertWeapons
-            // 
-            this.linkLabelInvertWeapons.AutoSize = true;
-            this.linkLabelInvertWeapons.Location = new System.Drawing.Point(129, 0);
-            this.linkLabelInvertWeapons.Name = "linkLabelInvertWeapons";
-            this.linkLabelInvertWeapons.Size = new System.Drawing.Size(34, 13);
-            this.linkLabelInvertWeapons.TabIndex = 2;
-            this.linkLabelInvertWeapons.TabStop = true;
-            this.linkLabelInvertWeapons.Text = "Invert";
-            this.linkLabelInvertWeapons.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInvertWeapons_LinkClicked);
             // 
             // tabPageWorldInformation
             // 
@@ -474,7 +351,7 @@
             this.tabPageWorldInformation.Location = new System.Drawing.Point(4, 22);
             this.tabPageWorldInformation.Name = "tabPageWorldInformation";
             this.tabPageWorldInformation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageWorldInformation.Size = new System.Drawing.Size(479, 286);
+            this.tabPageWorldInformation.Size = new System.Drawing.Size(466, 286);
             this.tabPageWorldInformation.TabIndex = 1;
             this.tabPageWorldInformation.Text = "World Information";
             this.tabPageWorldInformation.UseVisualStyleBackColor = true;
@@ -494,7 +371,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(473, 280);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(460, 280);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // buttonLoadInformation
@@ -505,7 +382,7 @@
             this.buttonLoadInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLoadInformation.Location = new System.Drawing.Point(3, 238);
             this.buttonLoadInformation.Name = "buttonLoadInformation";
-            this.buttonLoadInformation.Size = new System.Drawing.Size(467, 39);
+            this.buttonLoadInformation.Size = new System.Drawing.Size(454, 39);
             this.buttonLoadInformation.TabIndex = 11;
             this.buttonLoadInformation.Text = "Load Information";
             this.buttonLoadInformation.UseVisualStyleBackColor = true;
@@ -519,7 +396,7 @@
             this.worldInfoGroupBox.Controls.Add(this.worldPropertyGrid);
             this.worldInfoGroupBox.Location = new System.Drawing.Point(3, 3);
             this.worldInfoGroupBox.Name = "worldInfoGroupBox";
-            this.worldInfoGroupBox.Size = new System.Drawing.Size(230, 227);
+            this.worldInfoGroupBox.Size = new System.Drawing.Size(224, 227);
             this.worldInfoGroupBox.TabIndex = 3;
             this.worldInfoGroupBox.TabStop = false;
             this.worldInfoGroupBox.Text = "World Information";
@@ -530,7 +407,7 @@
             this.worldPropertyGrid.HelpVisible = false;
             this.worldPropertyGrid.Location = new System.Drawing.Point(3, 16);
             this.worldPropertyGrid.Name = "worldPropertyGrid";
-            this.worldPropertyGrid.Size = new System.Drawing.Size(224, 208);
+            this.worldPropertyGrid.Size = new System.Drawing.Size(218, 208);
             this.worldPropertyGrid.TabIndex = 0;
             // 
             // groupBox4
@@ -539,9 +416,9 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.treeViewChestInformation);
-            this.groupBox4.Location = new System.Drawing.Point(239, 3);
+            this.groupBox4.Location = new System.Drawing.Point(233, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(231, 227);
+            this.groupBox4.Size = new System.Drawing.Size(224, 227);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Chests";
@@ -551,7 +428,7 @@
             this.treeViewChestInformation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewChestInformation.Location = new System.Drawing.Point(3, 16);
             this.treeViewChestInformation.Name = "treeViewChestInformation";
-            this.treeViewChestInformation.Size = new System.Drawing.Size(225, 208);
+            this.treeViewChestInformation.Size = new System.Drawing.Size(218, 208);
             this.treeViewChestInformation.TabIndex = 3;
             // 
             // tabPageAbout
@@ -565,7 +442,7 @@
             this.tabPageAbout.Controls.Add(this.groupBox1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(479, 286);
+            this.tabPageAbout.Size = new System.Drawing.Size(466, 286);
             this.tabPageAbout.TabIndex = 4;
             this.tabPageAbout.Text = "About";
             this.tabPageAbout.UseVisualStyleBackColor = true;
@@ -573,7 +450,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(282, 70);
+            this.label3.Location = new System.Drawing.Point(363, 70);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 13);
             this.label3.TabIndex = 15;
@@ -582,7 +459,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(129, 103);
+            this.label2.Location = new System.Drawing.Point(210, 103);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 14;
@@ -591,7 +468,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(129, 70);
+            this.lblVersion.Location = new System.Drawing.Point(210, 70);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(72, 13);
             this.lblVersion.TabIndex = 13;
@@ -601,7 +478,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(126, 24);
+            this.label1.Location = new System.Drawing.Point(207, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(250, 33);
             this.label1.TabIndex = 12;
@@ -609,21 +486,23 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(18, 24);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(102, 92);
+            this.pictureBox1.Size = new System.Drawing.Size(198, 198);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
             // linkLabelHomepage
             // 
             this.linkLabelHomepage.AutoSize = true;
-            this.linkLabelHomepage.Location = new System.Drawing.Point(197, 103);
+            this.linkLabelHomepage.Location = new System.Drawing.Point(293, 103);
             this.linkLabelHomepage.Name = "linkLabelHomepage";
-            this.linkLabelHomepage.Size = new System.Drawing.Size(200, 13);
+            this.linkLabelHomepage.Size = new System.Drawing.Size(164, 13);
             this.linkLabelHomepage.TabIndex = 10;
             this.linkLabelHomepage.TabStop = true;
-            this.linkLabelHomepage.Text = "http://terrariaworldviewer.codeplex.com/";
+            this.linkLabelHomepage.Text = "terrariaworldviewer.codeplex.com";
             this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
             // 
             // groupBox1
@@ -631,9 +510,9 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelSpecialThanks);
-            this.groupBox1.Location = new System.Drawing.Point(3, 216);
+            this.groupBox1.Location = new System.Drawing.Point(3, 207);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 67);
+            this.groupBox1.Size = new System.Drawing.Size(460, 76);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Special Thanks To:";
@@ -643,7 +522,7 @@
             this.labelSpecialThanks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelSpecialThanks.Location = new System.Drawing.Point(3, 16);
             this.labelSpecialThanks.Name = "labelSpecialThanks";
-            this.labelSpecialThanks.Size = new System.Drawing.Size(467, 48);
+            this.labelSpecialThanks.Size = new System.Drawing.Size(454, 57);
             this.labelSpecialThanks.TabIndex = 0;
             this.labelSpecialThanks.Text = "SpecialThanks";
             // 
@@ -655,7 +534,7 @@
             this.progressBarDrawWorld});
             this.statusStrip1.Location = new System.Drawing.Point(3, 423);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(493, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(480, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -669,7 +548,7 @@
             // labelPercent
             // 
             this.labelPercent.Name = "labelPercent";
-            this.labelPercent.Size = new System.Drawing.Size(439, 17);
+            this.labelPercent.Size = new System.Drawing.Size(426, 17);
             this.labelPercent.Spring = true;
             this.labelPercent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -683,42 +562,30 @@
             // 
             this.groupBoxSelectWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxSelectWorld.Controls.Add(this.button1);
             this.groupBoxSelectWorld.Controls.Add(this.comboBoxWorldFilePath);
             this.groupBoxSelectWorld.Controls.Add(this.buttonBrowseWorld);
-            this.groupBoxSelectWorld.Location = new System.Drawing.Point(16, 6);
+            this.groupBoxSelectWorld.Location = new System.Drawing.Point(6, 6);
             this.groupBoxSelectWorld.Name = "groupBoxSelectWorld";
-            this.groupBoxSelectWorld.Size = new System.Drawing.Size(467, 96);
+            this.groupBoxSelectWorld.Size = new System.Drawing.Size(474, 96);
             this.groupBoxSelectWorld.TabIndex = 6;
             this.groupBoxSelectWorld.TabStop = false;
             this.groupBoxSelectWorld.Text = "Select World";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(6, 62);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBoxWorldFilePath
             // 
             this.comboBoxWorldFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxWorldFilePath.FormattingEnabled = true;
-            this.comboBoxWorldFilePath.Location = new System.Drawing.Point(6, 32);
+            this.comboBoxWorldFilePath.Location = new System.Drawing.Point(16, 32);
             this.comboBoxWorldFilePath.Name = "comboBoxWorldFilePath";
-            this.comboBoxWorldFilePath.Size = new System.Drawing.Size(455, 21);
+            this.comboBoxWorldFilePath.Size = new System.Drawing.Size(442, 21);
             this.comboBoxWorldFilePath.TabIndex = 3;
             this.comboBoxWorldFilePath.TextChanged += new System.EventHandler(this.comboBoxWorldFilePath_TextChanged);
             // 
             // buttonBrowseWorld
             // 
             this.buttonBrowseWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseWorld.Location = new System.Drawing.Point(343, 59);
+            this.buttonBrowseWorld.Location = new System.Drawing.Point(340, 59);
             this.buttonBrowseWorld.Name = "buttonBrowseWorld";
             this.buttonBrowseWorld.Size = new System.Drawing.Size(118, 28);
             this.buttonBrowseWorld.TabIndex = 2;
@@ -726,15 +593,46 @@
             this.buttonBrowseWorld.UseVisualStyleBackColor = true;
             this.buttonBrowseWorld.Click += new System.EventHandler(this.buttonBrowseWorld_Click);
             // 
+            // contextMenuStripListOperations
+            // 
+            this.contextMenuStripListOperations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.selectNoneToolStripMenuItem,
+            this.invertSelectionToolStripMenuItem});
+            this.contextMenuStripListOperations.Name = "contextMenuStripListOperations";
+            this.contextMenuStripListOperations.Size = new System.Drawing.Size(155, 70);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.selectAllToolStripMenuItem.Text = "Select all";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // selectNoneToolStripMenuItem
+            // 
+            this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
+            this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.selectNoneToolStripMenuItem.Text = "Select none";
+            this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
+            // 
+            // invertSelectionToolStripMenuItem
+            // 
+            this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
+            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.invertSelectionToolStripMenuItem.Text = "Invert selection";
+            this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+            // 
             // FormWorldView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 448);
+            this.ClientSize = new System.Drawing.Size(486, 448);
             this.Controls.Add(this.groupBoxSelectWorld);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControlSettings);
-            this.MinimumSize = new System.Drawing.Size(443, 473);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(502, 486);
             this.Name = "FormWorldView";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Terraria World Viewer";
@@ -747,17 +645,12 @@
             this.tabPageSettings.ResumeLayout(false);
             this.groupBoxSymbols.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.flowLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel3.PerformLayout();
             this.tabPageChestFinder.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.tabPageChestFinder.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.tabPageWorldInformation.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.worldInfoGroupBox.ResumeLayout(false);
@@ -769,6 +662,7 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBoxSelectWorld.ResumeLayout(false);
+            this.contextMenuStripListOperations.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -807,29 +701,21 @@
         private System.Windows.Forms.GroupBox groupBoxSymbols;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.CheckBox checkBoxDrawWalls;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.LinkLabel linkLabelSelectAllMarkers;
-        private System.Windows.Forms.LinkLabel linkLabelSelectNoneMarkers;
-        private System.Windows.Forms.LinkLabel linkLabelInvertMarkers;
         private System.Windows.Forms.CheckedListBox checkedListBoxMarkers;
         private System.Windows.Forms.TabPage tabPageChestFinder;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.LinkLabel linkLabelSelectAllAccessories;
-        private System.Windows.Forms.LinkLabel linkLabelSelectNoneAccessories;
-        private System.Windows.Forms.LinkLabel linkLabelInvertAccessories;
-        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterAccessories;
-        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterWeapons;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.LinkLabel linkLabelSelectAllWeapons;
-        private System.Windows.Forms.LinkLabel linkLabelSelectNoneWeapons;
-        private System.Windows.Forms.LinkLabel linkLabelInvertWeapons;
         private System.Windows.Forms.GroupBox groupBoxSelectWorld;
         private System.Windows.Forms.ComboBox comboBoxWorldFilePath;
         private System.Windows.Forms.Button buttonBrowseWorld;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox checkBoxFilterChests;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterAccessories;
+        private System.Windows.Forms.CheckedListBox checkedListBoxChestFilterWeapons;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripListOperations;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectNoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem invertSelectionToolStripMenuItem;
 
 
     }

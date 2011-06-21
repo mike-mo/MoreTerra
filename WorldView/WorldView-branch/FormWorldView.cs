@@ -8,36 +8,38 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
-using WorldView.Properties;
+using TerrariaWorldViewer.Properties;
 
-namespace WorldView
+namespace TerrariaWorldViewer
 {
     public partial class FormWorldView : Form
     {
         private delegate void PopulateWorldTreeDelegate();
-        private delegate void PopulateChestTreeDelegate();     
+        private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
 
         private WorldMapper mapper = null;
         private BackgroundWorker mapperWorker = null;
         private Timer tmrMapperProgress = new Timer();
-       
+
 
         private string worldPath = string.Empty;
 
 
 
         public FormWorldView()
-        {            
+        {
             InitializeComponent();
-         
-            labelSpecialThanks.Text = Constants.Credits;
+
+            labelSpecialThanks.Text = Constants.Credits + Environment.NewLine + Environment.NewLine +
+                                      "And special thanks to kdfb for donating a copy of the game!";
 
             tmrMapperProgress.Tick += new System.EventHandler(tmrMapperProgress_Tick);
             tmrMapperProgress.Enabled = false;
-            tmrMapperProgress.Interval = 333;             
+            tmrMapperProgress.Interval = 333;
 
             // Populate Symbol Properties
             Dictionary<string, bool> symbolStates = SettingsManager.Instance.SymbolStates;
+
             foreach (KeyValuePair<string, bool> kvp in symbolStates)
             {
                 this.checkedListBoxMarkers.Items.Add(kvp.Key, kvp.Value);
@@ -51,15 +53,14 @@ namespace WorldView
 
             foreach (KeyValuePair<string, bool> kvp in SettingsManager.Instance.FilterWeaponStates)
             {
-                this.checkedListBoxChestFilterWeapons.Items.Add(kvp.Key, kvp.Value);            
+                this.checkedListBoxChestFilterWeapons.Items.Add(kvp.Key, kvp.Value);
             }
-                        
+
 
             // Register the event handlers
             this.checkedListBoxMarkers.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxMarkers_ItemCheck);
             this.checkedListBoxChestFilterWeapons.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxChestFilterWeapons_ItemCheck);
             this.checkedListBoxChestFilterAccessories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxChestFilterAccessories_ItemCheck);
-            
         }
 
         private void WorldViewForm_Load(object sender, EventArgs e)
@@ -73,15 +74,28 @@ namespace WorldView
 
             lblVersion.Text = "Version: " + ver;
 
+            string folder = string.Empty;
+
             if (Directory.Exists(SettingsManager.Instance.InputWorldDirectory))
             {
-                foreach (string file in Directory.GetFiles(SettingsManager.Instance.InputWorldDirectory, "*.wld" ))
+                folder = SettingsManager.Instance.InputWorldDirectory;
+            }
+            else if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria")))
+            {
+                folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria");
+            }
+
+            if (folder != string.Empty)
+            {
+                foreach (string file in Directory.GetFiles(SettingsManager.Instance.InputWorldDirectory, "*.wld"))
                 {
                     comboBoxWorldFilePath.Items.Add(file);
                 }
 
                 if (comboBoxWorldFilePath.Items.Count > 0) comboBoxWorldFilePath.SelectedIndex = 0;
             }
+
+            checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
         }
 
         private void comboBoxWorldFilePath_TextChanged(object sender, EventArgs e)
@@ -138,7 +152,13 @@ namespace WorldView
                 (this.tabPageSettings as Control).Enabled = false;
                 (this.tabPageWorldInformation as Control).Enabled = false;
 
-                labelStatus.Text = "Drawing World...";
+                mapper = new WorldMapper();
+                mapper.Initialize();
+
+                labelStatus.Text = "Reading World...";
+                labelPercent.Visible = true;
+                labelPercent.Text = mapper.progress + "%";
+                progressBarDrawWorld.Value = mapper.progress;
                 progressBarDrawWorld.Visible = true;
 
                 if (textBoxOutputFile.Text.Substring(textBoxOutputFile.Text.Length - 4).CompareTo(".png") != 0)
@@ -151,34 +171,34 @@ namespace WorldView
                 mapperWorker.RunWorkerAsync(true);
 
                 tmrMapperProgress.Enabled = true;
-            }                    
+            }
         }
 
         private void worker_GenerateMap(object sender, DoWorkEventArgs e)
         {
             try
             {
-                mapper = new WorldMapper();
-                mapper.Initialize();
+                mapper.OpenWorld(worldPath);
 
-                string tempFile = Path.GetTempPath() + Path.GetFileName(worldPath);
+                //we're drawing a map
+                if ((bool)e.Argument == true) mapper.ReadWorldTiles();
 
-                File.Copy(worldPath, tempFile, true);
-
-                mapper.OpenWorld(tempFile);
                 PopulateWorldTree();
 
+                TreeNode[] chests = GetChests();
+
+                PopulateChestTree(chests);
+
+                mapper.CloseWorld();
+
+                //we're drawing a map
                 if ((bool)e.Argument == true)
                 {
-                    //the timer will populate the chests for us
                     mapper.CreatePreviewPNG(textBoxOutputFile.Text);
                     if (checkBoxOpenImage.Checked) System.Diagnostics.Process.Start(textBoxOutputFile.Text);
                 }
-                else
-                {
-                    PopulateChestTree();
-                }
-               
+
+                mapper.progress = 100;
             }
             catch (Exception ex)
             {
@@ -198,13 +218,21 @@ namespace WorldView
 
             labelPercent.Text = mapper.progress + "%";
 
-            if (mapper.progress >= 100)
+            if (mapper.progress > 30 && mapper.progress < 50)
+            {
+                labelStatus.Text = "Reading Chests...";
+            }
+            else if (mapper.progress > 50 && mapper.progress < 100)
+            {
+                labelStatus.Text = "Drawing World...";
+            }
+            else if (mapper.progress >= 100)
             {
                 tmrMapperProgress.Enabled = false;
 
-                PopulateChestTree();
                 labelStatus.Text = "Ready";
                 labelPercent.Text = string.Empty;
+                labelPercent.Visible = false;
                 progressBarDrawWorld.Value = 0;
                 progressBarDrawWorld.Visible = false;
 
@@ -213,7 +241,7 @@ namespace WorldView
                 groupBoxSelectWorld.Enabled = true;
                 groupBoxImageOutput.Enabled = true;
                 (this.tabPageSettings as Control).Enabled = true;
-                (this.tabPageWorldInformation as Control).Enabled = true;                
+                (this.tabPageWorldInformation as Control).Enabled = true;
             }
         }
 
@@ -225,20 +253,33 @@ namespace WorldView
                 worldPropertyGrid.Invoke(del);
                 return;
             }
-            
+
             worldPropertyGrid.SelectedObject = mapper.Header;
         }
 
-        private void PopulateChestTree()
+        private TreeNode[] GetChests()
+        {
+            List<Chest> chests = this.mapper.Chests;
+            List<TreeNode> nodes = new List<TreeNode>(chests.Count);
+
+            foreach (Chest c in chests)
+            {
+                TreeNode node = new TreeNode(string.Format("Chest at ({0},{0})", c.Coordinates.X, c.Coordinates.Y));
+                foreach (Item i in c.Items) node.Nodes.Add(i.ToString());
+                nodes.Add(node);
+            }
+
+            return nodes.ToArray();
+        }
+
+        private void PopulateChestTree(TreeNode[] node_array)
         {
             if (treeViewChestInformation.InvokeRequired)
             {
                 PopulateChestTreeDelegate del = new PopulateChestTreeDelegate(PopulateChestTree);
-                treeViewChestInformation.Invoke(del);
+                treeViewChestInformation.Invoke(del, new object[] { node_array });
                 return;
             }
-            
-            List<Chest> chests = this.mapper.Chests;
 
             treeViewChestInformation.SuspendLayout();
             treeViewChestInformation.Nodes.Clear();
@@ -248,84 +289,24 @@ namespace WorldView
             //to have its lower half cut off at the bottom of the control,
             //and it won't allow the user to scroll further down...
 
-            List<TreeNode> nodes = new List<TreeNode>(chests.Count);
-            
-            foreach (Chest c in chests)
-            {
-                TreeNode node = new TreeNode(string.Format("Chest at ({0},{0})", c.Coordinates.X, c.Coordinates.Y));
-                foreach (Item i in c.Items) node.Nodes.Add(i.ToString());
-                nodes.Add(node);
-            }
-
-            TreeNode[] node_array = nodes.ToArray();
             treeViewChestInformation.Nodes.AddRange(node_array);
 
-            treeViewChestInformation.ResumeLayout(true);          
-        }            
+            treeViewChestInformation.ResumeLayout(true);
+        }
 
         private void checkedListBoxMarkers_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            SettingsManager.Instance.ToggleSymbolVisibility(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxMarkers.Items[e.Index]), e.NewValue == CheckState.Checked);
+            SettingsManager.Instance.SymbolVisible(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxMarkers.Items[e.Index]), e.NewValue == CheckState.Checked);
         }
 
         private void checkedListBoxChestFilterWeapons_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-
+            SettingsManager.Instance.FilterWeapon(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxChestFilterWeapons.Items[e.Index]), e.NewValue == CheckState.Checked);
         }
 
         private void checkedListBoxChestFilterAccessories_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            SettingsManager.Instance.ToggleFilterAccessories(checkedListBoxChestFilterAccessories.GetItemText(checkedListBoxChestFilterAccessories.Items[e.Index]), e.NewValue == CheckState.Checked);
-        }
-
-        #region " LinkLabel Event Handlers "
-
-        private void linkLabelSelectAllWeapons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterWeapons.Items.Count; i++)
-            {
-                checkedListBoxChestFilterWeapons.SetItemChecked(i, true);
-            }
-        }
-
-        private void linkLabelSelectNoneWeapons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterWeapons.Items.Count; i++)
-            {
-                checkedListBoxChestFilterWeapons.SetItemChecked(i, false);
-            }
-        }
-
-        private void linkLabelInvertWeapons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterWeapons.Items.Count; i++)
-            {
-                checkedListBoxChestFilterWeapons.SetItemChecked(i, !checkedListBoxChestFilterWeapons.GetItemChecked(i));
-            }
-        }
-
-        private void linkLabelSelectAllAccessories_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterAccessories.Items.Count; i++)
-            {
-                checkedListBoxChestFilterAccessories.SetItemChecked(i, true);
-            }
-        }
-
-        private void linkLabelSelectNoneAccessories_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterAccessories.Items.Count; i++)
-            {
-                checkedListBoxChestFilterAccessories.SetItemChecked(i, false);
-            }
-        }
-
-        private void linkLabelInvertAccessories_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxChestFilterAccessories.Items.Count; i++)
-            {
-                checkedListBoxChestFilterAccessories.SetItemChecked(i, !checkedListBoxChestFilterAccessories.GetItemChecked(i));
-            }
+            SettingsManager.Instance.FilterAccessory(checkedListBoxChestFilterAccessories.GetItemText(checkedListBoxChestFilterAccessories.Items[e.Index]), e.NewValue == CheckState.Checked);
         }
 
         private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -333,32 +314,6 @@ namespace WorldView
             System.Diagnostics.Process.Start("http://terrariaworldviewer.codeplex.com/");
         }
 
-        private void linkLabelSelectAllMarkers_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxMarkers.Items.Count; i++)
-            {
-                checkedListBoxMarkers.SetItemChecked(i, true);
-            }
-        }
-
-        private void linkLabelSelectNoneMarkers_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxMarkers.Items.Count; i++)
-            {
-                checkedListBoxMarkers.SetItemChecked(i, false);
-            }
-        }
-
-        private void linkLabelInvertMarkers_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxMarkers.Items.Count; i++)
-            {
-                checkedListBoxMarkers.SetItemChecked(i, !checkedListBoxMarkers.GetItemChecked(i));
-            }
-        }
-
-        #endregion
-       
         private void buttonLoadInformation_Click(object sender, EventArgs e)
         {
             if (checkValidPaths(false))
@@ -370,15 +325,19 @@ namespace WorldView
                 (this.tabPageSettings as Control).Enabled = false;
                 (this.tabPageWorldInformation as Control).Enabled = false;
 
-                labelStatus.Text = "Reading World...";
+                labelStatus.Text = "Reading Chests...";
+                labelPercent.Visible = false;
+
+                mapper = new WorldMapper();
+                mapper.Initialize();
 
                 mapperWorker = new BackgroundWorker();
                 mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
                 mapperWorker.RunWorkerAsync(false);
 
                 tmrMapperProgress.Enabled = true;
-            }    
-        }        
+            }
+        }
 
         private bool checkValidPaths(bool checkOutput)
         {
@@ -400,13 +359,48 @@ namespace WorldView
 
         private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
         {
-            SettingsManager.Instance.IsWallDrawable = checkBoxDrawWalls.Checked;
+            SettingsManager.Instance.DrawWalls = checkBoxDrawWalls.Checked;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormPreview f = new FormPreview(worldPath);
-            f.Show();
+            if (contextMenuStripListOperations.SourceControl is CheckedListBox)
+            {
+                for (int i = 0; i < (contextMenuStripListOperations.SourceControl as CheckedListBox).Items.Count; i++)
+                {
+                    (contextMenuStripListOperations.SourceControl as CheckedListBox).SetItemChecked(i, true);
+                }
+            }
+        }
+
+        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (contextMenuStripListOperations.SourceControl is CheckedListBox)
+            {
+                for (int i = 0; i < (contextMenuStripListOperations.SourceControl as CheckedListBox).Items.Count; i++)
+                {
+                    (contextMenuStripListOperations.SourceControl as CheckedListBox).SetItemChecked(i, false);
+                }
+            }
+        }
+
+        private void invertSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (contextMenuStripListOperations.SourceControl is CheckedListBox)
+            {
+                for (int i = 0; i < (contextMenuStripListOperations.SourceControl as CheckedListBox).Items.Count; i++)
+                {
+                    (contextMenuStripListOperations.SourceControl as CheckedListBox).SetItemChecked(i, !(contextMenuStripListOperations.SourceControl as CheckedListBox).GetItemChecked(i));
+                }
+            }
+        }
+
+        private void checkBoxFilterChests_CheckedChanged(object sender, EventArgs e)
+        {
+            SettingsManager.Instance.FilterChests = checkBoxFilterChests.Checked;
+
+            checkedListBoxChestFilterWeapons.Enabled = checkBoxFilterChests.Checked;
+            checkedListBoxChestFilterAccessories.Enabled = checkBoxFilterChests.Checked;
         }
 
     }

@@ -4,21 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace WorldView
+namespace TerrariaWorldViewer
 {
     public class Constants
     {
         /// <summary>
         /// List of Credits
         /// </summary>
-        public const string Credits = @"TJChap2840
-Vib Rib
-Infinite Monkeys
-Dr VideoGames 0031
-Musluk
-Sanktanglia
-Metamorf
-All Other Goons";
+        public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf, and all other goons.";
+                                       
 
         public const int WallOffset = 258;
 
