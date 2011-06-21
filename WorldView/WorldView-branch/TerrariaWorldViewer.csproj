@@ -8,8 +8,8 @@
     <ProjectGuid>{DD925B6F-9AE0-4F42-8315-3BBB13EF41B4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorldView</RootNamespace>
-    <AssemblyName>WorldView</AssemblyName>
+    <RootNamespace>TerrariaWorldViewer</RootNamespace>
+    <AssemblyName>TerrariaWorldViewer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -54,7 +54,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WorldView.Program</StartupObject>
+    <StartupObject>TerrariaWorldViewer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
