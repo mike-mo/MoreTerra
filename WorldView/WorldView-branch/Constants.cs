@@ -130,6 +130,12 @@ namespace TerrariaWorldViewer
             public static Color UNDERGROUNDJUNGLE_THORNS = Color.FromArgb(94, 48, 55);
             public static Color GEMS = Color.FromArgb(42, 130, 250);
 
+            public static Color CACTUS = Color.DarkGreen;
+            public static Color CORAL = Color.LightPink;
+            public static Color HERB = Color.OliveDrab;
+            public static Color TOMBSTONE = Color.DimGray;
+
+
             public static Color UNDERGROUNDMUSHROOM_GRASS = Color.FromArgb(93, 127, 255);
             public static Color UNDERGROUNDMUSHROOM_PLANTS = Color.FromArgb(177, 174, 131);
             public static Color UNDERGROUNDMUSHROOM_TREES = Color.FromArgb(150, 143, 110);

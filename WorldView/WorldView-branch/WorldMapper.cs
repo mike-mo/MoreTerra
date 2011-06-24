@@ -128,9 +128,19 @@
             tileTypeDefs[77] = new TileProperties(TileType.UnderworldFurnance, true, Constants.Colors.IMPORTANT);
             tileTypeDefs[78] = new TileProperties(TileType.DecorativePot, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[79] = new TileProperties(TileType.Bed, true, Constants.Colors.DECORATIVE);
-            tileTypeDefs[80] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
 
-            for (int i = 80; i < 255; i++)
+            tileTypeDefs[80] = new TileProperties(TileType.Cactus, false, Constants.Colors.CACTUS);
+            tileTypeDefs[81] = new TileProperties(TileType.Coral, true, Constants.Colors.CORAL);
+            tileTypeDefs[82] = new TileProperties(TileType.HerbSprout, true, Constants.Colors.HERB);
+            tileTypeDefs[83] = new TileProperties(TileType.HerbStalk, true, Constants.Colors.HERB);
+            tileTypeDefs[84] = new TileProperties(TileType.Herb, true, Constants.Colors.HERB);
+            tileTypeDefs[85] = new TileProperties(TileType.Tombstone, true, Constants.Colors.TOMBSTONE);
+
+
+
+            tileTypeDefs[86] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
+
+            for (int i = 86; i < 255; i++)
             {
                 tileTypeDefs[i] = new TileProperties(TileType.Unknown, false, Color.Magenta);
             }
