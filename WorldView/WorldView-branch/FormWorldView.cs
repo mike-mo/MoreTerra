@@ -264,7 +264,7 @@ namespace TerrariaWorldViewer
 
             foreach (Chest c in chests)
             {
-                TreeNode node = new TreeNode(string.Format("Chest at ({0},{0})", c.Coordinates.X, c.Coordinates.Y));
+                TreeNode node = new TreeNode(string.Format("Chest at ({0},{1})", c.Coordinates.X, c.Coordinates.Y));
                 foreach (Item i in c.Items) node.Nodes.Add(i.ToString());
                 nodes.Add(node);
             }
