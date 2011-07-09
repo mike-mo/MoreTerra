@@ -1,4 +1,4 @@
-﻿namespace TerrariaWorldViewer
+﻿namespace MoreTerra
 {
     partial class FormWorldView
     {

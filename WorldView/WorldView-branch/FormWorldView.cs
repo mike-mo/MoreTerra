@@ -8,9 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
-using TerrariaWorldViewer.Properties;
+using MoreTerra.Properties;
 
-namespace TerrariaWorldViewer
+namespace MoreTerra
 {
     public partial class FormWorldView : Form
     {

@@ -16,7 +16,7 @@
 //}
 
 
-namespace TerrariaWorldViewer
+namespace MoreTerra
 {
     using System;
     using System.Collections.Generic;

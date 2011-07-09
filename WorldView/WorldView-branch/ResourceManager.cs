@@ -9,7 +9,7 @@ using System.Text;
 using System.Drawing;
 using System.Reflection;
 
-namespace TerrariaWorldViewer
+namespace MoreTerra
 {
 
 
