@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TerrariaWorldViewer.Properties {
+namespace MoreTerra.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

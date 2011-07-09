@@ -100,9 +100,9 @@
             // 
             // tabControlSettings
             // 
-            this.tabControlSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlSettings.Controls.Add(this.tabPageDrawWorld);
             this.tabControlSettings.Controls.Add(this.tabPageSettings);
             this.tabControlSettings.Controls.Add(this.tabPageChestFinder);
@@ -142,8 +142,8 @@
             // 
             // buttonDrawWorld
             // 
-            this.buttonDrawWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDrawWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDrawWorld.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDrawWorld.Location = new System.Drawing.Point(6, 241);
             this.buttonDrawWorld.Name = "buttonDrawWorld";
@@ -155,8 +155,8 @@
             // 
             // groupBoxImageOutput
             // 
-            this.groupBoxImageOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxImageOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxImageOutput.Controls.Add(this.textBoxOutputFile);
             this.groupBoxImageOutput.Controls.Add(this.buttonBrowseOutput);
             this.groupBoxImageOutput.Location = new System.Drawing.Point(6, 6);
@@ -168,8 +168,8 @@
             // 
             // textBoxOutputFile
             // 
-            this.textBoxOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputFile.Location = new System.Drawing.Point(6, 32);
             this.textBoxOutputFile.Name = "textBoxOutputFile";
             this.textBoxOutputFile.Size = new System.Drawing.Size(442, 20);
@@ -242,9 +242,9 @@
             // 
             // checkedListBoxMarkers
             // 
-            this.checkedListBoxMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBoxMarkers.CheckOnClick = true;
             this.checkedListBoxMarkers.ContextMenuStrip = this.contextMenuStripListOperations;
             this.checkedListBoxMarkers.FormattingEnabled = true;
@@ -333,9 +333,9 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -408,8 +408,8 @@
             // 
             // buttonLoadInformation
             // 
-            this.buttonLoadInformation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonLoadInformation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.buttonLoadInformation, 2);
             this.buttonLoadInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLoadInformation.Location = new System.Drawing.Point(3, 238);
@@ -422,9 +422,9 @@
             // 
             // worldInfoGroupBox
             // 
-            this.worldInfoGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.worldInfoGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.worldInfoGroupBox.Controls.Add(this.worldPropertyGrid);
             this.worldInfoGroupBox.Location = new System.Drawing.Point(3, 3);
             this.worldInfoGroupBox.Name = "worldInfoGroupBox";
@@ -444,9 +444,9 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.treeViewChestInformation);
             this.groupBox4.Location = new System.Drawing.Point(233, 3);
             this.groupBox4.Name = "groupBox4";
@@ -482,7 +482,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(363, 70);
+            this.label3.Location = new System.Drawing.Point(274, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 13);
             this.label3.TabIndex = 15;
@@ -491,7 +491,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(210, 103);
+            this.label2.Location = new System.Drawing.Point(165, 118);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 14;
@@ -500,7 +500,7 @@
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(210, 70);
+            this.lblVersion.Location = new System.Drawing.Point(165, 85);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(72, 13);
             this.lblVersion.TabIndex = 13;
@@ -509,19 +509,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(207, 15);
+            this.label1.Font = new System.Drawing.Font("Calibri", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(158, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 33);
+            this.label1.Size = new System.Drawing.Size(230, 59);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Terraria World Viewer";
+            this.label1.Text = "MoreTerra";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(198, 198);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
@@ -529,18 +529,18 @@
             // linkLabelHomepage
             // 
             this.linkLabelHomepage.AutoSize = true;
-            this.linkLabelHomepage.Location = new System.Drawing.Point(293, 103);
+            this.linkLabelHomepage.Location = new System.Drawing.Point(248, 118);
             this.linkLabelHomepage.Name = "linkLabelHomepage";
-            this.linkLabelHomepage.Size = new System.Drawing.Size(164, 13);
+            this.linkLabelHomepage.Size = new System.Drawing.Size(120, 13);
             this.linkLabelHomepage.TabIndex = 10;
             this.linkLabelHomepage.TabStop = true;
-            this.linkLabelHomepage.Text = "terrariaworldviewer.codeplex.com";
+            this.linkLabelHomepage.Text = "moreterra.codeplex.com";
             this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelSpecialThanks);
             this.groupBox1.Location = new System.Drawing.Point(3, 207);
             this.groupBox1.Name = "groupBox1";
@@ -592,8 +592,8 @@
             // 
             // groupBoxSelectWorld
             // 
-            this.groupBoxSelectWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxSelectWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxSelectWorld.Controls.Add(this.comboBoxWorldFilePath);
             this.groupBoxSelectWorld.Controls.Add(this.buttonBrowseWorld);
             this.groupBoxSelectWorld.Location = new System.Drawing.Point(6, 6);
@@ -605,8 +605,8 @@
             // 
             // comboBoxWorldFilePath
             // 
-            this.comboBoxWorldFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxWorldFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxWorldFilePath.FormattingEnabled = true;
             this.comboBoxWorldFilePath.Location = new System.Drawing.Point(16, 32);
             this.comboBoxWorldFilePath.Name = "comboBoxWorldFilePath";
@@ -637,7 +637,7 @@
             this.MinimumSize = new System.Drawing.Size(502, 486);
             this.Name = "FormWorldView";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "Terraria World Viewer";
+            this.Text = "MoreTerra (TerrariaWorldViewer)";
             this.Load += new System.EventHandler(this.WorldViewForm_Load);
             this.tabControlSettings.ResumeLayout(false);
             this.tabPageDrawWorld.ResumeLayout(false);
