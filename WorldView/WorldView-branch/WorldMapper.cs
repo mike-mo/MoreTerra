@@ -319,7 +319,7 @@
             // Draw Symbols
             foreach (KeyValuePair<TileType, List<Point>> kv in tileSymbolsToAdd)
             {
-                if (SettingsManager.Instance.DrawSymbol(kv.Key))
+                if (SettingsManager.Instance.DrawMarker(kv.Key))
                 {
                     Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
                     foreach (Point p in kv.Value)

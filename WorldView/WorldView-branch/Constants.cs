@@ -11,7 +11,7 @@ namespace MoreTerra
         /// <summary>
         /// List of Credits
         /// </summary>
-        public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf, and all other goons.";
+        public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf.";
                                        
 
         public const int WallOffset = 258;
@@ -42,53 +42,53 @@ namespace MoreTerra
 
         public static string[] ExternalSymbolNames = { "Altar", "Chest", "Heart", "ShadowOrb", "Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz", "Spawn" };
 
-        public static string[] ChestFilterWeapons = {
-                                                        "Muramasa",
-                                                        "Aqua Scepter",
-                                                        "Blue Moon",
-                                                        "Handgun",
-                                                        "Enchanted Boomerang",
-                                                        "Staff of Regrowth",
-                                                        "Starfury",
-                                                        "Grappling Hook",
-                                                        "Ivy Whip",
-                                                        "Flamelash",
-                                                        "Harpoon",
-                                                        "Flintlock Pistol",
-                                                        "Ball 'O Hurt",
-                                                        "Vilethorn",
-                                                        "Minishark",
-                                                        "Sunfury",
-                                                        "Flower of Fire",
-                                                        "Star Cannon",
-                                                        "Water Bolt",
-                                                        "Spiky Ball",
-                                                        "Meteor Shot",
-                                                        "Grenade",
-                                                        "Magic Missile",
-                                                  };
+        //public static string[] ChestFilterWeapons = {
+        //                                                "Muramasa",
+        //                                                "Aqua Scepter",
+        //                                                "Blue Moon",
+        //                                                "Handgun",
+        //                                                "Enchanted Boomerang",
+        //                                                "Staff of Regrowth",
+        //                                                "Starfury",
+        //                                                "Grappling Hook",
+        //                                                "Ivy Whip",
+        //                                                "Flamelash",
+        //                                                "Harpoon",
+        //                                                "Flintlock Pistol",
+        //                                                "Ball 'O Hurt",
+        //                                                "Vilethorn",
+        //                                                "Minishark",
+        //                                                "Sunfury",
+        //                                                "Flower of Fire",
+        //                                                "Star Cannon",
+        //                                                "Water Bolt",
+        //                                                "Spiky Ball",
+        //                                                "Meteor Shot",
+        //                                                "Grenade",
+        //                                                "Magic Missile",
+        //                                          };
 
-        public static string[] ChestFilterAccessories = {
-                                                        "Cobalt Shield",
-                                                        "Band of Regeneration",
-                                                        "Angel Statue",
-                                                        "Hermes Boots",
-                                                        "Magic Mirror",
-                                                        "Cloud in a Bottle",
-                                                        "Feral Claws",
-                                                        "Anklet of the Wind",
-                                                        "Breathing Reed",
-                                                        "Flipper",
-                                                        "Shiny Red Balloon",
-                                                        "Lucky Horseshoe",
-                                                        "Dirt Rod",
-                                                        "Band of Starpower",
-                                                        "Nature's Gift",
-                                                        "Obsidian Skull",
-                                                        "Rocket Boots",
-                                                        "Whoopie Cushion",
-                                                        "Orb of Light",
-                                                        };
+        //public static string[] ChestFilterAccessories = {
+        //                                                "Cobalt Shield",
+        //                                                "Band of Regeneration",
+        //                                                "Angel Statue",
+        //                                                "Hermes Boots",
+        //                                                "Magic Mirror",
+        //                                                "Cloud in a Bottle",
+        //                                                "Feral Claws",
+        //                                                "Anklet of the Wind",
+        //                                                "Breathing Reed",
+        //                                                "Flipper",
+        //                                                "Shiny Red Balloon",
+        //                                                "Lucky Horseshoe",
+        //                                                "Dirt Rod",
+        //                                                "Band of Starpower",
+        //                                                "Nature's Gift",
+        //                                                "Obsidian Skull",
+        //                                                "Rocket Boots",
+        //                                                "Whoopie Cushion",
+        //                                                "Orb of Light",
+        //                                                };
 
         // COLOR CONSTANTS
 

@@ -18,8 +18,7 @@ namespace MoreTerra
             public bool IsChestFilterEnabled;
             public bool IsWallsDrawable;
             public SerializableDictionary<string, bool> SymbolStates;
-            public SerializableDictionary<string, bool> ChestFilterWeaponStates;
-            public SerializableDictionary<string, bool> ChestFilterAccessoryStates;
+            public SerializableDictionary<string, bool> ChestFilterItems;
         }
 
         private static SettingsManager instance = null;
@@ -35,22 +34,43 @@ namespace MoreTerra
                 this.settings.SymbolStates.Add(s, true);
             }
 
-            this.settings.ChestFilterWeaponStates = new SerializableDictionary<string, bool>();
-            foreach (string s in Constants.ChestFilterWeapons)
-            {
-                this.settings.ChestFilterWeaponStates.Add(s, true);
-            }
 
-            this.settings.ChestFilterAccessoryStates = new SerializableDictionary<string, bool>();
-            foreach (string s in Constants.ChestFilterAccessories)
-            {
-                this.settings.ChestFilterAccessoryStates.Add(s, true);
-            }
+            InitializeItemFilter();
+
+
             this.settings.IsWallsDrawable = true;
             this.settings.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
             if (!Directory.Exists(this.settings.InputWorldDirectory))
             {
                 this.settings.InputWorldDirectory = string.Empty;
+            }
+        }
+
+        private void InitializeItemFilter()
+        {
+            this.settings.ChestFilterItems = new SerializableDictionary<string, bool>();
+            try
+            {
+                using (StreamReader list = new StreamReader("ItemList.txt"))
+                {
+                    while (!list.EndOfStream)
+                    {
+                        string s = list.ReadLine();
+
+                        if (!this.settings.ChestFilterItems.ContainsKey(s))
+                        {
+                            this.settings.ChestFilterItems.Add(s, false);
+                        }
+                    }
+
+                    list.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Error reading the item list from ItemList.txt.\n\n" +
+                                                        ex.ToString(), "Item List", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
 
@@ -81,6 +101,8 @@ namespace MoreTerra
             XmlNodeReader reader = new XmlNodeReader(xmlDoc.DocumentElement);
             XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
             this.settings = (UserSettings)inputSerializer.Deserialize(reader);
+
+            InitializeItemFilter();
         }
 
         public string InputWorldDirectory
@@ -139,50 +161,62 @@ namespace MoreTerra
             }
         }
 
-        public bool DrawSymbol(TileType type)
+        public bool DrawMarker(TileType type)
         {
             // convert to string index
             return this.settings.SymbolStates[Enum.GetName(typeof(TileType), type)];
         }
 
-        public void SymbolVisible(string key, bool status)
+        public bool DrawMarker(string marker)
+        {
+            if (this.settings.SymbolStates.ContainsKey(marker)) return this.settings.SymbolStates[marker];
+            else return false;
+        }
+
+        public void MarkerVisible(string key, bool status)
         {
             this.settings.SymbolStates[key] = status;
         }
 
-        public void FilterWeapon(string weaponName, bool status)
-        {
-            this.settings.ChestFilterWeaponStates[weaponName] = status;
-        }
+        //public void FilterWeapon(string weaponName, bool status)
+        //{
+        //    this.settings.ChestFilterWeaponStates[weaponName] = status;
+        //}
 
-        public void FilterAccessory(string accessoryName, bool status)
+        //public void FilterAccessory(string accessoryName, bool status)
+        //{
+        //    this.settings.ChestFilterAccessoryStates[accessoryName] = status;
+        //}
+
+        public void FilterItem(string itemName, bool status)
         {
-            this.settings.ChestFilterAccessoryStates[accessoryName] = status;
+            this.settings.ChestFilterItems[itemName] = status;
         }
 
         public Dictionary<string, bool> FilterItemStates
         {
             get
             {
-                return this.settings.ChestFilterWeaponStates.Concat(this.settings.ChestFilterAccessoryStates).ToDictionary(pair => pair.Key, pair => pair.Value);
+                //return this.settings.ChestFilterWeaponStates.Concat(this.settings.ChestFilterAccessoryStates).ToDictionary(pair => pair.Key, pair => pair.Value);
+                return this.settings.ChestFilterItems;                
             }
         }
 
-        public Dictionary<string, bool> FilterWeaponStates
-        {
-            get
-            {
-                return this.settings.ChestFilterWeaponStates;
-            }
-        }
+        //public Dictionary<string, bool> FilterWeaponStates
+        //{
+        //    get
+        //    {
+        //        return this.settings.ChestFilterWeaponStates;
+        //    }
+        //}
 
-        public Dictionary<string, bool> FilterAccessoryStates
-        {
-            get
-            {
-                return this.settings.ChestFilterAccessoryStates;
-            }
-        }
+        //public Dictionary<string, bool> FilterAccessoryStates
+        //{
+        //    get
+        //    {
+        //        return this.settings.ChestFilterAccessoryStates;
+        //    }
+        //}
 
         public void Shutdown()
         {           

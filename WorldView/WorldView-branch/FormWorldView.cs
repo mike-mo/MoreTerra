@@ -45,22 +45,21 @@ namespace MoreTerra
                 this.checkedListBoxMarkers.Items.Add(kvp.Key, kvp.Value);
             }
 
-            foreach (KeyValuePair<string, bool> kvp in SettingsManager.Instance.FilterAccessoryStates)
+
+            if (SettingsManager.Instance.FilterItemStates != null)
             {
-                this.checkedListBoxChestFilterAccessories.Items.Add(kvp.Key, kvp.Value);
+                foreach (KeyValuePair<string, bool> kvp in SettingsManager.Instance.FilterItemStates)
+                {
+                    lstAvailableItems.Items.Add(kvp.Key);
+                    if (kvp.Value) lstChestFilter.Items.Add(kvp.Key);                    
+                }
             }
 
 
-            foreach (KeyValuePair<string, bool> kvp in SettingsManager.Instance.FilterWeaponStates)
-            {
-                this.checkedListBoxChestFilterWeapons.Items.Add(kvp.Key, kvp.Value);
-            }
 
 
             // Register the event handlers
             this.checkedListBoxMarkers.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxMarkers_ItemCheck);
-            this.checkedListBoxChestFilterWeapons.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxChestFilterWeapons_ItemCheck);
-            this.checkedListBoxChestFilterAccessories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxChestFilterAccessories_ItemCheck);
         }
 
         private void WorldViewForm_Load(object sender, EventArgs e)
@@ -143,6 +142,42 @@ namespace MoreTerra
 
         private void buttonDrawWorld_Click(object sender, EventArgs e)
         {
+            if (SettingsManager.Instance.FilterChests && !SettingsManager.Instance.DrawMarker("Chest"))
+            {
+                DialogResult markers = MessageBox.Show("You have enabled Chest Filtering but have disabled drawing Chest Markers. " +
+                                                       "No Chests will show up, even if they contain the items you are looking for.\r\n\r\n" +
+                                                       "Would you like to enable Markers for Chests before continuing?", "Chest Markers disabled", 
+                                                       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (markers == System.Windows.Forms.DialogResult.Yes)
+                {
+                    SettingsManager.Instance.MarkerVisible("Chest", true);
+                    checkedListBoxMarkers.SetItemChecked(checkedListBoxMarkers.Items.IndexOf("Chest"), true);
+                }
+                else if (markers == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
+            if (SettingsManager.Instance.FilterChests && lstChestFilter.Items.Count == 0)
+            {
+                DialogResult markers = MessageBox.Show("You have enabled Chest Filtering but have not selected any items. " +
+                                                       "No Chests will show up, even if they are empty.\r\n\r\n" +
+                                                       "Would you like to disable Chest Filtering before continuing?", "Chest Finder list is empty",
+                                                       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (markers == System.Windows.Forms.DialogResult.Yes)
+                {
+                    SettingsManager.Instance.FilterChests = false;
+                    checkBoxFilterChests.Checked = false;
+                }
+                else if (markers == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             if (checkValidPaths(true))
             {
                 buttonDrawWorld.Enabled = false;
@@ -202,7 +237,8 @@ namespace MoreTerra
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Error Opening World", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + "Details: " + ex.ToString(),
+                                 "Error Opening World", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             finally
@@ -296,17 +332,7 @@ namespace MoreTerra
 
         private void checkedListBoxMarkers_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            SettingsManager.Instance.SymbolVisible(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxMarkers.Items[e.Index]), e.NewValue == CheckState.Checked);
-        }
-
-        private void checkedListBoxChestFilterWeapons_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            SettingsManager.Instance.FilterWeapon(checkedListBoxChestFilterWeapons.GetItemText(checkedListBoxChestFilterWeapons.Items[e.Index]), e.NewValue == CheckState.Checked);
-        }
-
-        private void checkedListBoxChestFilterAccessories_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            SettingsManager.Instance.FilterAccessory(checkedListBoxChestFilterAccessories.GetItemText(checkedListBoxChestFilterAccessories.Items[e.Index]), e.NewValue == CheckState.Checked);
+            SettingsManager.Instance.MarkerVisible(checkedListBoxMarkers.GetItemText(checkedListBoxMarkers.Items[e.Index]), e.NewValue == CheckState.Checked);
         }
 
         private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -398,10 +424,36 @@ namespace MoreTerra
         private void checkBoxFilterChests_CheckedChanged(object sender, EventArgs e)
         {
             SettingsManager.Instance.FilterChests = checkBoxFilterChests.Checked;
-
-            checkedListBoxChestFilterWeapons.Enabled = checkBoxFilterChests.Checked;
-            checkedListBoxChestFilterAccessories.Enabled = checkBoxFilterChests.Checked;
+            
+            lstAvailableItems.Enabled = checkBoxFilterChests.Checked;
+            lstChestFilter.Enabled = checkBoxFilterChests.Checked;
         }
 
+        private void lstChestFilter_DoubleClick(object sender, EventArgs e)
+        {
+            lstChestFilter_KeyDown(sender, new KeyEventArgs(Keys.Delete));
+        }
+
+        private void lstAvailableItems_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstAvailableItems.SelectedIndex == -1) return;
+
+            if (!lstChestFilter.Items.Contains(lstAvailableItems.SelectedItem.ToString())) lstChestFilter.Items.Add(lstAvailableItems.SelectedItem.ToString());
+            SettingsManager.Instance.FilterItem(lstAvailableItems.SelectedItem.ToString(), true);
+        }
+
+        private void lstChestFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            int selected =  lstChestFilter.SelectedIndex;
+
+            if (selected == -1) return;
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                SettingsManager.Instance.FilterItem(lstChestFilter.SelectedItem.ToString(), false);
+                lstChestFilter.Items.Remove(lstChestFilter.SelectedItem);
+                lstChestFilter.SelectedIndex = Math.Min(selected, lstChestFilter.Items.Count-1);
+            }
+        }
     }
 }

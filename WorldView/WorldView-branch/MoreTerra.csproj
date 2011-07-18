@@ -139,6 +139,7 @@
       <DependentUpon>FormWorldView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="MoreTerraNoGui.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -148,9 +149,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="WorldViewNoGui.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -187,6 +185,9 @@
     <EmbeddedResource Include="Resources\altar.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ItemList.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\cannon.ico" />
     <Content Include="Changelog.txt" />
   </ItemGroup>
