@@ -1,0 +1,25 @@
+﻿Made compatible with 1.0.5 by adding the new tiles
+Save list of items for chest filter in a separate file
+
+
+TODO:
+Remember to increment version number in project properties!
+Add search to the "available items" chest item list, in winamp's jump to file style (search as you type, pressing enter adds the item)
+Add gold chest filter (possible?)
+Use game resources (tiles) as world markers (altar, chest, orb... requires XNA?)
+Add meteor ore marker + tile color
+Better colors (gold/copper, silver/cobwebs), generate a color legend somewhere
+Refactor Settings Manager
+
+
+
+Considering / suggestions from reddit:
+Add torch marker
+Auto-generating an image after each auto save (monitor .bak file?)
+Is it possible to add this in the world info?
+    Chests count
+    Hearts count
+    Iron/Copper/Silver/Gold/Gems Ores count
+
+
+Also, is it possible to search/sort chests in the  World Information tab?

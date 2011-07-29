@@ -185,11 +185,12 @@
     <EmbeddedResource Include="Resources\altar.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Text Files\Changelog.txt" />
     <Content Include="ItemList.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Text Files\Regexes to extract chest item list from wiki site.txt" />
     <Content Include="Resources\cannon.ico" />
-    <Content Include="Changelog.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
