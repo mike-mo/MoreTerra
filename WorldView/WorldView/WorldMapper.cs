@@ -1,4 +1,4 @@
-﻿namespace WorldView
+﻿namespace MoreTerra
 {
     using System;
     using System.Collections.Generic;
@@ -14,10 +14,15 @@
         public static Dictionary<int, TileProperties> tileTypeDefs;
 
         private List<Chest> chests;
-        private Dictionary<TileType, List<Point>> tilesToSymbolize;
+        private Dictionary<TileType, List<Point>> tileSymbolsToAdd;
+        private TileType[,] tiles;
 
         private WorldHeader worldHeader;
         private WorldReader reader;
+
+        int maxX, maxY;
+
+        public int progress = 0;
 
         public WorldMapper()
         {
@@ -33,9 +38,6 @@
             }
         }
 
-        /// <summary>
-        /// Intiialize and load tile types
-        /// </summary>
         public void Initialize()
         {
             // :OHGOD:
@@ -49,7 +51,7 @@
             tileTypeDefs[7] = new TileProperties(TileType.Copper, false, Constants.Colors.COPPER);
             tileTypeDefs[8] = new TileProperties(TileType.Gold, false, Constants.Colors.GOLD);
             tileTypeDefs[9] = new TileProperties(TileType.Silver, false, Constants.Colors.SILVER);
-            
+
             tileTypeDefs[10] = new TileProperties(TileType.Door1, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[11] = new TileProperties(TileType.Door2, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[12] = new TileProperties(TileType.Heart, true, Constants.Colors.IMPORTANT, true);
@@ -126,9 +128,19 @@
             tileTypeDefs[77] = new TileProperties(TileType.UnderworldFurnance, true, Constants.Colors.IMPORTANT);
             tileTypeDefs[78] = new TileProperties(TileType.DecorativePot, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[79] = new TileProperties(TileType.Bed, true, Constants.Colors.DECORATIVE);
-            tileTypeDefs[80] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
 
-            for(int i = 80; i < 255; i++)
+            tileTypeDefs[80] = new TileProperties(TileType.Cactus, false, Constants.Colors.CACTUS);
+            tileTypeDefs[81] = new TileProperties(TileType.Coral, true, Constants.Colors.CORAL);
+            tileTypeDefs[82] = new TileProperties(TileType.HerbSprout, true, Constants.Colors.HERB);
+            tileTypeDefs[83] = new TileProperties(TileType.HerbStalk, true, Constants.Colors.HERB);
+            tileTypeDefs[84] = new TileProperties(TileType.Herb, true, Constants.Colors.HERB);
+            tileTypeDefs[85] = new TileProperties(TileType.Tombstone, true, Constants.Colors.TOMBSTONE);
+
+
+
+            tileTypeDefs[86] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
+
+            for (int i = 86; i < 255; i++)
             {
                 tileTypeDefs[i] = new TileProperties(TileType.Unknown, false, Color.Magenta);
             }
@@ -158,138 +170,173 @@
         {
             reader = new WorldReader(worldPath);
             this.worldHeader = reader.ReadHeader();
-
         }
 
-        public void CreatePreviewPNG(string outputPngPath, bool canDrawWalls, bool canDrawSymbols, ProgressBar progressBar)
+        public void ReadWorldTiles()
         {
+            progress = 0;
+
+            maxX = (int)Header.MaxTiles.Y;
+            maxY = (int)Header.MaxTiles.X;
+
             // Reset Symbol List
-            this.tilesToSymbolize = new Dictionary<TileType, List<Point>>();
+            tileSymbolsToAdd = new Dictionary<TileType, List<Point>>();
+            tiles = new TileType[maxX, maxY];
+
+            reader.SeekToTiles();
+
+            //Read all the tile data
+            for (int col = 0; col < maxX; col++)
+            {
+                progress = (int)(((float)col / (float)maxX) * 30f);
+
+                for (int row = 0; row < maxY; row++)
+                {
+                    tiles[col, row] = reader.GetNextTile();
+                }
+            }
+
+            // Add an empty list of Chests to populate
+            tileSymbolsToAdd.Add(TileType.Chest, new List<Point>());
+
+            Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemStates;
+            // Read the Chests
+            for (int i = 0; i < Constants.ChestMaxNumber; i++)
+            {
+                progress = (int)(((float)i / (float)Constants.ChestMaxNumber) * 20f + 30f);
+                Chest chest = this.reader.GetNextChest(i);
+
+                if (chest == null) continue;
+
+                this.chests.Add(chest);
+
+                // Find out if the chest is relevant to our interests
+                foreach (Item item in chest.Items)
+                {
+                    // If we're not filtering or if we want it
+                    if (!SettingsManager.Instance.FilterChests || (itemFilters.ContainsKey(item.Name) && itemFilters[item.Name] == true))
+                    {
+                        // Draw the symbol
+                        tileSymbolsToAdd[TileType.Chest].Add(chest.Coordinates);
+                        break;
+                    }
+                }
+            }
+
+            progress = 50;
+        }
+
+        public void ReadChests()
+        {
+            progress = 0;
+
             this.chests = new List<Chest>();
 
-            int maxX = (int)Header.MaxTiles.Y;
-            int maxY = (int)Header.MaxTiles.X;
+            reader.SeekToChests();
 
-            Bitmap bitmap = new Bitmap(maxX, maxY);
+            // Read the Chests
+            for (int i = 0; i < Constants.ChestMaxNumber; i++)
+            {
+                Chest chest = this.reader.GetNextChest(i);
+
+                if (chest == null) continue;
+                else this.chests.Add(chest);
+            }
+
+            progress = 100;
+        }
+
+        public void CreatePreviewPNG(string outputPngPath)
+        {
+
+            Bitmap bitmap = new Bitmap(maxX, maxY, PixelFormat.Format24bppRgb);
+            Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             Graphics graphicsHandle = Graphics.FromImage((Image)bitmap);
+
             graphicsHandle.FillRectangle(new SolidBrush(Constants.Colors.SKY), 0, 0, bitmap.Width, bitmap.Height);
+
+            System.Drawing.Imaging.BitmapData bmpData = bitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+            IntPtr ptr = bmpData.Scan0;
+            int bytes = Math.Abs(bmpData.Stride) * bitmap.Height;
+            byte[] rgbValues = new byte[bytes];
+            const int byteOffset = 3;
 
             Dictionary<byte, Color> randomColors = new Dictionary<byte, Color>();
             Random random = new Random();
+
             TileProperties properties;
             TileType tileType;
 
-            for (int col = 0; col < maxX; col++)
+
+
+            //Generate the bitmap
+            int index = -1 * byteOffset;    //first increment will be 0;
+
+            for (int row = 0; row < maxY; row++)
             {
-                progressBar.Value = (int)(((float)col / (float)maxX) * 100.0f);
-                for (int row = 0; row < maxY; row++)
+                progress = (int)(((float)row / (float)maxY) * 50.0f + 50f);
+
+                for (int col = 0; col < maxX; col++)
                 {
-                    tileType = reader.GetNextTile();
-                    if (tileType == TileType.Sky && row > (int)this.Header.SurfaceLevel)
-                    {
-                        tileType = TileType.WallBackground;
-                    }
+                    index += byteOffset;    //increase here to avoid adding increments to each continue
+                    tileType = tiles[col, row];
+
+                    if (tileType == TileType.Sky && row > (int)this.Header.SurfaceLevel) tileType = TileType.WallBackground;
 
                     // Skip Walls
-                    if (!canDrawWalls && tileType >= TileType.WallStone)
-                    {
-                        continue;
-                    }
+                    if (!SettingsManager.Instance.DrawWalls && tileType >= TileType.WallStone) continue;
 
-                    // Skip chests because we read the coordinates later
-                    if (tileType == TileType.Chest)
-                    {
-                        continue;
-                    }
+                    // Skip chests because we read the coordinates in ReadWorld()
+                    if (tileType == TileType.Chest) continue;
 
                     properties = tileTypeDefs[(int)tileType];
 
                     if (properties.HasSymbol)
                     {
-                        if (!tilesToSymbolize.ContainsKey(tileType))
-                        {
-                            tilesToSymbolize.Add(tileType, new List<Point>());
-                        }
-                        tilesToSymbolize[tileType].Add(new Point(col, row));
-                        continue;
+                        if (!tileSymbolsToAdd.ContainsKey(tileType)) tileSymbolsToAdd.Add(tileType, new List<Point>());
+
+                        tileSymbolsToAdd[tileType].Add(new Point(col, row));
                     }
-
-                    // Else Set Pixel Value
-                    bitmap.SetPixel(col, row, tileTypeDefs[(int)tileType].Colour);
-                }
-            }
-
-            // Add Chests
-            tilesToSymbolize.Add(TileType.Chest, new List<Point>());
-
-            //StringBuilder sb = new StringBuilder();
-            //Dictionary<string, string> ba = new Dictionary<string, string>();
-
-            Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemsStates;
-            // Read the Chests
-            for (int i = 0; i < Constants.ChestMaxNumber; i++)
-            {
-                Chest chest = this.reader.GetNextChest(i);
-                if (chest == null)
-                {
-                    continue;
-                }
-                this.chests.Add(chest);
-                if (SettingsManager.Instance.IsChestFilterEnabled)
-                {
-                    foreach (Item item in chest.Items)
+                    else //Set Pixel Value
                     {
-                        if (itemFilters.ContainsKey(item.Name))
-                        {
-                            // If we want it
-                            if (itemFilters[item.Name])
-                            {
-                                // Symbolize it
-                                tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
-                                break;
-                            }
-                        }
+                        Color color = tileTypeDefs[(int)tileType].Colour;
+                        rgbValues[index + 2] = color.R;
+                        rgbValues[index + 1] = color.G;
+                        rgbValues[index] = color.B;
                     }
-                }
-                else
-                {
-                    tilesToSymbolize[TileType.Chest].Add(chest.Coordinates);
                 }
             }
 
-            //foreach (KeyValuePair<string, string> kvp in ba)
-            //{
-            //    sb.AppendLine(kvp.Value);
-            //}
+            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+            bitmap.UnlockBits(bmpData);
 
-            //System.IO.File.WriteAllText(@"D:\Items.txt", sb.ToString());
 
             // Add Spawn
-            tilesToSymbolize.Add(TileType.Spawn, new List<Point>());
-            tilesToSymbolize[TileType.Spawn].Add(new Point(this.Header.SpawnPoint.X, this.Header.SpawnPoint.Y));
+            tileSymbolsToAdd.Add(TileType.Spawn, new List<Point>());
+            tileSymbolsToAdd[TileType.Spawn].Add(new Point(this.Header.SpawnPoint.X, this.Header.SpawnPoint.Y));
 
             // Draw Symbols
-            foreach (KeyValuePair<TileType, List<Point>> kv in tilesToSymbolize)
+            foreach (KeyValuePair<TileType, List<Point>> kv in tileSymbolsToAdd)
             {
-                bool isSymbolViewable = SettingsManager.Instance.IsSymbolViewable(kv.Key);
-                if (isSymbolViewable)
+                if (SettingsManager.Instance.DrawMarker(kv.Key))
                 {
                     Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
                     foreach (Point p in kv.Value)
                     {
                         int x = Math.Max((int)p.X - (symbolBitmap.Width / 2), 0);
                         int y = Math.Max((int)p.Y - (symbolBitmap.Height / 2), 0);
-                        if (x > maxX || y > maxY)
-                        {
-                            continue;
-                        }
+
+                        if (x > maxX || y > maxY) continue;
+
                         graphicsHandle.DrawImage(symbolBitmap, x, y);
                     }
                 }
 
             }
+
             bitmap.Save(outputPngPath, ImageFormat.Png);
-            progressBar.Value = 100;
+            progress = 100;
         }
 
         public void CloseWorld()
@@ -301,10 +348,11 @@
         {
             get
             {
+                if (this.chests.Count == 0) ReadChests();
                 return this.chests;
             }
         }
-        
+
 
     }
 }

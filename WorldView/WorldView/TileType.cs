@@ -1,4 +1,4 @@
-﻿namespace WorldView
+﻿namespace MoreTerra
 {
     using System;
     using System.Collections.Generic;
@@ -87,7 +87,26 @@
         UnderworldFurnance,
         DecorativePot,
         Bed,
+
+        /*
+         *  81-85 are "important tiles", and have U/V data, 80 doesn't.
+            80 is cactus
+            81 is coral
+            82 to 84 are the various plants in their various stages of growth. I'm calling 82 "herb sprouts", 83 "herb stalks", and 84 "herbs".. you can use the U coordinate to determine if it's moonglow, or blinkweed, or whatever.
+            85 is the tombstone.*/
+
+        //1.0.5
+        Cactus = 80,
+        Coral = 81,
+        HerbSprout = 82,
+        HerbStalk = 83,
+        Herb = 84,
+        Tombstone = 85,
+
         Unknown,
+
+
+
 
         // Additonal Placed Out of range of byte
         Spawn = 255,

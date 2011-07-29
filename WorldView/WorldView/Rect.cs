@@ -1,4 +1,4 @@
-﻿namespace WorldView
+﻿namespace MoreTerra
 {
     using System;
     using System.Collections.Generic;

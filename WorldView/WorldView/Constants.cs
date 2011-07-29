@@ -4,21 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace WorldView
+namespace MoreTerra
 {
     public class Constants
     {
         /// <summary>
         /// List of Credits
         /// </summary>
-        public const string Credits = @"TJChap2840
-Vib Rib
-Infinite Monkeys
-Dr VideoGames 0031
-Musluk
-Sanktanglia
-Metamorf
-All Other Goons";
+        public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf.";
+                                       
 
         public const int WallOffset = 258;
 
@@ -48,53 +42,53 @@ All Other Goons";
 
         public static string[] ExternalSymbolNames = { "Altar", "Chest", "Heart", "ShadowOrb", "Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz", "Spawn" };
 
-        public static string[] ChestFilterWeapons = {
-                                                        "Muramasa",
-                                                        "Aqua Scepter",
-                                                        "Blue Moon",
-                                                        "Handgun",
-                                                        "Enchanted Boomerang",
-                                                        "Staff of Regrowth",
-                                                        "Starfury",
-                                                        "Grappling Hook",
-                                                        "Ivy Whip",
-                                                        "Flamelash",
-                                                        "Harpoon",
-                                                        "Flintlock Pistol",
-                                                        "Ball 'O Hurt",
-                                                        "Vilethorn",
-                                                        "Minishark",
-                                                        "Sunfury",
-                                                        "Flower of Fire",
-                                                        "Star Cannon",
-                                                        "Water Bolt",
-                                                        "Spiky Ball",
-                                                        "Meteor Shot",
-                                                        "Grenade",
-                                                        "Magic Missile",
-                                                  };
+        //public static string[] ChestFilterWeapons = {
+        //                                                "Muramasa",
+        //                                                "Aqua Scepter",
+        //                                                "Blue Moon",
+        //                                                "Handgun",
+        //                                                "Enchanted Boomerang",
+        //                                                "Staff of Regrowth",
+        //                                                "Starfury",
+        //                                                "Grappling Hook",
+        //                                                "Ivy Whip",
+        //                                                "Flamelash",
+        //                                                "Harpoon",
+        //                                                "Flintlock Pistol",
+        //                                                "Ball 'O Hurt",
+        //                                                "Vilethorn",
+        //                                                "Minishark",
+        //                                                "Sunfury",
+        //                                                "Flower of Fire",
+        //                                                "Star Cannon",
+        //                                                "Water Bolt",
+        //                                                "Spiky Ball",
+        //                                                "Meteor Shot",
+        //                                                "Grenade",
+        //                                                "Magic Missile",
+        //                                          };
 
-        public static string[] ChestFilterAccessories = {
-                                                        "Cobalt Shield",
-                                                        "Band of Regeneration",
-                                                        "Angel Statue",
-                                                        "Hermes Boots",
-                                                        "Magic Mirror",
-                                                        "Cloud in a Bottle",
-                                                        "Feral Claws",
-                                                        "Anklet of the Wind",
-                                                        "Breathing Reed",
-                                                        "Flipper",
-                                                        "Shiny Red Balloon",
-                                                        "Lucky Horseshoe",
-                                                        "Dirt Rod",
-                                                        "Band of Starpower",
-                                                        "Nature's Gift",
-                                                        "Obsidian Skull",
-                                                        "Rocket Boots",
-                                                        "Whoopie Cushion",
-                                                        "Orb of Light",
-                                                        };
+        //public static string[] ChestFilterAccessories = {
+        //                                                "Cobalt Shield",
+        //                                                "Band of Regeneration",
+        //                                                "Angel Statue",
+        //                                                "Hermes Boots",
+        //                                                "Magic Mirror",
+        //                                                "Cloud in a Bottle",
+        //                                                "Feral Claws",
+        //                                                "Anklet of the Wind",
+        //                                                "Breathing Reed",
+        //                                                "Flipper",
+        //                                                "Shiny Red Balloon",
+        //                                                "Lucky Horseshoe",
+        //                                                "Dirt Rod",
+        //                                                "Band of Starpower",
+        //                                                "Nature's Gift",
+        //                                                "Obsidian Skull",
+        //                                                "Rocket Boots",
+        //                                                "Whoopie Cushion",
+        //                                                "Orb of Light",
+        //                                                };
 
         // COLOR CONSTANTS
 
@@ -135,6 +129,12 @@ All Other Goons";
             public static Color UNDERGROUNDJUNGLE_VINES = Color.FromArgb(138, 206, 28);
             public static Color UNDERGROUNDJUNGLE_THORNS = Color.FromArgb(94, 48, 55);
             public static Color GEMS = Color.FromArgb(42, 130, 250);
+
+            public static Color CACTUS = Color.DarkGreen;
+            public static Color CORAL = Color.LightPink;
+            public static Color HERB = Color.OliveDrab;
+            public static Color TOMBSTONE = Color.DimGray;
+
 
             public static Color UNDERGROUNDMUSHROOM_GRASS = Color.FromArgb(93, 127, 255);
             public static Color UNDERGROUNDMUSHROOM_PLANTS = Color.FromArgb(177, 174, 131);
