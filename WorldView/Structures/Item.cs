@@ -1,4 +1,4 @@
-﻿namespace MoreTerra
+﻿namespace MoreTerra.Structures
 {
     using System;
     using System.Collections.Generic;
@@ -31,6 +31,12 @@
             this.count = count;
         }
 
+		public Item()
+		{
+			this.name = null;
+			this.count = 0;
+		}
+
         /// <summary>
         /// Property returns name of item
         /// </summary>
@@ -40,6 +46,10 @@
             {
                 return this.name;
             }
+			set
+			{
+				this.name = value;
+			}
         }
 
         /// <summary>
@@ -51,6 +61,10 @@
             {
                 return this.count;
             }
+			set
+			{
+				this.count = value;
+			}
         }
 
         public override string ToString()

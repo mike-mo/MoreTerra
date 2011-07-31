@@ -10,14 +10,18 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MoreTerra</RootNamespace>
     <AssemblyName>MoreTerra</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -103,20 +107,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormEntryBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEntryBox.Designer.cs">
+      <DependentUpon>FormEntryBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMessageBoxWithCheckBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMessageBoxWithCheckBox.Designer.cs">
+      <DependentUpon>FormMessageBoxWithCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\BackwardsBinaryReader.cs" />
+    <Compile Include="Structures\Chest.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Structures\FilterItem.cs" />
+    <Compile Include="Structures\Item.cs" />
+    <Compile Include="Structures\NPC.cs" />
+    <Compile Include="Utilities\Options.cs" />
+    <Compile Include="Utilities\Comparers.cs" />
+    <Compile Include="Utilities\Profiler.cs" />
+    <Compile Include="Utilities\ProfileStructs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsManager.cs" />
-    <Compile Include="ResourceManager.cs" />
-    <Compile Include="Structures\Chest.cs" />
-    <Compile Include="Structures\Item.cs" />
     <Compile Include="Structures\Rect.cs" />
+    <Compile Include="ResourceManager.cs" />
     <Compile Include="Structures\SerializableDictionary.cs" />
+    <Compile Include="Structures\Footer.cs" />
+    <Compile Include="Structures\Sign.cs" />
+    <Compile Include="Structures\SymbolLoc.cs" />
     <Compile Include="Structures\TileProperties.cs" />
     <Compile Include="Structures\TileType.cs" />
-    <Compile Include="Structures\WorldHeader.cs" />
-    <Compile Include="Utilities\Options.cs" />
     <Compile Include="Utilities\Util.cs" />
+    <Compile Include="Structures\WorldHeader.cs" />
     <Compile Include="WorldMapper.cs" />
     <Compile Include="WorldReader.cs" />
     <Compile Include="FormWorldView.cs">
@@ -125,6 +150,12 @@
     <Compile Include="FormWorldView.Designer.cs">
       <DependentUpon>FormWorldView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormEntryBox.resx">
+      <DependentUpon>FormEntryBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMessageBoxWithCheckBox.resx">
+      <DependentUpon>FormMessageBoxWithCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -137,6 +168,7 @@
     </Compile>
     <EmbeddedResource Include="FormWorldView.resx">
       <DependentUpon>FormWorldView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="MoreTerraNoGui.bat" />
@@ -168,7 +200,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\chest.png" />
+    <EmbeddedResource Include="Resources\objects_chest.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\gem_a.png" />
@@ -177,20 +209,38 @@
     <EmbeddedResource Include="Resources\gem_r.png" />
     <EmbeddedResource Include="Resources\gem_s.png" />
     <EmbeddedResource Include="Resources\gem_t.png" />
-    <EmbeddedResource Include="Resources\heart.png" />
-    <EmbeddedResource Include="Resources\shadow.png" />
-    <EmbeddedResource Include="Resources\spawn.png" />
+    <EmbeddedResource Include="Resources\objects_heart.png" />
+    <EmbeddedResource Include="Resources\objects_shadow.png" />
+    <EmbeddedResource Include="Resources\people_spawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\altar.png" />
+    <EmbeddedResource Include="Resources\objects_altar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Text Files\Changelog.txt" />
-    <Content Include="ItemList.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Text Files\Regexes to extract chest item list from wiki site.txt" />
     <Content Include="Resources\cannon.ico" />
+    <Content Include="Text Files\Changelog.txt" />
+    <Content Include="Resources\gem_base.png" />
+    <Content Include="Resources\objects_base.png" />
+    <Content Include="Resources\objects_sign.png" />
+    <Content Include="Resources\ore_base.png" />
+    <Content Include="Resources\people_arms.png" />
+    <Content Include="Resources\people_base.png" />
+    <Content Include="Resources\people_cloth.png" />
+    <Content Include="Resources\people_demo.png" />
+    <Content Include="Resources\people_dryad.png" />
+    <Content Include="Resources\people_guide.png" />
+    <Content Include="Resources\people_merch.png" />
+    <Content Include="Resources\people_nurse.png" />
+    <Content Include="Resources\people_oldman.png" />
+    <EmbeddedResource Include="Resources\ore_o.png" />
+    <EmbeddedResource Include="Resources\ore_i.png" />
+    <EmbeddedResource Include="Resources\ore_s.png" />
+    <EmbeddedResource Include="Resources\ore_g.png" />
+    <EmbeddedResource Include="Resources\ore_m.png" />
+    <EmbeddedResource Include="Resources\ore_d.png" />
+    <EmbeddedResource Include="Resources\ore_h.png" />
+    <EmbeddedResource Include="Resources\ore_c.png" />
+    <EmbeddedResource Include="Resources\objects_hellforge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

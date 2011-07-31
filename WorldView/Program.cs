@@ -36,6 +36,7 @@ namespace MoreTerra
         static void Main(string[] args)
         {
             // Initialize Managers
+			Constants.Initialize();
             ResourceManager.Instance.Initialize();
             SettingsManager.Instance.Initialize();        
 
@@ -55,9 +56,13 @@ namespace MoreTerra
                 //    MessageBox.Show(args[i - 1] + args[i]);
                 //}
 
-                AttachConsole(ATTACH_PARENT_PROCESS);
-                
-                bool show_help = false;
+				// See if we are running in Mono and if so do not do the Attatch.
+				// Ugly but at least it lets the code run.
+				Type t = Type.GetType("Mono.Runtime");
+				if (t == null)
+					AttachConsole(ATTACH_PARENT_PROCESS);
+
+				bool show_help = false;
                 string worldPath = string.Empty;
                 string mapPath = string.Empty;
 
@@ -109,6 +114,7 @@ namespace MoreTerra
 
                     WorldMapper mapper = new WorldMapper();
 
+					SettingsManager.Instance.InConsole = true;
                     try
                     {
                         mapper.Initialize();

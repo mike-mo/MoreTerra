@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using MoreTerra.Structures;
 
 namespace MoreTerra
 {
@@ -17,16 +18,29 @@ namespace MoreTerra
             public string OutputPreviewDirectory;
             public bool IsChestFilterEnabled;
             public bool IsWallsDrawable;
+			public Boolean ScanForNewChestItems;
+			public Int32 ChestListSortType;
+			public Int32 HighestVersion;
             public SerializableDictionary<string, bool> SymbolStates;
-            public SerializableDictionary<string, bool> ChestFilterItems;
-        }
+
+			// This contains the actual list we use to filter with.
+			public SerializableDictionary<string, bool> ChestFilterItems;
+		}
 
         private static SettingsManager instance = null;
         private static readonly object mutex = new object();
         private UserSettings settings;
 
+		// This contains only the items that we have encoded in the program itself.
+		private List<String> DefaultFilterItems;
+
+		// Added to allow certain things to never happen when the console is on.
+		// Mainly pop-up forms and Dialogs.
+		private Boolean runningConsole = false;
+
         private SettingsManager()
         {
+
             this.settings = new UserSettings();
             this.settings.SymbolStates = new SerializableDictionary<string, bool>();
             foreach (string s in Constants.ExternalSymbolNames)
@@ -34,11 +48,18 @@ namespace MoreTerra
                 this.settings.SymbolStates.Add(s, true);
             }
 
+			this.DefaultFilterItems = new List<String>();
 
-            InitializeItemFilter();
+			foreach (string s in Constants.defaultItems)
+			{
+				this.DefaultFilterItems.Add(s);
+			}
 
+			InitializeItemFilter();
 
-            this.settings.IsWallsDrawable = true;
+			this.settings.IsChestFilterEnabled = false;
+			this.settings.IsWallsDrawable = true;
+			this.settings.ChestListSortType = 0;
             this.settings.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
             if (!Directory.Exists(this.settings.InputWorldDirectory))
             {
@@ -46,35 +67,33 @@ namespace MoreTerra
             }
         }
 
-        private void InitializeItemFilter()
-        {
-            this.settings.ChestFilterItems = new SerializableDictionary<string, bool>();
-            try
-            {
-                using (StreamReader list = new StreamReader("ItemList.txt"))
-                {
-                    while (!list.EndOfStream)
-                    {
-                        string s = list.ReadLine();
+		private void InitializeItemFilter()
+		{
+			SerializableDictionary<String, Boolean> sortedItems;
 
-                        if (!this.settings.ChestFilterItems.ContainsKey(s))
-                        {
-                            this.settings.ChestFilterItems.Add(s, false);
-                        }
-                    }
+			if (this.settings.ChestFilterItems == null)
+				this.settings.ChestFilterItems = new SerializableDictionary<string, bool>();
 
-                    list.Close();
-                }
+			foreach (String s in Constants.defaultItems)
+			{
+				if (!this.settings.ChestFilterItems.ContainsKey(s))
+					this.settings.ChestFilterItems.Add(s, false);
+			}
 
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Error reading the item list from ItemList.txt.\n\n" +
-                                                        ex.ToString(), "Item List", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-        }
+			// Now that we've done that let's sort them alphabetically.
+			IEnumerable<KeyValuePair<String, Boolean>> e = this.settings.ChestFilterItems.OrderBy<KeyValuePair<String, Boolean>, String>(kvp => kvp.Key);
+			sortedItems = new SerializableDictionary<String, Boolean>();
 
-        public static SettingsManager Instance
+			foreach (KeyValuePair<String, Boolean> kvp in e)
+			{
+				sortedItems.Add(kvp.Key, kvp.Value);
+			}
+
+			this.settings.ChestFilterItems = sortedItems;
+//	OrderBy <KeyValuePair <TKey, TValue >, TKey >(Func <KeyValuePair <TKey, TValue >, TKey >)
+		}
+
+		public static SettingsManager Instance
         {
             get
             {
@@ -102,8 +121,8 @@ namespace MoreTerra
             XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
             this.settings = (UserSettings)inputSerializer.Deserialize(reader);
 
-            InitializeItemFilter();
-        }
+			InitializeItemFilter();
+		}
 
         public string InputWorldDirectory
         {
@@ -161,62 +180,95 @@ namespace MoreTerra
             }
         }
 
+		public Int32 SortChestsBy
+		{
+			get
+			{
+				return this.settings.ChestListSortType;
+			}
+			set
+			{
+				this.settings.ChestListSortType = value;
+			}
+		}
+
+		// This is the highest version we have opened and said "Don't show again" to.
+		public Int32 TopVersion
+		{
+			get
+			{
+				return this.settings.HighestVersion;
+			}
+			set
+			{
+				this.settings.HighestVersion = value;
+			}
+		}
+
         public bool DrawMarker(TileType type)
         {
             // convert to string index
-            return this.settings.SymbolStates[Enum.GetName(typeof(TileType), type)];
+			if (this.settings.SymbolStates.ContainsKey(Enum.GetName(typeof(TileType), type)))
+				return this.settings.SymbolStates[Enum.GetName(typeof(TileType), type)];
+			return false;
         }
 
-        public bool DrawMarker(string marker)
-        {
-            if (this.settings.SymbolStates.ContainsKey(marker)) return this.settings.SymbolStates[marker];
-            else return false;
-        }
+		public bool DrawMarker(string marker)
+		{
+			if (this.settings.SymbolStates.ContainsKey(marker))
+				return this.settings.SymbolStates[marker];
+			return false;
+		}
 
-        public void MarkerVisible(string key, bool status)
-        {
-            this.settings.SymbolStates[key] = status;
-        }
+		public void MarkerVisible(string key, bool status)
+		{
+			this.settings.SymbolStates[key] = status;
+		}
+		
+		public Boolean IsDefaultItem(String itemName)
+		{
+			if (this.DefaultFilterItems.Contains(itemName))
+				return true;
 
-        //public void FilterWeapon(string weaponName, bool status)
-        //{
-        //    this.settings.ChestFilterWeaponStates[weaponName] = status;
-        //}
+			return false;
+		}
 
-        //public void FilterAccessory(string accessoryName, bool status)
-        //{
-        //    this.settings.ChestFilterAccessoryStates[accessoryName] = status;
-        //}
+		public void FilterItem(string itemName, bool status)
+		{
+			this.settings.ChestFilterItems[itemName] = status;
+		}
 
-        public void FilterItem(string itemName, bool status)
-        {
-            this.settings.ChestFilterItems[itemName] = status;
-        }
+		public Dictionary<string, bool> FilterItemStates
+		{
+			get
+			{
+				return this.settings.ChestFilterItems;
+			}
+		}
 
-        public Dictionary<string, bool> FilterItemStates
-        {
-            get
-            {
-                //return this.settings.ChestFilterWeaponStates.Concat(this.settings.ChestFilterAccessoryStates).ToDictionary(pair => pair.Key, pair => pair.Value);
-                return this.settings.ChestFilterItems;                
-            }
-        }
+		public Boolean ScanForNewItems
+		{
+			get
+			{
+				return this.settings.ScanForNewChestItems;
+			}
+			set
+			{
+				this.settings.ScanForNewChestItems = value;
+			}
+		}
 
-        //public Dictionary<string, bool> FilterWeaponStates
-        //{
-        //    get
-        //    {
-        //        return this.settings.ChestFilterWeaponStates;
-        //    }
-        //}
-
-        //public Dictionary<string, bool> FilterAccessoryStates
-        //{
-        //    get
-        //    {
-        //        return this.settings.ChestFilterAccessoryStates;
-        //    }
-        //}
+		public Boolean InConsole
+		{
+			get
+			{
+				return runningConsole;
+			}
+			set
+			{
+				runningConsole = value;
+			}
+		}
 
         public void Shutdown()
         {           

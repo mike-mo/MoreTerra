@@ -1,4 +1,4 @@
-﻿namespace MoreTerra
+﻿namespace MoreTerra.Structures
 {
     using System;
     using System.Collections.Generic;
@@ -7,84 +7,91 @@
 
     public enum TileType
     {
-        Dirt,
+        Dirt = 0,
         Stone,
         Grass,
         Plants,
         Torches,
-        Trees,
+        Trees = 5,
         Iron,
         Copper,
         Gold,
         Silver,
-        Door1,
-        Door2,
+
+        Door = 10,
+        DoorOpen,
         Heart,
         Bottles,
         Table,
-        Chair,
+        Chair = 15,
         Anvil,
         Furnance,
         CraftingTable,
         WoodenPlatform,
-        PlantsDecorative,
+
+        PlantsDecorative = 20,
         Chest,
-        CorruptionStone1,
+        Demonite,
         CorruptionGrass,
         CorruptionPlants,
-        CorruptionStone2,
+        Ebonstone = 25,
         Altar,
         Sunflower,
         Pot,
         PiggyBank,
-        BlockWood,
+
+        BlockWood = 30,
         ShadowOrb,
         CorruptionVines,
         Candle,
         ChandlerCopper,
-        ChandlerSilver,
+        ChandlerSilver = 35,
         ChandlerGold,
-        Meterorite, // Credit Vib Rib
+        Meteorite, // Credit Vib Rib
         BlockStone,
         BlockRedStone,
-        Clay,
+
+		Clay = 40,
         BlockBlueStone,
         LightGlobe,
         BlockGreenStone,
         BlockPinkStone,
-        BlockGold,
+        BlockGold = 45,
         BlockSilver,
         BlockCopper,
         Spikes,
         CandleBlue,
-        Books,
+
+		Books = 50,
         Web,
         Vines,
         Sand,
         Glass,
-        Signs,
+        Sign = 55,
         Obsidian,
         Ash, // Credit Infinite Monkeys
         Hellstone, // Credit Vib Rib
         Mud,
-        UndergroundJungleGrass,
+
+		UndergroundJungleGrass = 60,
         UndergroundJunglePlants,
         UndergroundJungleVines,
         Sapphire,
         Ruby,
-        Emerald,
+        Emerald = 65,
         Topaz,
         Amethyst,
         Diamond,
         UndergroundJungleThorns, // Credit Dr VideoGames 0031
-        UndergroundMushroomGrass,
+
+		UndergroundMushroomGrass = 70,
         UndergroundMushroomPlants,
         UndergroundMushroomTrees,
         Plants2,
         Plants3,
-        BlockObsidian,
+        BlockObsidian = 75,
         BlockHellstone,
-        UnderworldFurnance,
+        Hellforge,
         DecorativePot,
         Bed,
 
@@ -92,15 +99,17 @@
          *  81-85 are "important tiles", and have U/V data, 80 doesn't.
             80 is cactus
             81 is coral
-            82 to 84 are the various plants in their various stages of growth. I'm calling 82 "herb sprouts", 83 "herb stalks", and 84 "herbs".. you can use the U coordinate to determine if it's moonglow, or blinkweed, or whatever.
+            82 to 84 are the various plants in their various stages of growth. 
+		    Herb type names are based on the descriptions on the official Wiki.
+		    you can use the U coordinate to determine if it's moonglow, or blinkweed, or whatever.
             85 is the tombstone.*/
 
         //1.0.5
         Cactus = 80,
         Coral = 81,
-        HerbSprout = 82,
-        HerbStalk = 83,
-        Herb = 84,
+        HerbImmature = 82,
+        HerbMature = 83,
+        HerbBlooming = 84,
         Tombstone = 85,
 
         Unknown,
@@ -109,12 +118,21 @@
 
 
         // Additonal Placed Out of range of byte
-        Spawn = 255,
-        Sky = 256,
-        Water = 257,
-        Lava = 258,
+        Spawn = 256,
+		ArmsDealer = 257,
+		Clothier = 258,
+		Demolitionist = 259,
+		Dryad = 260,
+		Guide = 261,
+		Merchant = 262,
+		Nurse = 263,
+		OldMan = 264,
 
-        WallStone = 259,
+        Sky = 265,
+        Water = 266,
+        Lava = 267,
+
+        WallStone = 268,
         WallDirt,
         WallStone2,
         WallWood,

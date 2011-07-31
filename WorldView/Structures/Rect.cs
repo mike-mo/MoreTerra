@@ -1,4 +1,4 @@
-﻿namespace MoreTerra
+﻿namespace MoreTerra.Structures
 {
     using System;
     using System.Collections.Generic;

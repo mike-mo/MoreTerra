@@ -1,4 +1,4 @@
-﻿namespace MoreTerra
+﻿namespace MoreTerra.Structures
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
+	using MoreTerra;
 
     public struct WorldHeader
     {
@@ -95,6 +96,14 @@
             }
             set
             {
+				// For some very odd reason the Y coord on the map is stored first.
+				// Maps are always longer than tall so we flip it if it's the other way around.
+				if (value.X < value.Y)
+				{
+					int t = value.X;
+					value.X = value.Y;
+					value.Y = t;
+				}
                 this.maxTiles = value;
             }
         }

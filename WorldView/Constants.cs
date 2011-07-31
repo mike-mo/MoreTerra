@@ -8,13 +8,14 @@ namespace MoreTerra
 {
     public class Constants
     {
+		public const Int32 currentVersion = 12;
         /// <summary>
         /// List of Credits
         /// </summary>
         public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf.";
                                        
 
-        public const int WallOffset = 258;
+        public const int WallOffset = 268;
 
         /// <summary>
         /// Maximum Number of Items a Chest Can Contain
@@ -26,10 +27,21 @@ namespace MoreTerra
         /// </summary>
         public const int ChestMaxNumber = 1000;
 
+		/// <summary>
+		/// Maximum number of signs per world.
+		/// </summary>
+		public const Int32 SignMaxNumber = 1000;
+
+		/// <summary>
+		/// Maximum length of the text on a sign.  There is no limit in game I can find but this
+		/// beats trying to go all the way to 16k
+		/// </summary>
+		public const Int32 SignMaxSize = 1500;
+
         /// <summary>
-        /// Points to the root directory for terraria world viewer
+        /// Points to the root directory for MoreTerra
         /// </summary>
-        public static string ApplicationRootDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TerrariaWorldViewer");
+        public static string ApplicationRootDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MoreTerra");
 
         /// <summary>
         /// Points to the application log directory
@@ -39,56 +51,117 @@ namespace MoreTerra
 
         public static string ApplicationUserSettingsFile = System.IO.Path.Combine(ApplicationRootDirectory, "UserSettings.xml");
 
+		public static string[] ObjectSymbols = { "Altar", "Chest", "Heart", "Hellforge", "ShadowOrb", "Sign" };
+		public static string[] GemSymbols = {"Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz"};
+		public static string[] OreSymbols = { "Copper", "Iron", "Silver", "Gold", "Demonite", "Obsidian", "Meteorite", "Hellstone" };
+		public static string[] PeopleSymbols = { "ArmsDealer", "Clothier", "Demolitionist", "Dryad", "Guide", "Merchant", "Nurse", "OldMan", "Spawn" };
+		public static string[] ExternalSymbolNames = { };
 
-        public static string[] ExternalSymbolNames = { "Altar", "Chest", "Heart", "ShadowOrb", "Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz", "Spawn" };
+		public static string[] NPCList = {"Arms Dealer", "Clothier", "Demolitionist", "Dryad", "Guide", "Merchant", "Nurse", "Old Man"};
 
-        //public static string[] ChestFilterWeapons = {
-        //                                                "Muramasa",
-        //                                                "Aqua Scepter",
-        //                                                "Blue Moon",
-        //                                                "Handgun",
-        //                                                "Enchanted Boomerang",
-        //                                                "Staff of Regrowth",
-        //                                                "Starfury",
-        //                                                "Grappling Hook",
-        //                                                "Ivy Whip",
-        //                                                "Flamelash",
-        //                                                "Harpoon",
-        //                                                "Flintlock Pistol",
-        //                                                "Ball 'O Hurt",
-        //                                                "Vilethorn",
-        //                                                "Minishark",
-        //                                                "Sunfury",
-        //                                                "Flower of Fire",
-        //                                                "Star Cannon",
-        //                                                "Water Bolt",
-        //                                                "Spiky Ball",
-        //                                                "Meteor Shot",
-        //                                                "Grenade",
-        //                                                "Magic Missile",
-        //                                          };
+		public static string[] OldProgramNames = { "TerrariaWorldViewer", "MoreTerrra" };
 
-        //public static string[] ChestFilterAccessories = {
-        //                                                "Cobalt Shield",
-        //                                                "Band of Regeneration",
-        //                                                "Angel Statue",
-        //                                                "Hermes Boots",
-        //                                                "Magic Mirror",
-        //                                                "Cloud in a Bottle",
-        //                                                "Feral Claws",
-        //                                                "Anklet of the Wind",
-        //                                                "Breathing Reed",
-        //                                                "Flipper",
-        //                                                "Shiny Red Balloon",
-        //                                                "Lucky Horseshoe",
-        //                                                "Dirt Rod",
-        //                                                "Band of Starpower",
-        //                                                "Nature's Gift",
-        //                                                "Obsidian Skull",
-        //                                                "Rocket Boots",
-        //                                                "Whoopie Cushion",
-        //                                                "Orb of Light",
-        //                                                };
+		public static Dictionary<String, String[]> SymbolDict;
+
+		public static void Initialize()
+		{
+			SymbolDict = new Dictionary<String, String[]>();
+
+			SymbolDict.Add("Objects", ObjectSymbols);
+			SymbolDict.Add("Gems", GemSymbols);
+			SymbolDict.Add("Ores", OreSymbols);
+			SymbolDict.Add("People", PeopleSymbols);
+
+			Int32 i = 0;
+			i += ObjectSymbols.Length;
+			i += GemSymbols.Length;
+			i += OreSymbols.Length;
+			i += PeopleSymbols.Length;
+
+			ExternalSymbolNames = new string[i];
+
+			i = 0;
+			ObjectSymbols.CopyTo(ExternalSymbolNames, i);
+			i += ObjectSymbols.Length;
+
+			GemSymbols.CopyTo(ExternalSymbolNames, i);
+			i += GemSymbols.Length;
+
+			OreSymbols.CopyTo(ExternalSymbolNames, i);
+			i += OreSymbols.Length;
+
+			PeopleSymbols.CopyTo(ExternalSymbolNames, i);
+			i += PeopleSymbols.Length;
+		}
+
+		public static string[] defaultItems = {"Aglet",
+								  "Angel Statue",
+								  "Anklet of the Wind",
+								  "Aqua Scepter",
+								  "Archery Potion",
+								  "Band of Regeneration",
+								  "Battle Potion",
+								  "Blowpipe",
+								  "Blue Moon",
+								  "Bomb",
+								  "Bottle",
+								  "Breathing Reed",
+								  "Cloud in a Bottle",
+								  "Cobalt Shield",
+								  "Copper Bar",
+								  "Dark Lance",
+								  "Dynamite",
+								  "Enchanted Boomerang",
+								  "Featherfall Potion",
+								  "Feral Claws",
+								  "Flaming Arrow",
+								  "Flipper", 
+								  "Gills Potion",
+								  "Glowstick",
+								  "Gold Bar",
+								  "Gold Coin",
+								  "Gravitation Potion",
+								  "Grenade",
+								  "Handgun",
+								  "Healing Potion",
+								  "Hellfire Arrow",
+								  "Hermes Boots",
+								  "Hunter Potion",
+								  "Invisibility Potion",
+								  "Iron Bar",
+								  "Ironskin Potion",
+								  "Jester's Arrow",
+								  "Lesser Healing Potion",
+								  "Lesser Restoration Potion",
+								  "Lucky Horseshoe",
+								  "Magic Mirror",
+								  "Magic Missile",
+								  "Magic Power Potion",
+								  "Mana Regeneration Potion",
+								  "Meteorite Bar",
+								  "Muramasa",
+								  "Nature's Gift",
+								  "Night Owl Potion",
+								  "Obsidian Skin Potion",
+								  "Regeneration Potion",
+								  "Restoration Potion",
+								  "Shine Potion",
+								  "Shiny Red Balloon",
+								  "Shuriken",
+								  "Silver Bar",
+								  "Silver Bullet",
+								  "Silver Coin",
+								  "Spear",
+								  "Spelunker Potion",
+								  "Staff of Regrowth",
+								  "Starfury",
+								  "Swiftness Potion",
+								  "Thorns Potion",
+								  "Throwing Knife",
+								  "Torch",
+								  "Water Walking Potion",
+								  "Wooden Arrow",
+								  "Wooden Boomerang"};
 
         // COLOR CONSTANTS
 
@@ -107,9 +180,9 @@ namespace MoreTerra
             public static Color SILVER = Color.FromArgb(217, 223, 223);
             public static Color DECORATIVE = Color.FromArgb(0, 255, 242);
             public static Color IMPORTANT = Color.FromArgb(255, 0, 0);
-            public static Color CORRUPTION_STONE = Color.FromArgb(98, 95, 167);
+            public static Color DEMONITE = Color.FromArgb(98, 95, 167);
             public static Color CORRUPTION_GRASS = Color.FromArgb(141, 137, 223);
-            public static Color CORRUPTION_STONE2 = Color.FromArgb(75, 74, 130);
+            public static Color EBONSTONE = Color.FromArgb(75, 74, 130);
             public static Color CORRUPTION_VINES = Color.FromArgb(122, 97, 143);
             public static Color BLOCK = Color.FromArgb(178, 0, 255);
             public static Color METEORITE = Color.Magenta;//Color.FromArgb(223, 159, 137);

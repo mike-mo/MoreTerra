@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Reflection;
+using MoreTerra.Structures;
+using MoreTerra.Utilities;
 
 namespace MoreTerra
 {
@@ -48,8 +50,24 @@ namespace MoreTerra
             // Check to see if root folder directory exists
             if (!Directory.Exists(Constants.ApplicationRootDirectory))
             {
-                // Create it
-                Directory.CreateDirectory(Constants.ApplicationRootDirectory);
+
+				String oldRoot;
+				String newRoot = Constants.ApplicationRootDirectory;
+
+				Directory.CreateDirectory(Constants.ApplicationRootDirectory);
+
+				foreach(String s in Constants.OldProgramNames)
+				{
+
+					oldRoot = System.IO.Path.Combine(Environment.GetFolderPath(
+						Environment.SpecialFolder.ApplicationData), s);
+
+					if (Directory.Exists(oldRoot))
+					{
+						MoveAndCombineDirectories(oldRoot, newRoot);
+						Directory.Delete(oldRoot);
+					}
+				}
             }
 
             if (!Directory.Exists(Constants.ApplicationLogDirectory))
@@ -142,5 +160,56 @@ namespace MoreTerra
         {
             symbol.Save(Path.Combine(Constants.ApplicationResourceDirectory, string.Format("{0}.png", name)), ImageFormat.Png);
         }
+
+		private void MoveAndCombineDirectories(String oldDir, String newDir)
+		{
+			String[] oldDirectories;
+			String[] oldFiles;
+			String newFileName;
+			String newDirectoryName;
+
+			#region MoveFiles
+			oldFiles = Directory.GetFiles(oldDir);
+
+			foreach (String file in oldFiles)
+			{
+				newFileName = Path.Combine(newDir, Path.GetFileName(file));
+
+				if (File.Exists(newFileName))
+				{
+					// Find which one is newer and delete the older one.
+					if (File.GetLastWriteTime(file) > File.GetLastWriteTime(newFileName))
+					{
+						File.Delete(newFileName);
+						File.Move(file, newFileName);
+					}
+					else
+					{
+						File.Delete(file);
+					}
+				} else {
+					File.Move(file, newFileName);
+				}
+			}
+			#endregion
+
+			oldDirectories = Directory.GetDirectories(oldDir);
+
+			foreach (String dir in oldDirectories)
+			{
+				newDirectoryName = Path.Combine(newDir, Path.GetFileName(dir));
+
+				if (Directory.Exists(newDirectoryName))
+				{
+					MoveAndCombineDirectories(dir, newDirectoryName);
+					Directory.Delete(dir);
+				}
+				else
+				{
+					// It does not exist so let's just move it.
+					Directory.Move(dir, newDirectoryName);
+				}
+			}
+		}
     }
 }

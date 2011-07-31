@@ -74,9 +74,44 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ArmsDealer {
+            get {
+                object obj = ResourceManager.GetObject("ArmsDealer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Chest {
             get {
                 object obj = ResourceManager.GetObject("Chest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Clothier {
+            get {
+                object obj = ResourceManager.GetObject("Clothier", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Copper {
+            get {
+                object obj = ResourceManager.GetObject("Copper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Demolitionist {
+            get {
+                object obj = ResourceManager.GetObject("Demolitionist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Demonite {
+            get {
+                object obj = ResourceManager.GetObject("Demonite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -88,6 +123,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Dryad {
+            get {
+                object obj = ResourceManager.GetObject("Dryad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Emerald {
             get {
                 object obj = ResourceManager.GetObject("Emerald", resourceCulture);
@@ -95,9 +137,107 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Gems {
+            get {
+                object obj = ResourceManager.GetObject("Gems", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Gold {
+            get {
+                object obj = ResourceManager.GetObject("Gold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Guide {
+            get {
+                object obj = ResourceManager.GetObject("Guide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Heart {
             get {
                 object obj = ResourceManager.GetObject("Heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Hellforge {
+            get {
+                object obj = ResourceManager.GetObject("Hellforge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Hellstone {
+            get {
+                object obj = ResourceManager.GetObject("Hellstone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Iron {
+            get {
+                object obj = ResourceManager.GetObject("Iron", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Merchant {
+            get {
+                object obj = ResourceManager.GetObject("Merchant", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Meteorite {
+            get {
+                object obj = ResourceManager.GetObject("Meteorite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Nurse {
+            get {
+                object obj = ResourceManager.GetObject("Nurse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Objects {
+            get {
+                object obj = ResourceManager.GetObject("Objects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Obsidian {
+            get {
+                object obj = ResourceManager.GetObject("Obsidian", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OldMan {
+            get {
+                object obj = ResourceManager.GetObject("OldMan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Ores {
+            get {
+                object obj = ResourceManager.GetObject("Ores", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap People {
+            get {
+                object obj = ResourceManager.GetObject("People", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -119,6 +259,20 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap ShadowOrb {
             get {
                 object obj = ResourceManager.GetObject("ShadowOrb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Sign {
+            get {
+                object obj = ResourceManager.GetObject("Sign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Silver {
+            get {
+                object obj = ResourceManager.GetObject("Silver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

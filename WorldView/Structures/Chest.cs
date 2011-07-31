@@ -1,4 +1,4 @@
-﻿namespace MoreTerra
+﻿namespace MoreTerra.Structures
 {
     using System;
     using System.Collections.Generic;
@@ -8,16 +8,23 @@
 
     public class Chest
     {
+		private Boolean activeChest;
         private int chestId;
         private Point coordinates;
         private List<Item> items;
 
         public Chest(int chestId, Point coordinates)
         {
+			this.activeChest = true;
             this.chestId = chestId;
             this.coordinates = coordinates;
             this.items = new List<Item>();
         }
+
+		public Chest()
+		{
+			this.chestId = 0;
+		}
 
         public void AddItem(Item item)
         {
@@ -30,6 +37,10 @@
             {
                 return this.coordinates;
             }
+			set
+			{
+				this.coordinates = value;
+			}
         }
 
         public List<Item> Items
@@ -38,6 +49,10 @@
             {
                 return this.items;
             }
+			set
+			{
+				this.items = value;
+			}
         }
 
         public int ChestId
@@ -47,5 +62,17 @@
                 return this.chestId;
             }
         }
+
+		public Boolean Active
+		{
+			get
+			{
+				return this.activeChest;
+			}
+			set
+			{
+				this.activeChest = value;
+			}
+		}
     }
 }
