@@ -11,7 +11,7 @@
         Stone,
         Grass,
         Plants,
-        Torches,
+        Torch,
         Trees = 5,
         Iron,
         Copper,
