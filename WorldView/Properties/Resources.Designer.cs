@@ -290,5 +290,12 @@ namespace MoreTerra.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap Torch {
+            get {
+                object obj = ResourceManager.GetObject("Torch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

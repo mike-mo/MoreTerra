@@ -51,7 +51,7 @@ namespace MoreTerra
 
         public static string ApplicationUserSettingsFile = System.IO.Path.Combine(ApplicationRootDirectory, "UserSettings.xml");
 
-		public static string[] ObjectSymbols = { "Altar", "Chest", "Heart", "Hellforge", "ShadowOrb", "Sign" };
+		public static string[] ObjectSymbols = { "Altar", "Chest", "Heart", "Hellforge", "ShadowOrb", "Sign", "Torch" };
 		public static string[] GemSymbols = {"Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz"};
 		public static string[] OreSymbols = { "Copper", "Iron", "Silver", "Gold", "Demonite", "Obsidian", "Meteorite", "Hellstone" };
 		public static string[] PeopleSymbols = { "ArmsDealer", "Clothier", "Demolitionist", "Dryad", "Guide", "Merchant", "Nurse", "OldMan", "Spawn" };

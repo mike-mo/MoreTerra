@@ -51,7 +51,7 @@
             tileTypeDefs[1] = new TileProperties(TileType.Stone, false, Constants.Colors.STONE);
             tileTypeDefs[2] = new TileProperties(TileType.Grass, false, Constants.Colors.GRASS);
             tileTypeDefs[3] = new TileProperties(TileType.Plants, true, Constants.Colors.PLANTS);
-            tileTypeDefs[4] = new TileProperties(TileType.Torches, false, Constants.Colors.LIGHT_SOURCE);
+            tileTypeDefs[4] = new TileProperties(TileType.Torch, false, Constants.Colors.LIGHT_SOURCE, true);
             tileTypeDefs[5] = new TileProperties(TileType.Trees, true, Constants.Colors.WOOD);
             tileTypeDefs[6] = new TileProperties(TileType.Iron, false, Constants.Colors.IRON, true);
             tileTypeDefs[7] = new TileProperties(TileType.Copper, false, Constants.Colors.COPPER, true);
