@@ -40,13 +40,9 @@ namespace MoreTerra
 
         private SettingsManager()
         {
-
             this.settings = new UserSettings();
-            this.settings.SymbolStates = new SerializableDictionary<string, bool>();
-            foreach (string s in Constants.ExternalSymbolNames)
-            {
-                this.settings.SymbolStates.Add(s, true);
-            }
+
+			InitializeSymbolStates();
 
 			this.DefaultFilterItems = new List<String>();
 
@@ -66,6 +62,18 @@ namespace MoreTerra
                 this.settings.InputWorldDirectory = string.Empty;
             }
         }
+
+		private void InitializeSymbolStates()
+		{
+			if (this.settings.SymbolStates == null)
+				this.settings.SymbolStates = new SerializableDictionary<string, bool>();
+
+			foreach (string s in Constants.ExternalSymbolNames)
+			{
+				if (!this.settings.SymbolStates.ContainsKey(s))
+					this.settings.SymbolStates.Add(s, true);
+			}
+		}
 
 		private void InitializeItemFilter()
 		{
@@ -90,7 +98,6 @@ namespace MoreTerra
 			}
 
 			this.settings.ChestFilterItems = sortedItems;
-//	OrderBy <KeyValuePair <TKey, TValue >, TKey >(Func <KeyValuePair <TKey, TValue >, TKey >)
 		}
 
 		public static SettingsManager Instance
@@ -121,6 +128,7 @@ namespace MoreTerra
             XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
             this.settings = (UserSettings)inputSerializer.Deserialize(reader);
 
+			InitializeSymbolStates();
 			InitializeItemFilter();
 		}
 

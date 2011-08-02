@@ -140,6 +140,7 @@ namespace MoreTerra
             if (folder != string.Empty)
 				this.worldDirectoryChanged();
 
+			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
             checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
 			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
 
