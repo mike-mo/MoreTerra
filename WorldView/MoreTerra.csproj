@@ -115,16 +115,27 @@
     <Compile Include="FormMessageBoxWithCheckBox.Designer.cs">
       <DependentUpon>FormMessageBoxWithCheckBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProgressDialog.Designer.cs">
+      <DependentUpon>FormProgressDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Structures\PointInt16.cs" />
+    <Compile Include="Structures\PointSingle.cs" />
+    <Compile Include="Structures\Tile.cs" />
+    <Compile Include="Structures\World.cs" />
     <Compile Include="Utilities\BackwardsBinaryReader.cs" />
     <Compile Include="Structures\Chest.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Structures\FilterItem.cs" />
     <Compile Include="Structures\Item.cs" />
     <Compile Include="Structures\NPC.cs" />
+    <Compile Include="Utilities\BackwardsScanner.cs" />
+    <Compile Include="Utilities\BufferedBinaryReader.cs" />
     <Compile Include="Utilities\Options.cs" />
     <Compile Include="Utilities\Comparers.cs" />
     <Compile Include="Utilities\Profiler.cs" />
-    <Compile Include="Utilities\ProfileStructs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsManager.cs" />
@@ -139,7 +150,6 @@
     <Compile Include="Utilities\Util.cs" />
     <Compile Include="Structures\WorldHeader.cs" />
     <Compile Include="WorldMapper.cs" />
-    <Compile Include="WorldReader.cs" />
     <Compile Include="FormWorldView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMessageBoxWithCheckBox.resx">
       <DependentUpon>FormMessageBoxWithCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProgressDialog.resx">
+      <DependentUpon>FormProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -214,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\cannon.ico" />
+    <Content Include="Resources\objects_torch.png" />
     <Content Include="Text Files\Changelog.txt" />
     <Content Include="Resources\gem_base.png" />
     <Content Include="Resources\objects_base.png" />
@@ -228,6 +242,7 @@
     <Content Include="Resources\people_merch.png" />
     <Content Include="Resources\people_nurse.png" />
     <Content Include="Resources\people_oldman.png" />
+    <Content Include="Text Files\Regexes to extract chest item list from wiki site.txt" />
     <EmbeddedResource Include="Resources\ore_o.png" />
     <EmbeddedResource Include="Resources\ore_i.png" />
     <EmbeddedResource Include="Resources\ore_s.png" />

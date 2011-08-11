@@ -77,16 +77,19 @@ namespace MoreTerra
 
                 List<string> extra = new List<string>();
 
+#if (DEBUG == false)
                 try
                 {
+#endif
                     extra = p.Parse(args);
+#if (DEBUG == false)
                 }
                 catch (OptionException e)
                 {
                     Console.WriteLine(e.Message);
                     Console.WriteLine("Try '" + System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath) + " --help' for more information.");
                 }
-
+#endif
 
 
                 if (show_help || args.Contains<string>("-?") || worldPath == string.Empty || mapPath == string.Empty)
@@ -110,27 +113,30 @@ namespace MoreTerra
                 }
                 else
                 {
-                    Console.WriteLine("Generating map from:" + Environment.NewLine + " " + worldPath);                    
+                    Console.WriteLine(Environment.NewLine + "Generating map from:" + 
+						Environment.NewLine + " " + worldPath);                    
 
                     WorldMapper mapper = new WorldMapper();
 
 					SettingsManager.Instance.InConsole = true;
+#if (DEBUG == false)
                     try
                     {
+#endif
                         mapper.Initialize();
                         Console.WriteLine("Reading World file...");
-                        mapper.OpenWorld(worldPath);
-                        mapper.ReadWorldTiles();
-                        mapper.CloseWorld();
+                        mapper.OpenWorld();
+						mapper.ProcessWorld(worldPath, null);
                         Console.WriteLine("World file closed. Generating PNG...");
-                        mapper.CreatePreviewPNG(mapPath);
+                        mapper.CreatePreviewPNG(mapPath, null);
                         Console.WriteLine("Done! Saved to: " + Environment.NewLine + " " + mapPath);
+#if (DEBUG == false)
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error: " + ex.ToString());
                     }
-
+#endif
                 }    
             }          
         }

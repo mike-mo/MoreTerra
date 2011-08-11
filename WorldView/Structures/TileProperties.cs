@@ -1,9 +1,6 @@
 ﻿namespace MoreTerra.Structures
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Drawing;
 	
     public class TileProperties
@@ -14,7 +11,8 @@
         private bool hasSymbol;
 		private bool drawSymbol;
 
-        public TileProperties(TileType tileType, bool isTileImportant, Color colour, bool hasSymbol = false)
+		#region Constructors
+		public TileProperties(TileType tileType, bool isTileImportant, Color colour, bool hasSymbol = false)
         {
             this.type = tileType;
             this.isImportant = isTileImportant;
@@ -22,8 +20,10 @@
             this.hasSymbol = hasSymbol;
 			this.drawSymbol = false;
         }
+		#endregion
 
-        public TileType TileType
+		#region GetSet Functions
+		public TileType TileType
         {
             get
             {
@@ -66,5 +66,6 @@
 				drawSymbol = value;
 			}
 		}
-    }
+		#endregion
+	}
 }

@@ -1,16 +1,58 @@
-Release 1.6 TODO
-Make it so that if the new MoreTerra folder in AppData does not exist it goes looking for the old
- names (one of which is my typo).  If it finds an old name it 
-Do a bit more testing to be sure the program handles updating from the old UserSettings file properly.
-For that matter code something that transfers the files from the AppData/TWV folder to the MoreTerra folder.
-
 Release 1.6
+==============
+=New Features=
+==============
+Added "Open image after drawing" checkbox to the list of those saved in the Settings file.
+
+Removed the whole bottom status bar and added a Progress form that allows for outputing status
+ text to the window.
+
+===========
+=Bug Fixes=
+===========
+Fixed a bug I introduced when I shifted WallOffset over that was causing the walls to be drawn one
+ color off.  Aka Stone was drawing as Dirt and Hellstone was drawing as Unknown.
+
+Fixed the tiny bug that was making the Draw Walls checkbox show up as checked when it was not
+ true.
+
+Redid the #'s for reading/processing/drawing the world.  Mainly so that reading the chests,
+ which takes a quarter of a second doesn't take up 20% of the bar.  It now shows amount done
+ by the % of the file read in so far.
+
+=============
+=Refactoring=
+=============
+Completely removed WorldReader from the mix and added a World class instead.  World class
+ handles all loading and saving (not that anything saves) as well as doing tile scanning.
+
+Removed all extra #using definitions from the files.
+
+Added #if/#endif blocks around the try/catch blocks in the code so that when in DEBUG state
+ we can actually see the exceptions with all their useful line numbers.
+
+Changed all the structures over to private with get/set functions.
+
+Changed the Wall names around.  Stone2 to Ebonstone, all brick types now say brick.  Had to
+ do this to differentiate regular Obsidian wall from Obsidian brick walls.
+
+===============
+=Compatibility=
+===============
+Added the new items found in chests to the list.
+
+Added all new wall types and tiles.
+
+
+
+
+Release 1.5.5
 ==============
 =New Features=
 ==============
 Recreated Symbol list so that it shows the Symbols for each item next to the text for the item.
 
-Added Marker drawing for Hellforges, Signs, all ores and all NPCs.  Hellforged colored yellow to help
+Added Marker drawing for Hellforges, Signs, Torches, all ores and all NPCs.  Hellforged colored yellow to help
  stand out against the very dark underworld.  Ore colors are all colored the same as the pixel that would
  be drawn if the Marker was off.
 
@@ -46,6 +88,9 @@ Added sorting the Chest list in one of three ways.  Also changed the chest list 
 
 Made it so that the Scan item pop-up will not happen in console mode and the version mismatch will only
  show a message.  We do not want to pause the program waiting for user input in console mode.
+
+Added a system to migrate settings & custom icons to the new folder.
+
 ===========
 =Bug Fixes=
 ===========
@@ -82,9 +127,7 @@ Changed the name of the chest filter list box so that they match each other.  Th
  off things like "IsWallsDrawable".
 
 Reorganized the files into folders & namespaces.  Structures (data but no real code) are in one.
- Utilities are in the other.  ProfileStructs is the only one that defies this as it is tied into
- the profiler and only the profiler.  Might just need to stuff it inside the Profiler class, like
- how UserSettings is.
+ Utilities are in the other.  
 
 ==============
 =Optimization=
@@ -171,11 +214,6 @@ See if we can find a way to add 3-state checkboxes to the TreeView list.  I coul
 
 Reorganize things so that we have proper world objects instead of the horrible broken mix.
 
-Redo the Progress bar code to remove the unusual jumps when reading the world in.  Probably
- by basing it on file size read in instead.  Chests read in so instantly that it doesn't quite
- make sense.  Possibly change it over to a Dialog box that pops up instead of on the status bar.
- There's really nothing that anyone can do while waiting for it to draw anyways.
-
 Find a way to show whether a chest is a brown or gold chest on the map.
 
 Add a way to change the colors of all the tiles as they get drawn.  Change the Symbols so that
@@ -183,8 +221,6 @@ Add a way to change the colors of all the tiles as they get drawn.  Change the S
 
 Add a popout color option so maps get drawn with only some things in the right colors and the others
  in a greyscale form.
-
-Change all the structures over to private with get/set functions.
 
 Perfect the code for seeking to chests.
  We need to have a way to handle bad string matches.  This likely should only affect signs though
@@ -201,24 +237,21 @@ Change the way the resource files are read in so we can provide a check box for 
 Small bug in the filter boxes that keeps the "Remove custom item" box from turning on until
  you've clicked the object twice.
 
-Write a small bit of code that simply reads a world file and turns every square's IsLighted to false
- just to see what happens.  20% of every Terraria world file is taken up with that Boolean and I 
- strongly suspect that it does nothing at all as the lighting system seems to generate on the fly
- anyways.  I figure that could easily fit into the "Finding tile frames" loading segment and save
- some disk space.
-
-Change FormMessageBoxWithCheckBox to be more generic like the basic MessageBox class.  Might not need
- to do a thing except for removing the current text from the Initialization and provide a way
- to read the checkbox state.  Maybe add a way to size the dialog around the text provided to it.
- Partially done.  No resizing yet and it's not perfect but it's working.
-
 Finish changing all of the references to Symbol over to Marker instead.
 
 Consider adding an herb tracker.  Unlike Mushrooms herbs actually can be found in the file.
 
 Find a way to get the DialogBoxes from the worker thread to correctly attach to the main window.
 
+Add a way to remove large numbers of items from the filter list, like maybe to reset it back
+ to where it was by default.  Maybe a set of checkboxes along the bottom that turn on and off
+ what shows up in the list.
+
+Add an export feature to the chests.  CSV, Plaintext and XML.
+
 Remember to increment version number in project properties!
+
+Get the "Cancel" button on the ProgressBar form working.
 
 Add search to the "available items" chest item list, in winamp's jump to file style (search as you type, pressing enter adds the item)
  (Sol: I do want a better keyboard interface for the list.  This might not be too hard to implement)
@@ -226,24 +259,13 @@ Add search to the "available items" chest item list, in winamp's jump to file st
 Add gold chest filter (possible?)
  (Sol: Completely possible.  I'd need to rework how the ReadWorldTiles code works though)
 
-Use game resources (tiles) as world markers (altar, chest, orb... requires XNA?)
- (Sol: Yes and no.  I can easily pull the graphics from the files and we could use them but I'm not sure
- how legal that would be.  Using the data files from Terraria itself instead of distributing them would
- take XNA but would probably be more legal)
-
-Add meteor ore marker + tile color
- (Sol: No tile color but a marker, still running Magenta)
-
 Better colors (gold/copper, silver/cobwebs), generate a color legend somewhere
  (Sol: Does this need to be on the map?  I have plans to add a Colors tab for custom colors)
 
 Refactor Settings Manager
  (Sol: What did you have in mind with this?)
 
-
 Considering / suggestions from reddit:
-Add torch marker
- (Sol: Making the icon would take longer than making the code do it. Esp because torches are single square)
 
 Auto-generating an image after each auto save (monitor .bak file?)
  (Sol: Already on my list)
@@ -256,6 +278,3 @@ Is it possible to add this in the world info?
        would only get generated when doing a full process.  I already had the code counting these
 	   things anyways when I was testing out the new marker system I added.  We could potentially
 	   make it count every single tile type of the map.)
-
-Also, is it possible to search/sort chests in the  World Information tab?
- (Sol: Both already done)

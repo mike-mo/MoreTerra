@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MoreTerra.Utilities
@@ -11,7 +9,7 @@ namespace MoreTerra.Utilities
 		int IComparer.Compare(object one, object two)
 		{
 			if (((TreeNode)one).Parent != null)
-				return 0;
+				return 1;
 
 			Int32 oneX = getXCoord(((TreeNode)one).Text);
 			Int32 twoX = getXCoord(((TreeNode)two).Text);
@@ -34,7 +32,7 @@ namespace MoreTerra.Utilities
 		int IComparer.Compare(object one, object two)
 		{
 			if (((TreeNode)one).Parent != null)
-				return 0;
+				return 1;
 
 			Int32 oneX = getYCoord(((TreeNode)one).Text);
 			Int32 twoX = getYCoord(((TreeNode)two).Text);

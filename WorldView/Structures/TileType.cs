@@ -1,9 +1,6 @@
 ﻿namespace MoreTerra.Structures
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     public enum TileType
     {
@@ -106,11 +103,33 @@
 
         //1.0.5
         Cactus = 80,
-        Coral = 81,
-        HerbImmature = 82,
-        HerbMature = 83,
-        HerbBlooming = 84,
+        Coral,
+        HerbImmature,
+        HerbMature,
+        HerbBlooming,
         Tombstone = 85,
+		Loom,
+		Piano,
+		Dresser,
+		Bench,
+
+		Bathtub = 90,
+		Banner,
+		Lamppost,
+		Tikitorch,
+		Keg,
+		ChineseLamp = 95,
+		CookingPot,
+		Safe,
+		SkullCandle,
+		Trashcan,
+
+		Candleabra = 100,
+		Bookcase,
+		Throne,
+		Plate,
+		Clock,
+		SuitOfArmor = 105,
 
         Unknown,
 
@@ -134,18 +153,25 @@
 
         WallStone = 268,
         WallDirt,
-        WallStone2,
+        WallEbonstone = 270,
         WallWood,
-        WallBrick,
-        WallRed,
-        WallBlue,
-        WallGreen,
-        WallPink,
-        WallGold,
-        WallSilver,
-        WallCopper,
-        WallHellstone,
-        WallBackground,
+        WallGreyBrick,
+        WallRedBrick,
+        WallBlueBrick,
+        WallGreenBrick = 275,
+        WallPinkBrick,
+        WallGoldBrick,
+        WallSilverBrick,
+        WallCopperBrick,
+        WallHellstone = 280,
+		WallObsidianBrick,
+		WallMud,
+		WallDirtSafe,
+		WallBlueSafe,
+		WallGreenSafe = 285, 
+		WallPinkSafe,
+		WallObsidian,
+        WallBackground = 288,
     }
 
 }

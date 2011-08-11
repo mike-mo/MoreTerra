@@ -18,6 +18,7 @@ namespace MoreTerra
             public string OutputPreviewDirectory;
             public bool IsChestFilterEnabled;
             public bool IsWallsDrawable;
+			public Boolean OpenImageAfterDraw;
 			public Boolean ScanForNewChestItems;
 			public Int32 ChestListSortType;
 			public Int32 HighestVersion;
@@ -187,6 +188,18 @@ namespace MoreTerra
                 this.settings.IsWallsDrawable = value;
             }
         }
+
+		public Boolean OpenImage
+		{
+			get
+			{
+				return this.settings.OpenImageAfterDraw;
+			}
+			set
+			{
+				this.settings.OpenImageAfterDraw = value;
+			}
+		}
 
 		public Int32 SortChestsBy
 		{

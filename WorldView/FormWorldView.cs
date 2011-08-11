@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
+using System.Timers;
 using MoreTerra.Properties;
 using MoreTerra.Structures;
 using MoreTerra.Utilities;
@@ -22,7 +19,7 @@ namespace MoreTerra
 
         private WorldMapper mapper = null;
         private BackgroundWorker mapperWorker = null;
-        private Timer tmrMapperProgress = new Timer();
+		private System.Timers.Timer tmrMapperProgress;
 
 		// Used to store the images for our TreeView marker list.
 		private ImageList iList = new ImageList();
@@ -50,6 +47,8 @@ namespace MoreTerra
 		// changed what's in the filter since we switched tabs.
 		private Boolean filterUpdated;
 
+		private FormProgressDialog progForm;
+
         public FormWorldView()
         {
             InitializeComponent();
@@ -61,7 +60,8 @@ namespace MoreTerra
             labelSpecialThanks.Text = Constants.Credits + Environment.NewLine + Environment.NewLine +
                                       "And special thanks to kdfb for donating a copy of the game!";
 
-            tmrMapperProgress.Tick += new System.EventHandler(tmrMapperProgress_Tick);
+			tmrMapperProgress = new System.Timers.Timer();
+            tmrMapperProgress.Elapsed += new ElapsedEventHandler(tmrMapperProgress_Tick);
             tmrMapperProgress.Enabled = false;
             tmrMapperProgress.Interval = 333;
 
@@ -140,6 +140,7 @@ namespace MoreTerra
             if (folder != string.Empty)
 				this.worldDirectoryChanged();
 
+			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
 			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
             checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
 			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
@@ -265,95 +266,82 @@ namespace MoreTerra
                 mapper = new WorldMapper();
                 mapper.Initialize();
 
-                labelStatus.Text = "Reading World...";
-                labelPercent.Visible = true;
-                labelPercent.Text = mapper.progress + "%";
-                progressBarDrawWorld.Value = mapper.progress;
-                progressBarDrawWorld.Visible = true;
-
                 if (textBoxOutputFile.Text.Substring(textBoxOutputFile.Text.Length - 4).CompareTo(".png") != 0)
                 {
                     textBoxOutputFile.Text += ".png";
                 }
 
                 mapperWorker = new BackgroundWorker();
+				progForm = new FormProgressDialog("Draw World", false, mapperWorker);
+
+				mapperWorker.WorkerReportsProgress = true;
+				mapperWorker.WorkerSupportsCancellation = true;
+				mapperWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(progForm.worker_Completed);
+				mapperWorker.ProgressChanged += new ProgressChangedEventHandler(progForm.worker_ProgressChanged);
                 mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
                 mapperWorker.RunWorkerAsync(true);
 
-                tmrMapperProgress.Enabled = true;
+				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
+				progForm.Show();
             }
         }
 
         private void worker_GenerateMap(object sender, DoWorkEventArgs e)
         {
+			BackgroundWorker bw = (BackgroundWorker) sender;
+
+			tmrMapperProgress.Start();
+
+#if  (DEBUG == false)
             try
             {
-                mapper.OpenWorld(worldPath);
+#endif
+				mapper.OpenWorld();
 
                 //we're drawing a map
-                if ((bool)e.Argument == true) mapper.ReadWorldTiles();
-
-                PopulateWorldTree();
+				if ((bool)e.Argument == true)
+					mapper.ProcessWorld(worldPath, bw);
+				else 
+					mapper.ReadChests(worldPath, bw);
 
                 TreeNode[] chests = GetChests();
 
+				PopulateWorldTree();
                 PopulateChestTree(chests);
-
-                mapper.CloseWorld();
 
                 //we're drawing a map
                 if ((bool)e.Argument == true)
                 {
-                    mapper.CreatePreviewPNG(textBoxOutputFile.Text);
-                    if (checkBoxOpenImage.Checked) System.Diagnostics.Process.Start(textBoxOutputFile.Text);
+                    mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
+                    if (SettingsManager.Instance.OpenImage)
+						System.Diagnostics.Process.Start(textBoxOutputFile.Text);
                 }
 
-                mapper.progress = 100;
+				tmrMapperProgress.Stop();
+#if  (DEBUG == false)
             }
             catch (Exception ex)
             {
+				tmrMapperProgress.Stop();
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + "Details: " + ex.ToString(),
 								 "Error Opening World", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				return;
 			}
-            finally
-            {
-                mapper.CloseWorld();
-            }
-
+#endif
         }
 
         private void tmrMapperProgress_Tick(object sender, EventArgs e)
         {
-            progressBarDrawWorld.Value = mapper.progress;
+			mapperWorker.ReportProgress(mapper.progress);
+		}
 
-            labelPercent.Text = mapper.progress + "%";
 
-            if (mapper.progress > 30 && mapper.progress < 50)
-            {
-                labelStatus.Text = "Reading Chests...";
-            }
-            else if (mapper.progress > 50 && mapper.progress < 99)
-            {
-                labelStatus.Text = "Drawing World...";
-            }
-			else if (mapper.progress == 99)
+		private void worker_Completed(object sender, FormClosedEventArgs e)
 			{
-				labelStatus.Text = "Drawing Symbols...";
-			}
-			else if (mapper.progress >= 100)
-			{
-				tmrMapperProgress.Enabled = false;
-
+			Boolean v = progForm.Success;
 				if (filterCount != SettingsManager.Instance.FilterItemStates.Count())
 					ResetFilterLists();
-
-				labelStatus.Text = "Ready";
-				labelPercent.Text = string.Empty;
-				labelPercent.Visible = false;
-				progressBarDrawWorld.Value = 0;
-				progressBarDrawWorld.Visible = false;
 
 				buttonDrawWorld.Enabled = true;
 
@@ -363,7 +351,6 @@ namespace MoreTerra
 				(this.tabPageWorldInformation as Control).Enabled = true;
 				this.checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
 			}
-        }
 
         private void PopulateWorldTree()
         {
@@ -374,7 +361,7 @@ namespace MoreTerra
                 return;
             }
 
-            worldPropertyGrid.SelectedObject = mapper.Header;
+            worldPropertyGrid.SelectedObject = mapper.World.Header;
         }
 
         private TreeNode[] GetChests()
@@ -446,17 +433,21 @@ namespace MoreTerra
                 (this.tabPageSettings as Control).Enabled = false;
                 (this.tabPageWorldInformation as Control).Enabled = false;
 
-                labelStatus.Text = "Reading Chests...";
-                labelPercent.Visible = false;
-
                 mapper = new WorldMapper();
                 mapper.Initialize();
 
                 mapperWorker = new BackgroundWorker();
+				progForm = new FormProgressDialog("Load World Information", false, mapperWorker);
+
+				mapperWorker.WorkerReportsProgress = true;
+				mapperWorker.WorkerSupportsCancellation = false;
+				mapperWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(progForm.worker_Completed);
+				mapperWorker.ProgressChanged += new ProgressChangedEventHandler(progForm.worker_ProgressChanged);
                 mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
                 mapperWorker.RunWorkerAsync(false);
 
-                tmrMapperProgress.Enabled = true;
+				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
+				progForm.Show();
             }
         }
 
@@ -641,12 +632,15 @@ namespace MoreTerra
 			worldNames.Clear();
 			Int32 i = 0;
 			Int32 selection = 0;
+			World w;
 
 			comboBoxWorldFilePath.Items.Clear();
 
+			w = new World();
+
 			foreach (String file in Directory.GetFiles(SettingsManager.Instance.InputWorldDirectory, "*.wld"))
 			{
-				worldNames.Add(file, WorldReader.GetWorldName(file));
+				worldNames.Add(file, w.GetWorldName(file));
 				comboBoxWorldFilePath.Items.Add(file);
 
 				if (String.IsNullOrEmpty(selectedFile) != true && file == selectedFile)
@@ -791,6 +785,8 @@ namespace MoreTerra
 				SettingsManager.Instance.FilterItemStates.Remove(si);
 
 				lstAvailableItems.Items.RemoveAt(selection);
+
+				if (lstAvailableItems.Items.Count != 0)
 				lstAvailableItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
 			}
 
@@ -918,8 +914,9 @@ namespace MoreTerra
 			}
 		}
 
-
-
-
+		private void checkBoxOpenImage_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.OpenImage = checkBoxOpenImage.Checked;
+		}
 	}
 }

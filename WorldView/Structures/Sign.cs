@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 
 namespace MoreTerra.Structures
 {
 	public class Sign
 	{
-		public Int32 signId;
-		public Boolean activeSign;
-		public String signText;
-		public Point signPosition;
+		private Int32 signId;
+		private Boolean activeSign;
+		private String signText;
+		private Point signPosition;
 
 		public Sign()
 		{
@@ -28,5 +25,56 @@ namespace MoreTerra.Structures
 			signText = text;
 			signPosition = pos;
 		}
+
+		#region GetSet Functions
+		public Int32 Id
+		{
+			get
+			{
+				return this.signId;
+			}
+			set
+			{
+				this.signId = value;
+			}
+		}
+
+		public Boolean Active
+		{
+			get
+			{
+				return this.activeSign;
+			}
+			set
+			{
+				this.activeSign = value;
+			}
+		}
+
+		public String Text
+		{
+			get
+			{
+				return this.signText;
+			}
+			set
+			{
+				this.signText = value;
+			}
+		}
+
+		public Point Position
+		{
+			get
+			{
+				return this.signPosition;
+			}
+			set
+			{
+				this.signPosition = value;
+			}
+		}
+#endregion
+
 	}
 }

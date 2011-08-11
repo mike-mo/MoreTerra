@@ -1,36 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MoreTerra.Structures
 {
-	class FilterItem
+	public class FilterItem
 	{
-		private Boolean _filterOn;
-		private Int32 _min;
-		private Int32 _max;
+		private Boolean filterState;
+		private Int32 filterMin;
+		private Int32 filterMax;
 
+		#region Constructors
 		public FilterItem()
 		{
-			_filterOn = false;
-			_min = 0;
-			_max = 255;
+			filterState = false;
+			filterMin = 0;
+			filterMax = 255;
 		}
+		#endregion
 
-		public Boolean filterOn
+		#region GetSet Functions
+		public Boolean State
 		{
 			get
 			{
-				return _filterOn;
+				return filterState;
 			}
 		}
 
-		public Int32 min
+		public Int32 Min
 		{
 			get
 			{
-				return _min;
+				return filterMin;
 			}
 
 			set
@@ -38,18 +38,18 @@ namespace MoreTerra.Structures
 				if (value < 0)
 					value = 0;
 
-				if (value > _max)
-					value = _max;
+				if (value > filterMax)
+					value = filterMax;
 
-				_min = value;
+				filterMin = value;
 			}
 		}
 
-		public Int32 max
+		public Int32 Max
 		{
 			get
 			{
-				return _max;
+				return filterMax;
 			}
 
 			set
@@ -57,12 +57,12 @@ namespace MoreTerra.Structures
 				if (value < 0)
 					value = 0;
 
-				if (value < _min)
-					value = _min;
+				if (value < filterMin)
+					value =  filterMin;
 
-				_max = value;
+				filterMax = value;
 			}
 		}
-			
+		#endregion
 	}
 }

@@ -1,11 +1,9 @@
-﻿namespace MoreTerra.Structures
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Linq;
-    using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 
+namespace MoreTerra.Structures
+{
     public class Chest
     {
 		private Boolean activeChest;
@@ -13,6 +11,7 @@
         private Point coordinates;
         private List<Item> items;
 
+		#region Constructors
         public Chest(int chestId, Point coordinates)
         {
 			this.activeChest = true;
@@ -24,13 +23,16 @@
 		public Chest()
 		{
 			this.chestId = 0;
+			this.items = new List<Item>();
 		}
+		#endregion
 
         public void AddItem(Item item)
         {
             this.items.Add(item);
         }
 
+		#region GetSet Functions
         public Point Coordinates
         {
             get
@@ -61,6 +63,10 @@
             {
                 return this.chestId;
             }
+			set
+			{
+				this.chestId = value;
+			}
         }
 
 		public Boolean Active
@@ -74,5 +80,6 @@
 				this.activeChest = value;
 			}
 		}
+		#endregion
     }
 }

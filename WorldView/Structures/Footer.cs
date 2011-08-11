@@ -1,14 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MoreTerra.Structures
 {
-	class Footer
+	public class Footer
 	{
-		public Boolean activeFooter;
-		public String worldName;
-		public Int32 worldId;
+		private Boolean activeFooter;
+		private String worldName;
+		private Int32 worldId;
+
+		#region GetSet Functions
+		public Boolean Active
+		{
+			get
+			{
+				return activeFooter;
+			}
+			set
+			{
+				activeFooter = value;
+			}
+		}
+
+		public String Name
+		{
+			get
+			{
+				return worldName;
+			}
+			set
+			{
+				worldName = value;
+			}
+		}
+
+		public Int32 Id
+		{
+			get
+			{
+				return worldId;
+			}
+			set
+			{
+				worldId = value;
+			}
+		}
+		#endregion
 	}
 }

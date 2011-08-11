@@ -1,30 +1,14 @@
-﻿namespace MoreTerra.Structures
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+﻿using System;
 
-    /// <summary>
-    /// Basic Item Representation
-    /// </summary>
+namespace MoreTerra.Structures
+{
     public class Item
     {
-        /// <summary>
-        /// The name of the item
-        /// </summary>
         private string name;
-
-        /// <summary>
-        /// The count of the items
-        /// </summary>
         private int count;
+		private Int32 id;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name">name of the item</param>
-        /// <param name="count">number of the items</param>
+		#region Constructors
         public Item(string name, int count)
         {
             this.name = name;
@@ -36,10 +20,9 @@
 			this.name = null;
 			this.count = 0;
 		}
+		#endregion
 
-        /// <summary>
-        /// Property returns name of item
-        /// </summary>
+		#region GetSet Functions
         public string Name
         {
             get
@@ -52,9 +35,6 @@
 			}
         }
 
-        /// <summary>
-        /// Property returns number of items currently stacked
-        /// </summary>
         public int Count
         {
             get
@@ -67,6 +47,20 @@
 			}
         }
 
+		public Int32 Id
+		{
+			get
+			{
+				return id;
+			}
+			set
+			{
+				id = value;
+			}
+		}
+		#endregion
+
+		#region Overrides
         public override string ToString()
         {
             if(count == 1)
@@ -79,6 +73,7 @@
             }
             
         }
+		#endregion
     
     }
 }

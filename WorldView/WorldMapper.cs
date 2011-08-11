@@ -4,12 +4,11 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using System.Linq;
-    using System.Text;
 	using System.IO;
     using System.Windows.Forms;
 	using MoreTerra.Utilities;
 	using MoreTerra.Structures;
+	using System.ComponentModel;
 
     public class WorldMapper
     {
@@ -22,10 +21,9 @@
         private Boolean[,] processed;
 		private List<String> alreadyDenied;
 
-        private WorldHeader worldHeader;
-        private WorldReader reader;
+		private World world;
 
-        int maxX, maxY;
+		int maxX, maxY;
 
         public int progress = 0;
 		
@@ -34,14 +32,6 @@
             tileTypeDefs = new Dictionary<int, TileProperties>(255);
             chests = new List<Chest>();
 			alreadyDenied = new List<String>();
-        }
-
-        public WorldHeader Header
-        {
-            get
-            {
-                return this.worldHeader;
-            }
         }
 
         public void Initialize()
@@ -69,8 +59,9 @@
             tileTypeDefs[18] = new TileProperties(TileType.CraftingTable, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[19] = new TileProperties(TileType.WoodenPlatform, false, Constants.Colors.WOOD);
 
+			// #21 Chest has a marker but we do not use it to determine markers.
 			tileTypeDefs[20] = new TileProperties(TileType.PlantsDecorative, true, Constants.Colors.PLANTS);
-            tileTypeDefs[21] = new TileProperties(TileType.Chest, true, Constants.Colors.IMPORTANT, true);
+            tileTypeDefs[21] = new TileProperties(TileType.Chest, true, Constants.Colors.IMPORTANT);
 			tileTypeDefs[22] = new TileProperties(TileType.Demonite, false, Constants.Colors.DEMONITE, true);
             tileTypeDefs[23] = new TileProperties(TileType.CorruptionGrass, false, Constants.Colors.CORRUPTION_GRASS);
             tileTypeDefs[24] = new TileProperties(TileType.CorruptionPlants, true, Constants.Colors.CORRUPTION_GRASS);
@@ -102,12 +93,13 @@
             tileTypeDefs[48] = new TileProperties(TileType.Spikes, false, Constants.Colors.SPIKES);
             tileTypeDefs[49] = new TileProperties(TileType.CandleBlue, false, Constants.Colors.LIGHT_SOURCE);
 
+			// #55 Sign has a marker but we do not use it to determine markers.
 			tileTypeDefs[50] = new TileProperties(TileType.Books, true, Constants.Colors.DECORATIVE);
             tileTypeDefs[51] = new TileProperties(TileType.Web, false, Constants.Colors.WEB);
             tileTypeDefs[52] = new TileProperties(TileType.Vines, false, Constants.Colors.PLANTS);
             tileTypeDefs[53] = new TileProperties(TileType.Sand, false, Constants.Colors.SAND);
             tileTypeDefs[54] = new TileProperties(TileType.Glass, false, Constants.Colors.DECORATIVE);
-            tileTypeDefs[55] = new TileProperties(TileType.Sign, true, Constants.Colors.DECORATIVE, true);
+            tileTypeDefs[55] = new TileProperties(TileType.Sign, true, Constants.Colors.DECORATIVE);
 			tileTypeDefs[56] = new TileProperties(TileType.Obsidian, false, Constants.Colors.OBSIDIAN, true);
             tileTypeDefs[57] = new TileProperties(TileType.Ash, false, Constants.Colors.ASH);
 			tileTypeDefs[58] = new TileProperties(TileType.Hellstone, false, Constants.Colors.HELLSTONE, true);
@@ -141,12 +133,33 @@
             tileTypeDefs[83] = new TileProperties(TileType.HerbMature, true, Constants.Colors.HERB);
             tileTypeDefs[84] = new TileProperties(TileType.HerbBlooming, true, Constants.Colors.HERB);
             tileTypeDefs[85] = new TileProperties(TileType.Tombstone, true, Constants.Colors.TOMBSTONE);
+			tileTypeDefs[86] = new TileProperties(TileType.Loom, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[87] = new TileProperties(TileType.Piano, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[88] = new TileProperties(TileType.Dresser, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[89] = new TileProperties(TileType.Bench, true, Constants.Colors.DECORATIVE);
+
+			tileTypeDefs[90] = new TileProperties(TileType.Bathtub, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[91] = new TileProperties(TileType.Banner, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[92] = new TileProperties(TileType.Lamppost, true, Constants.Colors.LIGHT_SOURCE);
+			tileTypeDefs[93] = new TileProperties(TileType.Tikitorch, true, Constants.Colors.LIGHT_SOURCE);
+			tileTypeDefs[94] = new TileProperties(TileType.Keg, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[95] = new TileProperties(TileType.ChineseLamp, true, Constants.Colors.LIGHT_SOURCE);
+			tileTypeDefs[96] = new TileProperties(TileType.CookingPot, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[97] = new TileProperties(TileType.Safe, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[98] = new TileProperties(TileType.SkullCandle, true, Constants.Colors.LIGHT_SOURCE);
+			tileTypeDefs[99] = new TileProperties(TileType.Trashcan, true, Constants.Colors.DECORATIVE);
+
+			tileTypeDefs[100] = new TileProperties(TileType.Candleabra, true, Constants.Colors.LIGHT_SOURCE);
+			tileTypeDefs[101] = new TileProperties(TileType.Bookcase, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[102] = new TileProperties(TileType.Throne, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[103] = new TileProperties(TileType.Plate, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[104] = new TileProperties(TileType.Clock, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[105] = new TileProperties(TileType.SuitOfArmor, true, Constants.Colors.DECORATIVE);
 
 
+            tileTypeDefs[106] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
 
-            tileTypeDefs[86] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
-
-            for (int i = 87; i < 255; i++)
+            for (int i = 107; i < 256; i++)
             {
                 tileTypeDefs[i] = new TileProperties(TileType.Unknown, false, Color.Magenta);
             }
@@ -168,18 +181,25 @@
             // Walls
             tileTypeDefs[268] = new TileProperties(TileType.WallStone, false, Constants.Colors.WALL_STONE);
             tileTypeDefs[269] = new TileProperties(TileType.WallDirt, false, Constants.Colors.WALL_DIRT);
-            tileTypeDefs[270] = new TileProperties(TileType.WallStone2, false, Constants.Colors.WALL_STONE2);
+            tileTypeDefs[270] = new TileProperties(TileType.WallEbonstone, false, Constants.Colors.WALL_EBONSTONE);
             tileTypeDefs[271] = new TileProperties(TileType.WallWood, false, Constants.Colors.WALL_WOOD);
-            tileTypeDefs[272] = new TileProperties(TileType.WallBrick, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[273] = new TileProperties(TileType.WallRed, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[274] = new TileProperties(TileType.WallBlue, false, Constants.Colors.WALL_DUNGEON_BLUE);
-            tileTypeDefs[275] = new TileProperties(TileType.WallGreen, false, Constants.Colors.WALL_DUNGEON_GREEN);
-            tileTypeDefs[276] = new TileProperties(TileType.WallPink, false, Constants.Colors.WALL_DUNGEON_PINK);
-            tileTypeDefs[277] = new TileProperties(TileType.WallGold, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[278] = new TileProperties(TileType.WallSilver, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[279] = new TileProperties(TileType.WallCopper, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[280] = new TileProperties(TileType.WallHellstone, false, Constants.Colors.WALL_BRICK);
-            tileTypeDefs[281] = new TileProperties(TileType.WallHellstone, false, Constants.Colors.WALL_BACKGROUND);
+            tileTypeDefs[272] = new TileProperties(TileType.WallGreyBrick, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[273] = new TileProperties(TileType.WallRedBrick, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[274] = new TileProperties(TileType.WallBlueBrick, false, Constants.Colors.WALL_DUNGEON_BLUE);
+            tileTypeDefs[275] = new TileProperties(TileType.WallGreenBrick, false, Constants.Colors.WALL_DUNGEON_GREEN);
+            tileTypeDefs[276] = new TileProperties(TileType.WallPinkBrick, false, Constants.Colors.WALL_DUNGEON_PINK);
+            tileTypeDefs[277] = new TileProperties(TileType.WallGoldBrick, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[278] = new TileProperties(TileType.WallSilverBrick, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[279] = new TileProperties(TileType.WallCopperBrick, false, Constants.Colors.WALL_BRICK);
+            tileTypeDefs[280] = new TileProperties(TileType.WallHellstone, false, Constants.Colors.WALL_HELLSTONE);
+			tileTypeDefs[281] = new TileProperties(TileType.WallObsidianBrick, false, Constants.Colors.WALL_OBSIDIAN);
+			tileTypeDefs[282] = new TileProperties(TileType.WallMud, false, Constants.Colors.WALL_MUD);
+			tileTypeDefs[283] = new TileProperties(TileType.WallDirtSafe, false, Constants.Colors.WALL_DIRT);
+			tileTypeDefs[284] = new TileProperties(TileType.WallBlueSafe, false, Constants.Colors.WALL_DUNGEON_BLUE);
+			tileTypeDefs[285] = new TileProperties(TileType.WallGreenSafe, false, Constants.Colors.WALL_DUNGEON_GREEN);
+			tileTypeDefs[286] = new TileProperties(TileType.WallPinkSafe, false, Constants.Colors.WALL_DUNGEON_PINK);
+			tileTypeDefs[287] = new TileProperties(TileType.WallObsidian, false, Constants.Colors.WALL_BACKGROUND);
+            tileTypeDefs[288] = new TileProperties(TileType.WallBackground, false, Constants.Colors.WALL_BACKGROUND);
 
 			// Now we set DrawSymbol for each of the symbols we can potentially draw.
 			// This makes for a much faster lookup to see if we need to draw an symbol
@@ -193,115 +213,43 @@
 			}
         }
 
-        public void OpenWorld(string worldPath)
+        public void OpenWorld()
         {
-            reader = new WorldReader(worldPath);
-            this.worldHeader = reader.ReadHeader(true);
+			world = new World();
         }
 
-        public void ReadWorldTiles()
+        public void ProcessWorld(String worldPath, BackgroundWorker bw)
         {
-			Int32 i, col, row;
+			Int32 i;
 
-			progress = 0;
+			tiles = world.ReadAndProcessWorld(worldPath, bw);
+			if (tiles == null)
+				return;
+	
+			progress = 45;
 
-            maxX = (int)Header.MaxTiles.X;
-            maxY = (int)Header.MaxTiles.Y;
+			maxX = world.Header.MaxTiles.X;
+			maxY = world.Header.MaxTiles.Y;
 
             // Reset Symbol List
             tileSymbolsToAdd = new Dictionary<TileType, List<SymbolLoc>>();
-            tiles = new TileType[maxX, maxY];
             processed = new Boolean[maxX, maxY];
-
-            reader.SeekToTiles();
-
-			bool isTileActive;
-			TileType tileType;
-			byte blockType;
-			BinaryReader useReader = reader.Reader;
-
-			byte wallType;
-			bool isLighted, isLava;
-			bool isWall, isLiquid;
-
-
-			//Read all the tile data
-			for (col = 0; col < maxX; col++)
-			{
-				progress = (int)(((float)col / (float)maxX) * 30f);
-
-				for (row = 0; row < maxY; row++)
-				{
-					isTileActive = useReader.ReadBoolean();
-					tileType = TileType.Unknown;
-					blockType = 0x00;
-
-					if (isTileActive)
-					{
-						blockType = useReader.ReadByte();
-						if (WorldMapper.tileTypeDefs[blockType].IsImportant)
-						{
-							useReader.ReadInt16();
-							useReader.ReadInt16();
-						}
-						tileType = WorldMapper.tileTypeDefs[blockType].TileType;
-					}
-					else
-					{
-						tileType = TileType.Sky;
-					}
-					isLighted = useReader.ReadBoolean();
-
-					if (isLighted == true)
-						isWall = true;
-
-					isWall = useReader.ReadBoolean();
-					if (isWall)
-					{
-						wallType = useReader.ReadByte();
-						if (tileType == TileType.Unknown || tileType == TileType.Sky)
-						{
-							if (!WorldMapper.tileTypeDefs.ContainsKey((int)wallType + Constants.WallOffset))
-							{
-								tileType = TileType.Unknown;
-							}
-							else
-							{
-								tileType = WorldMapper.tileTypeDefs[(int)wallType + Constants.WallOffset].TileType;
-							}
-
-						}
-					}
-					isLiquid = useReader.ReadBoolean();
-					if (isLiquid)
-					{
-						byte liquidLevel = useReader.ReadByte();
-						isLava = useReader.ReadBoolean();
-						if (isWall || tileType == TileType.Sky)
-						{
-							tileType = isLava ? TileType.Lava : TileType.Water;
-						}
-
-					}
-
-					tiles[col, row] = tileType;
-				}
-			}
 
 			// If we are drawing chests then add an empty list of Chests to populate
 			if (SettingsManager.Instance.DrawMarker(TileType.Chest))
 				tileSymbolsToAdd.Add(TileType.Chest, new List<SymbolLoc>());
 
+			if (bw != null)
+				bw.ReportProgress(45, "Processing Chests");
+
             Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemStates;
-            // Read the Chests
-            for (i = 0; i < Constants.ChestMaxNumber; i++)
-            {
-                progress = (int)(((float)i / (float)Constants.ChestMaxNumber) * 20f + 30f);
-                Chest chest = this.reader.GetNextChest(i);
 
-                if (chest == null) continue;
+			// Read the Chests
+			this.chests = world.Chests;
 
-                this.chests.Add(chest);
+			foreach (Chest chest in this.chests)
+			{
+				progress = (int)(((float)chest.ChestId / (float)Constants.ChestMaxNumber) * 5f + 45f);
 
 				// See if we are bothering to draw chests at all.
 				if (SettingsManager.Instance.DrawMarker(TileType.Chest) == true)
@@ -310,7 +258,8 @@
 					foreach (Item item in chest.Items)
 					{
 						// If we're not filtering or if we want it
-						if (!SettingsManager.Instance.FilterChests || (itemFilters.ContainsKey(item.Name) && itemFilters[item.Name] == true))
+						if (!SettingsManager.Instance.FilterChests || 
+							(itemFilters.ContainsKey(item.Name) && itemFilters[item.Name] == true))
 						{
 							// Draw the symbol
 							tileSymbolsToAdd[TileType.Chest].Add(new SymbolLoc(chest.Coordinates, 1));
@@ -321,28 +270,35 @@
             }
 
 			if (SettingsManager.Instance.ScanForNewItems && SettingsManager.Instance.InConsole == false)
-				ScanChests(this.chests);
-
-			Sign newSign;
-			// Pull all of the Signs out of the file.
-			for (i = 0; i < Constants.SignMaxNumber; i++)
 			{
-				newSign = reader.GetNextSign(i);
-				if (newSign != null)
+				bw.ReportProgress(50, "Scanning chests for new items");
+				ScanChests(this.chests);
+			}
+
+			if (bw != null)
+				bw.ReportProgress(50, "Processing Signs");
+
+			// Pull all of the Signs out of the file.
+			foreach (Sign newSign in world.Signs)
+			{
+				if (newSign.Active)
 				{
 					if (SettingsManager.Instance.SymbolStates["Sign"] == true)
 					{
 						if (!tileSymbolsToAdd.ContainsKey(TileType.Sign))
 							tileSymbolsToAdd.Add(TileType.Sign, new List<SymbolLoc>());
-						tileSymbolsToAdd[TileType.Sign].Add(new SymbolLoc(newSign.signPosition, 1));
+						tileSymbolsToAdd[TileType.Sign].Add(new SymbolLoc(newSign.Position, 1));
 					}
 				}
 			}
 
 			i = 0;
-			NPC newNPC;
-			while ((newNPC = reader.GetNextNPC(i)) != null)
+			if (bw != null)
+				bw.ReportProgress(50, "Processing Npcs");
+			foreach (NPC newNPC in world.Npcs)
 			{
+				if (newNPC == null)
+					continue;
 				// Convert from the NPC list with names to the one without.  This is
 				// sadly needed because resources can not have spaces but some npcs
 				// have spaces in their names.  I could just strip the space out, I guess.
@@ -352,7 +308,7 @@
 
 				foreach (String s in Constants.NPCList)
 				{
-					if (s == newNPC.npcName)
+					if (s == newNPC.Name)
 					{
 						markerName = Constants.PeopleSymbols[pos];
 						break;
@@ -371,7 +327,8 @@
 					// if conditions are right two nurses and three merchants can spawn.
 					if (!tileSymbolsToAdd.ContainsKey(tt))
 						tileSymbolsToAdd.Add(tt, new List<SymbolLoc>());
-					tileSymbolsToAdd[tt].Add(new SymbolLoc(newNPC.npcPosition, 1));
+					tileSymbolsToAdd[tt].Add(new SymbolLoc(
+						new Point((Int32) (newNPC.Position.X/16), (Int32) (newNPC.Position.Y/16)), 1));
 				}
 
 				i++;
@@ -381,24 +338,14 @@
 			
 		}
 	
-
-        public void ReadChests()
+		// Called during worker_GenerateMap.  This will only get used if
+		// we are only doing a LoadInformation button press call.
+        public void ReadChests(String worldPath, BackgroundWorker bw)
         {
 			Dictionary<String, Boolean> itemFilters = SettingsManager.Instance.FilterItemStates;
             progress = 0;
 
-            this.chests = new List<Chest>();
-
-            reader.SeekToChests();
-
-            // Read the Chests
-            for (int i = 0; i < Constants.ChestMaxNumber; i++)
-            {
-                Chest chest = this.reader.GetNextChest(i);
-
-                if (chest == null) continue;
-                else this.chests.Add(chest);
-            }
+			chests = world.GetChests(worldPath, bw);
 
 			if (SettingsManager.Instance.ScanForNewItems && SettingsManager.Instance.InConsole == false)
 				ScanChests(this.chests);
@@ -441,11 +388,9 @@
 					}
 				}
 			}
-
-            progress = 100;
         }
 
-        public void CreatePreviewPNG(string outputPngPath)
+		public void CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)
         {
 			Bitmap bitmap = new Bitmap(maxX, maxY, PixelFormat.Format24bppRgb);
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
@@ -469,16 +414,19 @@
             //Generate the bitmap
             int index = -1 * byteOffset;    //first increment will be 0;
 
+			if (bw != null)
+				bw.ReportProgress(50, "Drawing Map");
+
             for (int row = 0; row < maxY; row++)
             {
-                progress = (int)(((float)row / (float)maxY) * 50.0f + 50f);
+                progress = (int)(((float)row / (float)maxY) * 40f + 50f);
 
                 for (int col = 0; col < maxX; col++)
                 {
                     index += byteOffset;    //increase here to avoid adding increments to each continue
                     tileType = tiles[col, row];
 
-                    if (tileType == TileType.Sky && row > (int)this.Header.SurfaceLevel)
+                    if (tileType == TileType.Sky && row > world.Header.SurfaceLevel)
 						tileType = TileType.WallBackground;
 
                     // Skip Walls
@@ -486,7 +434,7 @@
 						tileType = TileType.Sky;
 
                     // Skip chests and signs because we read the coordinates in ReadWorld()
-                    if (tileType == TileType.Chest || tileType == TileType.Sign) continue;
+//                    if (tileType == TileType.Chest || tileType == TileType.Sign) continue;
 
 					properties = tileTypeDefs[(int)tileType];
 
@@ -539,8 +487,8 @@
 							Int32 boundsMax = 32;
 							Rectangle bounds = new Rectangle(col, row, 1, 1);
 
-							Int32 screenMaxWidth = Header.MaxTiles.X;
-							Int32 screenMaxHeight = Header.MaxTiles.Y;
+							Int32 screenMaxWidth = world.Header.MaxTiles.X;
+							Int32 screenMaxHeight = world.Header.MaxTiles.Y;
 							Boolean expandedHoriz = false;
 							Boolean expandedVert = false;
 							Boolean doneProcessing = true;
@@ -687,12 +635,17 @@
 			if (tileTypeDefs[(int)TileType.Spawn].DrawSymbol == true)
 			{
 				tileSymbolsToAdd.Add(TileType.Spawn, new List<SymbolLoc>());
-				tileSymbolsToAdd[TileType.Spawn].Add(new SymbolLoc(new Point(this.Header.SpawnPoint.X, this.Header.SpawnPoint.Y), 1));
+				tileSymbolsToAdd[TileType.Spawn].Add(new SymbolLoc(new Point(
+					world.Header.SpawnPoint.X, world.Header.SpawnPoint.Y), 1));
 			}
 
+			if (bw != null)
+				bw.ReportProgress(90, "Drawing markers");
+			Int32 count = 0;
             // Draw Symbols
             foreach (KeyValuePair<TileType, List<SymbolLoc>> kv in tileSymbolsToAdd)
             {
+				progress = (Int32)(((Double)count / tileSymbolsToAdd.Count) * 10f + 90f);
                 Bitmap symbolBitmap = ResourceManager.Instance.GetSymbol(kv.Key);
                 foreach (SymbolLoc sl in kv.Value)
                 {
@@ -704,24 +657,29 @@
                     graphicsHandle.DrawImage(symbolBitmap, x, y);
                 }
             }
+			if (bw != null)
+				bw.ReportProgress(99, "Saving image");
             bitmap.Save(outputPngPath, ImageFormat.Png);
             progress = 100;
         }
 
-        public void CloseWorld()
-        {
-            reader.Close();
-        }
-
+		#region GetSet Functions
         public List<Chest> Chests
         {
             get
             {
-                if (this.chests.Count == 0) ReadChests();
                 return this.chests;
             }
         }
 
+		public World World
+		{
+			get
+			{
+				return world;
+			}
+		}
 
+		#endregion
     }
 }

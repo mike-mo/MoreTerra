@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 
 namespace MoreTerra
 {
     public class Constants
     {
-		public const Int32 currentVersion = 12;
+		public const Int32 currentVersion = 20;
         /// <summary>
         /// List of Credits
         /// </summary>
         public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf.";
                                        
 
-        public const int WallOffset = 268;
+        public const int WallOffset = 267;
 
         /// <summary>
         /// Maximum Number of Items a Chest Can Contain
@@ -116,10 +114,12 @@ namespace MoreTerra
 								  "Feral Claws",
 								  "Flaming Arrow",
 								  "Flipper", 
-								  "Gills Potion",
+								  "Flower of Fire",
+								  "Gills potion",
 								  "Glowstick",
 								  "Gold Bar",
 								  "Gold Coin",
+								  "Golden Key",
 								  "Gravitation Potion",
 								  "Grenade",
 								  "Handgun",
@@ -145,6 +145,7 @@ namespace MoreTerra
 								  "Obsidian Skin Potion",
 								  "Regeneration Potion",
 								  "Restoration Potion",
+								  "Shadow Key",
 								  "Shine Potion",
 								  "Shiny Red Balloon",
 								  "Shuriken",
@@ -156,9 +157,12 @@ namespace MoreTerra
 								  "Staff of Regrowth",
 								  "Starfury",
 								  "Swiftness Potion",
+								  "Sunfury",
+								  "Suspicious Looking Eye",
 								  "Thorns Potion",
 								  "Throwing Knife",
 								  "Torch",
+								  "Trident",
 								  "Water Walking Potion",
 								  "Wooden Arrow",
 								  "Wooden Boomerang"};
@@ -218,27 +222,17 @@ namespace MoreTerra
             public static Color SKY = Color.FromArgb(155, 209, 255);
             public static Color WALL_STONE = Color.FromArgb(66, 66, 66);
             public static Color WALL_DIRT = Color.FromArgb(88, 61, 46);
-            public static Color WALL_STONE2 = Color.FromArgb(61, 58, 78);
+            public static Color WALL_EBONSTONE = Color.FromArgb(61, 58, 78);
             public static Color WALL_WOOD = Color.FromArgb(73, 51, 36);
             public static Color WALL_BRICK = Color.FromArgb(60, 60, 60);
             public static Color WALL_BACKGROUND = Color.FromArgb(50, 50, 60);
             public static Color WALL_DUNGEON_PINK = Color.FromArgb(84, 25, 60);
             public static Color WALL_DUNGEON_BLUE = Color.FromArgb(29, 31, 72);
             public static Color WALL_DUNGEON_GREEN = Color.FromArgb(14, 68, 16);
+			public static Color WALL_MUD = Color.FromArgb(61, 46, 49);
+			public static Color WALL_HELLSTONE = Color.FromArgb(48, 21, 21);
+			public static Color WALL_OBSIDIAN = Color.FromArgb(87, 81, 173);
             public static Color UNKNOWN = Color.Magenta;
-        }
-
-        /// <summary>
-        /// Cell Types Defintions For Enums
-        /// </summary>
-        public enum CellType
-        {
-            Air,
-            Tile,
-            Wall,
-            Water,
-            Lava,
-            Unknown,
         }
     }
 }

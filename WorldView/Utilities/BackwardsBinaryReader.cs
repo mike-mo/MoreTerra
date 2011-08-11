@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace MoreTerra.Utilities
@@ -11,11 +8,13 @@ namespace MoreTerra.Utilities
 		private long oldPosition;
 		Stream inStream;
 
+		#region Constructors
 		public BackwardsBinaryReader(Stream input) : base(input)
 		{
 			oldPosition = input.Position;
 			inStream = input;
 		}
+		#endregion
 
 		/// <summary>
 		/// Attempts to read in a string of a specific size.
@@ -235,12 +234,6 @@ namespace MoreTerra.Utilities
 			inStream.Seek(-sizeof(Int32), SeekOrigin.Current);
 
 			return retVal;
-		}
-
-
-		public void ResetPosition()
-		{
-			inStream.Seek(oldPosition, SeekOrigin.Begin);
 		}
 	}
 }
