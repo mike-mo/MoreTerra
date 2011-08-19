@@ -129,8 +129,9 @@
 		Throne,
 		Plate,
 		Clock,
-		SuitOfArmor = 105,
+		Statue = 105,
 
+		Sawmill,
         Unknown,
 
 

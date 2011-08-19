@@ -4,21 +4,14 @@ namespace MoreTerra.Structures
 {
 	public class Tile
 	{
-		private Boolean isActive;
+		private Byte flags;
 		private Byte tileType;
 		private PointInt16 tileFrame;
-		private Boolean isLighted;
-		private Boolean isWall;
 		private Byte wallType;
-		private Boolean isLiquid;
 		private Byte liquidLevel;
-		private Boolean isLava;
-
-		private Boolean isImportant;
-		private Int32 tileSize;
-		private Int64 filePos;
 
 		#region Constructors
+
 		public Tile()
 		{
 
@@ -26,52 +19,24 @@ namespace MoreTerra.Structures
 
 		public Tile(Tile copy)
 		{
-			isActive = copy.isActive;
+			flags = copy.flags;
 			tileType = copy.tileType;
 			tileFrame = copy.tileFrame;
-			isLighted = copy.isLighted;
-			isWall = copy.isWall;
 			wallType = copy.wallType;
-			isLiquid = copy.isLiquid;
 			liquidLevel = copy.liquidLevel;
-			isLava = copy.isLava;
-
-			isImportant = copy.isImportant;
-			tileSize = copy.tileSize;
 		}
 		#endregion
-
-		public void calcSize()
-		{
-			Int32 size;
-
-			size = 4;
-			if (isActive == true)
-			{
-				size++;
-				if (isImportant)
-					size += 4;
-			}
-
-			if (isWall)
-				size++;
-
-			if (isLiquid)
-				size += 2;
-
-			tileSize = size;
-		}
 
 		#region GetSet Functions
 		public Boolean Active
 		{
 			get
 			{
-				return isActive;
+				return (flags & 0x01) != 0;
 			}
 			set
 			{
-				isActive = value;
+				flags = (Byte) ((flags & 0xFE) + (value ? 0x01 : 0x00));
 			}
 		}
 
@@ -103,11 +68,11 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return isLighted;
+				return (flags & 0x02) != 0;
 			}
 			set
 			{
-				isLighted = value;
+				flags = (Byte)((flags & 0xFD) + (value ? 0x02 : 0x00));
 			}
 		}
 
@@ -115,11 +80,11 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return isWall;
+				return (flags & 0x04) != 0;
 			}
 			set
 			{
-				isWall = value;
+				flags = (Byte)((flags & 0xFB) + (value ? 0x04 : 0x00));
 			}
 		}
 
@@ -137,11 +102,11 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return isLiquid;
+				return (flags & 0x08) != 0;
 			}
 			set
 			{
-				isLiquid = value;
+				flags = (Byte)((flags & 0xF7) + (value ? 0x08 : 0x00));
 			}
 		}
 
@@ -161,11 +126,11 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return isLava;
+				return (flags & 0x10) != 0;
 			}
 			set
 			{
-				isLava = value;
+				flags = (Byte)((flags & 0xEF) + (value ? 0x10 : 0x00));
 			}
 		}
 
@@ -173,23 +138,11 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return isImportant;
+				return (flags & 0x20) != 0;
 			}
 			set
 			{
-				isImportant = value;
-			}
-		}
-
-		public Int64 FilePos
-		{
-			get
-			{
-				return filePos;
-			}
-			set
-			{
-				filePos = value;
+				flags = (Byte)((flags & 0xDF) + (value ? 0x20 : 0x00));
 			}
 		}
 
@@ -197,10 +150,27 @@ namespace MoreTerra.Structures
 		{
 			get
 			{
-				return tileSize;
+
+				Int32 size;
+
+				size = 4;
+				if (Active == true)
+				{
+					size++;
+					if (Important)
+						size += 4;
+				}
+
+				if (Wall)
+					size++;
+
+				if (Liquid)
+					size += 2;
+
+
+				return size;
 			}
 		}
-
 		#endregion
 
 		#region Overrides
@@ -209,9 +179,9 @@ namespace MoreTerra.Structures
 			String ret = "";
 			String val;
 
-			if (isActive == true)
+			if (Active == true)
 			{
-				if (isImportant == true)
+				if (Important == true)
 				{
 					val = String.Format("01 {0:X2} {1:X2} {2:X2} {3:X2} {4:X2} ", tileType,
 						(tileFrame.X & 0xFF), ((tileFrame.X & 0xFF00) / 256),
@@ -229,14 +199,14 @@ namespace MoreTerra.Structures
 
 			ret += val;
 
-			if (isLighted == true)
+			if (Lighted == true)
 				val = "01 ";
 			else
 				val = "00 ";
 
 			ret += val;
 
-			if (isWall == true)
+			if (Wall == true)
 			{
 				val = String.Format("01 {0:X2} ", wallType);
 			}
@@ -247,9 +217,9 @@ namespace MoreTerra.Structures
 
 			ret += val;
 
-			if (isLiquid == true)
+			if (Liquid == true)
 			{
-				val = String.Format("01 {0:X2} {1:X2}", liquidLevel, isLava ? 1 : 0);
+				val = String.Format("01 {0:X2} {1:X2}", liquidLevel, Lava ? 1 : 0);
 			}
 			else
 			{
@@ -265,10 +235,10 @@ namespace MoreTerra.Structures
 		{
 			Tile secondTile = (Tile) obj;
 
-			if (tileSize != secondTile.tileSize)
+			if (Size != secondTile.Size)
 				return false;
 
-			if (tileSize.ToString() != secondTile.ToString())
+			if (Size.ToString() != secondTile.ToString())
 				return false;
 
 			return true;

@@ -154,10 +154,9 @@
 			tileTypeDefs[102] = new TileProperties(TileType.Throne, true, Constants.Colors.DECORATIVE);
 			tileTypeDefs[103] = new TileProperties(TileType.Plate, true, Constants.Colors.DECORATIVE);
 			tileTypeDefs[104] = new TileProperties(TileType.Clock, true, Constants.Colors.DECORATIVE);
-			tileTypeDefs[105] = new TileProperties(TileType.SuitOfArmor, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[105] = new TileProperties(TileType.Statue, true, Constants.Colors.DECORATIVE);
+			tileTypeDefs[106] = new TileProperties(TileType.Sawmill, true, Constants.Colors.DECORATIVE);
 
-
-            tileTypeDefs[106] = new TileProperties(TileType.Unknown, false, Constants.Colors.UNKNOWN);
 
             for (int i = 107; i < 256; i++)
             {
@@ -663,8 +662,31 @@
             progress = 100;
         }
 
+		// This code is just to runs tests with.
+
+/*		public void ScanAndCompare(String worldPath, BackgroundWorker bw)
+		{
+			World.TileImportance[] imp;
+
+			world = new World();
+			imp = world.ScanWorld(worldPath, bw);
+
+			for (Int32 j = 0; j < imp.GetLength(0); j++)
+			{
+				for (Int32 i = 0; i < 256; i++)
+				{
+					if (imp[j].isKnown((Byte)i))
+					{
+						if (imp[j].isImportant((Byte)i) != tileTypeDefs[i].IsImportant)
+							i = i;
+					}
+
+				}
+			}
+		}*/
+
 		#region GetSet Functions
-        public List<Chest> Chests
+		public List<Chest> Chests
         {
             get
             {

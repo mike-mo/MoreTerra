@@ -3,18 +3,13 @@
 namespace MoreTerra.Structures
 {
 	// A basic Point structure dealing with Single precision numbers.
-	public class PointSingle
+	public struct PointSingle
 	{
 		private Single _x;
 		private Single _y;
 
 		#region Constructors
-		public PointSingle()
-		{
-			_x = 0;
-			_y = 0;
-		}
-
+		
 		public PointSingle(Single x, Single y)
 		{
 			_x = x;

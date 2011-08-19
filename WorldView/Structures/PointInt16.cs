@@ -3,25 +3,19 @@
 namespace MoreTerra.Structures
 {
 	// A very basic Point class for handling 16-bit Integers.
-	public class PointInt16
+	public struct PointInt16
 	{
 		private Int16 _x;
 		private Int16 _y;
 
 		#region Constructors
-		public PointInt16()
-		{
-			_x = 0;
-			_y = 0;
-		}
-
 		public PointInt16(Int16 x, Int16 y)
 		{
 			_x = x;
 			_y = y;
 		}
 		#endregion
-
+		
 		#region GetSet Functions
 		public Int16 X
 		{

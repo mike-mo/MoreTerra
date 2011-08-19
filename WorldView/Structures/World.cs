@@ -76,7 +76,7 @@ namespace MoreTerra.Structures
 				for (i = 0; i < 256; i++)
 				{
 					tImportant[i] = copyFrom.tImportant[i];
-					tKnown[i] = copyFrom.tImportant[i];
+					tKnown[i] = copyFrom.tKnown[i];
 				}
 			}
 
@@ -333,8 +333,6 @@ namespace MoreTerra.Structures
 				{
 					theTile = new Tile();
 
-					theTile.FilePos = reader.BaseStream.Position;
-
 					theB = reader.ReadBoolean();
 
 					theTile.Active = theB;
@@ -376,7 +374,6 @@ namespace MoreTerra.Structures
 						theTile.Lava = reader.ReadBoolean();
 					}
 
-					theTile.calcSize();
 					tiles[i, j] = theTile;
 				}
 				progressPosition = stream.Position;
@@ -542,6 +539,7 @@ namespace MoreTerra.Structures
 
 				stream = new FileStream(worldPath, FileMode.Open, FileAccess.Read);
 				reader = new BinaryReader(stream);
+
 
 				ReadHeader();
 
@@ -921,6 +919,7 @@ namespace MoreTerra.Structures
 		public TileImportance[] ScanWorld(String world, BackgroundWorker worker = null)
 		{
 			Timer t = null;
+			TileImportance[] retList;
 
 			if (worker != null)
 			{
@@ -939,7 +938,7 @@ namespace MoreTerra.Structures
 
 			stream.Seek(0, SeekOrigin.Begin);
 			ReadHeader();
-			ScanWorldTiles();
+			retList = ScanWorldTiles();
 
 			if (bw != null)
 			{
@@ -949,7 +948,7 @@ namespace MoreTerra.Structures
 
 			reader.Close();
 
-			return null;
+			return retList;
 		}
 
 		private void timer_ScanWorld(object sender, ElapsedEventArgs e)
@@ -957,7 +956,7 @@ namespace MoreTerra.Structures
 			bw.ReportProgress(progress);
 		}
 
-		public TileImportance[] ScanWorldTiles()
+		private TileImportance[] ScanWorldTiles()
 		{
 			Byte tryByte;
 			Byte tileType;
@@ -1043,8 +1042,7 @@ namespace MoreTerra.Structures
 
 						if (curTile.Important == true)
 						{
-							curTile.Frame.X = buffReader.ReadInt16();
-							curTile.Frame.Y = buffReader.ReadInt16();
+							curTile.Frame = new PointInt16(buffReader.ReadInt16(), buffReader.ReadInt16());
 						}
 
 						// isLighted
@@ -1069,6 +1067,11 @@ namespace MoreTerra.Structures
 							curTile.Wall = true;
 							// wallType
 							tryByte = buffReader.ReadByte();
+
+							// It turns out there will never be a wall type 0.
+							if (tryByte == 0)
+								goto badPath;
+
 							curTile.WallType = tryByte;
 						}
 						else
@@ -1109,8 +1112,6 @@ namespace MoreTerra.Structures
 						{
 							curTile.Liquid = false;
 						}
-
-						curTile.calcSize();
 
 						curReader.filePos = buffReader.Position;
 
@@ -1177,7 +1178,7 @@ namespace MoreTerra.Structures
 				}
 			}
 
-			bw.ReportProgress(progress, String.Format("Path #{0} Terminated {1}", readerList[k].id, readerList.Count - 1));
+			//bw.ReportProgress(progress, String.Format("Path #{0} Terminated {1}", readerList[k].id, readerList.Count - 1));
 
 			return returnList;
 		}

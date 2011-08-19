@@ -1,3 +1,29 @@
+Release 1.6.1
+==============
+=New Features=
+==============
+
+===========
+=Bug Fixes=
+===========
+Finally got the Marker list to show as with three-state checkboxes.
+
+=============
+=Refactoring=
+=============
+Changed the Settings tab to Markers instead.
+
+Added a lot of region statements to help organize the code into easier chunks.
+
+Changed PointInt16 and PointSingle to struct types so they are Value type instead of Reference type.
+
+===============
+=Compatibility=
+===============
+Added the Sawmill.
+
+
+
 Release 1.6
 ==============
 =New Features=
@@ -35,6 +61,8 @@ Changed all the structures over to private with get/set functions.
 
 Changed the Wall names around.  Stone2 to Ebonstone, all brick types now say brick.  Had to
  do this to differentiate regular Obsidian wall from Obsidian brick walls.
+
+Added a lot of region statements to help organize the code into easier chunks.
 
 ===============
 =Compatibility=

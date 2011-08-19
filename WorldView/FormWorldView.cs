@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.IO;
 using System.Timers;
 using MoreTerra.Properties;
@@ -17,13 +18,14 @@ namespace MoreTerra
         private delegate void PopulateWorldTreeDelegate();
         private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
 
-        private WorldMapper mapper = null;
+		#region Variable definitions
+		private WorldMapper mapper = null;
         private BackgroundWorker mapperWorker = null;
 		private System.Timers.Timer tmrMapperProgress;
 
 		// Used to store the images for our TreeView marker list.
 		private ImageList iList = new ImageList();
-
+		private ImageList siList = new ImageList();
 
         private string worldPath = string.Empty;
 
@@ -48,8 +50,9 @@ namespace MoreTerra
 		private Boolean filterUpdated;
 
 		private FormProgressDialog progForm;
+		#endregion
 
-        public FormWorldView()
+		public FormWorldView()
         {
             InitializeComponent();
 
@@ -75,10 +78,30 @@ namespace MoreTerra
 			if (SettingsManager.Instance.FilterItemStates != null)
 				ResetFilterLists();
 
-			Boolean checkParent;
+
+			// This section sets up the Marker list box.  The first part draws the three
+			// states of our checkboxes and then it populates the TreeView.
+			Int32 checkParent;
 			Int32 index = 0;
 			TreeNode tNode;
 			TreeNode baseNode;
+
+			Bitmap bmp = new Bitmap(16, 16);
+			Graphics graph = Graphics.FromImage(bmp);
+			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.UncheckedNormal);
+			siList.Images.Add(bmp);
+
+			bmp = new Bitmap(16, 16);
+			graph = Graphics.FromImage(bmp);
+			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.CheckedNormal);
+			siList.Images.Add(bmp);
+
+			bmp = new Bitmap(16, 16);
+			graph = Graphics.FromImage(bmp);
+			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.MixedNormal);
+			siList.Images.Add(bmp);
+
+			treeViewMarkerList.StateImageList = siList;
 			treeViewMarkerList.ImageList = iList;
 
 			markerNodes = new Dictionary<String, TreeNode>();
@@ -89,8 +112,8 @@ namespace MoreTerra
 				iList.Images.Add((Image)Properties.Resources.ResourceManager.GetObject(kvp.Key));
 				baseNode.ImageIndex = index;
 				baseNode.SelectedImageIndex = index++;
-				this.treeViewMarkerList.Nodes.Add(baseNode);
-				checkParent = true;
+				treeViewMarkerList.Nodes.Add(baseNode);
+				checkParent = 0;
 
 				for (Int32 i = 0; i < kvp.Value.Length; i++)
 				{
@@ -102,47 +125,62 @@ namespace MoreTerra
 					baseNode.Nodes.Add(tNode);
 
 					if (symbolStates.ContainsKey(kvp.Value[i]))
-						tNode.Checked = symbolStates[kvp.Value[i]];
+					{
+						if (symbolStates[kvp.Value[i]])
+						{
+							tNode.Checked = true;
+							tNode.StateImageIndex = (Int32)CheckState.Checked;
+						}
+						else
+						{
+							tNode.Checked = false;
+							tNode.StateImageIndex = (Int32)CheckState.Unchecked;
+						}
+					}
 
-					if (tNode.Checked == false)
-						checkParent = false;
+					if (tNode.Checked == true)
+						checkParent += 1;
 				}
 
-				baseNode.Checked = checkParent;
+				if (checkParent == kvp.Value.Length)
+					baseNode.StateImageIndex = (Int32)CheckState.Checked;
+				else if (checkParent == 0)
+					baseNode.StateImageIndex = (Int32)CheckState.Unchecked;
+				else
+					baseNode.StateImageIndex = (Int32) CheckState.Indeterminate;
 			}
 
-			treeViewMarkerList.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMarkerList_AfterCheck);
 		}
 
-        private void WorldViewForm_Load(object sender, EventArgs e)
-        {
-            string ver = Application.ProductVersion;
+		private void WorldViewForm_Load(object sender, EventArgs e)
+		{
+			string ver = Application.ProductVersion;
 
-            while (ver.Length > 3 && ver.Substring(ver.Length - 2) == ".0")
-            {
-                ver = ver.Substring(0, ver.Length - 2);
-            }
+			while (ver.Length > 3 && ver.Substring(ver.Length - 2) == ".0")
+			{
+				ver = ver.Substring(0, ver.Length - 2);
+			}
 
-            lblVersion.Text = "Version: " + ver;
+			lblVersion.Text = "Version: " + ver;
 
-            string folder = string.Empty;
+			string folder = string.Empty;
 
-            if (Directory.Exists(SettingsManager.Instance.InputWorldDirectory))
-            {
-                folder = SettingsManager.Instance.InputWorldDirectory;
-            }
-            else if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria")))
-            {
-                folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria");
+			if (Directory.Exists(SettingsManager.Instance.InputWorldDirectory))
+			{
+				folder = SettingsManager.Instance.InputWorldDirectory;
+			}
+			else if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria")))
+			{
+				folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria");
 				SettingsManager.Instance.InputWorldDirectory = folder;
-            }
+			}
 
-            if (folder != string.Empty)
+			if (folder != string.Empty)
 				this.worldDirectoryChanged();
 
 			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
 			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
-            checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
+			checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
 			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
 
 			switch (SettingsManager.Instance.SortChestsBy)
@@ -157,65 +195,112 @@ namespace MoreTerra
 					radioButtonSortByNone.Checked = true;
 					break;
 			}
-        }
+		}
 
-        private void comboBoxWorldFilePath_TextChanged(object sender, EventArgs e)
-        {
-            worldPath = comboBoxWorldFilePath.Text;
+		#region SelectWorld groupBox functions
+		private void buttonBrowseWorld_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "Terraria World (*.wld)|*.wld|Terraria Backup World (*.wld.bak)|*.wld.bak";
+			dialog.Title = "Select World File";
+			dialog.InitialDirectory = SettingsManager.Instance.InputWorldDirectory;
+			string filePath = (dialog.ShowDialog() == DialogResult.OK) ? dialog.FileName : string.Empty;
 
-            if (File.Exists(comboBoxWorldFilePath.Text) && Directory.Exists(SettingsManager.Instance.OutputPreviewDirectory))
-            {
-                textBoxOutputFile.Text = Path.Combine(SettingsManager.Instance.OutputPreviewDirectory, Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text) + ".png");
-            }
+			if (filePath == string.Empty) return;
 
-			if (worldNames.ContainsKey(worldPath) == true)
-			{
-				labelWorldName.Text = "World Name: " + worldNames[worldPath];
-			} else {
-				labelWorldName.Text = "World Name: ";
-			}
-
-        }
-
-        private void buttonBrowseWorld_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Terraria World (*.wld)|*.wld|Terraria Backup World (*.wld.bak)|*.wld.bak";
-            dialog.Title = "Select World File";
-            dialog.InitialDirectory = SettingsManager.Instance.InputWorldDirectory;
-            string filePath = (dialog.ShowDialog() == DialogResult.OK) ? dialog.FileName : string.Empty;
-
-            if (filePath == string.Empty) return;
-
-            comboBoxWorldFilePath.Text = filePath;
+			comboBoxWorldFilePath.Text = filePath;
 			if (!(SettingsManager.Instance.InputWorldDirectory == Path.GetDirectoryName(filePath)))
 			{
 				SettingsManager.Instance.InputWorldDirectory = Path.GetDirectoryName(filePath);
 				worldDirectoryChanged(filePath);
 			}
-        }
+		}
 
-        private void buttonBrowseOutput_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "PNG (*.png)|*.png";
-            dialog.Title = "Select World File";
-            dialog.InitialDirectory = SettingsManager.Instance.OutputPreviewDirectory;
+		private void comboBoxWorldFilePath_TextChanged(object sender, EventArgs e)
+		{
+			worldPath = comboBoxWorldFilePath.Text;
 
-            if (comboBoxWorldFilePath.Text != string.Empty)
-            {
-                dialog.FileName = string.Format("{0}.png", System.IO.Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text));
-            }
+			if (File.Exists(comboBoxWorldFilePath.Text) && Directory.Exists(SettingsManager.Instance.OutputPreviewDirectory))
+			{
+				textBoxOutputFile.Text = Path.Combine(SettingsManager.Instance.OutputPreviewDirectory, Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text) + ".png");
+			}
 
-            if (dialog.ShowDialog() != DialogResult.OK) return;
+			if (worldNames.ContainsKey(worldPath) == true)
+			{
+				labelWorldName.Text = "World Name: " + worldNames[worldPath];
+			}
+			else
+			{
+				labelWorldName.Text = "World Name: ";
+			}
 
-            SettingsManager.Instance.OutputPreviewDirectory = Path.GetDirectoryName(dialog.FileName);
-            textBoxOutputFile.Text = dialog.FileName;
+		}
 
-        }
+		private void worldDirectoryChanged(String selectedFile = null)
+		{
+			worldNames.Clear();
+			Int32 i = 0;
+			Int32 selection = 0;
+			World w;
 
-        private void buttonDrawWorld_Click(object sender, EventArgs e)
-        {
+			comboBoxWorldFilePath.Items.Clear();
+
+			w = new World();
+
+			foreach (String file in Directory.GetFiles(SettingsManager.Instance.InputWorldDirectory, "*.wld"))
+			{
+				worldNames.Add(file, w.GetWorldName(file));
+				comboBoxWorldFilePath.Items.Add(file);
+
+				if (String.IsNullOrEmpty(selectedFile) != true && file == selectedFile)
+				{
+					selection = i;
+				}
+				i++;
+			}
+
+			if (comboBoxWorldFilePath.Items.Count > 0)
+				comboBoxWorldFilePath.SelectedIndex = selection;
+		}
+		#endregion
+
+		#region Draw World tabPage functions
+		private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.DrawWalls = checkBoxDrawWalls.Checked;
+		}
+
+		private void checkBoxScanForItems_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.ScanForNewItems = checkBoxScanForItems.Checked;
+		}
+
+		private void checkBoxOpenImage_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.OpenImage = checkBoxOpenImage.Checked;
+		}
+
+		private void buttonBrowseOutput_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.Filter = "PNG (*.png)|*.png";
+			dialog.Title = "Select World File";
+			dialog.InitialDirectory = SettingsManager.Instance.OutputPreviewDirectory;
+
+			if (comboBoxWorldFilePath.Text != string.Empty)
+			{
+				dialog.FileName = string.Format("{0}.png", System.IO.Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.Text));
+			}
+
+			if (dialog.ShowDialog() != DialogResult.OK) return;
+
+			SettingsManager.Instance.OutputPreviewDirectory = Path.GetDirectoryName(dialog.FileName);
+			textBoxOutputFile.Text = dialog.FileName;
+
+		}
+
+		private void buttonDrawWorld_Click(object sender, EventArgs e)
+		{
 			if (SettingsManager.Instance.FilterChests && !SettingsManager.Instance.DrawMarker("Chest"))
 			{
 				DialogResult markers = MessageBox.Show("You have enabled Chest Filtering but have disabled drawing Chest Markers. " +
@@ -252,73 +337,73 @@ namespace MoreTerra
 					return;
 				}
 			}
-			
+
 			if (checkValidPaths(true))
-            {
-                buttonDrawWorld.Enabled = false;
+			{
+				buttonDrawWorld.Enabled = false;
 				filterCount = SettingsManager.Instance.FilterItemStates.Count();
 
-                groupBoxSelectWorld.Enabled = false;
-                groupBoxImageOutput.Enabled = false;
-                (this.tabPageSettings as Control).Enabled = false;
-                (this.tabPageWorldInformation as Control).Enabled = false;
+				groupBoxSelectWorld.Enabled = false;
+				groupBoxImageOutput.Enabled = false;
+				(this.tabPageMarkers as Control).Enabled = false;
+				(this.tabPageWorldInformation as Control).Enabled = false;
 
-                mapper = new WorldMapper();
-                mapper.Initialize();
+				mapper = new WorldMapper();
+				mapper.Initialize();
 
-                if (textBoxOutputFile.Text.Substring(textBoxOutputFile.Text.Length - 4).CompareTo(".png") != 0)
-                {
-                    textBoxOutputFile.Text += ".png";
-                }
+				if (textBoxOutputFile.Text.Substring(textBoxOutputFile.Text.Length - 4).CompareTo(".png") != 0)
+				{
+					textBoxOutputFile.Text += ".png";
+				}
 
-                mapperWorker = new BackgroundWorker();
+				mapperWorker = new BackgroundWorker();
 				progForm = new FormProgressDialog("Draw World", false, mapperWorker);
 
 				mapperWorker.WorkerReportsProgress = true;
 				mapperWorker.WorkerSupportsCancellation = true;
 				mapperWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(progForm.worker_Completed);
 				mapperWorker.ProgressChanged += new ProgressChangedEventHandler(progForm.worker_ProgressChanged);
-                mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
-                mapperWorker.RunWorkerAsync(true);
+				mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
+				mapperWorker.RunWorkerAsync(true);
 
 				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
 				progForm.Show();
-            }
-        }
+			}
+		}
 
-        private void worker_GenerateMap(object sender, DoWorkEventArgs e)
-        {
-			BackgroundWorker bw = (BackgroundWorker) sender;
+		private void worker_GenerateMap(object sender, DoWorkEventArgs e)
+		{
+			BackgroundWorker bw = (BackgroundWorker)sender;
 
 			tmrMapperProgress.Start();
 
-#if  (DEBUG == false)
+			#if  (DEBUG == false)
             try
             {
-#endif
-				mapper.OpenWorld();
+			#endif
+			mapper.OpenWorld();
 
-                //we're drawing a map
-				if ((bool)e.Argument == true)
-					mapper.ProcessWorld(worldPath, bw);
-				else 
-					mapper.ReadChests(worldPath, bw);
+			//we're drawing a map
+			if ((bool)e.Argument == true)
+				mapper.ProcessWorld(worldPath, bw);
+			else
+				mapper.ReadChests(worldPath, bw);
 
-                TreeNode[] chests = GetChests();
+			TreeNode[] chests = GetChests();
 
-				PopulateWorldTree();
-                PopulateChestTree(chests);
+			PopulateWorldTree();
+			PopulateChestTree(chests);
 
-                //we're drawing a map
-                if ((bool)e.Argument == true)
-                {
-                    mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
-                    if (SettingsManager.Instance.OpenImage)
-						System.Diagnostics.Process.Start(textBoxOutputFile.Text);
-                }
+			//we're drawing a map
+			if ((bool)e.Argument == true)
+			{
+				mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
+				if (SettingsManager.Instance.OpenImage)
+					System.Diagnostics.Process.Start(textBoxOutputFile.Text);
+			}
 
-				tmrMapperProgress.Stop();
-#if  (DEBUG == false)
+			tmrMapperProgress.Stop();
+			#if  (DEBUG == false)
             }
             catch (Exception ex)
             {
@@ -328,45 +413,44 @@ namespace MoreTerra
 
 				return;
 			}
-#endif
-        }
+			#endif
+		}
 
-        private void tmrMapperProgress_Tick(object sender, EventArgs e)
-        {
+		private void tmrMapperProgress_Tick(object sender, EventArgs e)
+		{
 			mapperWorker.ReportProgress(mapper.progress);
 		}
 
-
 		private void worker_Completed(object sender, FormClosedEventArgs e)
-			{
+		{
 			Boolean v = progForm.Success;
-				if (filterCount != SettingsManager.Instance.FilterItemStates.Count())
-					ResetFilterLists();
+			if (filterCount != SettingsManager.Instance.FilterItemStates.Count())
+				ResetFilterLists();
 
-				buttonDrawWorld.Enabled = true;
+			buttonDrawWorld.Enabled = true;
 
-				groupBoxSelectWorld.Enabled = true;
-				groupBoxImageOutput.Enabled = true;
-				(this.tabPageSettings as Control).Enabled = true;
-				(this.tabPageWorldInformation as Control).Enabled = true;
-				this.checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
+			groupBoxSelectWorld.Enabled = true;
+			groupBoxImageOutput.Enabled = true;
+			(this.tabPageMarkers as Control).Enabled = true;
+			(this.tabPageWorldInformation as Control).Enabled = true;
+			this.checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
+		}
+
+		private void PopulateWorldTree()
+		{
+			if (worldPropertyGrid.InvokeRequired)
+			{
+				PopulateWorldTreeDelegate del = new PopulateWorldTreeDelegate(PopulateWorldTree);
+				worldPropertyGrid.Invoke(del);
+				return;
 			}
 
-        private void PopulateWorldTree()
-        {
-            if (worldPropertyGrid.InvokeRequired)
-            {
-                PopulateWorldTreeDelegate del = new PopulateWorldTreeDelegate(PopulateWorldTree);
-                worldPropertyGrid.Invoke(del);
-                return;
-            }
+			worldPropertyGrid.SelectedObject = mapper.World.Header;
+		}
 
-            worldPropertyGrid.SelectedObject = mapper.World.Header;
-        }
-
-        private TreeNode[] GetChests()
-        {
-            List<Chest> chests = this.mapper.Chests;
+		private TreeNode[] GetChests()
+		{
+			List<Chest> chests = this.mapper.Chests;
 
 			if (chestNodes == null)
 			{
@@ -389,93 +473,141 @@ namespace MoreTerra
 				return filteredChestNodes.ToArray();
 			}
 
-            return chestNodes.ToArray();
-        }
+			return chestNodes.ToArray();
+		}
 
-        private void PopulateChestTree(TreeNode[] node_array)
-        {
-            if (treeViewChestInformation.InvokeRequired)
-            {
-                PopulateChestTreeDelegate del = new PopulateChestTreeDelegate(PopulateChestTree);
-                treeViewChestInformation.Invoke(del, new object[] { node_array });
-                return;
-            }
+		private void PopulateChestTree(TreeNode[] node_array)
+		{
+			if (treeViewChestInformation.InvokeRequired)
+			{
+				PopulateChestTreeDelegate del = new PopulateChestTreeDelegate(PopulateChestTree);
+				treeViewChestInformation.Invoke(del, new object[] { node_array });
+				return;
+			}
 
-            treeViewChestInformation.SuspendLayout();
-            treeViewChestInformation.Nodes.Clear();
+			treeViewChestInformation.SuspendLayout();
+			treeViewChestInformation.Nodes.Clear();
 
-            //nodes have to be added in this fairly awkward way, because this
-            //fixes a bug with the TreeView control that will cause the last node
-            //to have its lower half cut off at the bottom of the control,
-            //and it won't allow the user to scroll further down...
+			//nodes have to be added in this fairly awkward way, because this
+			//fixes a bug with the TreeView control that will cause the last node
+			//to have its lower half cut off at the bottom of the control,
+			//and it won't allow the user to scroll further down...
 
-            treeViewChestInformation.Nodes.AddRange(node_array);
+			treeViewChestInformation.Nodes.AddRange(node_array);
 
-            treeViewChestInformation.ResumeLayout(true);
-        }
+			treeViewChestInformation.ResumeLayout(true);
+		}
 
-        private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://moreterra.codeplex.com/");
-        }
+		private bool checkValidPaths(bool checkOutput)
+		{
+			if (comboBoxWorldFilePath.Text == string.Empty || !File.Exists(comboBoxWorldFilePath.Text))
+			{
+				MessageBox.Show("The World file could not be found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return false;
+			}
+			else if (checkOutput && textBoxOutputFile.Text == string.Empty)
+			{
+				MessageBox.Show("Please enter desired output image path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		#endregion
 
-        private void buttonLoadInformation_Click(object sender, EventArgs e)
-        {
-            if (checkValidPaths(false))
-            {
-				chestNodes = null;
-				filterCount = SettingsManager.Instance.FilterItemStates.Count;
+		#region Marker tabPage functions
+		// This handles pressing space to check/uncheck boxes.
+		private void treeViewMarkerList_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar != ' ')
+				return;
 
-                buttonDrawWorld.Enabled = false;
+			if (treeViewMarkerList.SelectedNode != null)
+			{
+				treeViewMarkerList.SelectedNode.Checked = !treeViewMarkerList.SelectedNode.Checked;
+				this.treeViewMarkerList_AfterCheck(this.treeViewMarkerList,
+					new TreeViewEventArgs(treeViewMarkerList.SelectedNode, TreeViewAction.ByMouse));
+			}
 
-                groupBoxSelectWorld.Enabled = false;
-                groupBoxImageOutput.Enabled = false;
-                (this.tabPageSettings as Control).Enabled = false;
-                (this.tabPageWorldInformation as Control).Enabled = false;
+		}
 
-                mapper = new WorldMapper();
-                mapper.Initialize();
+		// This handles clicking on the check box part of the nodes.
+		private void treeViewMarkerList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			Int32 xSpot = e.X - e.Node.Bounds.Left;
 
-                mapperWorker = new BackgroundWorker();
-				progForm = new FormProgressDialog("Load World Information", false, mapperWorker);
+			if (treeViewMarkerList.ImageList != null)
+			{
+				if (xSpot < -34 || xSpot > -19)
+					return;
+			}
+			else
+			{
+				if (xSpot < -16 || xSpot > -1)
+					return;
+			}
 
-				mapperWorker.WorkerReportsProgress = true;
-				mapperWorker.WorkerSupportsCancellation = false;
-				mapperWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(progForm.worker_Completed);
-				mapperWorker.ProgressChanged += new ProgressChangedEventHandler(progForm.worker_ProgressChanged);
-                mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
-                mapperWorker.RunWorkerAsync(false);
+			e.Node.Checked = !e.Node.Checked;
 
-				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
-				progForm.Show();
-            }
-        }
+			this.treeViewMarkerList_AfterCheck(this.treeViewMarkerList,
+				new TreeViewEventArgs(e.Node, TreeViewAction.ByMouse));
+		}
 
-        private bool checkValidPaths(bool checkOutput)
-        {
-            if (comboBoxWorldFilePath.Text == string.Empty || !File.Exists(comboBoxWorldFilePath.Text))
-            {
-                MessageBox.Show("The World file could not be found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            else if (checkOutput && textBoxOutputFile.Text == string.Empty)
-            {
-                MessageBox.Show("Please enter desired output image path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+		// This takes a node that was clicked and goes down the list to update the parent to
+		// it's correct state.
+		private void treeViewMarkerList_updateParentNode(TreeNode e)
+		{
+			Int32 count, set;
 
-        private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
-        {
-            SettingsManager.Instance.DrawWalls = checkBoxDrawWalls.Checked;
-        }
+			count = 0;
+			set = 0;
+			foreach (TreeNode n in e.Parent.Nodes)
+			{
+				count++;
+				if (n.Checked == true)
+					set++;
+			}
 
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+			if (set == count)
+				e.Parent.Checked = true;
+			else
+				e.Parent.Checked = false;
+
+			if (set == 0)
+				e.Parent.StateImageIndex = (Int32)CheckState.Unchecked;
+			else if (set != count)
+				e.Parent.StateImageIndex = (Int32)CheckState.Indeterminate;
+			else
+				e.Parent.StateImageIndex = (Int32)CheckState.Checked;
+
+		}
+
+		// This handles clicking a checkbox and correctly sets the child nodes, if there are any.
+		private void treeViewMarkerList_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			// Don't do anything unless it was the user who set the checked state.
+			if (e.Action == TreeViewAction.Unknown)
+				return;
+
+			if (markerNodes.ContainsKey(e.Node.Text))
+			{
+				SettingsManager.Instance.MarkerVisible(e.Node.Text, e.Node.Checked);
+				treeViewMarkerList_updateParentNode(e.Node);
+			}
+			else
+			{
+				foreach (TreeNode n in e.Node.Nodes)
+				{
+					n.Checked = e.Node.Checked;
+					SettingsManager.Instance.MarkerVisible(n.Text, e.Node.Checked);
+				}
+			}
+		}
+
+		private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			if (contextMenuStripListOperations.SourceControl is TreeView)
 			{
 				foreach (TreeNode p in (contextMenuStripListOperations.SourceControl as TreeView).Nodes)
@@ -491,8 +623,8 @@ namespace MoreTerra
 			}
 		}
 
-        private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void selectNoneToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			if (contextMenuStripListOperations.SourceControl is TreeView)
 			{
 				foreach (TreeNode p in (contextMenuStripListOperations.SourceControl as TreeView).Nodes)
@@ -508,34 +640,52 @@ namespace MoreTerra
 			}
 		}
 
-        private void invertSelectionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-			Boolean parentChecked;
+		private void invertSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			Boolean nodeFlip;
+			Int32 count, set;
 
 			if (contextMenuStripListOperations.SourceControl is TreeView)
 			{
 				foreach (TreeNode p in (contextMenuStripListOperations.SourceControl as TreeView).Nodes)
 				{
-					parentChecked = true;
-
+					count = 0;
+					set = 0;
 					foreach (TreeNode n in p.Nodes)
 					{
+						count++;
 						nodeFlip = !n.Checked;
 						SettingsManager.Instance.MarkerVisible(n.Text, nodeFlip);
 						n.Checked = nodeFlip;
 
-						if (nodeFlip == false)
-							parentChecked = false;
+						if (nodeFlip == true)
+							set++;
 					}
 
-					p.Checked = parentChecked;
+					if (set == count)
+						p.Checked = true;
+					else
+						p.Checked = false;
+
+					if (set == 0)
+						p.StateImageIndex = (Int32)CheckState.Unchecked;
+					else if (set != count)
+						p.StateImageIndex = (Int32)CheckState.Indeterminate;
+					else
+						p.StateImageIndex = (Int32)CheckState.Checked;
 				}
 			}
 		}
 
-        private void checkBoxFilterChests_CheckedChanged(object sender, EventArgs e)
-        {
+		private void buttonCustomResources_Click(object sender, EventArgs e)
+		{
+			System.Diagnostics.Process.Start(Constants.ApplicationResourceDirectory);
+		}
+		#endregion
+
+		#region ChestFinder tabPage functions
+		private void checkBoxFilterChests_CheckedChanged(object sender, EventArgs e)
+		{
 			SettingsManager.Instance.FilterChests = checkBoxFilterChests.Checked;
 
 			lstAvailableItems.Enabled = checkBoxFilterChests.Checked;
@@ -568,7 +718,6 @@ namespace MoreTerra
 			filterUpdated = true;
 		}
 	
-
 		private void lstFilteredItems_KeyDown(object sender, KeyEventArgs e)
 		{
 			String si;
@@ -589,123 +738,6 @@ namespace MoreTerra
 				si = si.Split('*')[0];
 				SettingsManager.Instance.FilterItem(si, false);
 				filterUpdated = true;
-			}
-		}
-
-		private void treeViewMarkerList_updateParentNode(TreeNode e)
-		{
-			Boolean parentChecked;
-
-			parentChecked = true;
-			foreach (TreeNode n in e.Parent.Nodes)
-			{
-				if (n.Checked == false)
-					parentChecked = false;
-			}
-
-			e.Parent.Checked = parentChecked;
-		}
-
-		private void treeViewMarkerList_AfterCheck(object sender, TreeViewEventArgs e)
-		{
-			// Don't do anything unless it was the user who set the checked state.
-			if (e.Action == TreeViewAction.Unknown)
-				return;
-
-			if (markerNodes.ContainsKey(e.Node.Text))
-			{
-				SettingsManager.Instance.MarkerVisible(e.Node.Text, e.Node.Checked);
-				treeViewMarkerList_updateParentNode(e.Node);
-			}
-			else
-			{
-				foreach (TreeNode n in e.Node.Nodes)
-				{
-					n.Checked = e.Node.Checked;
-					SettingsManager.Instance.MarkerVisible(n.Text, e.Node.Checked);
-				}
-			}
-		}
-
-		private void worldDirectoryChanged(String selectedFile = null)
-		{
-			worldNames.Clear();
-			Int32 i = 0;
-			Int32 selection = 0;
-			World w;
-
-			comboBoxWorldFilePath.Items.Clear();
-
-			w = new World();
-
-			foreach (String file in Directory.GetFiles(SettingsManager.Instance.InputWorldDirectory, "*.wld"))
-			{
-				worldNames.Add(file, w.GetWorldName(file));
-				comboBoxWorldFilePath.Items.Add(file);
-
-				if (String.IsNullOrEmpty(selectedFile) != true && file == selectedFile)
-				{
-					selection = i;
-				}
-				i++;
-			}
-
-			if (comboBoxWorldFilePath.Items.Count > 0)
-				comboBoxWorldFilePath.SelectedIndex = selection;
-		}
-
-		private void buttonCustomResources_Click(object sender, EventArgs e)
-		{
-			System.Diagnostics.Process.Start(Constants.ApplicationResourceDirectory);
-		}
-
-		private void radioButtonSortByNone_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Instance.SortChestsBy = 0;
-
-			treeViewChestInformation.TreeViewNodeSorter = null;
-			treeViewChestInformation.Sorted = false;
-
-			if (chestNodes != null)
-				PopulateChestTree(GetChests());
-		}
-
-		private void radioButtonSortByX_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Instance.SortChestsBy = 1;
-
-			treeViewChestInformation.TreeViewNodeSorter = new ChestComparerX();
-		}
-
-		private void radioButtonSortByY_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Instance.SortChestsBy = 2;
-
-			treeViewChestInformation.TreeViewNodeSorter = new ChestComparerY();
-		}
-
-		private void applyChestFilter()
-		{
-			String itemName;
-			Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemStates;
-			filteredChestNodes = new List<TreeNode>();
-
-			foreach(TreeNode tn in chestNodes)
-			{
-				// If we are checking the chest node itself.
-				if (tn.Parent == null)
-				{
-					foreach (TreeNode item in tn.Nodes)
-					{
-						itemName = item.Text.Split(',')[0];
-
-						if (itemFilters.ContainsKey(itemName) && itemFilters[itemName] == true)
-						{
-							filteredChestNodes.Add(tn);
-							break;
-						}
-					}
-				}
 			}
 		}
 
@@ -787,7 +819,7 @@ namespace MoreTerra
 				lstAvailableItems.Items.RemoveAt(selection);
 
 				if (lstAvailableItems.Items.Count != 0)
-				lstAvailableItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
+					lstAvailableItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
 			}
 
 		}
@@ -893,10 +925,89 @@ namespace MoreTerra
 
 			filterUpdated = true;
 		}
+		#endregion
 
-		private void checkBoxScanForItems_CheckedChanged(object sender, EventArgs e)
+		#region World Information tabPage functions
+		private void buttonLoadInformation_Click(object sender, EventArgs e)
 		{
-			SettingsManager.Instance.ScanForNewItems = checkBoxScanForItems.Checked;
+			if (checkValidPaths(false))
+			{
+				chestNodes = null;
+				filterCount = SettingsManager.Instance.FilterItemStates.Count;
+
+				buttonDrawWorld.Enabled = false;
+
+				groupBoxSelectWorld.Enabled = false;
+				groupBoxImageOutput.Enabled = false;
+				(this.tabPageMarkers as Control).Enabled = false;
+				(this.tabPageWorldInformation as Control).Enabled = false;
+
+				mapper = new WorldMapper();
+				mapper.Initialize();
+
+				mapperWorker = new BackgroundWorker();
+				progForm = new FormProgressDialog("Load World Information", false, mapperWorker);
+
+				mapperWorker.WorkerReportsProgress = true;
+				mapperWorker.WorkerSupportsCancellation = false;
+				mapperWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(progForm.worker_Completed);
+				mapperWorker.ProgressChanged += new ProgressChangedEventHandler(progForm.worker_ProgressChanged);
+				mapperWorker.DoWork += new DoWorkEventHandler(worker_GenerateMap);
+				mapperWorker.RunWorkerAsync(false);
+
+				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
+				progForm.Show();
+			}
+		}
+
+		private void radioButtonSortByNone_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.SortChestsBy = 0;
+
+			treeViewChestInformation.TreeViewNodeSorter = null;
+			treeViewChestInformation.Sorted = false;
+
+			if (chestNodes != null)
+				PopulateChestTree(GetChests());
+		}
+
+		private void radioButtonSortByX_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.SortChestsBy = 1;
+
+			treeViewChestInformation.TreeViewNodeSorter = new ChestComparerX();
+		}
+
+		private void radioButtonSortByY_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.SortChestsBy = 2;
+
+			treeViewChestInformation.TreeViewNodeSorter = new ChestComparerY();
+		}
+
+		private void applyChestFilter()
+		{
+			String itemName;
+			Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemStates;
+			filteredChestNodes = new List<TreeNode>();
+
+			foreach(TreeNode tn in chestNodes)
+			{
+				// If we are checking the chest node itself.
+				if (tn.Parent == null)
+				{
+					foreach (TreeNode item in tn.Nodes)
+					{
+						itemName = item.Text.Split(',')[0];
+
+						if (itemFilters.ContainsKey(itemName) && itemFilters[itemName] == true)
+						{
+							filteredChestNodes.Add(tn);
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		private void tabControlSettings_SelectedIndexChanged(object sender, EventArgs e)
@@ -913,10 +1024,14 @@ namespace MoreTerra
 				}
 			}
 		}
+		#endregion
 
-		private void checkBoxOpenImage_CheckedChanged(object sender, EventArgs e)
+		#region About tabPage functions
+		private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			SettingsManager.Instance.OpenImage = checkBoxOpenImage.Checked;
+			System.Diagnostics.Process.Start("http://moreterra.codeplex.com/");
 		}
+		#endregion
+
 	}
 }

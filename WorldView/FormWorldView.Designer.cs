@@ -32,19 +32,22 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWorldView));
 			this.tabControlSettings = new System.Windows.Forms.TabControl();
 			this.tabPageDrawWorld = new System.Windows.Forms.TabPage();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.comboBoxDrawUsing = new System.Windows.Forms.ComboBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.checkBoxScanForItems = new System.Windows.Forms.CheckBox();
 			this.checkBoxOpenImage = new System.Windows.Forms.CheckBox();
 			this.buttonDrawWorld = new System.Windows.Forms.Button();
 			this.groupBoxImageOutput = new System.Windows.Forms.GroupBox();
 			this.textBoxOutputFile = new System.Windows.Forms.TextBox();
 			this.buttonBrowseOutput = new System.Windows.Forms.Button();
-			this.tabPageSettings = new System.Windows.Forms.TabPage();
+			this.tabPageMarkers = new System.Windows.Forms.TabPage();
 			this.groupBoxSymbols = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonCustomResources = new System.Windows.Forms.Button();
 			this.labelCustomResources = new System.Windows.Forms.Label();
-			this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
 			this.treeViewMarkerList = new System.Windows.Forms.TreeView();
 			this.contextMenuStripListOperations = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,14 +88,12 @@
 			this.labelWorldName = new System.Windows.Forms.Label();
 			this.comboBoxWorldFilePath = new System.Windows.Forms.ComboBox();
 			this.buttonBrowseWorld = new System.Windows.Forms.Button();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.comboBoxDrawUsing = new System.Windows.Forms.ComboBox();
+			this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
 			this.tabControlSettings.SuspendLayout();
 			this.tabPageDrawWorld.SuspendLayout();
+			this.groupBox6.SuspendLayout();
 			this.groupBoxImageOutput.SuspendLayout();
-			this.tabPageSettings.SuspendLayout();
+			this.tabPageMarkers.SuspendLayout();
 			this.groupBoxSymbols.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -110,7 +111,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBoxSelectWorld.SuspendLayout();
-			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControlSettings
@@ -119,7 +119,7 @@
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControlSettings.Controls.Add(this.tabPageDrawWorld);
-			this.tabControlSettings.Controls.Add(this.tabPageSettings);
+			this.tabControlSettings.Controls.Add(this.tabPageMarkers);
 			this.tabControlSettings.Controls.Add(this.tabPageChestFinder);
 			this.tabControlSettings.Controls.Add(this.tabPageWorldInformation);
 			this.tabControlSettings.Controls.Add(this.tabPageAbout);
@@ -132,6 +132,7 @@
 			// 
 			// tabPageDrawWorld
 			// 
+			this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWalls);
 			this.tabPageDrawWorld.Controls.Add(this.groupBox6);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxScanForItems);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxOpenImage);
@@ -144,6 +145,46 @@
 			this.tabPageDrawWorld.TabIndex = 0;
 			this.tabPageDrawWorld.Text = "Draw World";
 			this.tabPageDrawWorld.UseVisualStyleBackColor = true;
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.comboBoxDrawUsing);
+			this.groupBox6.Controls.Add(this.button2);
+			this.groupBox6.Controls.Add(this.button1);
+			this.groupBox6.Location = new System.Drawing.Point(250, 188);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(218, 73);
+			this.groupBox6.TabIndex = 13;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Unsupported World Version Helper";
+			this.groupBox6.Visible = false;
+			// 
+			// comboBoxDrawUsing
+			// 
+			this.comboBoxDrawUsing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxDrawUsing.FormattingEnabled = true;
+			this.comboBoxDrawUsing.Location = new System.Drawing.Point(6, 19);
+			this.comboBoxDrawUsing.Name = "comboBoxDrawUsing";
+			this.comboBoxDrawUsing.Size = new System.Drawing.Size(206, 21);
+			this.comboBoxDrawUsing.TabIndex = 2;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(120, 46);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(92, 23);
+			this.button2.TabIndex = 1;
+			this.button2.Text = "Save as Default";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(6, 46);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(87, 23);
+			this.button1.TabIndex = 0;
+			this.button1.Text = "Scan for Tiles";
+			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxScanForItems
 			// 
@@ -217,16 +258,16 @@
 			this.buttonBrowseOutput.UseVisualStyleBackColor = true;
 			this.buttonBrowseOutput.Click += new System.EventHandler(this.buttonBrowseOutput_Click);
 			// 
-			// tabPageSettings
+			// tabPageMarkers
 			// 
-			this.tabPageSettings.Controls.Add(this.groupBoxSymbols);
-			this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
-			this.tabPageSettings.Name = "tabPageSettings";
-			this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageSettings.Size = new System.Drawing.Size(474, 312);
-			this.tabPageSettings.TabIndex = 2;
-			this.tabPageSettings.Text = "Settings";
-			this.tabPageSettings.UseVisualStyleBackColor = true;
+			this.tabPageMarkers.Controls.Add(this.groupBoxSymbols);
+			this.tabPageMarkers.Location = new System.Drawing.Point(4, 22);
+			this.tabPageMarkers.Name = "tabPageMarkers";
+			this.tabPageMarkers.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageMarkers.Size = new System.Drawing.Size(474, 312);
+			this.tabPageMarkers.TabIndex = 2;
+			this.tabPageMarkers.Text = "Markers";
+			this.tabPageMarkers.UseVisualStyleBackColor = true;
 			// 
 			// groupBoxSymbols
 			// 
@@ -261,7 +302,6 @@
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.Controls.Add(this.buttonCustomResources, 0, 3);
 			this.tableLayoutPanel2.Controls.Add(this.labelCustomResources, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.checkBoxDrawWalls, 0, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(231, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -292,27 +332,16 @@
 			this.labelCustomResources.TabIndex = 44;
 			this.labelCustomResources.Text = "labelCustomResources";
 			// 
-			// checkBoxDrawWalls
-			// 
-			this.checkBoxDrawWalls.AutoSize = true;
-			this.checkBoxDrawWalls.Checked = true;
-			this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxDrawWalls.Location = new System.Drawing.Point(3, 3);
-			this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
-			this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
-			this.checkBoxDrawWalls.TabIndex = 41;
-			this.checkBoxDrawWalls.Text = "Draw Walls";
-			this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
-			this.checkBoxDrawWalls.CheckedChanged += new System.EventHandler(this.checkBoxDrawWalls_CheckedChanged);
-			// 
 			// treeViewMarkerList
 			// 
-			this.treeViewMarkerList.CheckBoxes = true;
 			this.treeViewMarkerList.ContextMenuStrip = this.contextMenuStripListOperations;
 			this.treeViewMarkerList.Location = new System.Drawing.Point(3, 3);
 			this.treeViewMarkerList.Name = "treeViewMarkerList";
 			this.treeViewMarkerList.Size = new System.Drawing.Size(222, 281);
 			this.treeViewMarkerList.TabIndex = 44;
+			this.treeViewMarkerList.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMarkerList_AfterCheck);
+			this.treeViewMarkerList.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMarkerList_NodeMouseClick);
+			this.treeViewMarkerList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMarkerList_KeyPress);
 			// 
 			// contextMenuStripListOperations
 			// 
@@ -763,45 +792,17 @@
 			this.buttonBrowseWorld.UseVisualStyleBackColor = true;
 			this.buttonBrowseWorld.Click += new System.EventHandler(this.buttonBrowseWorld_Click);
 			// 
-			// groupBox6
+			// checkBoxDrawWalls
 			// 
-			this.groupBox6.Controls.Add(this.comboBoxDrawUsing);
-			this.groupBox6.Controls.Add(this.button2);
-			this.groupBox6.Controls.Add(this.button1);
-			this.groupBox6.Location = new System.Drawing.Point(250, 188);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(218, 73);
-			this.groupBox6.TabIndex = 13;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Unsupported World Version Helper";
-			this.groupBox6.Visible = false;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(6, 46);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(87, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "Scan for Tiles";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(120, 46);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(92, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "Save as Default";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// comboBoxDrawUsing
-			// 
-			this.comboBoxDrawUsing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxDrawUsing.FormattingEnabled = true;
-			this.comboBoxDrawUsing.Location = new System.Drawing.Point(6, 19);
-			this.comboBoxDrawUsing.Name = "comboBoxDrawUsing";
-			this.comboBoxDrawUsing.Size = new System.Drawing.Size(206, 21);
-			this.comboBoxDrawUsing.TabIndex = 2;
+			this.checkBoxDrawWalls.AutoSize = true;
+			this.checkBoxDrawWalls.Checked = true;
+			this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxDrawWalls.Location = new System.Drawing.Point(12, 198);
+			this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
+			this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
+			this.checkBoxDrawWalls.TabIndex = 42;
+			this.checkBoxDrawWalls.Text = "Draw Walls";
+			this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
 			// 
 			// FormWorldView
 			// 
@@ -819,9 +820,10 @@
 			this.tabControlSettings.ResumeLayout(false);
 			this.tabPageDrawWorld.ResumeLayout(false);
 			this.tabPageDrawWorld.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
 			this.groupBoxImageOutput.ResumeLayout(false);
 			this.groupBoxImageOutput.PerformLayout();
-			this.tabPageSettings.ResumeLayout(false);
+			this.tabPageMarkers.ResumeLayout(false);
 			this.groupBoxSymbols.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
@@ -844,7 +846,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBoxSelectWorld.ResumeLayout(false);
 			this.groupBoxSelectWorld.PerformLayout();
-			this.groupBox6.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -865,7 +866,7 @@
         private System.Windows.Forms.PropertyGrid worldPropertyGrid;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TreeView treeViewChestInformation;
-        private System.Windows.Forms.TabPage tabPageSettings;
+        private System.Windows.Forms.TabPage tabPageMarkers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel linkLabelHomepage;
@@ -876,8 +877,7 @@
         private System.Windows.Forms.CheckBox checkBoxOpenImage;
         private System.Windows.Forms.Button buttonLoadInformation;
         private System.Windows.Forms.GroupBox groupBoxSymbols;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-		private System.Windows.Forms.CheckBox checkBoxDrawWalls;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TabPage tabPageChestFinder;
         private System.Windows.Forms.GroupBox groupBoxSelectWorld;
         private System.Windows.Forms.ComboBox comboBoxWorldFilePath;
@@ -910,6 +910,7 @@
 		private System.Windows.Forms.ComboBox comboBoxDrawUsing;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.CheckBox checkBoxDrawWalls;
 
 
     }
