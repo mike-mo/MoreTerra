@@ -1,0 +1,1882 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <tiles>
+    <tile name="Dirt" tileImage="0" autoGenType="Building Block" color="#AF8365" />
+    <tile name="Stone" tileImage="1" autoGenType="Ore Blend" color="#808080" />
+    <tile name="Grass" tileImage="2" autoGenType="Grass Blend" color="#1CD85E" />
+    <tile name="Plants" tileImage="3" color="Plants">
+      <subtile name="Mushroom" frameX="9" frameY="0" />
+    </tile>
+    <tile name="Torch" tileImage="4" color="Light Source" marker="Torch" /> <!-- autoGenType="Torches" -->
+    <tile name="Trees" tileImage="5" color="Wood" />
+    <tile name="Iron" tileImage="6" autoGenType="Ore Blend"  color="#BD9F8B" marker="Iron" />
+    <tile name="Copper" tileImage="7" autoGenType="Ore Blend"  color="#FF9532" marker="Copper" />
+    <tile name="Silver" tileImage="8" autoGenType="Ore Blend"  color="#B9A417" marker="Silver" />
+    <tile name="Gold" tileImage="9" autoGenType="Ore Blend"  color="#D9DFDF" marker="Gold" />
+
+    <tile name="Closed Door" tileImage="10" color="Decorative" />
+    <tile name="Open Door" tileImage="11" color="Decorative" />
+    <tile name="Heart" tileImage="12" color="Important" marker="Heart" />
+    <tile name="Bottles" tileImage="13" color="Decorative" >
+      <subtile name="Bottle" frameX="0" frameY="0" />
+      <subtile name="Lesser Healing Potion" frameX="1" frameY="0" />
+      <subtile name="Lesser Mana Potion" frameX="2" frameY="0" />
+      <subtile name="Pink Vase" frameX="3" frameY="0" />
+      <subtile name="Mug" frameX="4" frameY="0" />
+    </tile>
+    <tile name="Table" tileImage="14" color="Decorative" />
+    <tile name="Chairs" tileImage="15" color="Decorative">
+      <subtile name="Chair" frameX="0" frameY="0" />
+      <subtile name="Toilet" frameX="0" frameY="1" />
+    </tile>
+    <tile name="Anvil" tileImage="16" color="Decorative" />
+    <tile name="Furnace" tileImage="17" color="Decorative" />
+    <tile name="Work Bench" tileImage="18" color="Decorative" />
+    <tile name="Wood Platform" tileImage="19" autoGenType="Platform" color="Wood" />
+
+    <tile name="Saplings" tileImage="20" color="Plants" />
+    <tile name="Containers" tileImage="21" color="Important" >
+      <subtype name="Chest" frameX="0" frameY="0" marker="Chest" />
+      <subtype name="Gold Chest" frameX="2" frameY="0" marker="Gold Chest" />
+      <subtype name="Locked Gold Chest" frameX="4" frameY="0" />
+      <subtype name="Shadow Chest" frameX="6" frameY="0" />
+      <subtype name="Barrel" frameX="8" frameY="0" />
+      <subtype name="Trash Can" frameX="10" frameY="0" />
+    </tile>
+    <tile name="Demonite" tileImage="22" autoGenType="Ore Blend" color="#625FA7" marker="Demonite" />
+    <tile name="Corrupt Grass" tileImage="23" autoGenType="Grass Blend" color="Corruption Grass" />
+    <tile name="Corrupt Plants" tileImage="24" color="Corruption Grass" >
+      <subtype name="Vile Mushroom" frameX="10" frameY="0" />
+    </tile>
+    <tile name="Ebonstone" tileImage="25" autoGenType="Ore Blend" color="#4B4A82" />
+    <tile name="Demon Altar" tileImage="26" color="Important" marker="Altar" />
+    <tile name="Sunflower" tileImage="27" color="Plants" />
+    <tile name="Pots" tileImage="28" color="Important" />
+    <tile name="Piggy Bank" tileImage="29" color="Decorative" />
+
+    <tile name="Wood Block" tileImage="30" autoGenType="Building Block" color="#A87957" />
+    <tile name="Shadow Orb" tileImage="31" color="Important" marker="Shadow Orb" />
+    <tile name="Corrupt Thorns" tileImage="32" autoGenType="Building Block" color="#7A618F" />
+    <tile name="Candle" tileImage="33" color="Light Source" />
+    <tile name="Copper Chandelier" tileImage="34" color="Light Source" />
+    <tile name="Silver Chandelier" tileImage="35" color="Light Source" />
+    <tile name="Gold Chandelier" tileImage="36" color="Light Source" />
+    <tile name="Meteorite" tileImage="37" autoGenType="Ore Blend" color="#FF00FF" marker="Meteorite" />
+    <tile name="Gray Brick" tileImage="38" autoGenType="Building Block" color="Block" />
+    <tile name="Red Brick" tileImage="39" autoGenType="Building Block" color="Block" />
+
+    <tile name="Clay Block" tileImage="40" autoGenType="Ore Blend" color="#D87365" />
+    <tile name="Blue Brick" tileImage="41" autoGenType="Building Block" color="#4245C2" />
+    <tile name="Hanging Globe" tileImage="42" color="Light Source" />
+    <tile name="Green Brick" tileImage="43" autoGenType="Building Block" color="#1A8822" />
+    <tile name="Pink Brick" tileImage="44" autoGenType="Building Block" color="#A93175" />
+    <tile name="Gold Brick" tileImage="45" autoGenType="Building Block" color="Block" />
+    <tile name="Silver Brick" tileImage="46" autoGenType="Building Block" color="Block" />
+    <tile name="Copper Brick" tileImage="47" autoGenType="Building Block" color="Block" />
+    <tile name="Spike" tileImage="48" autoGenType="Building Block" color="#6D6D6D" />
+    <tile name="Water Candle" tileImage="49" autoGenType="Single" color="Light Source" />
+
+    <tile name="Books" tileImage="50" color="Decorative" />
+    <tile name="Cobweb" tileImage="51" autoGenType="Building Block" color="#FFFFFF" />
+    <tile name="Vines" tileImage="52" autoGenType="Hanging Vine" color="Plants" />
+    <tile name="Sand" tileImage="53" autoGenType="Ore Blend" color="#FFDA38" />
+    <tile name="Glass" tileImage="54" autoGenType="Building Block" color="Decorative" />
+    <tile name="Signs" tileImage="55" color="Decorative">
+      <subtype name="Sign" frameX="0" frameY="0" />
+      <subtype name="Top Hanging Sign" frameX="2" frameY="0" />
+      <subtype name="Left Hanging Sign" frameX="4" frameY="0" />
+      <subtype name="Right Hanging Sign" frameX="6" frameY="0" />
+    </tile>
+    <tile name="Obsidian" tileImage="56" autoGenType="Ore Blend" color="#5751AD" marker="Obsidian" />
+    <tile name="Ash" tileImage="57" autoGenType="Building Block" color="#44444C" />
+    <tile name="Hellstone" tileImage="58" autoGenType="Ore Blend" blendWith="Ash" color="#662222" marker="Hellstone" />
+    <tile name="Mud" tileImage="59" autoGenType="Ore Blend" color="#5C4449" />
+
+    <tile name="Jungle Grass" tileImage="60" autoGenType="Grass Blend" blendWith="Mud" color="Jungle Plants" />
+    <tile name="Jungle Plants" tileImage="61" color="Jungle Plants"/>
+    <tile name="Jungle Vines" tileImage="62" autoGenType="Hanging Vine" color="#8ACE1C" />
+    <tile name="Sapphire" tileImage="63" autoGenType="Ore Blend" color="Gems" marker="Sapphire" />
+    <tile name="Ruby" tileImage="64" autoGenType="Ore Blend" color="Gems" marker="Ruby" />
+    <tile name="Emerald" tileImage="65" autoGenType="Ore Blend" color="Gems" marker="Emerald" />
+    <tile name="Topaz" tileImage="66" autoGenType="Ore Blend" color="Gems" marker="Topaz" />
+    <tile name="Amethyst" tileImage="67" autoGenType="Ore Blend" color="Gems" marker="Amethyst" />
+    <tile name="Diamond" tileImage="68" autoGenType="Ore Blend" color="Gems" marker="Diamond" />
+    <tile name="Jungle Thorns" tileImage="69" autoGenType="Building Block" color="#5E3037" />
+
+    <tile name="Mushroom Grass" tileImage="70" autoGenType="Grass Blend" blendWith="Mud" color="#5D7FFF" />
+    <tile name="Mushroom Plants" tileImage="71" color="#B1AE83">
+      <subtile name="Glowing Mushroom" frameX="4" frameY="0" />
+    </tile>
+    <tile name="Mushroom Trees" tileImage="72" color="#968F6E" />
+    <tile name="Plants2" tileImage="73" color="Plants" />
+    <tile name="Plants3" tileImage="74" color="Plants" />
+    <tile name="Obsidian Brick" tileImage="75" autoGenType="Building Block" color="Block" />
+    <tile name="Hellstone Brick" tileImage="76" autoGenType="Building Block" color="Block" />
+    <tile name="Hellforge" tileImage="77" color="Important" marker="Hellforge" />
+    <tile name="Clay Pot" tileImage="78" color="Decorative" />
+    <tile name="Bed" tileImage="79" color="Decorative" />
+
+    <tile name="Cactus" tileImage="80" autoGenType="Cactus" color="#006400" />
+    <tile name="Coral" tileImage="81" color="#FFB6C1" />
+    <tile name="Immature Herbs" tileImage="82" color="Herb">
+      <tile name="Immature Daybloom" frameX="0" frameY="0" />
+      <tile name="Immature Moonglow" frameX="1" frameY="0" />
+      <tile name="Immature Blinkroot" frameX="2" frameY="0" />
+      <tile name="Immature Deathweed" frameX="3" frameY="0" />
+      <tile name="Immature Waterleaf" frameX="4" frameY="0" />
+      <tile name="Immature Fireblossom" frameX="5" frameY="0" />
+    </tile>
+    <tile name="Mature Herbs" tileImage="83" color="Herb">
+      <tile name="Mature Daybloom" frameX="0" frameY="0" />
+      <tile name="Mature Moonglow" frameX="1" frameY="0" />
+      <tile name="Mature Blinkroot" frameX="2" frameY="0" />
+      <tile name="Mature Deathweed" frameX="3" frameY="0" />
+      <tile name="Mature Waterleaf" frameX="4" frameY="0" />
+      <tile name="Mature Fireblossom" frameX="5" frameY="0" />
+    </tile>
+    <tile name="Blooming Herbs" tileImage="84" color="Herb">
+      <tile name="Blooming Daybloom" frameX="0" frameY="0" />
+      <tile name="Blooming Moonglow" frameX="1" frameY="0" />
+      <tile name="Blooming Blinkroot" frameX="2" frameY="0" />
+      <tile name="Blooming Deathweed" frameX="3" frameY="0" />
+      <tile name="Blooming Waterleaf" frameX="4" frameY="0" />
+      <tile name="Blooming Fireblossom" frameX="5" frameY="0" />
+    </tile>
+    <tile name="Tombstone" tileImage="85" color="#696969" marker="Tombstone" />
+    <tile name="Loom" tileImage="86" color="Decorative" />
+    <tile name="Piano" tileImage="87" color="Decorative" />
+    <tile name="Dresser" tileImage="88" color="Decorative" />
+    <tile name="Bench" tileImage="89" color="Decorative" />
+
+    <tile name="Bathtub" tileImage="90" color="Decorative" />
+    <tile name="Banners" tileImage="91" color="Decorative">
+      <subtype name="Red Banner" frameX="0" frameY="0" />
+      <subtype name="Green Banner" frameX="1" frameY="0" />
+      <subtype name="Blue Banner" frameX="2" frameY="0" />
+      <subtype name="Yellow Banner" frameX="3" frameY="0" />
+    </tile>
+    <tile name="Lamppost" tileImage="92" color="Light Source" />
+    <tile name="Tiki Torch" tileImage="93" color="Light Source" />
+    <tile name="Keg" tileImage="94" color="Decorative" />
+    <tile name="Chinese Lantern" tileImage="95" color="Light Source" />
+    <tile name="Cooking Pot" tileImage="96" color="Decorative" />
+    <tile name="Safe" tileImage="97" color="Decorative" />
+    <tile name="Skull Candle" tileImage="98" color="Light Source" />
+    <tile name="Trash Can" tileImage="99" color="Decorative" />
+
+    <tile name="Candelabra" tileImage="100" color="Light Source" />
+    <tile name="Bookcase" tileImage="101" color="Decorative" />
+    <tile name="Throne" tileImage="102" color="Decorative" />
+    <tile name="Bowl" tileImage="103" color="Decorative" />
+    <tile name="Grandfather Clock" tileImage="104" color="Decorative" />
+    <tile name="Statue" tileImage="105" color="Decorative" />
+    <tile name="Sawmill" tileImage="106" color="Decorative" />
+    
+    <tile name="Cobalt" autoGenType="Ore Blend" tileImage="107" color="#0b508f" marker="Cobalt" />
+    <tile name="Mythril" autoGenType="Ore Blend" tileImage="108" color="#5ba9a9" marker="Mythril" />
+    <tile name="Hallowed Grass" autoGenType="Grass Blend" tileImage="109" color="Hallowed Plants" />
+
+    <tile name="Hallowed Plants" tileImage="110" color="Hallowed Plants" />
+    <tile name="Adamantite" autoGenType="Ore Blend" tileImage="111" color="#801a34" marker="Adamantite" />
+    <tile name="Silt" autoGenType="Ore Blend" tileImage="112" color="#67627A" />
+    <tile name="Hallowed Plants 2" tileImage="113" color="Hallowed Plants" />
+    <tile name="Tinkerer's Workbench" tileImage="114" color="Decorative" />
+    <tile name="Hallowed Vines" autoGenType="Hanging Vine" tileImage="115" color="Hallowed Vines" />
+    <tile name="Pearlsand" autoGenType="Ore Blend" tileImage="116" color="#EEE1DA" />
+    <tile name="Pearlstone" autoGenType="Ore Blend" tileImage="117" color="#B5ACBE" />
+    <tile name="Pearlstone Brick" autoGenType="Ore Blend" tileImage="118" color="Block" />
+    <tile name="Iridescent Brick" autoGenType="Ore Blend" tileImage="119" color="Block" />
+
+    <tile name="Unknown New Brick" autoGenType="Ore Blend" tileImage="120" color="Unknown" />
+    <tile name="Cobalt Brick" autoGenType="Ore Blend" tileImage="121" color="Block" />
+    <tile name="Mythril Brick" autoGenType="Ore Blend" tileImage="122" color="Block" />
+    <tile name="Ebonsand" autoGenType="Ore Blend" tileImage="123" color="#595353" />
+    <tile name="Wooden Plank" autoGenType="Building Block" tileImage="124" color="Wood" />
+    <tile name="Crystal Ball" tileImage="125" color="Decorative" />
+    <tile name="Disco Ball" tileImage="126" color="Decorative" />
+    <tile name="Ice Block" autoGenType="Building Block" tileImage="127" color="Block" />
+    <tile name="Mannequin" tileImage="128" color="Decorative" />
+    <tile name="Crystals" tileImage="129" color="#785AD9" />
+
+    <tile name="Active Stone Block" autoGenType="Ore Blend" tileImage="130" color="Mechanical" />
+    <tile name="Inactive Stone Block" autoGenType="Ore Blend" tileImage="131" color="Mechanical" />
+    <tile name="Lever" tileImage="132" color="Mechanical" />
+    <tile name="Adamantite Forge" tileImage="133" color="Decorative" />
+    <tile name="Mythril Anvil" tileImage="134" color="Decorative" />
+    <tile name="Pressure Plates" tileImage="135" color="Mechanical" />
+    <tile name="Switches" tileImage="136" color="Mechanical" />
+    <tile name="Dart Trap" tileImage="137" color="Mechanical" />
+    <tile name="Boulder" tileImage="138" color="Decorative" />
+    <tile name="Music Boxes" tileImage="139" color="Decorative" />
+
+    <tile name="Ebonstone Brick" autoGenType="Ore Blend" tileImage="140" color="Block" />
+    <tile name="Explosives" tileImage="141" color="Mechanical" />
+    <tile name="Inlet Pump" tileImage="142" color="Mechanical" />
+    <tile name="Outlet Pump" tileImage="143" color="Mechanical" />
+    <tile name="Timers" tileImage="144" color="Mechanical" />
+
+  </tiles>
+  <walls>
+    <wall name="Stone" wallImage="1" color="#424242" />
+    <wall name="Dirt (Unsafe)" wallImage="2" unsafe="true" color="Wall Dirt" />
+    <wall name="Ebonstone" wallImage="3" unsafe="true" color="#3D3A4E" />
+    <wall name="Wood" wallImage="4" color="Wall Wood" />
+    <wall name="Grey Brick" wallImage="5" color="Wall Brick" />
+    <wall name="Red Brick" wallImage="6" color="Wall Brick" />
+    <wall name="Blue Dungeon Brick" wallImage="7" unsafe="true" color="Wall Dungeon Blue" />
+    <wall name="Green Dungeon Brick" wallImage="8" unsafe="true" color="Wall Dungeon Green" />
+    <wall name="Pink Dungeon Brick" wallImage="9" unsafe="true" color="Wall Dungeon Pink" />
+    <wall name="Gold Brick" wallImage="10" color="Wall Brick" />
+    <wall name="Silver Brick" wallImage="11" color="Wall Brick" />
+
+    <wall name="Copper Brick" wallImage="12" color="Wall Brick" />
+    <wall name="Hellstone" wallImage="13" unsafe="true" color="#301515" />
+    <wall name="Obsidian Brick" wallImage="14" color="#5751AD" />
+    <wall name="Mud" wallImage="15" unsafe="true" color="#3D2E31" />
+    <wall name="Dirt" wallImage="16" color="Wall Dirt" />
+    <wall name="Blue Brick" wallImage="17" color="Wall Dungeon Blue" />
+    <wall name="Green Brick" wallImage="18" color="Wall Dungeon Green" />
+    <wall name="Pink Brick" wallImage="19" color="Wall Dungeon Pink" />
+    <wall name="Obsidian" wallImage="20" unsafe="true" color="Wall Dirt"/>
+
+    <wall name="Glass Wall" wallImage="21" color="Wall Brick" />
+    <wall name="Pearlstone Brick Wall" wallImage="22" color="Wall Brick" />
+    <wall name="Iridescent Brick Wall" wallImage="23" color="Wall Brick" />
+    <wall name="Mudstone Brick Wall" wallImage="24" color="Wall Brick" />
+    <wall name="Cobalt Brick Wall" wallImage="25" color="Wall Brick" />
+    <wall name="Mythril Brick Wall" wallImage="26" color="Wall Brick" />
+    <wall name="Planked Wall" wallImage="27" color="Wall Wood" />
+
+    <wall name="Ebonstone Brick Wall" wallImage="28" color="Wall Brick" />
+  </walls>
+  <items>
+    <item name="1 Second Timer" type="Unknown" itemImage="0" />
+    <item name="3 Second Timer" type="Unknown" itemImage="0" />
+    <item name="5 Second Timer" type="Unknown" itemImage="0" />
+
+    <item name="Acorn" type="Seed" plantsIn="Grass" itemImage="27" />
+    <item name="Active Stone Block" type="Unknown" itemImage="0" />
+    <item name="Adamantite Bar" type="Unknown" itemImage="0" />
+    <item name="Adamantite Breastplate" type="Unknown" itemImage="0" />
+    <item name="Adamantite Chainsaw" type="Unknown" itemImage="0" />
+    <item name="Adamantite Drill" type="Unknown" itemImage="0" />
+    <item name="Adamantite Forge" type="Unknown" itemImage="0" />
+    <item name="Adamantite Glaive" type="Unknown" itemImage="0" />
+    <item name="Adamantite Headgear" type="Unknown" itemImage="0" />
+    <item name="Adamantite Helmet" type="Unknown" itemImage="0" />
+    <item name="Adamantite Leggings" type="Unknown" itemImage="0" />
+    <item name="Adamantite Ore" type="Unknown" itemImage="0" />
+    <item name="Adamantite Repeater" type="Unknown" itemImage="0" />
+    <item name="Adamantite Sword" type="Unknown" itemImage="0" />
+    <item name="Aglet" type="Accessory" foundIn="Chest" itemImage="285" />
+    <item name="Ale" type="Consumable" itemImage="353" />
+    <item name="Amethyst" type="Gem" itemImage="181" />
+    <item name="Angel Statue" foundIn="Chest" maxStack="1" itemImage="52" />
+    <item name="Angel Wings" type="Unknown" itemImage="0" />
+    <item name="Anklet of the Wind" type="Accessory" foundIn="Chest" itemImage="212" />
+    <item name="Antlion Mandible" itemImage="323" />
+    <item name="Anvil Statue" type="Unknown" itemImage="0" />
+    <item name="Aqua Scepter" type="Weapon" foundIn="Chest" itemImage="157" />
+    <item name="Archaeologist's Hat" type="Head Costume" itemImage="251" />
+    <item name="Archaeologist's Jacket" type="Body Costume" itemImage="252" />
+    <item name="Archaeologist's Pants" type="Leg Costume" itemImage="253" />
+    <item name="Archery Potion" type="Potion" foundIn="Chest" itemImage="303" />
+    <item name="Armor Statue" type="Unknown" itemImage="0" />
+    <item name="Ash Block" type="Building Block" itemImage="172" />
+    <item name="Axe Statue" type="Unknown" itemImage="0" />
+
+    <item name="Ball O' Hurt" type="Weapon" foundIn="Shadow Orb" itemImage="162" />
+    <item name="Band of Regeneration" type="Accessory" foundIn="Chest" itemImage="49" />
+    <item name="Band of Starpower" type="Accessory" foundIn="Shadow Orb" itemImage="111" />
+    <item name="Barrel" type="Container" itemImage="343" />
+    <item name="Bat Statue" type="Unknown" itemImage="0" />
+    <item name="Bathtub" type="Placeable Object" itemImage="336" />
+    <item name="Battle Potion" type="Potion" foundIn="Chest" itemImage="300" />
+    <item name="Bed" type="Placeable Object" itemImage="224" />
+    <item name="Bell" type="Unknown" itemImage="0" />
+    <item name="Bench" type="Placeable Object" itemImage="335" />
+    <item name="Bird Statue" type="Unknown" itemImage="0" />
+    <item name="Black Dye" itemImage="254" />
+    <item name="Black Lens" itemImage="236" />
+    <item name="Blade of Grass" type="Weapon" itemImage="190" />
+    <item name="Blinkroot" type="Herb" itemImage="315" />
+    <item name="Blinkroot Seeds" type="Seed" plantsIn="Dirt" itemImage="309" />
+    <item name="Blowpipe" type="Ranged Weapon" ammoType="Seed" foundIn="Chest" itemImage="281" />
+    <item name="Blue Banner" type="Placeable Object" itemImage="339" />
+    <item name="Blue Brick" type="Building Block" itemImage="134" />
+    <item name="Blue Brick Wall" type="Wall" itemImage="135" />
+    <item name="Blue Moon" type="Weapon" foundIn="Chest" itemImage="163" />
+    <item name="Blue Phaseblade" type="Weapon" itemImage="198" />
+    <item name="Blue Phasesaber" type="Unknown" itemImage="0" />
+    <item name="Blue Torch" type="Unknown" itemImage="0" />
+    <item name="Bomb" type="Explosive" foundIn="Chest" itemImage="166" />
+    <item name="Bomb Statue" type="Unknown" itemImage="0" />
+    <item name="Bone" type="Thrown Weapon" itemImage="154" />
+    <!-- verify stack size -->
+    <item name="Book" type="Placeable Object" itemImage="149" />
+    <item name="Bookcase" type="Placeable Object" itemImage="354" />
+    <item name="Boomerang Statue" type="Unknown" itemImage="0" />
+    <item name="Boot Statue" type="Unknown" itemImage="0" />
+    <item name="Bottle" foundIn="Chest" itemImage="31" />
+    <item name="Bottled Water" type="Consumable" itemImage="126" />
+    <item name="Boulder" type="Unknown" itemImage="0" />
+    <item name="Bow Statue" type="Unknown" itemImage="0" />
+    <item name="Bowl" type="Placeable Object" itemImage="356" />
+    <item name="Bowl of Soup" type="Consumable" itemImage="357" />
+    <item name="Breaker Blade" type="Unknown" itemImage="0" />
+    <item name="Breathing Reed" type="Usable" foundIn="Chest" itemImage="186" />
+    <item name="Bunny Hood" type="Head Costume" itemImage="243" />
+    <item name="Bunny Statue" type="Unknown" itemImage="0" />
+
+    <item name="Cactus" maxStack="250" itemImage="276" />
+    <item name="Candelabra" type="Placeable Object" itemImage="349" />
+    <item name="Candle" type="Placeable Object" subType="Light" itemImage="105" />
+    <item name="Chain Lantern" type="Placeable Object" subType="Light" itemImage="136" />
+    <item name="Chest" type="Container" itemImage="48" />
+    <item name="Chest Statue" type="Unknown" itemImage="0" />
+    <item name="Chinese Lantern" type="Placeable Object" itemImage="344" />
+    <item name="Clay Block" type="Building Block" itemImage="133" />
+    <item name="Clay Pot" type="Placeable Object" itemImage="222" />
+    <item name="Clockwork Assault Rifle" type="Unknown" itemImage="0" />
+    <item name="Cloud in a Balloon" type="Unknown" itemImage="0" />
+    <item name="Cloud in a Bottle" type="Accessory" foundIn="Chest" itemImage="53" />
+    <item name="Clown Hat" type="Unknown" itemImage="0" />
+    <item name="Clown Pants" type="Unknown" itemImage="0" />
+    <item name="Clown Shirt" type="Unknown" itemImage="0" />
+    <item name="Cobalt Bar" type="Unknown" itemImage="0" />
+    <item name="Cobalt Breastplate" type="Unknown" itemImage="0" />
+    <item name="Cobalt Brick" type="Unknown" itemImage="0" />
+    <item name="Cobalt Brick Wall" type="Unknown" itemImage="0" />
+    <item name="Cobalt Chainsaw" type="Unknown" itemImage="0" />
+    <item name="Cobalt Drill" type="Unknown" itemImage="0" />
+    <item name="Cobalt Hat" type="Unknown" itemImage="0" />
+    <item name="Cobalt Helmet" type="Unknown" itemImage="0" />
+    <item name="Cobalt Leggings" type="Unknown" itemImage="0" />
+    <item name="Cobalt Mask" type="Unknown" itemImage="0" />
+    <item name="Cobalt Naginata" type="Unknown" itemImage="0" />
+    <item name="Cobalt Ore" type="Unknown" itemImage="0" />
+    <item name="Cobalt Repeater" type="Unknown" itemImage="0" />
+    <item name="Cobalt Shield" type="Accessory" foundIn="Chest" itemImage="156" />
+    <item name="Cobalt Sword" type="Unknown" itemImage="0" />
+    <item name="Cobweb" itemImage="150" />
+    <item name="Compass" type="Unknown" itemImage="0" />
+    <item name="Cooking Pot" type="Placeable Object" itemImage="345" />
+    <item name="Copper Axe" type="Weapon" itemImage="10" recolor="Copper" />
+    <item name="Copper Bar" type="Metal Bar" foundIn="Chest" itemImage="20" />
+    <item name="Copper Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="99" recolor="Copper" />
+    <item name="Copper Brick" type="Building Block" itemImage="145" />
+    <item name="Copper Brick Wall" type="Wall" itemImage="146" />
+    <item name="Copper Broadsword" type="Weapon" itemImage="24" />
+    <item name="Copper Chainmail" type="Body Equipment" itemImage="80" />
+    <item name="Copper Chandelier" type="Placeable Object" itemImage="106" />
+    <item name="Copper Coin" type="Coin" itemImage="71" />
+    <item name="Copper Greaves" type="Leg Equipment" itemImage="76" />
+    <item name="Copper Hammer" type="Weapon" itemImage="7" recolor="Copper" />
+    <item name="Copper Helmet" type="Head Equipment" itemImage="89" />
+    <item name="Copper Ore" type="Ore" itemImage="12" />
+    <item name="Copper Pickaxe" type="Weapon" itemImage="1" recolor="Copper" />
+    <item name="Copper Shortsword" type="Weapon" itemImage="6" recolor="Copper" />
+    <item name="Copper Watch" type="Accessory" itemImage="15" />
+    <item name="Coral" itemImage="275" />
+    <item name="Corrupt Seeds" type="Seed" plantsIn="Dirt" itemImage="59" />
+    <item name="Corrupt Statue" type="Unknown" itemImage="0" />
+    <item name="Crab Statue" type="Unknown" itemImage="0" />
+    <item name="Cross Statue" type="Unknown" itemImage="0" />
+    <item name="Crystal Ball" type="Unknown" itemImage="0" />
+    <item name="Crystal Bullet" type="Unknown" itemImage="0" />
+    <item name="Crystal Shard" type="Unknown" itemImage="0" />
+    <item name="Crystal Storm" type="Unknown" itemImage="0" />
+    <item name="Cursed Arrow" type="Unknown" itemImage="0" />
+    <item name="Cursed Bullet" type="Unknown" itemImage="0" />
+    <item name="Cursed Flame" type="Unknown" itemImage="0" />
+    <item name="Cursed Flames" type="Unknown" itemImage="0" />
+    <item name="Cursed Torch" type="Unknown" itemImage="0" />
+
+    <item name="Dao of Pow" type="Unknown" itemImage="0" />
+    <item name="Dark Lance" type="Weapon" foundIn="Chest" itemImage="274" />
+    <item name="Daybloom" type="Herb" itemImage="313" />
+    <item name="Daybloom Seeds" type="Seed" plantsIn="Grass" itemImage="307" />
+    <item name="Deathweed" type="Herb" itemImage="316" />
+    <item name="Deathweed Seeds" type="Seed" plantsIn="Ebonstone" itemImage="310" />
+    <item name="Demon Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="44" />
+    <item name="Demon Scythe" type="Magical Weapon" itemImage="272" />
+    <item name="Demon Torch" type="Unknown" itemImage="0" />
+    <item name="Demon Wings" type="Unknown" itemImage="0" />
+    <item name="Demonite Bar" type="Metal Bar" itemImage="57" />
+    <item name="Demonite Ore" type="Ore" itemImage="56" />
+    <item name="Depth Meter" type="Accessory" itemImage="18" />
+    <item name="Diamond" type="Gem" itemImage="182" />
+    <item name="Dirt Block" type="Building Block" itemImage="2" />
+    <item name="Dirt Rod" type="Magical Item" itemImage="114" />
+    <item name="Dirt Wall" type="Wall" itemImage="30" />
+    <item name="Disco Ball" type="Unknown" itemImage="0" />
+    <item name="Diving Gear" type="Unknown" itemImage="0" />
+    <item name="Diving Helmet" type="Head Equipment" itemImage="268" />
+    <item name="Dresser" type="Placeable Object" itemImage="334" />
+    <item name="Dual Hook" type="Unknown" itemImage="0" />
+    <item name="Dynamite" type="Explosive" foundIn="Chest" maxStack="5" itemImage="167" />
+
+    <item name="Ebonsand Block" type="Unknown" itemImage="0" />
+    <item name="Ebonstone Block" type="Building Block" itemImage="61" />
+    <item name="Emerald" type="Gem" itemImage="179" />
+    <item name="Empty Bucket" type="Usable" itemImage="205" />
+    <item name="Enchanted Boomerang" type="Weapon" foundIn="Chest" itemImage="55" />
+    <item name="Excalibur" type="Unknown" itemImage="0" />
+    <item name="Explosives" type="Unknown" itemImage="0" />
+    <item name="Eyeball Statue" type="Unknown" itemImage="0" />
+
+    <item name="Fairy Bell" type="Unknown" itemImage="0" />
+    <item name="Fallen Star" type="Consumable" maxStack="100" itemImage="75" />
+    <item name="Familiar Pants" type="Leg Costume" itemImage="270" />
+    <item name="Familiar Shirt" type="Body Costume" itemImage="269" />
+    <item name="Familiar Wig" type="Head Costume" itemImage="271" />
+    <item name="Feather" itemImage="320" />
+    <item name="Featherfall Potion" type="Potion" foundIn="Chest" itemImage="295" />
+    <item name="Feral Claws" type="Accessory" foundIn="Chest" itemImage="211" />
+    <item name="Fiery Greatsword" type="Weapon" itemImage="121" />
+    <item name="Fireblossom" type="Herb" itemImage="318" />
+    <item name="Fireblossom Seeds" type="Seed" plantsIn="Ash" itemImage="312" />
+    <item name="Fish Bowl" type="Head Costume" itemImage="250" />
+    <item name="Fish Statue" type="Unknown" itemImage="0" />
+    <item name="Flamarang" type="Weapon" itemImage="119" />
+    <item name="Flamelash" type="Magical Weapon" foundIn="Chest" itemImage="218" />
+    <item name="Flamethrower" type="Unknown" itemImage="0" />
+    <item name="Flaming Arrow" type="Arrow" foundIn="Chest" itemImage="41" />
+    <item name="Flintlock Pistol" type="Ranged Weapon" ammoType="Bullet" itemImage="95" />
+    <item name="Flipper" type="Accessory" foundIn="Chest" itemImage="187" />
+    <item name="Flower of Fire" type="Magical Weapon" foundIn="Chest" itemImage="112" />
+    <item name="Furnace" type="Placeable Object" itemImage="33" />
+
+    <item name="Gargoyle Statue" type="Unknown" itemImage="0" />
+    <item name="Gel" itemImage="23" />
+    <!-- wrong color? -->
+    <item name="Gills Potion" type="Potion" foundIn="Chest" itemImage="291" />
+    <item name="Glass" type="Building Block" itemImage="170" />
+    <item name="Glass Wall" type="Unknown" itemImage="0" />
+    <item name="Gloom Statue" type="Unknown" itemImage="0" />
+    <item name="Glowing Mushroom" type="Consumable" itemImage="183" />
+    <item name="Glowstick" type="Usable" foundIn="Chest" maxStack="99" itemImage="282" />
+    <item name="Goblin Battle Standard" type="Usable" itemImage="361" />
+    <item name="Goblin Statue" type="Unknown" itemImage="0" />
+    <item name="Goggles" type="Head Equipment" itemImage="37" />
+    <item name="Gold Axe" type="Weapon" itemImage="10" recolor="Gold" />
+    <item name="Gold Bar" type="Metal Bar" foundIn="Chest" itemImage="19" />
+    <item name="Gold Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="99" recolor="Gold" />
+    <item name="Gold Brick" type="Building Block" itemImage="141" />
+    <item name="Gold Brick Wall" type="Wall" itemImage="142" />
+    <item name="Gold Broadsword" type="Weapon" itemImage="4" recolor="Gold" />
+    <item name="Gold Chainmail" type="Body Equipment" itemImage="83" />
+    <item name="Gold Chandelier" type="Placeable Object" itemImage="108" />
+    <item name="Gold Chest" type="Container" itemImage="306" />
+    <item name="Gold Coin" type="Coin" foundIn="Chest" itemImage="73" />
+    <item name="Gold Crown" type="Head Costume" itemImage="264" />
+    <item name="Gold Greaves" type="Leg Equipment" itemImage="79" />
+    <item name="Gold Hammer" type="Weapon" itemImage="7" recolor="Gold" />
+    <item name="Gold Helmet" type="Head Equipment" itemImage="92" />
+    <item name="Gold Ore" type="Ore" itemImage="13" />
+    <item name="Gold Pickaxe" type="Weapon" itemImage="1" recolor="Gold" />
+    <item name="Gold Shortsword" type="Weapon" itemImage="6" recolor="Gold" />
+    <item name="Gold Watch" type="Accessory" itemImage="17" />
+    <item name="Golden Key" type="Key" foundIn="Chest" itemImage="327" />
+    <item name="Goldfish" type="Consumable" itemImage="261" />
+    <item name="GPS" type="Unknown" itemImage="0" />
+    <item name="Grandfather Clock" type="Placeable Object" itemImage="359" />
+    <item name="Grappling Hook" type="Usable" itemImage="84" />
+    <item name="Grass Seeds" type="Seed" plantsIn="Dirt" itemImage="62" />
+    <item name="Gravitation Potion" type="Potion" foundIn="Chest" itemImage="305" />
+    <item name="Gray Brick" type="Building Block" itemImage="129" />
+    <item name="Gray Brick Wall" type="Wall" itemImage="130" />
+    <item name="Greater Healing Potion" type="Unknown" itemImage="0" />
+    <item name="Greater Mana Potion" type="Unknown" itemImage="0" />
+    <item name="Green Banner" type="Placeable Object" itemImage="338" />
+    <item name="Green Brick" type="Building Block" itemImage="137" />
+    <item name="Green Brick Wall" type="Wall" itemImage="138" />
+    <item name="Green Dye" itemImage="255" />
+    <item name="Green Phaseblade" type="Weapon" itemImage="200" />
+    <item name="Green Phasesaber" type="Unknown" itemImage="0" />
+    <item name="Green Torch" type="Unknown" itemImage="0" />
+    <item name="Grenade" type="Explosive" foundIn="Chest" itemImage="168" />
+    <item name="Guide Voodoo Doll" type="Accessory" itemImage="267" />
+    <item name="Gungnir" type="Unknown" itemImage="0" />
+
+    <item name="Hallowed Seeds" type="Unknown" itemImage="0" />
+    <item name="Hamdrax" type="Unknown" itemImage="0" />
+    <item name="Hammer Statue" type="Unknown" itemImage="0" />
+    <item name="Handgun" type="Ranged Weapon" ammoType="Bullet" foundIn="Chest" itemImage="164" />
+    <item name="Harp" type="Unknown" itemImage="0" />
+    <item name="Harpoon" type="Weapon" itemImage="160" />
+    <item name="Healing Potion" type="Potion" foundIn="Chest" itemImage="188" />
+    <item name="Heart" type="Pickup Item" itemImage="58" />
+    <item name="Heart Statue" type="Unknown" itemImage="0" />
+    <item name="Hellfire Arrow" type="Arrow" foundIn="Chest" itemImage="265" />
+    <item name="Hellforge" type="Placeable Object" itemImage="221" />
+    <item name="Hellstone" type="Ore" itemImage="174" />
+    <item name="Hellstone Bar" type="Metal Bar" itemImage="175" />
+    <item name="Hellstone Brick" type="Building Block" itemImage="214" />
+    <item name="Hermes Boots" type="Accessory" foundIn="Chest" itemImage="54" />
+    <item name="Hero's Hat" type="Head Costume" itemImage="247" />
+    <item name="Hero's Pants" type="Leg Costume" itemImage="249" />
+    <item name="Hero's Shirt" type="Body Costume" itemImage="248" />
+    <item name="Holy Arrow" type="Unknown" itemImage="0" />
+    <item name="Holy Water" type="Unknown" itemImage="0" />
+    <item name="Hook" itemImage="118" />
+    <item name="Hornet Statue" type="Unknown" itemImage="0" />
+    <item name="Hunter Potion" type="Potion" foundIn="Chest" itemImage="304" />
+
+    <item name="Ice Rod" type="Unknown" itemImage="0" />
+    <item name="Illegal Gun Parts" itemImage="324" />
+    <item name="Imp Statue" type="Unknown" itemImage="0" />
+    <item name="Inactive Stone Block" type="Unknown" itemImage="0" />
+    <item name="Invisibility Potion" type="Potion" foundIn="Chest" itemImage="297" />
+    <item name="Iridescent Brick" type="Unknown" itemImage="0" />
+    <item name="Iridescent Brick Wall" type="Unknown" itemImage="0" />
+    <item name="Iron Anvil" type="Placeable Object" itemImage="35" />
+    <item name="Iron Axe" type="Weapon" itemImage="10" />
+    <item name="Iron Bar" type="Metal Bar" foundIn="Chest" itemImage="22" />
+    <item name="Iron Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="99" />
+    <item name="Iron Broadsword" type="Weapon" itemImage="4" />
+    <item name="Iron Chain" itemImage="85" />
+    <item name="Iron Chainmail" type="Body Equipment" itemImage="81" />
+    <item name="Iron Greaves" type="Leg Equipment" itemImage="77" />
+    <item name="Iron Hammer" type="Weapon" itemImage="7" />
+    <item name="Iron Helmet" type="Head Equipment" itemImage="90" />
+    <item name="Iron Ore" type="Ore" itemImage="11" />
+    <item name="Iron Pickaxe" type="Weapon" itemImage="1" />
+    <item name="Iron Shortsword" type="Weapon" itemImage="6" />
+    <item name="Ironskin Potion" type="Potion" foundIn="Chest" itemImage="292" />
+    <item name="Ivy Whip" type="Weapon" itemImage="185" />
+
+    <item name="Jellyfish Statue" type="Unknown" itemImage="0" />
+    <item name="Jester's Arrow" type="Arrow" foundIn="Chest" itemImage="51" />
+    <item name="Jungle Grass Seeds" type="Seed" plantsIn="Mud" itemImage="195" />
+    <item name="Jungle Hat" type="Head Equipment" itemImage="228" />
+    <item name="Jungle Pants" type="Leg Equipment" itemImage="230" />
+    <item name="Jungle Rose" type="Head Costume" itemImage="208" />
+    <item name="Jungle Shirt" type="Body Equipment" itemImage="229" />
+    <item name="Jungle Spores" itemImage="331" />
+
+    <item name="Keg" type="Placeable Object" itemImage="352" />
+    <item name="King Statue" type="Unknown" itemImage="0" />
+
+    <item name="Laser Rifle" type="Unknown" itemImage="0" />
+    <item name="Lamp Post" type="Placeable Object" itemImage="341" />
+    <item name="Lava Bucket" type="Usable" itemImage="207" />
+    <item name="Leather" itemImage="259" />
+    <item name="Lens" itemImage="38" />
+    <item name="Lesser Healing Potion" type="Potion" foundIn="Chest" itemImage="28" />
+    <item name="Lesser Mana Potion" type="Potion" itemImage="110" />
+    <item name="Lesser Restoration Potion" type="Potion" foundIn="Chest" itemImage="226" />
+    <item name="Lever" type="Unknown" itemImage="0" />
+    <item name="Life Crystal" type="Stat Upgrade" itemImage="29" />
+    <item name="Light Disc" type="Unknown" itemImage="0" />
+    <item name="Light's Bane" type="Weapon" itemImage="46" />
+    <item name="Loom" type="Placeable Object" itemImage="332" />
+    <item name="Lucky Horseshoe" type="Accessory" foundIn="Chest" itemImage="158" />
+
+    <item name="Magic Dagger" type="Unknown" itemImage="0" />
+    <item name="Magic Mirror" type="Magical Item" foundIn="Chest" itemImage="50" />
+    <item name="Magic Missile" type="Magical Weapon" foundIn="Chest" itemImage="113" />
+    <item name="Magic Power Potion" type="Potion" foundIn="Chest" itemImage="294" />
+    <item name="Magical Harp" type="Unknown" itemImage="0" />
+    <item name="Mana Crystal" type="Consumable" itemImage="109" />
+    <item name="Mana Potion" type="Potion" itemImage="189" />
+    <item name="Mana Regeneration Potion" type="Potion" foundIn="Chest" itemImage="293" />
+    <item name="Mannequin" type="Unknown" itemImage="0" />
+    <item name="Meteor Hamaxe" type="Weapon" itemImage="204" />
+    <item name="Meteor Helmet" type="Head Equipment" itemImage="123" />
+    <item name="Meteor Leggings" type="Leg Equipment" itemImage="125" />
+    <item name="Meteor Shot" type="Bullet" itemImage="234" />
+    <item name="Meteor Suit" type="Body Equipment" itemImage="124" />
+    <item name="Meteorite" type="Ore" itemImage="116" />
+    <item name="Meteorite Bar" type="Metal Bar" foundIn="Chest" itemImage="117" />
+    <item name="Mime Mask" type="Head Costume" itemImage="322" />
+    <item name="Mining Helmet" type="Head Equipment" itemImage="88" />
+    <item name="Mining Pants" type="Unknown" itemImage="0" />
+    <item name="Mining Shirt" type="Unknown" itemImage="0" />
+    <item name="Minishark" type="Ranged Weapon" ammoType="Bullet" itemImage="98" />
+    <item name="Molten Breastplate" type="Body Equipment" itemImage="232" />
+    <item name="Molten Fury" type="Weapon" itemImage="120" />
+    <item name="Molten Greaves" type="Leg Equipment" itemImage="233" />
+    <item name="Molten Hamaxe" type="Weapon" itemImage="217" />
+    <item name="Molten Helmet" type="Head Equipment" itemImage="231" />
+    <item name="Molten Pickaxe" type="Weapon" itemImage="122" />
+    <item name="Moon Charm" type="Unknown" itemImage="0" />
+    <item name="Moonglow" type="Herb" itemImage="314" />
+    <item name="Moonglow Seeds" type="Seed" plantsIn="Jungle Grass" itemImage="308" />
+    <item name="Mud Block" type="Building Block" itemImage="176" />
+    <item name="Mudstone Brick Wall" type="Unknown" itemImage="0" />
+    <item name="Mug" type="Placeable Object" itemImage="351" />
+    <item name="Muramasa" type="Weapon" foundIn="Chest" itemImage="155" />
+    <item name="Mushroom" type="Consumable" itemImage="5" />
+    <item name="Mushroom Grass Seeds" type="Seed" plantsIn="Mud" itemImage="194" />
+    <item name="Mushroom Statue" type="Unknown" itemImage="0" />
+    <item name="Musket" type="Ranged Weapon" ammoType="Bullet" foundIn="Shadow Orb" itemImage="96" />
+    <item name="Musket Ball" type="Bullet" foundIn="Shadow Orb" itemImage="97" />
+    <item name="Mythril Anvil" type="Unknown" itemImage="0" />
+    <item name="Mythril Bar" type="Unknown" itemImage="0" />
+    <item name="Mythril Brick" type="Unknown" itemImage="0" />
+    <item name="Mythril Brick Wall" type="Unknown" itemImage="0" />
+    <item name="Mythril Chainmail" type="Unknown" itemImage="0" />
+    <item name="Mythril Chainsaw" type="Unknown" itemImage="0" />
+    <item name="Mythril Drill" type="Unknown" itemImage="0" />
+    <item name="Mythril Greaves" type="Unknown" itemImage="0" />
+    <item name="Mythril Halberd" type="Unknown" itemImage="0" />
+    <item name="Mythril Hat" type="Unknown" itemImage="0" />
+    <item name="Mythril Helmet" type="Unknown" itemImage="0" />
+    <item name="Mythril Hood" type="Unknown" itemImage="0" />
+    <item name="Mythril Ore" type="Unknown" itemImage="0" />
+    <item name="Mythril Repeater" type="Unknown" itemImage="0" />
+    <item name="Mythril Sword" type="Unknown" itemImage="0" />
+
+    <item name="Nature's Gift" type="Accessory" foundIn="Chest" itemImage="223" />
+    <item name="Necro Breastplate" type="Body Equipment" itemImage="152" />
+    <item name="Necro Greaves" type="Leg Equipment" itemImage="153" />
+    <item name="Necro Helmet" type="Head Equipment" itemImage="151" />
+    <item name="Neptune's Shell" type="Unknown" itemImage="0" />
+    <item name="Night Owl Potion" type="Potion" foundIn="Chest" itemImage="299" />
+    <item name="Nightmare Pickaxe" type="Weapon" itemImage="103" />
+    <item name="Night's Edge" type="Weapon" itemImage="273" />
+    <item name="Ninja Hood" type="Head Costume" droppedBy="King Slime" itemImage="256" />
+    <item name="Ninja Pants" type="Leg Costume" droppedBy="King Slime" itemImage="257" />
+    <item name="Ninja Shirt" type="Body Costume" droppedBy="King Slime" itemImage="258" />
+
+    <item name="Obsidian" type="Ore" itemImage="173" />
+    <item name="Obsidian Brick" type="Building Block" itemImage="192" />
+    <item name="Obsidian Brick Wall" type="Wall" itemImage="330" />
+    <item name="Obsidian Horseshoe" type="Unknown" itemImage="0" />
+    <item name="Obsidian Shield" type="Unknown" itemImage="0" />
+    <item name="Obsidian Skin Potion" type="Potion" foundIn="Chest" itemImage="288" />
+    <item name="Obsidian Skull"  type="Accessory" itemImage="193" />
+    <item name="Orb of Light" type="Magical Item" foundIn="Shadow Orb" itemImage="115" />
+
+    <item name="Pearlsand Block" type="Unknown" itemImage="0" />
+    <item name="Pearlstone Block" type="Unknown" itemImage="0" />
+    <item name="Pearlstone Brick" type="Unknown" itemImage="0" />
+    <item name="Pearlstone Brick Wall" type="Unknown" itemImage="0" />
+    <item name="Phoenix Blaster" type="Weapon" itemImage="219" />
+    <item name="Piano" type="Placeable Object" itemImage="333" />
+    <item name="Pickaxe Statue" type="Unknown" itemImage="0" />
+    <item name="Piggy Bank" type="Bank" itemImage="87" />
+    <item name="Pillar Statue" type="Unknown" itemImage="0" />
+    <item name="Pink Brick" type="Building Block" itemImage="139" />
+    <item name="Pink Brick Wall" type="Wall" itemImage="140" />
+    <item name="Pink Vase" type="Placeable Object" itemImage="350" />
+    <item name="Pirahna Statue" type="Unknown" itemImage="0" />
+    <item name="Pixie Dust" type="Unknown" itemImage="0" />
+    <item name="Planked Wall" type="Unknown" itemImage="0" />
+    <item name="Platinum Coin" type="Coin" itemImage="74" />
+    <item name="Plumber's Hat" type="Head Costume" itemImage="244" />
+    <item name="Plumber's Pants" type="Leg Costume" itemImage="246" />
+    <item name="Plumber's Shirt" type="Body Costume" itemImage="245" />
+    <item name="Poisoned Knife" type="Thrown Weapon" itemImage="287" />
+    <item name="Pot Statue" type="Unknown" itemImage="0" />
+    <item name="Potion Statue" type="Unknown" itemImage="0" />
+    <item name="Purification Powder" type="Thrown Weapon" itemImage="66" />
+    <item name="Purple Phaseblade" type="Weapon" itemImage="201" />
+    <item name="Purple Phasesaber" type="Unknown" itemImage="0" />
+    <item name="Purple Torch" type="Unknown" itemImage="0" />
+    <item name="Pwnhammer" type="Unknown" itemImage="0" />
+
+    <item name="Queen Statue" type="Unknown" itemImage="0" />
+
+    <item name="Rainbow Rod" type="Unknown" itemImage="0" />
+    <item name="Ranger Emblem" type="Unknown" itemImage="0" />
+    <item name="Reaper Statue" type="Unknown" itemImage="0" />
+    <item name="Red Banner" type="Placeable Object" itemImage="337" />
+    <item name="Red Brick" type="Building Block" itemImage="131" />
+    <item name="Red Brick Wall" type="Wall" itemImage="132" />
+    <item name="Red Hat" type="Head Costume" itemImage="260" />
+    <item name="Red Phaseblade" type="Weapon" itemImage="199" />
+    <item name="Regeneration Potion" type="Potion" foundIn="Chest" itemImage="289" />
+    <item name="Restoration Potion" type="Potion" foundIn="Chest" itemImage="227" />
+    <item name="Robe" type="Body Equipment" itemImage="262" />
+    <item name="Robot Hat" type="Head Costume" itemImage="263" />
+    <item name="Rocket Boots" type="Accessory" itemImage="128" />
+    <item name="Rotten Chunk" itemImage="68" />
+    <item name="Ruby" type="Gem" itemImage="178" />
+    <item name="Ruler" type="Unknown" itemImage="0" />
+
+    <item name="Safe" type="Bank" itemImage="346" />
+    <item name="Sand Block" type="Building Block" itemImage="169" />
+    <item name="Sandgun" type="Weapon" itemImage="266" />
+    <item name="Sapphire" type="Gem" itemImage="177" />
+    <item name="Sawmill" type="Placeable Object" itemImage="363" />
+    <item name="Seed" type="Shooting Seed" itemImage="283" />
+    <item name="Shackle" type="Accessory" itemImage="216" />
+    <item name="Shadow Chest" type="Container" itemImage="328" />
+    <item name="Shadow Greaves" type="Leg Equipment" itemImage="100" />
+    <item name="Shadow Helmet" type="Head Equipment" itemImage="102" />
+    <item name="Shadow Key" type="Key" foundIn="Chest" itemImage="329" />
+    <item name="Shadow Scale" itemImage="86" />
+    <item name="Shadow Scalemail" type="Body Equipment" itemImage="101" />
+    <item name="Shark Fin" itemImage="319" />
+    <item name="Shield Statue" type="Unknown" itemImage="0" />
+    <item name="Shine Potion" type="Potion" foundIn="Chest" itemImage="298" />
+    <item name="Shiny Red Balloon" type="Accessory" foundIn="Chest" itemImage="159" />
+    <item name="Shuriken" type="Thrown Weapon" foundIn="Chest" itemImage="42" />
+    <item name="Sign" type="Placeable Object" itemImage="171" />
+    <item name="Silk" itemImage="225" />
+    <item name="Silt Block" type="Unknown" itemImage="0" />
+    <item name="Silver Axe" type="Weapon" itemImage="10" recolor="Silver" />
+    <item name="Silver Bar" type="Metal Bar" foundIn="Chest" itemImage="21" />
+    <item name="Silver Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="99" recolor="Silver" />
+    <item name="Silver Brick" type="Building Block" itemImage="143" />
+    <item name="Silver Brick Wall" type="Wall" itemImage="144" />
+    <item name="Silver Broadsword" type="Weapon" itemImage="4" recolor="Silver" />
+    <item name="Silver Bullet" type="Bullet" foundIn="Chest" itemImage="278" />
+    <item name="Silver Chainmail" type="Body Equipment" itemImage="82" />
+    <item name="Silver Chandelier" type="Placeable Object" itemImage="107" />
+    <item name="Silver Coin" type="Coin" foundIn="Chest" itemImage="72" />
+    <item name="Silver Greaves" type="Leg Equipment" itemImage="78" />
+    <item name="Silver Hammer" type="Weapon" itemImage="7" recolor="Silver" />
+    <item name="Silver Helmet" type="Head Equipment" itemImage="91" />
+    <item name="Silver Ore" type="Ore" itemImage="14" />
+    <item name="Silver Pickaxe" type="Weapon" itemImage="1" recolor="Silver" />
+    <item name="Silver Shortsword" type="Weapon" itemImage="6" recolor="Silver" />
+    <item name="Silver Watch" type="Accessory" itemImage="16" />
+    <item name="Skeleton Statue" type="Unknown" itemImage="0" />
+    <item name="Skull Lantern" type="Placeable Object" itemImage="347" />
+    <item name="Slime Statue" type="Unknown" itemImage="0" />
+    <item name="Sorcerer Emblem" type="Unknown" itemImage="0" />
+    <item name="Soul of Fright" type="Unknown" itemImage="0" />
+    <item name="Soul of Light" type="Unknown" itemImage="0" />
+    <item name="Soul of Might" type="Unknown" itemImage="0" />
+    <item name="Soul of Night" type="Unknown" itemImage="0" />
+    <item name="Soul of Sight" type="Unknown" itemImage="0" />
+    <item name="Space Gun" type="Magical Weapon" itemImage="127" />
+    <item name="Spear" type="Weapon" foundIn="Chest" itemImage="280" />
+    <item name="Spear Statue" type="Unknown" itemImage="0" />
+    <item name="Spectre Boots" type="Unknown" itemImage="0" />
+    <item name="Spelunker Potion" type="Potion" foundIn="Chest" itemImage="296" />
+    <item name="Spike"  type="Placeable Object" itemImage="147" />
+    <item name="Spiky Ball" itemImage="161" />
+    <item name="Staff of Regrowth" type="Magical Item" foundIn="Chest" itemImage="213" />
+    <item name="Star" type="Pickup Item" itemImage="184" />
+    <item name="Star Cannon" type="Ranged Weapon" ammoType="Fallen Star" itemImage="197" />
+    <item name="Star Statue" type="Unknown" itemImage="0" />
+    <item name="Starfury" type="Magical Weapon" foundIn="Chest" itemImage="65" />
+    <item name="Statue" type="Placeable Object" itemImage="360" />
+    <item name="Sticky Bomb" type="Explosive" itemImage="235" />
+    <item name="Sticky Glowstick" itemImage="286" />
+    <item name="Stinger" itemImage="209" />
+    <item name="Stone Block" type="Building Block" itemImage="3" />
+    <item name="Stone Wall" type="Wall" itemImage="26" />
+    <item name="Summer Hat" type="Head Costume" itemImage="242" />
+    <item name="Sunflower" type="Seed" plantsIn="Grass" itemImage="63" />
+    <item name="Sunflower Statue" type="Unknown" itemImage="0" />
+    <item name="Sunfury" type="Weapon" foundIn="Chest" itemImage="220" />
+    <item name="Sunglasses" type="Head Costume" itemImage="237" />
+    <item name="Suspicious Looking Eye" foundIn="Chest" itemImage="43" />
+    <item name="Swiftness Potion" type="Potion" foundIn="Chest" itemImage="290" />
+    <item name="Sword Statue" type="Unknown" itemImage="0" />
+
+    <item name="Tattered Cloth" itemImage="362" />
+    <item name="The Breaker" type="Weapon" itemImage="104" />
+    <item name="The Doctor's Pants" type="Leg Costume" itemImage="325" />
+    <item name="The Doctor's Shirt" type="Body Costume" itemImage="326" />
+    <item name="Thorn Chakram" type="Weapon" itemImage="191" />
+    <item name="Thorns Potion" type="Potion" foundIn="Chest" itemImage="301" />
+    <item name="Throne" type="Placeable Object" itemImage="355" />
+    <item name="Throwing Knife" type="Thrown Weapon" foundIn="Chest" itemImage="279" />
+    <item name="Tiki Torch" type="Placeable Object" subType="Light" itemImage="342" />
+    <item name="Tinkerer's Workshop" type="Unknown" itemImage="0" />
+    <item name="Toilet" type="Placeable Object" itemImage="358" />
+    <item name="Tombstone" type="Placeable Object" itemImage="321" />
+    <item name="Toolbelt" type="Unknown" itemImage="0" />
+    <item name="Top Hat" type="Head Costume" itemImage="239" />
+    <item name="Topaz" type="Gem" itemImage="180" />
+    <item name="Torch" type="Placeable Object" foundIn="Chest" itemImage="8" />
+    <item name="Trash Can" type="Container" itemImage="348" />
+    <item name="Tree Statue" type="Unknown" itemImage="0" />
+    <item name="Trident" type="Weapon" foundIn="Chest" itemImage="277" />
+    <item name="Tuxedo Pants" type="Leg Costume" itemImage="240" />
+    <item name="Tuxedo Shirt" type="Body Costume" itemImage="241" />
+
+    <item name="Unholy Arrow" type="Arrow" itemImage="47" />
+    <item name="Unholy Water" type="Unknown" itemImage="0" />
+    <item name="Unicorn Horn" type="Unknown" itemImage="0" />
+
+    <item name="Vile Mushroom" itemImage="60" />
+    <item name="Vile Powder" type="Thrown Weapon" maxStack="99" itemImage="67" />
+    <!-- verify stack size -->
+    <item name="Vilethorn" type="Magical Weapon" foundIn="Shadow Orb" itemImage="64" />
+    <item name="Vine" itemImage="210" />
+
+    <item name="War Axe of the Night" type="Weapon" itemImage="45" />
+    <item name="Warrior Emblem" type="Unknown" itemImage="0" />
+    <item name="Water Bolt" type="Magical Weapon" itemImage="165" />
+    <item name="Water Bucket" type="Usable" itemImage="206" />
+    <item name="Water Candle" itemImage="148" />
+    <item name="Water Walking Potion" type="Potion" foundIn="Chest" itemImage="302" />
+    <item name="Waterleaf" type="Herb" itemImage="317" />
+    <item name="Waterleaf Seeds" type="Seed" plantsIn="Sand" itemImage="311" />
+    <item name="White Phaseblade" type="Weapon" itemImage="202" />
+    <item name="White Phasesaber" type="Unknown" itemImage="0" />
+    <item name="White Torch" type="Unknown" itemImage="0" />
+    <item name="Whoopie Cushion" itemImage="215" />
+    <item name="Wire" type="Unknown" itemImage="0" />
+    <item name="Wire Cutter" type="Unknown" itemImage="0" />
+    <item name="Wizard Hat" type="Head Costume" itemImage="238" />
+    <item name="Woman Statue" type="Unknown" itemImage="0" />
+    <item name="Wood" type="Building Block" itemImage="9" />
+    <item name="Wood Platform" type="Placeable Object" itemImage="94" />
+    <item name="Wood Wall" type="Wall" itemImage="93" />
+    <item name="Wooden Arrow" type="Arrow" foundIn="Chest" itemImage="40" />
+    <item name="Wooden Beam" type="Unknown" itemImage="0" />
+    <item name="Wooden Boomerang" type="Weapon" foundIn="Chest" itemImage="284" />
+    <item name="Wooden Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="39" />
+    <item name="Wooden Chair" type="Placeable Object" itemImage="34" />
+    <item name="Wooden Door" type="Placeable Object" subType="Door" itemImage="25" />
+    <item name="Wooden Hammer" type="Weapon" itemImage="196" />
+    <item name="Wooden Sword" type="Weapon" itemImage="4" recolor="Wood" />
+    <item name="Wooden Table" type="Placeable Object" itemImage="32" />
+    <item name="Work Bench" type="Placeable Object" itemImage="36" />
+    <item name="Worm Food" itemImage="70" />
+    <item name="Worm Tooth" itemImage="69" />
+    <item name="Wrench" type="Unknown" itemImage="0" />
+
+    <item name="Yellow Banner" type="Placeable Object" itemImage="340" />
+    <item name="Yellow Phaseblade" type="Weapon" itemImage="203" />
+    <item name="Yellow Phasesaber" type="Unknown" itemImage="0" />
+    <item name="Yellow Torch" type="Unknown" itemImage="0" />
+
+    <item name="Soul of Flight" type="Unknown" itemImage="0" />
+    <item name="Music Box" type="Unknown" itemImage="0" />
+    <item name="Dark Shard" type="Unknown" itemImage="0" />
+    <item name="Light Shard" type="Unknown" itemImage="0" />
+    <item name="Red Pressure Plate" type="Unknown" itemImage="0" />
+    <item name="Spell Tome" type="Unknown" itemImage="0" />
+    <item name="Star Cloak" type="Unknown" itemImage="0" />
+    <item name="Megashark" type="Unknown" itemImage="0" />
+    <item name="Shotgun" type="Unknown" itemImage="0" />
+    <item name="Philosopher's Stone" type="Unknown" itemImage="0" />
+    <item name="Titan Glove" type="Unknown" itemImage="0" />
+    <item name="Switch" type="Unknown" itemImage="0" />
+    <item name="Dart Trap" type="Unknown" itemImage="0" />
+    <item name="Green Pressure Plate" type="Unknown" itemImage="0" />
+    <item name="Gray Pressure Plate" type="Unknown" itemImage="0" />
+    <item name="Brown Pressure Plate" type="Unknown" itemImage="0" />
+    <item name="Mechanical Eye" type="Unknown" itemImage="0" />
+    <item name="Hallowed Plate Mail" type="Unknown" itemImage="0" />
+    <item name="Hallowed Greaves" type="Unknown" itemImage="0" />
+    <item name="Hallowed Headgear" type="Unknown" itemImage="0" />
+    <item name="Hallowed Mask" type="Unknown" itemImage="0" />
+    <item name="Cross Necklace" type="Unknown" itemImage="0" />
+    <item name="Mana Flower" type="Unknown" itemImage="0" />
+    <item name="Mechanical Worm" type="Unknown" itemImage="0" />
+    <item name="Mechanical Skull" type="Unknown" itemImage="0" />
+    <item name="Slime Crown" type="Unknown" itemImage="0" />
+    <item name="Demonite Brick" type="Unknown" itemImage="0" />
+    <item name="Hallowed Repeater" type="Unknown" itemImage="0" />
+    <item name="Inlet Pump" type="Unknown" itemImage="0" />
+    <item name="Outlet Pump" type="Unknown" itemImage="0" />
+    <item name="Music Box (Overworld Day)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Eerie)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Night)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Title)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Underground)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Boss 1)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Jungle)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Corruption)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Underground Corruption)" type="Unknown" itemImage="0" />
+    <item name="Music Box (The Hallow)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Boss 2)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Underground Hallow)" type="Unknown" itemImage="0" />
+    <item name="Music Box (Boss 3)" type="Unknown" itemImage="0" />
+
+  </items>
+  <namechanges>
+    <item name="Ball 'O Hurt" newName="Ball O' Hurt" />
+    <item name="Gills potion" newName="Gills Potion" />
+    <item name="Cobalt Breastplate" newName="Jungle Shirt" />
+    <item name="Cobalt Greaves" newName="Jungle Pants" />
+    <item name="Cobalt Helmet" newName="Jungle Hat" />
+    <item name="Thorn Chakrum" newName="Thorn Chakram" />
+  </namechanges>
+  <recoloring>
+    <recolor name="Gold" tintRed="1.431" tintGreen="1.3575" tintBlue="0.6075" />
+    <recolor name="Silver" tintRed="1.312" tintGreen="1.312" tintBlue="1.312" />
+    <recolor name="Blue" tintRed="2" tintGreen="0.67" tintBlue="1.3" />
+    <recolor name="Copper" tintRed="1.3906" tintGreen="1.0781" tintBlue="0.8671" />
+    <recolor name="Wood" tintRed="1.14" tintGreen="0.825" tintBlue="0.5925" />
+  </recoloring>
+  <itemtypes>
+    <itemtype name="Accessory"  defaultStack="1" />
+    <itemtype name="Arrow" defaultStack="99" />
+    <itemtype name="Bank" defaultStack="99" />
+    <itemtype name="Body Costume" defaultStack="1" />
+    <itemtype name="Body Equipment" defaultStack="1" />
+    <itemtype name="Building Block" defaultStack="250" />
+    <itemtype name="Bullet" defaultStack="250" />
+    <itemtype name="Coin" defaultStack="100" />
+    <itemtype name="Consumable" defaultStack="99" />
+    <itemtype name="Container" defaultStack="99" />
+    <itemtype name="Explosive" defaultStack="20" />
+    <itemtype name="Gem" defaultStack="99" />
+    <itemtype name="Herb" defaultStack="99" />
+    <itemtype name="Generic" defaultStack="99" />
+    <itemtype name="Head Costume" defaultStack="1" />
+    <itemtype name="Head Equipment" defaultStack="1" />
+    <itemtype name="Key" defaultStack="99" />
+    <itemtype name="Leg Costume" defaultStack="1" />
+    <itemtype name="Leg Equipment" defaultStack="1" />
+    <itemtype name="Magical Item" defaultStack="1" />
+    <itemtype name="Magical Weapon" defaultStack="1" />
+    <itemtype name="Metal Bar" defaultStack="99" />
+    <itemtype name="Ranged Weapon" defaultStack="1" />
+    <itemtype name="Ore" defaultStack="99" />
+    <itemtype name="Pickup Item" defaultStack="99" />
+    <itemtype name="Placeable Object" defaultStack="99" />
+    <itemtype name="Potion" defaultStack="30" />
+    <itemtype name="Seed" defaultStack="99" />    <!-- verify this -->
+    <itemtype name="Shooting Seed" defaultStack="99" /> <!-- verify this -->
+    <itemtype name="Stat Upgrade" defaultStack="99" />
+    <itemtype name="Thrown Weapon" defaultStack="250" />
+    <itemtype name="Usable" defaultStack="99" />
+    <itemtype name="Wall" defaultStack="250" /> <!-- verify this -->
+    <itemtype name="Weapon" defaultStack="1" />
+
+    <itemtype name="Unknown" defaultStack="1" />
+  </itemtypes>
+  <crafting>
+    <craftingspot name="Anywhere">
+      <recipe name="Torch" numMade="3">
+        <material name="Gel" />
+        <material name="Wood" />
+      </recipe>
+      <recipe name="Sticky Glowstick">
+        <material name="Gel" />
+        <material name="Glowstick" />
+      </recipe>
+      <recipe name="Wood Platform">
+        <material name="Wood" />
+      </recipe>
+      <recipe name="Work Bench">
+        <material name="Wood" quantity="10" />
+      </recipe>
+      <recipe name="Flaming Arrow" numMade="3">
+        <material name="Wooden Arrow" quantity="3" />
+        <material name="Torch" />
+      </recipe>
+      <recipe name="Mana Crystal">
+        <material name="Fallen Star" quantity="10" />
+      </recipe>
+      <recipe name="Copper Coin" numMade="100">
+        <material name="Silver Coin" />
+      </recipe>
+      <recipe name="Silver Coin">
+        <material name="Copper Coin" quantity="100" />
+      </recipe>
+      <recipe name="Silver Coin" numMade="100">
+        <material name="Gold Coin" />
+      </recipe>
+      <recipe name="Gold Coin">
+        <material name="Silver Coin" quantity="100" />
+      </recipe>
+      <recipe name="Gold Coin" numMade="100">
+        <material name="Platinum Coin" />
+      </recipe>
+      <recipe name="Platinum Coin">
+        <material name="Gold Coin" quantity="100" />
+      </recipe>
+      <recipe name="Poisoned Knife" numMade="20">
+        <material name="Throwing Knife" quantity="20" />
+        <material name="Vile Powder" />
+      </recipe>
+      <recipe name="Sticky Bomb">
+        <material name="Bomb" />
+        <material name="Gel" quantity="5" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Water" type="Special Tile">
+      <recipe name="Bottled Water">
+        <material name="Bottle" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Cooking Pot" type="Tile">
+      <recipe name="Bowl of Soup">
+        <material name="Bowl"/>
+        <material name="Mushroom" />
+        <material name="Goldfish" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Keg" type="Tile">
+      <recipe name="Ale">
+        <material name="Mug" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Loom" type="Tile">
+      <recipe name="Silk">
+        <material name="Cobweb" quantity="10" />
+      </recipe>
+      <recipe name="Red Banner">
+        <material name="Silk" quantity="3" />
+      </recipe>
+      <recipe name="Green Banner">
+        <material name="Silk" quantity="3" />
+      </recipe>
+      <recipe name="Blue Banner">
+        <material name="Silk" quantity="3" />
+      </recipe>
+      <recipe name="Yellow Banner">
+        <material name="Silk" quantity="3" />
+      </recipe>
+      <recipe name="Goblin Battle Standard">
+        <material name="Tattered Cloth" quantity="10" />
+        <material name="Wood" quantity="5" />
+      </recipe>
+      <recipe name="Tuxedo Shirt">
+        <material name="Silk" quantity="20" />
+        <material name="Black Dye" quantity="3" />
+      </recipe>
+      <recipe name="Tuxedo Pants">
+        <material name="Silk" quantity="20" />
+        <material name="Black Dye" quantity="3" />
+      </recipe>
+      <recipe name="Hero's Hat">
+        <material name="Silk" quantity="20" />
+        <material name="Green Dye" quantity="3" />
+      </recipe>
+      <recipe name="Hero's Shirt">
+        <material name="Silk" quantity="20" />
+        <material name="Green Dye" quantity="3" />
+      </recipe>
+      <recipe name="Hero's Pants">
+        <material name="Silk" quantity="20" />
+        <material name="Green Dye" quantity="3" />
+      </recipe>
+      <recipe name="Archaeologist's Jacket">
+        <material name="Leather" quantity="15" />
+      </recipe>
+      <recipe name="Archaeologist's Pants">
+        <material name="Leather" quantity="15" />
+      </recipe>
+      <recipe name="Robe">
+        <material name="Silk" quantity="30" />
+        <material name="Ruby" quantity="3" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Work Bench" type="Tile">
+      <recipe name="Gray Brick Wall" numMade="4">
+        <material name="Gray Brick" />
+      </recipe>
+      <recipe name="Red Brick Wall" numMade="4">
+        <material name="Red Brick" />
+      </recipe>
+      <recipe name="Copper Brick Wall" numMade="4">
+        <material name="Copper Brick" />
+      </recipe>
+      <recipe name="Silver Brick Wall" numMade="4">
+        <material name="Silver Brick" />
+      </recipe>
+      <recipe name="Gold Brick Wall" numMade="4">
+        <material name="Gold Brick" />
+      </recipe>
+      <recipe name="Dirt Wall" numMade="4">
+        <material name="Dirt Block" />
+      </recipe>
+      <recipe name="Stone Wall" numMade="4">
+        <material name="Stone Block" />
+      </recipe>
+      <recipe name="Wood Wall" numMade="4">
+        <material name="Wood" />
+      </recipe>
+      <recipe name="Wooden Door">
+        <material name="Wood" quantity="6" />
+      </recipe>
+      <recipe name="Wooden Chair">
+        <material name="Wood" quantity="4" />
+      </recipe>
+      <recipe name="Sign">
+        <material name="Wood" quantity="6" />
+      </recipe>
+      <recipe name="Chest">
+        <material name="Wood" quantity="8" />
+        <material name="Iron Bar" quantity="2" />
+      </recipe>
+      <recipe name="Sawmill">
+        <material name="Wood" quantity="10" />
+        <material name="Iron Bar" quantity="2" />
+        <material name="Iron Chain" quantity="1" />
+      </recipe>
+      <recipe name="Wooden Table">
+        <material name="Wood" quantity="8" />
+      </recipe>
+      <recipe name="Wooden Sword">
+        <material name="Wood" quantity="7" />
+      </recipe>
+      <recipe name="Wooden Hammer">
+        <material name="Wood" quantity="8" />
+      </recipe>
+      <recipe name="Wooden Arrow" numMade="3">
+        <material name="Wood" />
+        <material name="Stone Block" />
+      </recipe>
+      <recipe name="Wooden Bow">
+        <material name="Wood" quantity="10" />
+      </recipe>
+      <recipe name="Furnace">
+        <material name="Stone Block" quantity="20" />
+        <material name="Wood" quantity="4" />
+        <material name="Torch" quantity="3" />
+      </recipe>
+      <recipe name="Statue">
+        <material name="Stone Block" quantity="100" />
+      </recipe>
+      <recipe name="Iron Anvil">
+        <material name="Iron Bar" quantity="5" />
+      </recipe>
+      <recipe name="Candle">
+        <material name="Gold Bar" />
+        <material name="Torch" />
+      </recipe>
+      <recipe name="Tiki Torch">
+        <material name="Torch" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Chinese Lantern">
+        <material name="Silk" quantity="5" />
+        <material name="Torch" />
+      </recipe>'
+      <recipe name="Mug">
+        <material name="Glass" />
+      </recipe>
+      <recipe name="Pink Vase">
+        <material name="Clay Block" quantity="4" />
+      </recipe>
+      <recipe name="Bowl">
+        <material name="Clay Block" quantity="2" />
+      </recipe>
+      <recipe name="Necro Helmet">
+        <material name="Bone" quantity="25" />
+        <material name="Cobweb" quantity="40" />
+      </recipe>
+      <recipe name="Necro Breastplate">
+        <material name="Bone" quantity="35" />
+        <material name="Cobweb" quantity="50" />
+      </recipe>
+      <recipe name="Necro Greaves">
+        <material name="Bone" quantity="30" />
+        <material name="Cobweb" quantity="45" />
+      </recipe>
+      <recipe name="Leather">
+        <material name="Rotten Chunk" quantity="5" />
+      </recipe>
+    </craftingspot>
+    
+    <craftingspot name="Sawmill" type="Tile">
+      <recipe name="Bench">
+        <material name="Wood" quantity="8" />
+      </recipe>
+      <recipe name="Bed">
+        <material name="Silk" quantity="5" />
+        <material name="Wood" quantity="15" />
+      </recipe>
+      <recipe name="Barrel">
+        <material name="Iron Bar" />
+        <material name="Wood" quantity="9" />
+      </recipe>
+      <recipe name="Bookcase">
+        <material name="Wood" quantity="20" />
+        <material name="Book" quantity="10" />
+      </recipe>
+      <recipe name="Dresser">
+        <material name="Wood" quantity="16" />
+      </recipe>
+      <recipe name="Keg">
+        <material name="Wood" quantity="14" />
+      </recipe>
+      <recipe name="Loom">
+        <material name="Wood" quantity="12" />
+      </recipe>
+      <recipe name="Piano">
+        <material name="Bone" quantity="4" />
+        <material name="Wood" quantity="15" />
+      </recipe>
+    </craftingspot>
+    
+    <craftingspot name="Alchemy Station" type="Special Tile">
+      <recipe name="Lesser Healing Potion" numMade="2">
+        <material name="Mushroom" />
+        <material name="Gel" quantity="2" />
+        <material name="Bottle" quantity="2" />
+      </recipe>
+      <recipe name="Lesser Mana Potion" numMade="2">
+        <material name="Fallen Star" />
+        <material name="Gel" quantity="2" />
+        <material name="Bottle" quantity="2" />
+      </recipe>
+      <recipe name="Healing Potion">
+        <material name="Lesser Healing Potion" quantity="2" />
+        <material name="Glowing Mushroom" />
+      </recipe>
+      <recipe name="Mana Potion">
+        <material name="Lesser Mana Potion" quantity="2" />
+        <material name="Glowing Mushroom" />
+      </recipe>
+      <recipe name="Lesser Restoration Potion">
+        <material name="Lesser Healing Potion" />
+        <material name="Lesser Mana Potion" />
+      </recipe>
+      <recipe name="Restoration Potion">
+        <material name="Healing Potion" />
+        <material name="Mana Potion" />
+      </recipe>
+      <recipe name="Green Dye">
+        <material name="Jungle Grass Seeds" quantity="3" />
+        <material name="Bottle" />
+      </recipe>
+      <recipe name="Obsidian Skin Potion">
+        <material name="Bottled Water" />
+        <material name="Fireblossom" />
+        <material name="Waterleaf" />
+        <material name="Obsidian" />
+      </recipe>
+      <recipe name="Regeneration Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Mushroom" />
+      </recipe>
+      <recipe name="Swiftness Potion">
+        <material name="Bottled Water" />
+        <material name="Blinkroot" />
+        <material name="Cactus" />
+      </recipe>
+      <recipe name="Gills Potion">
+        <material name="Bottled Water" />
+        <material name="Waterleaf" />
+        <material name="Coral" />
+      </recipe>
+      <recipe name="Ironskin Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Iron Ore" />
+      </recipe>
+      <recipe name="Mana Regeneration Potion">
+        <material name="Bottled Water" />
+        <material name="Moonglow" />
+        <material name="Daybloom" />
+        <material name="Fallen Star" />
+      </recipe>
+      <recipe name="Magic Power Potion">
+        <material name="Bottled Water" />
+        <material name="Moonglow" />
+        <material name="Deathweed" />
+        <material name="Fallen Star" />
+      </recipe>
+      <recipe name="Featherfall Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Blinkroot" />
+        <material name="Feather" />
+      </recipe>
+      <recipe name="Spelunker Potion">
+        <material name="Bottled Water" />
+        <material name="Blinkroot" />
+        <material name="Moonglow" />
+        <material name="Gold Ore" />
+      </recipe>
+      <recipe name="Invisibility Potion">
+        <material name="Bottled Water" />
+        <material name="Blinkroot" />
+        <material name="Moonglow" />
+      </recipe>
+      <recipe name="Shine Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Glowing Mushroom" />
+      </recipe>
+      <recipe name="Night Owl Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Blinkroot" />
+      </recipe>
+      <recipe name="Battle Potion">
+        <material name="Bottled Water" />
+        <material name="Deathweed" />
+        <material name="Rotten Chunk" />
+      </recipe>
+      <recipe name="Thorns Potion">
+        <material name="Bottled Water" />
+        <material name="Deathweed" />
+        <material name="Cactus" />
+      </recipe>
+      <recipe name="Water Walking Potion">
+        <material name="Bottled Water" />
+        <material name="Waterleaf" />
+        <material name="Shark Fin" />
+      </recipe>
+      <recipe name="Archery Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Lens" />
+      </recipe>
+      <recipe name="Hunter Potion">
+        <material name="Bottled Water" />
+        <material name="Daybloom" />
+        <material name="Blinkroot" />
+        <material name="Shark Fin" />
+      </recipe>
+      <recipe name="Gravitation Potion">
+        <material name="Bottled Water" />
+        <material name="Fireblossom" />
+        <material name="Deathweed" />
+        <material name="Blinkroot" />
+        <material name="Feather" />
+      </recipe>
+      <recipe name="Vile Powder" numMade="5">
+        <material name="Vile Mushroom" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Table and Chair" type="Special Tile">
+      <recipe name="Goggles">
+        <material name="Lens" quantity="2" />
+      </recipe>
+      <recipe name="Copper Watch">
+        <material name="Iron Chain" />
+        <material name="Copper Bar" quantity="10" />
+      </recipe>
+      <recipe name="Silver Watch">
+        <material name="Iron Chain" />
+        <material name="Silver Bar" quantity="10" />
+      </recipe>
+      <recipe name="Gold Watch">
+        <material name="Iron Chain" />
+        <material name="Gold Bar" quantity="10" />
+      </recipe>
+      <recipe name="Depth Meter">
+        <material name="Copper Bar" quantity="10" />
+        <material name="Silver Bar" quantity="8" />
+        <material name="Gold Bar" quantity="6" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Furnace" type="Tile">
+      <recipe name="Copper Bar">
+        <material name="Copper Ore" quantity="3" />
+      </recipe>
+      <recipe name="Iron Bar">
+        <material name="Iron Ore" quantity="3" />
+      </recipe>
+      <recipe name="Silver Bar">
+        <material name="Silver Ore" quantity="4" />
+      </recipe>
+      <recipe name="Gold Bar">
+        <material name="Gold Ore" quantity="4" />
+      </recipe>
+      <recipe name="Demonite Bar">
+        <material name="Demonite Ore" quantity="4" />
+      </recipe>
+      <recipe name="Meteorite Bar">
+        <material name="Meteorite" quantity="6" />
+      </recipe>
+      <recipe name="Gray Brick">
+        <material name="Stone Block" quantity="2" />
+      </recipe>
+      <recipe name="Red Brick">
+        <material name="Clay Block" quantity="2" />
+      </recipe>
+      <recipe name="Copper Brick">
+        <material name="Stone Block" />
+        <material name="Copper Ore" />
+      </recipe>
+      <recipe name="Silver Brick">
+        <material name="Stone Block" />
+        <material name="Silver Ore" />
+      </recipe>
+      <recipe name="Gold Brick">
+        <material name="Stone Block" />
+        <material name="Gold Ore" />
+      </recipe>
+      <recipe name="Obsidian Brick">
+        <material name="Obsidian" quantity="2" />
+      </recipe>
+      <recipe name="Hellstone Brick">
+        <material name="Stone Block" />
+        <material name="Hellstone" />
+      </recipe>
+      <recipe name="Glass">
+        <material name="Sand Block" quantity="2" />
+      </recipe>
+      <recipe name="Bottle" numMade="2">
+        <material name="Glass" />
+      </recipe>
+      <recipe name="Clay Pot">
+        <material name="Clay Block" quantity="6" />
+      </recipe>
+      <recipe name="Obsidian Skull">
+        <material name="Obsidian" quantity="20" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Iron Anvil" type="Tile">
+      <recipe name="Copper Pickaxe">
+        <material name="Copper Bar" quantity="12" />
+        <material name="Wood" quantity="4" />
+      </recipe>
+      <recipe name="Copper Axe">
+        <material name="Copper Bar" quantity="9" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Copper Hammer">
+        <material name="Copper Bar" quantity="10" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Copper Broadsword">
+        <material name="Copper Bar" quantity="8" />
+      </recipe>
+      <recipe name="Copper Shortsword">
+        <material name="Copper Bar" quantity="7" />
+      </recipe>
+      <recipe name="Copper Bow">
+        <material name="Copper Bar" quantity="7" />
+      </recipe>
+      <recipe name="Copper Helmet">
+        <material name="Copper Bar" quantity="15" />
+      </recipe>
+      <recipe name="Copper Chainmail">
+        <material name="Copper Bar" quantity="25" />
+      </recipe>
+      <recipe name="Copper Greaves">
+        <material name="Copper Bar" quantity="20" />
+      </recipe>
+      <recipe name="Copper Chandelier">
+        <material name="Copper Bar" quantity="4" />
+        <material name="Torch" quantity="4" />
+        <material name="Iron Chain" />
+      </recipe>
+      <recipe name="Empty Bucket">
+        <material name="Iron Bar" quantity="3" />
+      </recipe>
+      <recipe name="Iron Pickaxe">
+        <material name="Iron Bar" quantity="12" />
+        <material name="Wood" quantity="4" />
+      </recipe>
+      <recipe name="Iron Axe">
+        <material name="Iron Bar" quantity="9" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Iron Hammer">
+        <material name="Iron Bar" quantity="10" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Iron Broadsword">
+        <material name="Iron Bar" quantity="8" />
+      </recipe>
+      <recipe name="Iron Shortsword">
+        <material name="Iron Bar" quantity="7" />
+      </recipe>
+      <recipe name="Iron Bow">
+        <material name="Iron Bar" quantity="7" />
+      </recipe>
+      <recipe name="Iron Helmet">
+        <material name="Iron Bar" quantity="20" />
+      </recipe>
+      <recipe name="Iron Chainmail">
+        <material name="Iron Bar" quantity="30" />
+      </recipe>
+      <recipe name="Iron Greaves">
+        <material name="Iron Bar" quantity="25" />
+      </recipe>
+      <recipe name="Iron Chain">
+        <material name="Iron Bar" quantity="3" />
+      </recipe>
+      <recipe name="Grappling Hook">
+        <material name="Iron Chain" quantity="3" />
+        <material name="Hook" />
+      </recipe>
+      <recipe name="Cooking Pot">
+        <material name="Iron Bar" quantity="10" />
+        <material name="Wood" quantity="2" />
+      </recipe>
+      <recipe name="Toilet">
+        <material name="Iron Bar" quantity="6" />
+      </recipe>
+      <recipe name="Bathtub">
+        <material name="Iron Bar" quantity="14" />
+      </recipe>
+      <recipe name="Trash Can">
+        <material name="Iron Bar"  quantity="8" />
+      </recipe>
+      <recipe name="Lamp Post">
+        <material name="Iron Bar" quantity="3" />
+        <material name="Glass" quantity="2" />
+        <material name="Torch" />
+      </recipe>
+      <recipe name="Silver Pickaxe">
+        <material name="Silver Bar" quantity="12" />
+        <material name="Wood" quantity="4" />
+      </recipe>
+      <recipe name="Silver Axe">
+        <material name="Silver Bar" quantity="9" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Silver Hammer">
+        <material name="Silver Bar" quantity="10" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Silver Broadsword">
+        <material name="Silver Bar" quantity="8" />
+      </recipe>
+      <recipe name="Silver Shortsword">
+        <material name="Silver Bar" quantity="7" />
+      </recipe>
+      <recipe name="Silver Bow">
+        <material name="Silver Bar" quantity="7" />
+      </recipe>
+      <recipe name="Silver Helmet">
+        <material name="Silver Bar" quantity="20" />
+      </recipe>
+      <recipe name="Silver Chainmail">
+        <material name="Silver Bar" quantity="30" />
+      </recipe>
+      <recipe name="Silver Greaves">
+        <material name="Silver Bar" quantity="25" />
+      </recipe>
+      <recipe name="Silver Chandelier">
+        <material name="Silver Bar" quantity="4" />
+        <material name="Torch" quantity="4" />
+        <material name="Iron Chain" />
+      </recipe>
+      <recipe name="Gold Pickaxe">
+        <material name="Gold Bar" quantity="12" />
+        <material name="Wood" quantity="4" />
+      </recipe>
+      <recipe name="Gold Axe">
+        <material name="Gold Bar" quantity="9" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Gold Hammer">
+        <material name="Gold Bar" quantity="10" />
+        <material name="Wood" quantity="3" />
+      </recipe>
+      <recipe name="Gold Broadsword">
+        <material name="Gold Bar" quantity="8" />
+      </recipe>
+      <recipe name="Gold Shortsword">
+        <material name="Gold Bar" quantity="7" />
+      </recipe>
+      <recipe name="Gold Bow">
+        <material name="Gold Bar" quantity="7" />
+      </recipe>
+      <recipe name="Gold Helmet">
+        <material name="Gold Bar" quantity="25" />
+      </recipe>
+      <recipe name="Gold Chainmail">
+        <material name="Gold Bar" quantity="35" />
+      </recipe>
+      <recipe name="Gold Greaves">
+        <material name="Gold Bar" quantity="30" />
+      </recipe>
+      <recipe name="Gold Chandelier">
+        <material name="Gold Bar" quantity="4" />
+        <material name="Torch" quantity="4" />
+        <material name="Iron Chain" />
+      </recipe>
+      <recipe name="Candelabra">
+        <material name="Gold Bar" quantity="3" />
+        <material name="Torch" quantity="3" />
+      </recipe>
+      <recipe name="Gold Crown">
+        <material name="Gold Bar" quantity="30" />
+        <material name="Ruby" />
+      </recipe>
+      <recipe name="Throne">
+        <material name="Gold Bar" quantity="30" />
+        <material name="Silk" quantity="20" />
+      </recipe>
+      <recipe name="Grandfather Clock">
+        <material name="Gold Bar" quantity="3" />
+        <material name="Glass" quantity="6" />
+        <material name="Wood" quantity="10" />
+      </recipe>
+      <recipe name="White Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Diamond" quantity="10" />
+      </recipe>
+      <recipe name="Blue Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Sapphire" quantity="10" />
+      </recipe>
+      <recipe name="Green Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Emerald" quantity="10" />
+      </recipe>
+      <recipe name="Red Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Ruby" quantity="10" />
+      </recipe>
+      <recipe name="Purple Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Amethyst" quantity="10" />
+      </recipe>
+      <recipe name="Yellow Phaseblade">
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Topaz" quantity="10" />
+      </recipe>
+      <recipe name="Meteor Hamaxe">
+        <material name="Meteorite Bar" quantity="35" />
+      </recipe>
+      <recipe name="Meteor Helmet">
+        <material name="Meteorite Bar" quantity="25" />
+      </recipe>
+      <recipe name="Meteor Suit">
+        <material name="Meteorite Bar" quantity="35" />
+      </recipe>
+      <recipe name="Meteor Leggings">
+        <material name="Meteorite Bar" quantity="30" />
+      </recipe>
+      <recipe name="Star Cannon">
+        <material name="Minishark" />
+        <material name="Meteorite Bar" quantity="20" />
+        <material name="Fallen Star" quantity="5" />
+      </recipe>
+      <recipe name="Space Gun">
+        <material name="Flintlock Pistol" />
+        <material name="Fallen Star" quantity="10" />
+        <material name="Meteorite Bar" quantity="30" />
+      </recipe>
+      <recipe name="Meteor Shot" numMade="25">
+        <material name="Musket Ball" quantity="25" />
+        <material name="Meteorite Bar" />
+      </recipe>
+      <recipe name="Demon Bow">
+        <material name="Demonite Bar" quantity="8" />
+      </recipe>
+      <recipe name="War Axe of the Night">
+        <material name="Demonite Bar" quantity="10" />
+      </recipe>
+      <recipe name="Light's Bane">
+        <material name="Demonite Bar" quantity="10" />
+      </recipe>
+      <recipe name="Shadow Helmet">
+        <material name="Demonite Bar" quantity="15" />
+        <material name="Shadow Scale" quantity="10" />
+      </recipe>
+      <recipe name="Shadow Scalemail">
+        <material name="Demonite Bar" quantity="25" />
+        <material name="Shadow Scale" quantity="20" />
+      </recipe>
+      <recipe name="Shadow Greaves">
+        <material name="Demonite Bar" quantity="20" />
+        <material name="Shadow Scale" quantity="15" />
+      </recipe>
+      <recipe name="Nightmare Pickaxe">
+        <material name="Demonite Bar" quantity="12" />
+        <material name="Shadow Scale" quantity="6" />
+      </recipe>
+      <recipe name="The Breaker">
+        <material name="Demonite Bar" quantity="10" />
+        <material name="Shadow Scale" quantity="5" />
+      </recipe>
+      <recipe name="Unholy Arrow" numMade="2">
+        <material name="Wooden Arrow" quantity="2" />
+        <material name="Worm Tooth" quantity="1" />
+      </recipe>
+      <recipe name="Ivy Whip">
+        <material name="Grappling Hook" />
+        <material name="Jungle Spores" quantity="15" />
+        <material name="Vine" quantity="3" />
+      </recipe>
+      <recipe name="Thorn Chakram">
+        <material name="Jungle Spores" quantity="15" />
+        <material name="Stinger" quantity="30" />
+      </recipe>
+      <recipe name="Blade of Grass">
+        <material name="Silver Broadsword" />
+        <material name="Jungle Spores" quantity="20" />
+        <material name="Stinger" quantity="20" />
+      </recipe>
+      <recipe name="Jungle Hat">
+        <material name="Silver Helmet" />
+        <material name="Emerald" quantity="10" />
+        <material name="Sapphire" quantity="10" />
+        <material name="Jungle Spores" quantity="15" />
+      </recipe>
+      <recipe name="Jungle Shirt">
+        <material name="Silver Chainmail" />
+        <material name="Ruby" quantity="6" />
+        <material name="Diamond" quantity="6" />
+        <material name="Jungle Spores" quantity="20" />
+        <material name="Stinger" quantity="12" />
+      </recipe>
+      <recipe name="Jungle Pants">
+        <material name="Silver Greaves" />
+        <material name="Amethyst" quantity="8" />
+        <material name="Topaz" quantity="8" />
+        <material name="Jungle Spores" quantity="20" />
+        <material name="Vine" quantity="4" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Hellforge" type="Tile">
+      <recipe name="Hellstone Bar">
+        <material name="Hellstone" quantity="4" />
+        <material name="Obsidian" quantity="1" />
+      </recipe>
+      <recipe name="Molten Pickaxe">
+        <material name="Hellstone Bar" quantity="35" />
+      </recipe>
+      <recipe name="Molten Fury">
+        <material name="Hellstone Bar" quantity="25" />
+      </recipe>
+      <recipe name="Fiery Greatsword">
+        <material name="Hellstone Bar" quantity="35" />
+      </recipe>
+      <recipe name="Molten Hamaxe">
+        <material name="Hellstone Bar" quantity="35" />
+      </recipe>
+      <recipe name="Molten Helmet">
+        <material name="Hellstone Bar" quantity="30" />
+        <material name="Gold Helmet" />
+      </recipe>
+      <recipe name="Molten Breastplate">
+        <material name="Hellstone Bar" quantity="40" />
+        <material name="Gold Chainmail" />
+      </recipe>
+      <recipe name="Molten Greaves">
+        <material name="Hellstone Bar" quantity="35" />
+        <material name="Gold Greaves" />
+      </recipe>
+      <recipe name="Flamarang">
+        <material name="Hellstone Bar" quantity="15" />
+        <material name="Enchanted Boomerang" />
+      </recipe>
+      <recipe name="Phoenix Blaster">
+        <material name="Hellstone Bar" quantity="20" />
+        <material name="Handgun" />
+      </recipe>
+    </craftingspot>
+
+    <craftingspot name="Demon Altar" type="Tile">
+      <recipe name="Suspicious Looking Eye">
+        <material name="Lens" quantity="6" />
+      </recipe>
+      <recipe name="Worm Food">
+        <material name="Vile Powder" quantity="30" />
+        <material name="Rotten Chunk" quantity="15" />
+      </recipe>
+      <recipe name="Night's Edge">
+        <material name="Fiery Greatsword" />
+        <material name="Muramasa" />
+        <material name="Blade of Grass" />
+        <material name="Light's Bane" />
+      </recipe>
+    </craftingspot>
+  </crafting>
+  <npcs>
+    <npc name="Arms Dealer" npcImage="19" />
+    <npc name="Clothier" npcImage="54" />
+    <npc name="Demolitionist" npcImage="38" />
+    <npc name="Dryad" npcImage="20" />
+    <npc name="Guide" npcImage="22" />
+    <npc name="Merchant" npcImage="17" />
+    <npc name="Nurse" npcImage="18" />
+    <npc name="Old Man" npcImage="37" />
+  </npcs>
+  <colors>
+    <color name="Unknown" red="255" green="0" blue="255" />
+    <color name="Plants" red="13" green="101" blue="36" />
+    <color name="Light Source" red="253" green="62" blue="3" />
+    <color name="Wood" red="86" green="62" blue="44" />
+    <color name="Decorative" red="0" green="255" blue="242" />
+    <color name="Important" red="255" green="0" blue="0" />
+    <color name="Corruption Grass" red="141" green="137" blue="223" />
+    <color name="Block" red="178" green="0" blue="255" />
+    <color name="Jungle Plants" red="143" green="215" blue="29" />
+    <color name="Jungle Vines" red="138" green="206" blue="28" />
+    <color name="Gems" red="42" green="130" blue="250" />
+    <color name="Herb" colorString="#6B8E23" />
+    <color name="Hallowed Plants" colorString="#4EC0E2" />
+    <color name="Hallowed Vines" colorString="#25B8E3" />
+    <color name="Mechanical" colorString="#FD743D" />
+
+    <color name="Sky" red="155" green="209" blue="255" />
+    <color name="Dirt Background" red="82" green="70" blue="63" />
+    <color name="Rock Background" red="50" green="50" blue="60" />
+    <color name="Underworld Background" red="82" green="26" blue="26" />
+
+    <color name="Wall Wood" colorString="#493324" />
+    <color name="Wall Dirt" red="88" green="61" blue="46" />
+    <color name="Wall Brick" red="60" green="60" blue="60" />
+    <color name="Wall Dungeon Pink" red="84" green="25" blue="60" />
+    <color name="Wall Dungeon Blue" red="29" green="31" blue="72" />
+    <color name="Wall Dungeon Green" red="14" green="68" blue="16" />
+  </colors>
+  <markers>
+    <marker name="Objects" />
+    <marker name="Altar" partOfSet="Objects" />
+    <marker name="Heart" partOfSet="Objects" />
+    <marker name="Hellforge" partOfSet="Objects" />
+    <marker name="Shadow Orb" markerImage="ShadowOrb" partOfSet="Objects" />
+    <marker name="Sign" partOfSet="Objects" />
+    <marker name="Torch" partOfSet="Objects" />
+    <marker name="Tombstone" partOfSet="Objects" />
+    
+    <marker name="Containers" />
+    <marker name="Chest" partOfSet="Containers" />
+    <marker name="Gold Chest" markerImage="GoldChest" partOfSet="Containers" />
+    <marker name="Locked Gold Chest" markerImage="LockedGoldChest" partOfSet="Containers" />
+    <marker name="Shadow Chest" markerImage="ShadowChest" partOfSet="Containers" />
+    <marker name="Locked Shadow Chest" markerImage="LockedShadowChest" partOfSet="Containers" />
+    <marker name="Barrel" partOfSet="Containers" />
+    <marker name="Trash Can" markerImage="TrashCan" partOfSet="Containers" />
+    
+    <marker name="Gems" />
+    <marker name="Amethyst" partOfSet="Gems" />
+    <marker name="Diamond" partOfSet="Gems" />
+    <marker name="Emerald" partOfSet="Gems" />
+    <marker name="Ruby" partOfSet="Gems" />
+    <marker name="Sapphire" partOfSet="Gems" />
+    <marker name="Topaz" partOfSet="Gems" />
+    
+    <marker name="Ores" />
+    <marker name="Copper" partOfSet="Ores" />
+    <marker name="Iron" partOfSet="Ores" />
+    <marker name="Silver" partOfSet="Ores" />
+    <marker name="Gold" partOfSet="Ores" />
+    <marker name="Demonite" partOfSet="Ores" />
+    <marker name="Obsidian" partOfSet="Ores" />
+    <marker name="Meteorite" partOfSet="Ores" />
+    <marker name="Hellstone" partOfSet="Ores" />
+    <marker name="Cobalt" partOfSet="Ores" />
+    <marker name="Mythril" partOfSet="Ores" />
+    <marker name="Adamantite" partOfSet="Ores" />
+    
+    <marker name="People" />
+    <marker name="Arms Dealer" markerImage="ArmsDealer" partOfSet="People" />
+    <marker name="Clothier" partOfSet="People" />
+    <marker name="Demolitionist" partOfSet="People" />
+    <marker name="Dryad" partOfSet="People" />
+    <marker name="Guide" partOfSet="People" />
+    <marker name="Merchant" partOfSet="People" />
+    <marker name="Nurse" partOfSet="People" />
+    <marker name="Old Man" markerImage="OldMan" partOfSet="People" />
+    <marker name="Goblin Tinkerer" markerImage="Tinkerer" partOfSet="People" />
+    <marker name="Wizard" partOfSet="People" />
+    <marker name="Mechanic" partOfSet="People" />
+    <marker name="Spawn" partOfSet="People" />
+    
+    <marker name="Unknown" notInList="true" />
+  </markers>
+  <specialobjects>
+    <object name="Sky" type="Background" objectImage="0" color="#9BD1FF" />
+    <object name="Dirt Transition" type="Background" objectImage="1" color="Dirt Background" />
+    <object name="Dirt" type="Background" objectImage="2" color="Dirt Background" />
+    <object name="Rock" type="Background" objectImage="3" color="Rock Background" />
+    <object name="Rock Transition" type="Background" objectImage="4" color="Rock Background" />
+    <object name="Underworld" type="Background" objectImage="5" color="Underworld Background" />
+    <object name="Underworld Transition" type="Background" objectImage="6" color="Underworld Background" />
+    
+    <object name="Water" type="Liquid" color="#000CFF" />
+    <object name="Lava" type="Liquid" color="#FF4000" />
+
+    <object name="Wire" type="Wire" color="#FD3A3D" />
+  </specialobjects>
+</data>

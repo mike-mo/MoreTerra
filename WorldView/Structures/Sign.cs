@@ -3,12 +3,19 @@ using System.Drawing;
 
 namespace MoreTerra.Structures
 {
+	public enum SignType
+	{
+		Sign = 0,
+		Tombstone
+	}
+
 	public class Sign
 	{
 		private Int32 signId;
 		private Boolean activeSign;
 		private String signText;
 		private Point signPosition;
+		private SignType signType;
 
 		public Sign()
 		{
@@ -16,6 +23,7 @@ namespace MoreTerra.Structures
 			activeSign = false;
 			signText = String.Empty;
 			signPosition = new Point(0, 0);
+			signType = SignType.Sign;
 		}
 
 		public Sign(Int32 id, Boolean active, String text, Point pos)
@@ -24,6 +32,7 @@ namespace MoreTerra.Structures
 			activeSign = active;
 			signText = text;
 			signPosition = pos;
+			signType = SignType.Sign;
 		}
 
 		#region GetSet Functions
@@ -74,7 +83,19 @@ namespace MoreTerra.Structures
 				this.signPosition = value;
 			}
 		}
-#endregion
+
+		public SignType Type
+		{
+			get
+			{
+				return this.signType;
+			}
+			set
+			{
+				this.signType = value;
+			}
+		}
+		#endregion
 
 	}
 }

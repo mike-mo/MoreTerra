@@ -1,8 +1,90 @@
-Release 1.6.1
+Release 1.10
 ==============
 =New Features=
 ==============
+Added the option to draw the wiring on the map.
 
+It is now possible to have MoreTerra draw different Markers for each type of Chest/Container.
+
+The chest list now has icons for each chest type.  It only shows them if you have created the
+ list by choosing Draw World though.
+
+Added the version number to the Exception handler, to help make screenshots from bug reports more useful.
+
+Added saving the chest list to basic Text, CSV and XML formats.
+
+Added an option to reset the custom images back to default.
+
+Added an option whether to use the default images or custom ones, for those who changed their images.
+
+Cleaned up the Marker object images.
+
+Redid the settings file for both readability and to add the option to have multiple settings stored.
+
+Removed the ability to resize the window but shrunk the top section down a bit to give the bottom more room.
+
+Dialog boxes now center in the MoreTerra window instead of appearing whereever.
+
+Dialog boxes now respond to Enter/Escape and set the cursor straight into Text boxes.
+
+Added the ability to have multiple settings and easily switch back and forth.
+
+Redid all the tab settings to make keyboard navigation easier.
+
+Dialog boxes now correctly attatch to the main window.
+
+===========
+=Bug Fixes=
+===========
+Fixed the last bug (I hope) in the code for reading backwards to chests.  It should
+ no longer fail for any correctly formed World file.
+
+Refixed the Draw Walls checkbox.
+
+Stopped all the extra pop-up forms from showing on the taskbar.
+
+Fixed a bug that was stopping fully checked parent nodes in the marker list from changing until clicked twice.
+
+Fixed the bug that was causing the "Move All" buttons on the Chest Finder to not turn on properly.
+
+Fixed the bug that was causing the "Remove Custom Item" button to not turn on properly.
+
+Fixed a bug I didn't even know I had fixed.  If a spot had both a wall and water in it any tiles there
+ were getting overwritten on the drawing by the water.  Extra obvious with Jungle gaining Mud wall backgrounds.
+ I only found this as I was comparing a new image to an old one.
+
+=============
+=Refactoring=
+=============
+Changed all places in the code from Symbol to Marker.  Thank god for Visual Studio refactoring.
+
+Redid the way the markers are handled so I could finally stop adding little hacks to get odd things
+ like drawing Npcs or the different chest types in.  Should be useful when it's Herb tracking time too.
+
+Removed SerializableDictionary from the project.  I found it's output too messy, though it was kind of nice
+ to just add new items and not have to do anything else.
+
+===============
+=Compatibility=
+===============
+Added all new tiles and walls.
+
+Rewrote the loading code so it handles the new file format.
+
+==============
+=Optimization=
+==============
+Changed how the icons worked to remove duplicate copies and cut the file size almost in half.
+ That's what I get for assuming it was only adding one for each reference.  Sadly, the new
+ XML data file brings it right back up.
+
+Changed how the Marker drawing code worked to speed up the code when a
+ large # of markers are on.  I'm looking at you Hellstone.
+
+Changed how the tiles get read and processed.  Takes much less memory and
+ runs faster.
+
+Release 1.6.1
 ===========
 =Bug Fixes=
 ===========
@@ -21,8 +103,6 @@ Changed PointInt16 and PointSingle to struct types so they are Value type instea
 =Compatibility=
 ===============
 Added the Sawmill.
-
-
 
 Release 1.6
 ==============
@@ -78,7 +158,7 @@ Release 1.5.5
 ==============
 =New Features=
 ==============
-Recreated Symbol list so that it shows the Symbols for each item next to the text for the item.
+Recreated Marker list so that it shows the Marker for each item next to the text for the item.
 
 Added Marker drawing for Hellforges, Signs, Torches, all ores and all NPCs.  Hellforged colored yellow to help
  stand out against the very dark underworld.  Ore colors are all colored the same as the pixel that would
@@ -95,7 +175,7 @@ Added a message box that shows up if the version of the file you are loading doe
  world version shows up.
 
 Added a button that opens the MoreTerra Application Data/Resources folder to make it easier for people
- to change the symbol icons.
+ to change the marker icons.
 
 Changed the filter list around.  Now when you move something from one list to the other it removes it
  from the first list.  Added buttons to move all items at the same time, from one list to the other.
@@ -124,13 +204,13 @@ Added a system to migrate settings & custom icons to the new folder.
 ===========
 Fixed a bug where if Draw Walls was turned off it was drawing black instead of Sky color.
 
-Fixed a bug where items that could have a symbol on the map were not getting their colors drawn
- if you turned off drawing of those symbols.
+Fixed a bug where items that could have a marker on the map were not getting their colors drawn
+ if you turned off drawing of those markers.
 
 Fixed a bug where the InputDirectory was being opened if it did not exist if the Terraria directory
  did exist.
 
-The new symbol drawing code was throwing a very odd out of array range error and I tracked it down to a longstanding
+The new marker drawing code was throwing a very odd out of array range error and I tracked it down to a longstanding
  bug.  Seems Terraria stores the map height then width but they were being read in as width then height.  Flipped it
  and the places it references to fix it.
 
@@ -166,8 +246,8 @@ Added a new property to TileProperties to cache the lookup for what objects are 
  it sets it before even reading a single tile so that 
  one fast Boolean lookup + one costly Dictionary.ContainsKey turns into just one fast Boolean lookup.
 
-Changed symbol drawing code so that the check to see if we are drawing them
- happens before adding them to the list instead of adding symbols for
+Changed marker drawing code so that the check to see if we are drawing them
+ happens before adding them to the list instead of adding markers for
  everything on the map to a huge list and then filtering there.  Should be faster now.
 
 Added code that will read backwards along the world file to get to the chests faster.  The slowest I ever
@@ -233,49 +313,29 @@ Change how the settings file is loaded so that people can set things up the way 
  people could potentially run the program twice each cron tick.  Once for one setup and one
  for another.  Like a map only and a map with items.
 
-Find a way to stuff Min/Max filtering into the new Symbol list.  Decided I'll make some items
+Find a way to stuff Min/Max filtering into the new Marker list.  Decided I'll make some items
  outside of the treeview list for that.  All my ideas about making it show up in the TreeView
  are too complicated to do.
 
-See if we can find a way to add 3-state checkboxes to the TreeView list.  I could hack this now
- using images but I'd really like to have something nicer looking.
-
 Reorganize things so that we have proper world objects instead of the horrible broken mix.
 
-Find a way to show whether a chest is a brown or gold chest on the map.
-
-Add a way to change the colors of all the tiles as they get drawn.  Change the Symbols so that
- as you change the icons the Symbols change too.
+Add a way to change the colors of all the tiles as they get drawn.  Change the Markers so that
+ as you change the icons the Markers change too.
 
 Add a popout color option so maps get drawn with only some things in the right colors and the others
  in a greyscale form.
-
-Perfect the code for seeking to chests.
- We need to have a way to handle bad string matches.  This likely should only affect signs though
- as it seems to only happen if the string is over 32 bytes in length so that say a space gets
- interpreted as a string length of 32.
 
 See if we can manage to get this running under Mono for those users.  Runs (kind of) for me under
  the windows version of Mono.  A lot of stuff is offset really poorly, some things so far as to
  switch sides of the Table control they are found in.  Program crashes for some reason when trying
  to Load Information but doesn't when Drawing a map.  So odd.
 
-Change the way the resource files are read in so we can provide a check box for "Use custom files".
-
-Small bug in the filter boxes that keeps the "Remove custom item" box from turning on until
- you've clicked the object twice.
-
-Finish changing all of the references to Symbol over to Marker instead.
-
 Consider adding an herb tracker.  Unlike Mushrooms herbs actually can be found in the file.
-
-Find a way to get the DialogBoxes from the worker thread to correctly attach to the main window.
+  Whoops, turns out Mushrooms actually _can_ be found in the file.  Thought they were unimportant.
 
 Add a way to remove large numbers of items from the filter list, like maybe to reset it back
  to where it was by default.  Maybe a set of checkboxes along the bottom that turn on and off
  what shows up in the list.
-
-Add an export feature to the chests.  CSV, Plaintext and XML.
 
 Remember to increment version number in project properties!
 
@@ -283,9 +343,6 @@ Get the "Cancel" button on the ProgressBar form working.
 
 Add search to the "available items" chest item list, in winamp's jump to file style (search as you type, pressing enter adds the item)
  (Sol: I do want a better keyboard interface for the list.  This might not be too hard to implement)
-
-Add gold chest filter (possible?)
- (Sol: Completely possible.  I'd need to rework how the ReadWorldTiles code works though)
 
 Better colors (gold/copper, silver/cobwebs), generate a color legend somewhere
  (Sol: Does this need to be on the map?  I have plans to add a Colors tab for custom colors)

@@ -1,4 +1,17 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using System.IO;
+using System.Runtime.InteropServices;
+using NDesk.Options;
+using MoreTerra.Utilities;
+using MoreTerra.Structures;
+using MoreTerra.Structures.TerraInfo;
+
+using System.Xml;
+using System.Net;
+using System.IO.Compression;
 
 //public class Win32
 //{
@@ -18,12 +31,6 @@
 
 namespace MoreTerra
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Forms;
-    using NDesk.Options;
-    using System.IO;
 
     static class Program
     {
@@ -32,14 +39,41 @@ namespace MoreTerra
         static extern bool AttachConsole(int dwProcessId);
         private const int ATTACH_PARENT_PROCESS = -1;
 
+		static void ReadUpdate()
+		{
+			WebClient wc = new WebClient();
+			String page = wc.DownloadString("http://moreterra.codeplex.com/wikipage?title=Updates");
+			String header = "<div class=\"wikidoc\">";
+			Int32 start = page.IndexOf(header) + header.Length;
+			Int32 end = page.IndexOf("</div>", start);
+
+			String versionString = String.Empty;
+			versionString = page.Substring(start, end - start);
+			versionString = versionString.Replace("&amp;", "&");
+
+			XmlDocument xmlDoc = new XmlDocument();
+			xmlDoc.Load(versionString);
+
+			MessageBox.Show(xmlDoc.InnerXml);
+		}
+
         [STAThread]
         static void Main(string[] args)
         {
-            // Initialize Managers
-			Constants.Initialize();
-            ResourceManager.Instance.Initialize();
-            SettingsManager.Instance.Initialize();        
+			String error = Global.Instance.Initialize();
 
+#if DEBUG == true
+			if (error != String.Empty)
+			{
+				MessageBox.Show(error);
+				return;
+			}
+#endif
+			
+            // Initialize Managers
+			TileProperties.Initialize();
+            ResourceManager.Instance.Initialize();
+            SettingsManager.Instance.Initialize();
 
             if (args.Length == 0) //started from windows
             {
@@ -56,9 +90,10 @@ namespace MoreTerra
                 //    MessageBox.Show(args[i - 1] + args[i]);
                 //}
 
-				// See if we are running in Mono and if so do not do the Attatch.
+				// See if we are running in Mono and if so do not do the Attach.
 				// Ugly but at least it lets the code run.
 				Type t = Type.GetType("Mono.Runtime");
+				
 				if (t == null)
 					AttachConsole(ATTACH_PARENT_PROCESS);
 
@@ -118,7 +153,7 @@ namespace MoreTerra
 
                     WorldMapper mapper = new WorldMapper();
 
-					SettingsManager.Instance.InConsole = true;
+					Global.Instance.InConsole = true;
 #if (DEBUG == false)
                     try
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MoreTerra
@@ -8,20 +9,47 @@ namespace MoreTerra
 		private String lText;
 		private String cbText;
 		private String tText;
+		private Point sPoint;
 
 		public FormMessageBoxWithCheckBox(String labelText, String checkBoxText, String titleText)
 		{
 			lText = labelText;
 			cbText = checkBoxText;
 			tText = titleText;
+			sPoint.X = -1;
+			sPoint.Y = -1;
+
+			this.ShowInTaskbar = false;
 			InitializeComponent();
+
+			this.Icon = Properties.Resources.Cannon;
 		}
 
 		private void FormMessageBoxWithCheckBox_Load(object sender, EventArgs e)
 		{
+			Point pt = new Point(0, 0);
+			Size size;
+
 			labelDialogText.Text = lText;
 			checkBoxDialogItem.Text = cbText;
 			Text = tText;
+
+			// Set the box to the center of the window.
+			if ((sPoint.X != -1) && (sPoint.Y != -1))
+			{
+				pt.X = sPoint.X - (this.Size.Width / 2);
+				pt.Y = sPoint.Y - (this.Size.Height / 2);
+				this.Location = pt;
+			} else if (this.Owner != null)
+			{
+				pt = this.Owner.Location;
+				size = this.Owner.Size;
+
+				pt.X = pt.X + (size.Width / 2) - (this.Size.Width / 2);
+				pt.Y = pt.Y + (size.Height / 2) - (this.Size.Height / 2);
+
+				this.Location = pt;
+			}
 		}
 
 		private void buttonYes_Click(object sender, EventArgs e)
@@ -75,6 +103,14 @@ namespace MoreTerra
 			set
 			{
 				cbText = value;
+			}
+		}
+
+		public Point parentCenter
+		{
+			set
+			{
+				sPoint = value;
 			}
 		}
 	}

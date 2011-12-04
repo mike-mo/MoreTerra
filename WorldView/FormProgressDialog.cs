@@ -22,15 +22,29 @@ namespace MoreTerra
 			cancel = allowsCancel;
 			name = titleName;
 
+			this.ShowInTaskbar = false;
 			InitializeComponent();
+
+			this.Icon = Properties.Resources.Cannon;
 		}
 
 		private void FormProgressDialog_Load(object sender, EventArgs e)
 		{
+			Point pt;
+			Size size;
 			Text = name;
 
 			buttonCancel.Enabled = cancel;
 			textBoxOutput.Text = "";
+
+			// Set the box to the center of the window.
+			pt = this.Owner.Location;
+			size = this.Owner.Size;
+
+			pt.X = pt.X + (size.Width / 2) - (this.Size.Width / 2);
+			pt.Y = pt.Y + (size.Height / 2) - (this.Size.Height / 2);
+
+			this.Location = pt;
 		}
 
 		private void buttonCancel_Click(object sender, EventArgs e)

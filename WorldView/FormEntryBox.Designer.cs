@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEntryBox));
 			this.labelMessage = new System.Windows.Forms.Label();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonOk = new System.Windows.Forms.Button();
@@ -41,15 +40,15 @@
 			this.labelMessage.Name = "labelMessage";
 			this.labelMessage.Size = new System.Drawing.Size(320, 45);
 			this.labelMessage.TabIndex = 0;
-			this.labelMessage.Text = "Enter a new item to add to the available list.\r\nCase does matter, though item nam" +
-				"es normally start with capitals.\r\nExample: Staff of Growth";
+			this.labelMessage.Text = "labelMessage";
 			// 
 			// buttonCancel
 			// 
+			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonCancel.Location = new System.Drawing.Point(187, 105);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 1;
+			this.buttonCancel.TabIndex = 2;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -59,7 +58,7 @@
 			this.buttonOk.Location = new System.Drawing.Point(72, 105);
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.Size = new System.Drawing.Size(75, 23);
-			this.buttonOk.TabIndex = 2;
+			this.buttonOk.TabIndex = 1;
 			this.buttonOk.Text = "Ok";
 			this.buttonOk.UseVisualStyleBackColor = true;
 			this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
@@ -69,24 +68,27 @@
 			this.textBoxItem.Location = new System.Drawing.Point(15, 66);
 			this.textBoxItem.Name = "textBoxItem";
 			this.textBoxItem.Size = new System.Drawing.Size(317, 20);
-			this.textBoxItem.TabIndex = 3;
+			this.textBoxItem.TabIndex = 0;
 			this.textBoxItem.Text = "textBoxItem";
 			// 
 			// FormEntryBox
 			// 
+			this.AcceptButton = this.buttonOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.buttonCancel;
 			this.ClientSize = new System.Drawing.Size(344, 140);
 			this.Controls.Add(this.textBoxItem);
 			this.Controls.Add(this.buttonOk);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.labelMessage);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormEntryBox";
-			this.Text = "New Custom Item";
+			this.Text = "Dialog Text";
 			this.Load += new System.EventHandler(this.FormEntryBox_Load);
+			this.Shown += new System.EventHandler(this.FormEntryBox_Shown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

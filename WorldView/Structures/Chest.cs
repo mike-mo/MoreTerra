@@ -4,12 +4,26 @@ using System.Drawing;
 
 namespace MoreTerra.Structures
 {
+	public enum ChestType
+	{
+		Unknown = -1,
+		Chest = 0,
+		GoldChest,
+		LockedGoldChest,
+		ShadowChest,
+		LockedShadowChest,
+		Barrel,
+		TrashCan
+	}
+
+
     public class Chest
     {
 		private Boolean activeChest;
         private int chestId;
         private Point coordinates;
         private List<Item> items;
+		private ChestType chestType;
 
 		#region Constructors
         public Chest(int chestId, Point coordinates)
@@ -18,12 +32,14 @@ namespace MoreTerra.Structures
             this.chestId = chestId;
             this.coordinates = coordinates;
             this.items = new List<Item>();
+			this.chestType = ChestType.Unknown;
         }
 
 		public Chest()
 		{
 			this.chestId = 0;
 			this.items = new List<Item>();
+			this.chestType = ChestType.Unknown;
 		}
 		#endregion
 
@@ -78,6 +94,18 @@ namespace MoreTerra.Structures
 			set
 			{
 				this.activeChest = value;
+			}
+		}
+
+		public ChestType Type
+		{
+			get
+			{
+				return this.chestType;
+			}
+			set
+			{
+				this.chestType = value;
 			}
 		}
 		#endregion

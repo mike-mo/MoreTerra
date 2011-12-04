@@ -91,6 +91,7 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\cannon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -121,18 +122,34 @@
     <Compile Include="FormProgressDialog.Designer.cs">
       <DependentUpon>FormProgressDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Structures\ColorListData.cs" />
+    <Compile Include="Structures\MarkerType.cs" />
     <Compile Include="Structures\PointInt16.cs" />
     <Compile Include="Structures\PointSingle.cs" />
+    <Compile Include="Structures\TerraInfo\ColorInfo.cs" />
+    <Compile Include="Structures\TerraInfo\CraftingSpotInfo.cs" />
+    <Compile Include="Structures\TerraInfo\ItemInfo.cs" />
+    <Compile Include="Structures\TerraInfo\ItemTypeInfo.cs" />
+    <Compile Include="Structures\TerraInfo\MarkerInfo.cs" />
+    <Compile Include="Structures\TerraInfo\NpcInfo.cs" />
+    <Compile Include="Structures\TerraInfo\RecipeInfo.cs" />
+    <Compile Include="Structures\TerraInfo\RecolorInfo.cs" />
+    <Compile Include="Structures\TerraInfo\RenameInfo.cs" />
+    <Compile Include="Structures\TerraInfo\SpecialObjectInfo.cs" />
+    <Compile Include="Structures\TerraInfo\TerraInfo.cs" />
+    <Compile Include="Structures\TerraInfo\TileInfo.cs" />
+    <Compile Include="Structures\TerraInfo\WallInfo.cs" />
     <Compile Include="Structures\Tile.cs" />
     <Compile Include="Structures\World.cs" />
     <Compile Include="Utilities\BackwardsBinaryReader.cs" />
     <Compile Include="Structures\Chest.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Structures\FilterItem.cs" />
+    <Compile Include="Structures\MarkerSettings.cs" />
     <Compile Include="Structures\Item.cs" />
     <Compile Include="Structures\NPC.cs" />
     <Compile Include="Utilities\BackwardsScanner.cs" />
     <Compile Include="Utilities\BufferedBinaryReader.cs" />
+    <Compile Include="Utilities\CompressedXml.cs" />
     <Compile Include="Utilities\Options.cs" />
     <Compile Include="Utilities\Comparers.cs" />
     <Compile Include="Utilities\Profiler.cs" />
@@ -141,13 +158,10 @@
     <Compile Include="SettingsManager.cs" />
     <Compile Include="Structures\Rect.cs" />
     <Compile Include="ResourceManager.cs" />
-    <Compile Include="Structures\SerializableDictionary.cs" />
     <Compile Include="Structures\Footer.cs" />
     <Compile Include="Structures\Sign.cs" />
     <Compile Include="Structures\SymbolLoc.cs" />
     <Compile Include="Structures\TileProperties.cs" />
-    <Compile Include="Structures\TileType.cs" />
-    <Compile Include="Utilities\Util.cs" />
     <Compile Include="Structures\WorldHeader.cs" />
     <Compile Include="WorldMapper.cs" />
     <Compile Include="FormWorldView.cs">
@@ -209,9 +223,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\objects_chest.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\gem_a.png" />
     <EmbeddedResource Include="Resources\gem_d.png" />
     <EmbeddedResource Include="Resources\gem_e.png" />
@@ -226,8 +237,27 @@
     <EmbeddedResource Include="Resources\objects_altar.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\BigCannon.png" />
     <Content Include="Resources\cannon.ico" />
+    <Content Include="Resources\chest_b.png" />
+    <Content Include="Resources\chest_base.png" />
+    <Content Include="Resources\chest_c.png" />
+    <Content Include="Resources\chest_g.png" />
+    <Content Include="Resources\chest_gl.png" />
+    <Content Include="Resources\chest_s.png" />
+    <Content Include="Resources\chest_sl.png" />
+    <Content Include="Resources\chest_t.png" />
+    <EmbeddedResource Include="Resources\Items.xml" />
+    <Content Include="Resources\objects_tombstone.png" />
     <Content Include="Resources\objects_torch.png" />
+    <Content Include="Resources\objects_unknown.png" />
+    <None Include="Resources\SmallCannon.ico" />
+    <None Include="Resources\ore_a.png" />
+    <None Include="Resources\ore_cob.png" />
+    <None Include="Resources\ore_myth.png" />
+    <None Include="Resources\people_mech.png" />
+    <None Include="Resources\people_tinker.png" />
+    <None Include="Resources\people_wizard.png" />
     <Content Include="Text Files\Changelog.txt" />
     <Content Include="Resources\gem_base.png" />
     <Content Include="Resources\objects_base.png" />

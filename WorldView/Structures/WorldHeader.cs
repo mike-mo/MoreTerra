@@ -24,13 +24,31 @@
         private bool isBoss1Dead;
         private bool isBoss2Dead;
         private bool isBoss3Dead;
+		private bool isGoblinSaved;
+		private bool isWizardSaved;
+		private bool isMechanicSaved;
+		private bool isGoblinArmyDefeated;
+		private bool isClownDefeated;
         private bool isShadowOrbSmashed;
         private bool isMeteorSpawned;
         private byte shadowOrbsSmashed;
+		private int altarsDestroyed;
+		private bool hardMode;
         private int invasionDelay;
         private int invasionSize;
         private int invasionType;
         private double invasionPointX;
+
+		private String merchantsName; //0x11
+		private String nursesName; //0x12
+		private String armsDealersName; //0x13
+		private String dryadsName; //0x14
+		private String guidesName; //0x16
+		private String clothiersName; //0x36
+		private String demolitionistsName; //0x26
+		private String tinkerersName; //0x6B
+		private String wizardsName; //0x6C
+		private String mechanicsName; //0x7C
 
         [CategoryAttribute("General"), ReadOnlyAttribute(true)]
         public int ReleaseNumber
@@ -248,6 +266,58 @@
             }
         }
 
+		[CategoryAttribute("NPC Information"), ReadOnlyAttribute(true)]
+		public Boolean IsGoblinSaved
+		{
+			get
+			{
+				return this.isGoblinSaved;
+			}
+			set
+			{
+				this.isGoblinSaved = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Information"), ReadOnlyAttribute(true)]
+		public Boolean IsWizardSaved
+		{
+			get
+			{
+				return this.isWizardSaved;
+			}
+			set
+			{
+				this.isWizardSaved = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Information"), ReadOnlyAttribute(true)]
+		public Boolean IsMechanicSaved
+		{
+			get
+			{
+				return this.isMechanicSaved;
+			}
+			set
+			{
+				this.isMechanicSaved = value;
+			}
+		}
+
+		[CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
+		public Boolean IsClownDefeated
+		{
+			get
+			{
+				return this.isClownDefeated;
+			}
+			set
+			{
+				this.isClownDefeated = value;
+			}
+		}
+
         [CategoryAttribute("Meteor Information"), ReadOnlyAttribute(true)]
         public bool IsShadowOrbSmashed
         {
@@ -287,7 +357,33 @@
             }
         }
 
-        [CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
+		[CategoryAttribute("Hard Mode Information"), ReadOnlyAttribute(true)]
+		public Int32 AltarsDestroyed
+		{
+			get
+			{
+				return this.altarsDestroyed;
+			}
+			set
+			{
+				this.altarsDestroyed = value;
+			}
+		}
+
+		[CategoryAttribute("Hard Mode Information"), ReadOnlyAttribute(true)]
+		public Boolean HardMode
+		{
+			get
+			{
+				return this.hardMode;
+			}
+			set
+			{
+				this.hardMode = value;
+			}
+		}
+
+		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
         public int InvasionDelay
         {
             get
@@ -337,7 +433,131 @@
             {
                 this.invasionPointX = value;
             }
-
         }
-    }
+
+		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
+		public Boolean IsGoblinArmyDefeated
+		{
+			get
+			{
+				return isGoblinArmyDefeated;
+			}
+			set
+			{
+				isGoblinArmyDefeated = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String MerchantsName
+		{
+			get {
+				return merchantsName;
+			}
+			set {
+				merchantsName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String NursesName
+		{
+			get {
+				return nursesName;
+			}
+			set {
+				nursesName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String ArmsDealersName
+		{
+			get {
+				return armsDealersName;
+			}
+			set {
+				armsDealersName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String DryadsName
+		{
+			get {
+				return dryadsName;
+			}
+			set {
+				dryadsName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String GuidesName
+		{
+			get {
+				return guidesName;
+			}
+			set {
+				guidesName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String ClothiersName
+		{
+			get {
+				return clothiersName;
+			}
+			set {
+				clothiersName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String DemolitionistsName
+		{
+			get {
+				return demolitionistsName;
+			}
+			set {
+				demolitionistsName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String TinkerersName
+		{
+			get {
+				return tinkerersName;
+			}
+			set {
+				tinkerersName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String WizardsName
+		{
+			get {
+				return wizardsName;
+			}
+			set {
+				wizardsName = value;
+			}
+		}
+
+		[CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+		public String MechanicsName
+		{
+			get {
+				return mechanicsName;
+			}
+			set {
+				mechanicsName = value;
+			}
+		}
+
+
+	}
 }

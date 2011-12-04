@@ -7,18 +7,21 @@ namespace MoreTerra.Structures
         private string name;
         private int count;
 		private Int32 id;
+		private Byte prefix;
 
 		#region Constructors
-        public Item(string name, int count)
+        public Item(string name, int count, byte prefix)
         {
             this.name = name;
             this.count = count;
+			this.prefix = prefix;
         }
 
 		public Item()
 		{
 			this.name = null;
 			this.count = 0;
+			this.prefix = 0;
 		}
 		#endregion
 
@@ -52,6 +55,18 @@ namespace MoreTerra.Structures
 			get
 			{
 				return id;
+			}
+			set
+			{
+				id = value;
+			}
+		}
+
+		public Byte Prefix
+		{
+			get
+			{
+				return prefix;
 			}
 			set
 			{

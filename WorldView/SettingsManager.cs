@@ -1,104 +1,165 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 using System.IO;
+using System.Text;
+using System.Drawing;
 using MoreTerra.Structures;
+using MoreTerra.Structures.TerraInfo;
+
+/*
+ * Patch System
+ * ------------
+ * Patch Name
+ * Patch Creator
+ * Patch Creation Date
+ * Patch Application Date
+ * 
+ * Patch Types
+ *   ColorName
+ *   TileColor
+ */
+
 
 namespace MoreTerra
 {
     public sealed class SettingsManager
     {
-        [Serializable]
         public class UserSettings
         {
+			public string SettingsName;
             public string InputWorldDirectory;
             public string OutputPreviewDirectory;
             public bool IsChestFilterEnabled;
-            public bool IsWallsDrawable;
+			public Boolean AreWiresDrawable;
+            public bool AreWallsDrawable;
 			public Boolean OpenImageAfterDraw;
 			public Boolean ScanForNewChestItems;
+			public Boolean ShowCustomItems;
+			public Boolean ShowChestItems;
+			public Boolean ShowNormalItems;
+			public Boolean ShowChestTypes;
+			public Boolean UseCustomMarkers;
 			public Int32 ChestListSortType;
-			public Int32 HighestVersion;
-            public SerializableDictionary<string, bool> SymbolStates;
+
+//            public SerializableDictionary<string, MarkerInfo> MarkerStates;
+			public Dictionary<String, MarkerSettings> MarkerStates;
 
 			// This contains the actual list we use to filter with.
-			public SerializableDictionary<string, bool> ChestFilterItems;
+			public List<String> ChestFilterItems;
+
+			public UserSettings()
+			{
+
+			}
+
+			public UserSettings(UserSettings copy, String newName)
+			{
+				SettingsName = newName;
+				InputWorldDirectory = copy.InputWorldDirectory;
+				OutputPreviewDirectory = copy.OutputPreviewDirectory;
+				IsChestFilterEnabled = copy.IsChestFilterEnabled;
+				AreWallsDrawable = copy.AreWallsDrawable;
+				OpenImageAfterDraw = copy.OpenImageAfterDraw;
+				ScanForNewChestItems = copy.ScanForNewChestItems;
+				ShowChestTypes = copy.ShowChestTypes;
+				UseCustomMarkers = copy.UseCustomMarkers;
+				ChestListSortType = copy.ChestListSortType;
+				ShowChestItems = copy.ShowChestItems;
+				ShowCustomItems = copy.ShowCustomItems;
+				ShowNormalItems = copy.ShowNormalItems;
+
+				MarkerStates = new Dictionary<String, MarkerSettings>();
+
+				foreach (KeyValuePair<String, MarkerSettings> kvp in copy.MarkerStates)
+					MarkerStates.Add(kvp.Key, kvp.Value);
+
+				ChestFilterItems = new List<String>();
+
+				foreach (String s in copy.ChestFilterItems)
+					ChestFilterItems.Add(s);
+			}
+		}
+
+		public class ColorSettings
+		{
+			
 		}
 
         private static SettingsManager instance = null;
         private static readonly object mutex = new object();
-        private UserSettings settings;
+        private List<UserSettings> settingsList;
+		private UserSettings settings;
 
-		// This contains only the items that we have encoded in the program itself.
-		private List<String> DefaultFilterItems;
+		private List<ColorSettings> colorSettingsList;
+		private ColorSettings colorSettings;
 
-		// Added to allow certain things to never happen when the console is on.
-		// Mainly pop-up forms and Dialogs.
-		private Boolean runningConsole = false;
+		// These items get saved into the settings file.
+		// These are our Global Settings.
+		private const Int32 UserSettingsVersion = 1;
+		private Int32 curSettings;
+		private Int32 HighestVersion;
 
-        private SettingsManager()
+		#region Constructors
+		private SettingsManager()
         {
-            this.settings = new UserSettings();
+			UserSettings us = new UserSettings();
 
-			InitializeSymbolStates();
+			this.settingsList = new List<UserSettings>();
+			this.settingsList.Add(us);
+			curSettings = 0;
 
-			this.DefaultFilterItems = new List<String>();
+			this.HighestVersion = Global.CurrentVersion;
 
-			foreach (string s in Constants.defaultItems)
-			{
-				this.DefaultFilterItems.Add(s);
-			}
+			SetDefaults(us);
 
-			InitializeItemFilter();
-
-			this.settings.IsChestFilterEnabled = false;
-			this.settings.IsWallsDrawable = true;
-			this.settings.ChestListSortType = 0;
-            this.settings.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
-            if (!Directory.Exists(this.settings.InputWorldDirectory))
-            {
-                this.settings.InputWorldDirectory = string.Empty;
-            }
+			this.settings = us;
         }
+		#endregion
 
-		private void InitializeSymbolStates()
+		#region Initialization
+		private void SetDefaults(UserSettings us)
 		{
-			if (this.settings.SymbolStates == null)
-				this.settings.SymbolStates = new SerializableDictionary<string, bool>();
+			// Initialize Marker States
+			us.MarkerStates = new Dictionary<String, MarkerSettings>();
 
-			foreach (string s in Constants.ExternalSymbolNames)
+			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
 			{
-				if (!this.settings.SymbolStates.ContainsKey(s))
-					this.settings.SymbolStates.Add(s, true);
-			}
-		}
+				if ((kvp.Value.notInList == true) || (kvp.Value.markerSet == String.Empty))
+					continue;
 
-		private void InitializeItemFilter()
-		{
-			SerializableDictionary<String, Boolean> sortedItems;
-
-			if (this.settings.ChestFilterItems == null)
-				this.settings.ChestFilterItems = new SerializableDictionary<string, bool>();
-
-			foreach (String s in Constants.defaultItems)
-			{
-				if (!this.settings.ChestFilterItems.ContainsKey(s))
-					this.settings.ChestFilterItems.Add(s, false);
+				us.MarkerStates.Add(kvp.Key, new MarkerSettings());
 			}
 
-			// Now that we've done that let's sort them alphabetically.
-			IEnumerable<KeyValuePair<String, Boolean>> e = this.settings.ChestFilterItems.OrderBy<KeyValuePair<String, Boolean>, String>(kvp => kvp.Key);
-			sortedItems = new SerializableDictionary<String, Boolean>();
+			// Initialize Item Filter
+			us.ChestFilterItems = new List<String>();
+			us.ChestFilterItems.Sort();
 
-			foreach (KeyValuePair<String, Boolean> kvp in e)
+			us.SettingsName = "Default";
+			us.IsChestFilterEnabled = false;
+			us.AreWallsDrawable = true;
+			us.OpenImageAfterDraw = true;
+			us.ScanForNewChestItems = false;
+			us.ShowChestTypes = false;
+			us.UseCustomMarkers = false;
+			us.ShowChestItems = true;
+			us.ShowNormalItems = false;
+			us.ShowCustomItems = true;
+
+			us.ChestListSortType = 0;
+
+			us.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
+			if (!Directory.Exists(us.InputWorldDirectory))
 			{
-				sortedItems.Add(kvp.Key, kvp.Value);
+				us.InputWorldDirectory = string.Empty;
 			}
 
-			this.settings.ChestFilterItems = sortedItems;
+			us.OutputPreviewDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+			if (!Directory.Exists(us.OutputPreviewDirectory))
+			{
+				us.OutputPreviewDirectory = string.Empty;
+			}
 		}
 
 		public static SettingsManager Instance
@@ -119,21 +180,154 @@ namespace MoreTerra
         public void Initialize()
         {
             // Initialization
-            if (!System.IO.File.Exists(Constants.ApplicationUserSettingsFile)) return;
+            if (System.IO.File.Exists(Global.ApplicationUserSettingsFile))
+				LoadSettings();
+		}
+		#endregion
 
+		#region SettingsList Helper Functions
+		public String SettingsName(Int32 name)
+		{
+			if ((name < 0) || (name >= settingsList.Count))
+				return String.Empty;
 
-            // Load User Preference File
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(File.ReadAllText(Constants.ApplicationUserSettingsFile));
-            XmlNodeReader reader = new XmlNodeReader(xmlDoc.DocumentElement);
-            XmlSerializer inputSerializer = new XmlSerializer(this.settings.GetType());
-            this.settings = (UserSettings)inputSerializer.Deserialize(reader);
-
-			InitializeSymbolStates();
-			InitializeItemFilter();
+			return settingsList[name].SettingsName;
 		}
 
-        public string InputWorldDirectory
+		public Int32 SettingsCount
+		{
+			get
+			{
+				return settingsList.Count;
+			}
+		}
+
+		public Int32 CurrentSettings
+		{
+			get
+			{
+				return curSettings;
+			}
+			set
+			{
+				if ((value < 0) || (value >= settingsList.Count))
+					return;
+
+				curSettings = value;
+				settings = settingsList[value];
+			}
+		}
+
+		// This does no range check as it is done in the Delete button event handler.
+		public void DeleteSettings(Int32 toDelete)
+		{
+			settingsList.RemoveAt(toDelete);
+			if (toDelete == curSettings)
+			{
+				curSettings = -1;
+				settings = null;
+			} 
+		}
+
+		public Boolean AddNewSettings(String newName)
+		{
+			UserSettings us;
+			Int32 i;
+
+			if (newName == String.Empty)
+				return false;
+
+			for (i = 0; i < settingsList.Count; i++)
+			{
+				if (newName == settingsList[i].SettingsName)
+					return false;
+			}
+
+			us = new UserSettings(settings, newName);
+
+			settingsList.Add(us);
+
+			return true;
+		}
+		#endregion
+
+		#region Marker Helper Functions
+		public bool DrawMarker(Byte type)
+		{
+			if (type >= TileProperties.Unknown)
+				return false;
+
+			String index = Global.Instance.Info.Tiles[type].markerName;
+
+			// convert to string index
+			if (this.settings.MarkerStates.ContainsKey(index))
+				return this.settings.MarkerStates[index].Drawing;
+
+			return false;
+		}
+
+		public bool DrawMarker(ChestType type)
+		{
+			if (type == ChestType.Unknown)
+				return false;
+
+			String chestType = Global.Instance.Info.MarkerImageToName(Enum.GetName(typeof(ChestType), type));
+
+			if (this.settings.MarkerStates.ContainsKey(chestType))
+				return this.settings.MarkerStates[chestType].Drawing;
+
+			return false;
+		}
+
+		public bool DrawMarker(MarkerType type)
+		{
+			if (type == MarkerType.Unknown)
+				return false;
+
+			String markerType = Global.Instance.Info.MarkerImageToName(Enum.GetName(typeof(MarkerType), type));
+
+			if (this.settings.MarkerStates.ContainsKey(markerType))
+				return this.settings.MarkerStates[markerType].Drawing;
+
+			return false;
+		}
+
+		public bool DrawMarker(NPCType type)
+		{
+			String npcType = Global.Instance.Info.MarkerImageToName(Enum.GetName(typeof(NPCType), type));
+
+			if (this.settings.MarkerStates.ContainsKey(npcType))
+				return this.settings.MarkerStates[npcType].Drawing;
+
+			return false;
+		}
+
+		public bool DrawMarker(string marker)
+		{
+			if (this.settings.MarkerStates.ContainsKey(marker))
+				return this.settings.MarkerStates[marker].Drawing;
+
+			return false;
+		}
+
+		public void MarkerVisible(string key, bool status)
+		{
+			this.settings.MarkerStates[key].Drawing = status;
+		}
+		#endregion
+
+		#region Filter Helper Functions
+		public void FilterItem(string itemName, bool status)
+		{
+			if (status == true)
+				this.settings.ChestFilterItems.Add(itemName);
+			else
+				this.settings.ChestFilterItems.Remove(itemName);
+		}
+		#endregion
+
+		#region GetSet Functions
+		public string InputWorldDirectory
         {
             get
             {
@@ -157,11 +351,11 @@ namespace MoreTerra
             }
         }
 
-        public Dictionary<string, bool> SymbolStates
+        public Dictionary<string, MarkerSettings> MarkerStates
         {
             get
             {
-                return this.settings.SymbolStates;
+                return this.settings.MarkerStates;
             }
         }
 
@@ -177,15 +371,27 @@ namespace MoreTerra
             }
         }
 
+		public Boolean DrawWires
+		{
+			get
+			{
+				return this.settings.AreWiresDrawable;
+			}
+			set
+			{
+				this.settings.AreWiresDrawable = value;
+			}
+		}
+
         public bool DrawWalls
         {
             get
             {
-                return this.settings.IsWallsDrawable;
+                return this.settings.AreWallsDrawable;
             }
             set
             {
-                this.settings.IsWallsDrawable = value;
+                this.settings.AreWallsDrawable = value;
             }
         }
 
@@ -218,48 +424,15 @@ namespace MoreTerra
 		{
 			get
 			{
-				return this.settings.HighestVersion;
+				return this.HighestVersion;
 			}
 			set
 			{
-				this.settings.HighestVersion = value;
+				this.HighestVersion = value;
 			}
 		}
 
-        public bool DrawMarker(TileType type)
-        {
-            // convert to string index
-			if (this.settings.SymbolStates.ContainsKey(Enum.GetName(typeof(TileType), type)))
-				return this.settings.SymbolStates[Enum.GetName(typeof(TileType), type)];
-			return false;
-        }
-
-		public bool DrawMarker(string marker)
-		{
-			if (this.settings.SymbolStates.ContainsKey(marker))
-				return this.settings.SymbolStates[marker];
-			return false;
-		}
-
-		public void MarkerVisible(string key, bool status)
-		{
-			this.settings.SymbolStates[key] = status;
-		}
-		
-		public Boolean IsDefaultItem(String itemName)
-		{
-			if (this.DefaultFilterItems.Contains(itemName))
-				return true;
-
-			return false;
-		}
-
-		public void FilterItem(string itemName, bool status)
-		{
-			this.settings.ChestFilterItems[itemName] = status;
-		}
-
-		public Dictionary<string, bool> FilterItemStates
+		public List<String> FilterItemStates
 		{
 			get
 			{
@@ -279,28 +452,580 @@ namespace MoreTerra
 			}
 		}
 
-		public Boolean InConsole
+		public Boolean ShowChestTypes
 		{
 			get
 			{
-				return runningConsole;
+				return this.settings.ShowChestTypes;
 			}
 			set
 			{
-				runningConsole = value;
+				this.settings.ShowChestTypes = value;
 			}
 		}
 
-        public void Shutdown()
-        {           
-            // Serialize Symbols / Etc
-            XmlSerializer outputSerializer = new XmlSerializer(this.settings.GetType());
-            StringBuilder sb = new StringBuilder();
-            StringWriter writer = new StringWriter(sb);
-            outputSerializer.Serialize(writer, this.settings);
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(sb.ToString());
-            xmlDocument.Save(Constants.ApplicationUserSettingsFile);
+		public Boolean CustomMarkers
+		{
+			get
+			{
+				return settings.UseCustomMarkers;
+			}
+			set
+			{
+				settings.UseCustomMarkers = value;
+			}
+		}
+
+		public Boolean ShowChestItems
+		{
+			get
+			{
+				return settings.ShowChestItems;
+			}
+			set
+			{
+				settings.ShowChestItems = value;
+			}
+		}
+
+		public Boolean ShowNormalItems
+		{
+			get
+			{
+				return settings.ShowNormalItems;
+			}
+			set
+			{
+				settings.ShowNormalItems = value;
+			}
+		}
+
+		public Boolean ShowCustomItems
+		{
+			get
+			{
+				return settings.ShowCustomItems;
+			}
+			set
+			{
+				settings.ShowCustomItems = value;
+			}
+		}
+		#endregion
+
+		#region Load/Save Functions
+		public void LoadSettings()
+		{
+			String curSettingsName = "Default";
+			Int32 settingsNodeCount;
+			UserSettings us;
+			Int32 settingsVer;
+			XmlNode baseNode;
+			XmlNodeList settingsNodes;
+			XmlNode parseNode;
+			XmlNodeList parseNodeList;
+			XmlDocument xmlDoc = new XmlDocument();
+			xmlDoc.Load(Global.ApplicationUserSettingsFile);
+
+			baseNode = xmlDoc.DocumentElement;
+
+			// There's no UserSettings element so we'll use the default settings.
+			if (baseNode.Name != "UserSettings")
+				return;
+
+			if (baseNode.Attributes["version"] == null)
+				settingsVer = 0;
+			else
+				settingsVer = Int32.Parse(baseNode.Attributes["version"].Value);
+
+			switch(settingsVer)
+			{
+				case 0:
+					break;
+				case 1:
+					parseNode = baseNode.SelectSingleNode("GlobalSettings");
+
+					if (parseNode == null)
+						break;
+					
+					parseNodeList = parseNode.SelectNodes("item");
+
+					foreach (XmlNode node in parseNodeList)
+					{
+						parseNode = node.Attributes["name"];
+
+						if (parseNode == null)
+							continue;
+
+						switch (parseNode.Value)
+						{
+							case "UseSettings":
+								parseNode = node.Attributes["value"];
+
+								if (parseNode != null)
+									curSettingsName = parseNode.Value;
+								break;
+							case "HighestVersion":
+								parseNode = node.Attributes["value"];
+
+								if (parseNode != null)
+									this.HighestVersion = Int32.Parse(parseNode.Value);
+								break;
+							default:
+								break;
+						}
+					}
+					break;
+				default:
+					break;
+			}
+
+			if (settingsVer > 0)
+				settingsNodes = baseNode.SelectNodes("Settings");
+			else
+				settingsNodes = xmlDoc.SelectNodes("UserSettings");
+
+			settingsNodeCount = 0;
+			foreach (XmlNode settingsNode in settingsNodes)
+			{
+				String settingsName;
+
+				parseNode = settingsNode.Attributes["name"];
+
+				if (parseNode == null)
+					settingsName = "Default";
+				else
+					settingsName = parseNode.Value;
+
+				us = null;
+
+				foreach (UserSettings testUs in this.settingsList)
+				{
+					if (testUs.SettingsName == settingsName)
+						us = testUs;
+				}
+
+				if (us == null)
+				{
+					us = new UserSettings();
+					SetDefaults(us);
+					us.SettingsName = settingsName;
+
+					this.settingsList.Add(us);
+				}
+
+				if (us.SettingsName == curSettingsName)
+				{
+					this.settings = us;
+					curSettings = settingsNodeCount;
+				}
+				settingsNodeCount++;
+
+				switch (settingsVer)
+				{
+					case 0:
+						#region UserSettings version 0 Loader
+						foreach (XmlNode node in settingsNode)
+						{
+							switch (node.Name)
+							{
+								case "InputWorldDirectory":
+									us.InputWorldDirectory = node.InnerXml;
+									break;
+								case "OutputPreviewDirectory":
+									us.OutputPreviewDirectory = node.InnerXml;
+									break;
+								case "IsChestFilterEnabled":
+									us.IsChestFilterEnabled = Boolean.Parse(node.InnerXml);
+									break;
+								case "IsWallsDrawable":
+									us.AreWallsDrawable = Boolean.Parse(node.InnerXml);
+									break;
+								case "OpenImageAfterDraw":
+									us.OpenImageAfterDraw = Boolean.Parse(node.InnerXml);
+									break;
+								case "ScanForNewChestItems":
+									us.ScanForNewChestItems = Boolean.Parse(node.InnerXml);
+									break;
+								case "ShowChestTypes":
+									us.ShowChestTypes = Boolean.Parse(node.InnerXml);
+									break;
+								case "UseCustomMarkers":
+									us.UseCustomMarkers = Boolean.Parse(node.InnerXml);
+									break;
+								case "ChestListSortType":
+									us.ChestListSortType = Int32.Parse(node.InnerXml);
+									break;
+								case "HighestVersion":
+									this.HighestVersion = Int32.Parse(node.InnerXml);
+									break;
+								case "SymbolStates":
+									parseNodeList = node.SelectNodes("item");
+
+									foreach (XmlNode n in parseNodeList)
+									{
+										String Key;
+										Boolean Value;
+										MarkerSettings mi;
+
+										parseNode = n.SelectSingleNode("key").SelectSingleNode("string");
+										Key = parseNode.InnerXml;
+
+										parseNode = n.SelectSingleNode("value").SelectSingleNode("boolean");
+										Value = Boolean.Parse(parseNode.InnerXml);
+
+										if (us.MarkerStates.ContainsKey(Key))
+											us.MarkerStates[Key].Drawing = Value;
+										else
+										{
+											String newKey = Global.Instance.Info.MarkerImageToName(Key);
+
+											if (!us.MarkerStates.ContainsKey(newKey))
+												newKey = String.Empty;
+
+											if (newKey == String.Empty)
+											{
+												mi = new MarkerSettings();
+												mi.Drawing = Value;
+												us.MarkerStates.Add(Key, mi);
+											}
+											else
+											{
+												us.MarkerStates[newKey].Drawing = Value;
+											}
+										}
+									}
+									break;
+								case "ChestFilterItems":
+									parseNodeList = node.SelectNodes("item");
+
+									foreach (XmlNode n in parseNodeList)
+									{
+										String Key;
+										Boolean Value;
+
+										parseNode = n.SelectSingleNode("key").SelectSingleNode("string");
+										Key = parseNode.InnerXml;
+
+										parseNode = n.SelectSingleNode("value").SelectSingleNode("boolean");
+										Value = Boolean.Parse(parseNode.InnerXml);
+
+										if (Value == true)
+											us.ChestFilterItems.Add(Key);
+									}
+									break;
+								default:
+									break;
+							}
+						}
+						#endregion
+						break;
+					case 1:
+						#region UserSettings version 1 Loader
+						foreach (XmlNode node in settingsNode)
+						{
+							parseNode = node.Attributes["name"];
+
+							if (parseNode == null)
+								continue;
+
+							switch (parseNode.Value)
+							{
+								case "InputWorldDirectory":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.InputWorldDirectory = parseNode.Value;
+									break;
+								case "OutputPreviewDirectory":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.OutputPreviewDirectory = parseNode.Value;
+									break;
+								case "IsChestFilterEnabled":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.IsChestFilterEnabled = Boolean.Parse(parseNode.Value);
+									break;
+								case "AreWiresDrawable":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.AreWiresDrawable = Boolean.Parse(parseNode.Value);
+									break;
+								case "AreWallsDrawable":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.AreWallsDrawable = Boolean.Parse(parseNode.Value);
+									break;
+								case "OpenImageAfterDraw":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.OpenImageAfterDraw = Boolean.Parse(parseNode.Value);
+									break;
+								case "ScanForNewChestItems":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ScanForNewChestItems = Boolean.Parse(parseNode.Value);
+									break;
+								case "ShowChestTypes":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ShowChestTypes = Boolean.Parse(parseNode.Value);
+									break;
+								case "UseCustomMarkers":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.UseCustomMarkers = Boolean.Parse(parseNode.Value);
+									break;
+								case "ChestListSortType":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ChestListSortType = Int32.Parse(parseNode.Value);
+									break;
+								case "ShowChestItems":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ShowChestItems = Boolean.Parse(parseNode.Value);
+									break;
+								case "ShowNormalItems":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ShowNormalItems = Boolean.Parse(parseNode.Value);
+									break;
+								case "ShowCustomItems":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.ShowCustomItems = Boolean.Parse(parseNode.Value);
+									break;
+								case "MarkerStates":
+									parseNodeList = node.SelectNodes("listitem");
+
+									foreach (XmlNode n in parseNodeList)
+									{
+										String Name;
+										MarkerSettings mi;
+
+										parseNode = n.Attributes["name"];
+
+										if (parseNode == null)
+											break;
+
+										Name = parseNode.Value;
+
+										if (us.MarkerStates.TryGetValue(Name, out mi) == false)
+											mi = new MarkerSettings();
+
+										parseNode = n.Attributes["draw"];
+
+										if (parseNode != null)
+											mi.Drawing = Boolean.Parse(parseNode.Value);
+
+										parseNode = n.Attributes["filter"];
+
+										if (parseNode != null)
+											mi.Filtering = Boolean.Parse(parseNode.Value);
+
+										parseNode = n.Attributes["min"];
+
+										if (parseNode != null)
+											mi.Min = Int32.Parse(parseNode.Value);
+
+										parseNode = n.Attributes["max"];
+
+										if (parseNode != null)
+											mi.Max = Int32.Parse(parseNode.Value);
+
+										if (!us.MarkerStates.ContainsKey(Name))
+											us.MarkerStates.Add(Name, mi);
+									}
+									break;
+								case "ChestFilterItems":
+									parseNode = node.Attributes["filter"];
+
+									if (parseNode == null)
+										continue;
+
+									String[] splitList = parseNode.Value.Split(';');
+
+									foreach (String s in splitList)
+									{
+										us.ChestFilterItems.Add(s);
+									}
+									break;
+								default:
+									break;
+							}
+						}
+						#endregion
+						break;
+					default:
+						return;
+				}
+			}
+
+			parseNode = baseNode.SelectSingleNode("CustomItems");
+
+			if (parseNode != null)
+			{
+				parseNode = parseNode.Attributes["list"];
+
+				if (parseNode != null)
+				{
+					String[] itemList = parseNode.Value.Split(';');
+
+					foreach (String s in itemList)
+					{
+						if (!Global.Instance.Info.Items.ContainsKey(s))
+							Global.Instance.Info.AddCustomItem(s);
+					}
+				}
+			}
+
+			parseNode = baseNode.SelectSingleNode("CustomColors");
+
+			if (parseNode != null)
+			{
+				parseNode = parseNode.Attributes["list"];
+
+				if (parseNode != null)
+				{
+					String[] colorList = parseNode.Value.Split(';');
+					Color newColor;
+
+					for (Int32 sPos = 0; sPos < colorList.Length; sPos += 2)
+					{
+						if (Global.TryParseColor(colorList[sPos + 1], out newColor) == false)
+							continue;
+
+						if (Global.Instance.Info.Colors.ContainsKey(colorList[sPos]))
+							continue;
+
+
+						Global.Instance.Info.AddCustomColor(colorList[sPos], newColor);
+					}
+				}
+			}
+		}
+
+		public void SaveSettings()
+		{
+			StringBuilder sb = new StringBuilder();
+			String splitter;
+			FileStream stream = new FileStream(Global.ApplicationUserSettingsFile, FileMode.Create);
+			StreamWriter writer = new StreamWriter(stream);
+
+			writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+			writer.WriteLine("<UserSettings version=\"{0}\">", SettingsManager.UserSettingsVersion);
+
+			writer.WriteLine("  <GlobalSettings>");
+			writer.WriteLine("    <item name=\"UseSettings\" value=\"{0}\" />",
+				this.settingsList[curSettings].SettingsName);
+			writer.WriteLine("    <item name=\"HighestVersion\" value=\"{0}\" />", this.HighestVersion);
+			writer.WriteLine("  </GlobalSettings>");
+
+			foreach (UserSettings us in this.settingsList)
+			{
+
+				writer.WriteLine("  <Settings name=\"{0}\">",
+					us.SettingsName);
+				writer.WriteLine("    <item name=\"InputWorldDirectory\" value=\"{0}\" />",
+					us.InputWorldDirectory);
+				writer.WriteLine("    <item name=\"OutputPreviewDirectory\" value=\"{0}\" />",
+					us.OutputPreviewDirectory);
+				writer.WriteLine("    <item name=\"IsChestFilterEnabled\" value=\"{0}\" />",
+					us.IsChestFilterEnabled);
+				writer.WriteLine("    <item name=\"ShowChestItems\" value=\"{0}\" />",
+					us.ShowChestItems);
+				writer.WriteLine("    <item name=\"ShowNormalItems\" value=\"{0}\" />",
+					us.ShowNormalItems);
+				writer.WriteLine("    <item name=\"ShowCustomItems\" value=\"{0}\" />",
+					us.ShowCustomItems);
+				writer.WriteLine("    <item name=\"AreWiresDrawable\" value=\"{0}\" />",
+					us.AreWiresDrawable);
+				writer.WriteLine("    <item name=\"AreWallsDrawable\" value=\"{0}\" />",
+					us.AreWallsDrawable);
+				writer.WriteLine("    <item name=\"OpenImageAfterDraw\" value=\"{0}\" />",
+					us.OpenImageAfterDraw);
+				writer.WriteLine("    <item name=\"ScanForNewChestItems\" value=\"{0}\" />",
+					us.ScanForNewChestItems);
+				writer.WriteLine("    <item name=\"ShowChestTypes\" value=\"{0}\" />",
+					us.ShowChestTypes);
+				writer.WriteLine("    <item name=\"UseCustomMarkers\" value=\"{0}\" />",
+					us.UseCustomMarkers);
+				writer.WriteLine("    <item name=\"ChestListSortType\" value=\"{0}\" />",
+					us.ChestListSortType);
+
+				writer.WriteLine("    <item name=\"MarkerStates\">");
+				foreach (KeyValuePair<String, MarkerSettings> kvp in us.MarkerStates)
+				{
+					writer.WriteLine("      <listitem name=\"{0}\" draw=\"{1}\" filter=\"{2}\" min=\"{3}\" max=\"{4}\" />",
+						kvp.Key, kvp.Value.Drawing, kvp.Value.Filtering, kvp.Value.Min, kvp.Value.Max);
+				}
+				writer.WriteLine("    </item>");
+
+				sb.Clear();
+				splitter = "";
+				foreach (String s in us.ChestFilterItems)
+				{
+					sb.Append(splitter + s);
+					splitter = ";";
+				}
+
+				if (sb.Length != 0)
+					writer.WriteLine("    <item name=\"ChestFilterItems\" filter=\"{0}\" />", sb.ToString());
+
+				writer.WriteLine("  </Settings>");
+			}
+
+			sb.Clear();
+			splitter = "";
+			foreach (KeyValuePair<String, ItemInfo> kvp in Global.Instance.Info.Items)
+			{
+				if (kvp.Value.isCustom == true)
+				{
+					sb.Append(splitter + kvp.Key);
+					splitter = ";";
+				}
+			}
+
+			if (sb.Length != 0)
+				writer.WriteLine("  <CustomItems list=\"{0}\" />", sb.ToString());
+
+			sb.Clear();
+			splitter = "";
+			foreach (KeyValuePair<String, ColorInfo> kvp in Global.Instance.Info.Colors)
+			{
+				if (kvp.Value.isCustom == true)
+				{
+					sb.AppendFormat("{0}{1};{2}", splitter, kvp.Key, Global.ToColorString(kvp.Value.color));
+					splitter = ";";
+				}
+			}
+
+			if (sb.Length != 0)
+				writer.WriteLine("  <CustomColors list=\"{0}\" />", sb.ToString());
+
+			writer.WriteLine("</UserSettings>");
+			writer.Close();
+
+		}
+		#endregion
+
+		public void Shutdown()
+        {
+			SaveSettings();
         }
 
         

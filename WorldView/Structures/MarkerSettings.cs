@@ -2,27 +2,53 @@
 
 namespace MoreTerra.Structures
 {
-	public class FilterItem
+	public class MarkerSettings
 	{
-		private Boolean filterState;
+		private Boolean drawMarker;
+		private Boolean useFilter;
 		private Int32 filterMin;
 		private Int32 filterMax;
 
 		#region Constructors
-		public FilterItem()
+		public MarkerSettings()
 		{
-			filterState = false;
-			filterMin = 0;
+			drawMarker = true;
+			useFilter = false;
+			filterMin = 1;
 			filterMax = 255;
+		}
+
+		public MarkerSettings(MarkerSettings copy)
+		{
+			drawMarker = copy.drawMarker;
+			useFilter = copy.useFilter;
+			filterMin = copy.filterMin;
+			filterMax = copy.filterMax;
 		}
 		#endregion
 
 		#region GetSet Functions
-		public Boolean State
+		public Boolean Drawing
 		{
 			get
 			{
-				return filterState;
+				return drawMarker;
+			}
+			set
+			{
+				drawMarker = value;
+			}
+		}
+
+		public Boolean Filtering
+		{
+			get
+			{
+				return useFilter;
+			}
+			set
+			{
+				useFilter = value;
 			}
 		}
 
@@ -35,8 +61,8 @@ namespace MoreTerra.Structures
 
 			set
 			{
-				if (value < 0)
-					value = 0;
+				if (value < 1)
+					value = 1;
 
 				if (value > filterMax)
 					value = filterMax;

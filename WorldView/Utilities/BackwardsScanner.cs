@@ -266,6 +266,9 @@ namespace MoreTerra.Utilities
 
 				returnSign.Position = new Point(x, y);
 
+				// We're going to try to read in the string.  In a Sign the string should
+				// always have a 0x01 before it to show it was an active Sign.
+//				returnSign.Text = backReader.ReadBackwardsString(true, 1500, 1);
 				returnSign.Text = backReader.ReadBackwardsString(true, 1500);
 
 				if (returnSign.Text != null)

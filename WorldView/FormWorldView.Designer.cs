@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWorldView));
 			this.tabControlSettings = new System.Windows.Forms.TabControl();
 			this.tabPageDrawWorld = new System.Windows.Forms.TabPage();
+			this.checkBoxDrawWires = new System.Windows.Forms.CheckBox();
+			this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.comboBoxDrawUsing = new System.Windows.Forms.ComboBox();
 			this.button2 = new System.Windows.Forms.Button();
@@ -43,17 +44,44 @@
 			this.textBoxOutputFile = new System.Windows.Forms.TextBox();
 			this.buttonBrowseOutput = new System.Windows.Forms.Button();
 			this.tabPageMarkers = new System.Windows.Forms.TabPage();
-			this.groupBoxSymbols = new System.Windows.Forms.GroupBox();
+			this.groupBoxMarkers = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.checkBoxShowChestTypes = new System.Windows.Forms.CheckBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.checkBoxCustomMarkers = new System.Windows.Forms.CheckBox();
+			this.buttonResetCustomImages = new System.Windows.Forms.Button();
 			this.buttonCustomResources = new System.Windows.Forms.Button();
-			this.labelCustomResources = new System.Windows.Forms.Label();
 			this.treeViewMarkerList = new System.Windows.Forms.TreeView();
 			this.contextMenuStripListOperations = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabPageColors = new System.Windows.Forms.TabPage();
+			this.groupBoxColorNames = new System.Windows.Forms.GroupBox();
+			this.buttonColorNameColor = new System.Windows.Forms.Button();
+			this.textBoxColorNameColor = new System.Windows.Forms.TextBox();
+			this.buttonColorNameDelete = new System.Windows.Forms.Button();
+			this.buttonColorNameAddNew = new System.Windows.Forms.Button();
+			this.comboBoxColorNamesName = new System.Windows.Forms.ComboBox();
+			this.groupBoxColorListPresets = new System.Windows.Forms.GroupBox();
+			this.buttonPresetDelete = new System.Windows.Forms.Button();
+			this.buttonPresetAddNew = new System.Windows.Forms.Button();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.treeViewColorList = new System.Windows.Forms.TreeView();
+			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.resetAllToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.groupBoxColor = new System.Windows.Forms.GroupBox();
+			this.buttonColorColor = new System.Windows.Forms.Button();
+			this.comboBoxColorName = new System.Windows.Forms.ComboBox();
+			this.textBoxColorColor = new System.Windows.Forms.TextBox();
+			this.radioButtonColorColor = new System.Windows.Forms.RadioButton();
+			this.radioButtonColorPreset = new System.Windows.Forms.RadioButton();
+			this.radioButtonColorDefault = new System.Windows.Forms.RadioButton();
 			this.tabPageChestFinder = new System.Windows.Forms.TabPage();
+			this.checkBoxShowCustomItems = new System.Windows.Forms.CheckBox();
+			this.checkBoxShowNormalItems = new System.Windows.Forms.CheckBox();
+			this.checkBoxShowChestItems = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonMoveAllToFiltered = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -70,6 +98,10 @@
 			this.worldPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.treeViewChestInformation = new System.Windows.Forms.TreeView();
+			this.contextMenuStripSaveChests = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.saveToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.radioButtonSortByX = new System.Windows.Forms.RadioButton();
 			this.radioButtonSortByY = new System.Windows.Forms.RadioButton();
@@ -88,16 +120,25 @@
 			this.labelWorldName = new System.Windows.Forms.Label();
 			this.comboBoxWorldFilePath = new System.Windows.Forms.ComboBox();
 			this.buttonBrowseWorld = new System.Windows.Forms.Button();
-			this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.buttonSettingsDelete = new System.Windows.Forms.Button();
+			this.buttonSettingsAddNew = new System.Windows.Forms.Button();
+			this.comboBoxSettings = new System.Windows.Forms.ComboBox();
 			this.tabControlSettings.SuspendLayout();
 			this.tabPageDrawWorld.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBoxImageOutput.SuspendLayout();
 			this.tabPageMarkers.SuspendLayout();
-			this.groupBoxSymbols.SuspendLayout();
+			this.groupBoxMarkers.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.contextMenuStripListOperations.SuspendLayout();
+			this.tabPageColors.SuspendLayout();
+			this.groupBoxColorNames.SuspendLayout();
+			this.groupBoxColorListPresets.SuspendLayout();
+			this.contextMenuStrip.SuspendLayout();
+			this.groupBoxColor.SuspendLayout();
 			this.tabPageChestFinder.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -106,11 +147,13 @@
 			this.tableLayoutPanel1.SuspendLayout();
 			this.worldInfoGroupBox.SuspendLayout();
 			this.groupBox4.SuspendLayout();
+			this.contextMenuStripSaveChests.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.tabPageAbout.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBoxSelectWorld.SuspendLayout();
+			this.groupBox8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControlSettings
@@ -120,18 +163,19 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControlSettings.Controls.Add(this.tabPageDrawWorld);
 			this.tabControlSettings.Controls.Add(this.tabPageMarkers);
+			this.tabControlSettings.Controls.Add(this.tabPageColors);
 			this.tabControlSettings.Controls.Add(this.tabPageChestFinder);
 			this.tabControlSettings.Controls.Add(this.tabPageWorldInformation);
 			this.tabControlSettings.Controls.Add(this.tabPageAbout);
-			this.tabControlSettings.Location = new System.Drawing.Point(6, 108);
+			this.tabControlSettings.Location = new System.Drawing.Point(6, 89);
 			this.tabControlSettings.Name = "tabControlSettings";
 			this.tabControlSettings.SelectedIndex = 0;
-			this.tabControlSettings.Size = new System.Drawing.Size(482, 338);
-			this.tabControlSettings.TabIndex = 1;
-			this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
+			this.tabControlSettings.Size = new System.Drawing.Size(480, 355);
+			this.tabControlSettings.TabIndex = 5;
 			// 
 			// tabPageDrawWorld
 			// 
+			this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWires);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWalls);
 			this.tabPageDrawWorld.Controls.Add(this.groupBox6);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxScanForItems);
@@ -141,20 +185,44 @@
 			this.tabPageDrawWorld.Location = new System.Drawing.Point(4, 22);
 			this.tabPageDrawWorld.Name = "tabPageDrawWorld";
 			this.tabPageDrawWorld.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageDrawWorld.Size = new System.Drawing.Size(474, 312);
+			this.tabPageDrawWorld.Size = new System.Drawing.Size(472, 329);
 			this.tabPageDrawWorld.TabIndex = 0;
 			this.tabPageDrawWorld.Text = "Draw World";
 			this.tabPageDrawWorld.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxDrawWires
+			// 
+			this.checkBoxDrawWires.AutoSize = true;
+			this.checkBoxDrawWires.Checked = true;
+			this.checkBoxDrawWires.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxDrawWires.Location = new System.Drawing.Point(12, 194);
+			this.checkBoxDrawWires.Name = "checkBoxDrawWires";
+			this.checkBoxDrawWires.Size = new System.Drawing.Size(81, 17);
+			this.checkBoxDrawWires.TabIndex = 12;
+			this.checkBoxDrawWires.Text = "Draw Wires";
+			this.checkBoxDrawWires.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxDrawWalls
+			// 
+			this.checkBoxDrawWalls.AutoSize = true;
+			this.checkBoxDrawWalls.Checked = true;
+			this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxDrawWalls.Location = new System.Drawing.Point(12, 217);
+			this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
+			this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
+			this.checkBoxDrawWalls.TabIndex = 8;
+			this.checkBoxDrawWalls.Text = "Draw Walls";
+			this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
 			// 
 			// groupBox6
 			// 
 			this.groupBox6.Controls.Add(this.comboBoxDrawUsing);
 			this.groupBox6.Controls.Add(this.button2);
 			this.groupBox6.Controls.Add(this.button1);
-			this.groupBox6.Location = new System.Drawing.Point(250, 188);
+			this.groupBox6.Location = new System.Drawing.Point(248, 205);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(218, 73);
-			this.groupBox6.TabIndex = 13;
+			this.groupBox6.TabIndex = 3;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Unsupported World Version Helper";
 			this.groupBox6.Visible = false;
@@ -166,14 +234,14 @@
 			this.comboBoxDrawUsing.Location = new System.Drawing.Point(6, 19);
 			this.comboBoxDrawUsing.Name = "comboBoxDrawUsing";
 			this.comboBoxDrawUsing.Size = new System.Drawing.Size(206, 21);
-			this.comboBoxDrawUsing.TabIndex = 2;
+			this.comboBoxDrawUsing.TabIndex = 12;
 			// 
 			// button2
 			// 
 			this.button2.Location = new System.Drawing.Point(120, 46);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(92, 23);
-			this.button2.TabIndex = 1;
+			this.button2.TabIndex = 14;
 			this.button2.Text = "Save as Default";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
@@ -182,7 +250,7 @@
 			this.button1.Location = new System.Drawing.Point(6, 46);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(87, 23);
-			this.button1.TabIndex = 0;
+			this.button1.TabIndex = 13;
 			this.button1.Text = "Scan for Tiles";
 			this.button1.UseVisualStyleBackColor = true;
 			// 
@@ -190,13 +258,12 @@
 			// 
 			this.checkBoxScanForItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBoxScanForItems.AutoSize = true;
-			this.checkBoxScanForItems.Location = new System.Drawing.Point(12, 221);
+			this.checkBoxScanForItems.Location = new System.Drawing.Point(12, 238);
 			this.checkBoxScanForItems.Name = "checkBoxScanForItems";
 			this.checkBoxScanForItems.Size = new System.Drawing.Size(161, 17);
-			this.checkBoxScanForItems.TabIndex = 12;
+			this.checkBoxScanForItems.TabIndex = 9;
 			this.checkBoxScanForItems.Text = "Scan for new items in chests";
 			this.checkBoxScanForItems.UseVisualStyleBackColor = true;
-			this.checkBoxScanForItems.CheckedChanged += new System.EventHandler(this.checkBoxScanForItems_CheckedChanged);
 			// 
 			// checkBoxOpenImage
 			// 
@@ -204,26 +271,24 @@
 			this.checkBoxOpenImage.AutoSize = true;
 			this.checkBoxOpenImage.Checked = true;
 			this.checkBoxOpenImage.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxOpenImage.Location = new System.Drawing.Point(12, 244);
+			this.checkBoxOpenImage.Location = new System.Drawing.Point(12, 261);
 			this.checkBoxOpenImage.Name = "checkBoxOpenImage";
 			this.checkBoxOpenImage.Size = new System.Drawing.Size(170, 17);
-			this.checkBoxOpenImage.TabIndex = 11;
+			this.checkBoxOpenImage.TabIndex = 10;
 			this.checkBoxOpenImage.Text = "Open World image when done";
 			this.checkBoxOpenImage.UseVisualStyleBackColor = true;
-			this.checkBoxOpenImage.CheckedChanged += new System.EventHandler(this.checkBoxOpenImage_CheckedChanged);
 			// 
 			// buttonDrawWorld
 			// 
 			this.buttonDrawWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonDrawWorld.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonDrawWorld.Location = new System.Drawing.Point(6, 267);
+			this.buttonDrawWorld.Location = new System.Drawing.Point(6, 284);
 			this.buttonDrawWorld.Name = "buttonDrawWorld";
-			this.buttonDrawWorld.Size = new System.Drawing.Size(462, 39);
-			this.buttonDrawWorld.TabIndex = 10;
+			this.buttonDrawWorld.Size = new System.Drawing.Size(460, 39);
+			this.buttonDrawWorld.TabIndex = 11;
 			this.buttonDrawWorld.Text = "Draw World";
 			this.buttonDrawWorld.UseVisualStyleBackColor = true;
-			this.buttonDrawWorld.Click += new System.EventHandler(this.buttonDrawWorld_Click);
 			// 
 			// groupBoxImageOutput
 			// 
@@ -233,8 +298,8 @@
 			this.groupBoxImageOutput.Controls.Add(this.buttonBrowseOutput);
 			this.groupBoxImageOutput.Location = new System.Drawing.Point(6, 6);
 			this.groupBoxImageOutput.Name = "groupBoxImageOutput";
-			this.groupBoxImageOutput.Size = new System.Drawing.Size(462, 96);
-			this.groupBoxImageOutput.TabIndex = 9;
+			this.groupBoxImageOutput.Size = new System.Drawing.Size(460, 96);
+			this.groupBoxImageOutput.TabIndex = 2;
 			this.groupBoxImageOutput.TabStop = false;
 			this.groupBoxImageOutput.Text = "Image Output";
 			// 
@@ -244,41 +309,40 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxOutputFile.Location = new System.Drawing.Point(6, 32);
 			this.textBoxOutputFile.Name = "textBoxOutputFile";
-			this.textBoxOutputFile.Size = new System.Drawing.Size(450, 20);
-			this.textBoxOutputFile.TabIndex = 4;
+			this.textBoxOutputFile.Size = new System.Drawing.Size(448, 20);
+			this.textBoxOutputFile.TabIndex = 6;
 			// 
 			// buttonBrowseOutput
 			// 
 			this.buttonBrowseOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonBrowseOutput.Location = new System.Drawing.Point(338, 58);
+			this.buttonBrowseOutput.Location = new System.Drawing.Point(336, 58);
 			this.buttonBrowseOutput.Name = "buttonBrowseOutput";
 			this.buttonBrowseOutput.Size = new System.Drawing.Size(118, 28);
-			this.buttonBrowseOutput.TabIndex = 5;
+			this.buttonBrowseOutput.TabIndex = 7;
 			this.buttonBrowseOutput.Text = "Browse...";
 			this.buttonBrowseOutput.UseVisualStyleBackColor = true;
-			this.buttonBrowseOutput.Click += new System.EventHandler(this.buttonBrowseOutput_Click);
 			// 
 			// tabPageMarkers
 			// 
-			this.tabPageMarkers.Controls.Add(this.groupBoxSymbols);
+			this.tabPageMarkers.Controls.Add(this.groupBoxMarkers);
 			this.tabPageMarkers.Location = new System.Drawing.Point(4, 22);
 			this.tabPageMarkers.Name = "tabPageMarkers";
 			this.tabPageMarkers.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageMarkers.Size = new System.Drawing.Size(474, 312);
+			this.tabPageMarkers.Size = new System.Drawing.Size(472, 329);
 			this.tabPageMarkers.TabIndex = 2;
 			this.tabPageMarkers.Text = "Markers";
 			this.tabPageMarkers.UseVisualStyleBackColor = true;
 			// 
-			// groupBoxSymbols
+			// groupBoxMarkers
 			// 
-			this.groupBoxSymbols.Controls.Add(this.tableLayoutPanel4);
-			this.groupBoxSymbols.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxSymbols.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxSymbols.Name = "groupBoxSymbols";
-			this.groupBoxSymbols.Size = new System.Drawing.Size(468, 306);
-			this.groupBoxSymbols.TabIndex = 7;
-			this.groupBoxSymbols.TabStop = false;
-			this.groupBoxSymbols.Text = "World Markers";
+			this.groupBoxMarkers.Controls.Add(this.tableLayoutPanel4);
+			this.groupBoxMarkers.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxMarkers.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxMarkers.Name = "groupBoxMarkers";
+			this.groupBoxMarkers.Size = new System.Drawing.Size(466, 323);
+			this.groupBoxMarkers.TabIndex = 7;
+			this.groupBoxMarkers.TabStop = false;
+			this.groupBoxMarkers.Text = "World Markers";
 			// 
 			// tableLayoutPanel4
 			// 
@@ -293,55 +357,82 @@
 			this.tableLayoutPanel4.RowCount = 1;
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(462, 287);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(460, 304);
 			this.tableLayoutPanel4.TabIndex = 0;
 			// 
 			// tableLayoutPanel2
 			// 
 			this.tableLayoutPanel2.ColumnCount = 1;
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Controls.Add(this.buttonCustomResources, 0, 3);
-			this.tableLayoutPanel2.Controls.Add(this.labelCustomResources, 0, 2);
+			this.tableLayoutPanel2.Controls.Add(this.checkBoxShowChestTypes, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.groupBox7, 0, 1);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(231, 3);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(229, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 4;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 149F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 71F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(228, 281);
+			this.tableLayoutPanel2.RowCount = 2;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(228, 298);
 			this.tableLayoutPanel2.TabIndex = 42;
+			// 
+			// checkBoxShowChestTypes
+			// 
+			this.checkBoxShowChestTypes.AutoSize = true;
+			this.checkBoxShowChestTypes.Location = new System.Drawing.Point(3, 3);
+			this.checkBoxShowChestTypes.Name = "checkBoxShowChestTypes";
+			this.checkBoxShowChestTypes.Size = new System.Drawing.Size(115, 17);
+			this.checkBoxShowChestTypes.TabIndex = 7;
+			this.checkBoxShowChestTypes.Text = "Show Chest Types";
+			this.checkBoxShowChestTypes.UseVisualStyleBackColor = true;
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.checkBoxCustomMarkers);
+			this.groupBox7.Controls.Add(this.buttonResetCustomImages);
+			this.groupBox7.Controls.Add(this.buttonCustomResources);
+			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox7.Location = new System.Drawing.Point(3, 211);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(222, 84);
+			this.groupBox7.TabIndex = 48;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Custom Images";
+			// 
+			// checkBoxCustomMarkers
+			// 
+			this.checkBoxCustomMarkers.AutoSize = true;
+			this.checkBoxCustomMarkers.Location = new System.Drawing.Point(6, 19);
+			this.checkBoxCustomMarkers.Name = "checkBoxCustomMarkers";
+			this.checkBoxCustomMarkers.Size = new System.Drawing.Size(120, 17);
+			this.checkBoxCustomMarkers.TabIndex = 8;
+			this.checkBoxCustomMarkers.Text = "Use Custom Images";
+			this.checkBoxCustomMarkers.UseVisualStyleBackColor = true;
+			// 
+			// buttonResetCustomImages
+			// 
+			this.buttonResetCustomImages.Location = new System.Drawing.Point(113, 42);
+			this.buttonResetCustomImages.Name = "buttonResetCustomImages";
+			this.buttonResetCustomImages.Size = new System.Drawing.Size(109, 39);
+			this.buttonResetCustomImages.TabIndex = 10;
+			this.buttonResetCustomImages.Text = "Reset Custom Images";
+			this.buttonResetCustomImages.UseVisualStyleBackColor = true;
 			// 
 			// buttonCustomResources
 			// 
-			this.buttonCustomResources.Location = new System.Drawing.Point(3, 248);
+			this.buttonCustomResources.Location = new System.Drawing.Point(6, 42);
 			this.buttonCustomResources.Name = "buttonCustomResources";
-			this.buttonCustomResources.Size = new System.Drawing.Size(152, 28);
-			this.buttonCustomResources.TabIndex = 43;
+			this.buttonCustomResources.Size = new System.Drawing.Size(101, 39);
+			this.buttonCustomResources.TabIndex = 9;
 			this.buttonCustomResources.Text = "Open Resource Folder";
 			this.buttonCustomResources.UseVisualStyleBackColor = true;
-			this.buttonCustomResources.Click += new System.EventHandler(this.buttonCustomResources_Click);
-			// 
-			// labelCustomResources
-			// 
-			this.labelCustomResources.AutoSize = true;
-			this.labelCustomResources.Location = new System.Drawing.Point(3, 174);
-			this.labelCustomResources.Name = "labelCustomResources";
-			this.labelCustomResources.Size = new System.Drawing.Size(115, 13);
-			this.labelCustomResources.TabIndex = 44;
-			this.labelCustomResources.Text = "labelCustomResources";
 			// 
 			// treeViewMarkerList
 			// 
 			this.treeViewMarkerList.ContextMenuStrip = this.contextMenuStripListOperations;
 			this.treeViewMarkerList.Location = new System.Drawing.Point(3, 3);
 			this.treeViewMarkerList.Name = "treeViewMarkerList";
-			this.treeViewMarkerList.Size = new System.Drawing.Size(222, 281);
-			this.treeViewMarkerList.TabIndex = 44;
-			this.treeViewMarkerList.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMarkerList_AfterCheck);
-			this.treeViewMarkerList.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMarkerList_NodeMouseClick);
-			this.treeViewMarkerList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMarkerList_KeyPress);
+			this.treeViewMarkerList.Size = new System.Drawing.Size(220, 297);
+			this.treeViewMarkerList.TabIndex = 6;
 			// 
 			// contextMenuStripListOperations
 			// 
@@ -351,40 +442,283 @@
             this.invertSelectionToolStripMenuItem});
 			this.contextMenuStripListOperations.Name = "contextMenuStripListOperations";
 			this.contextMenuStripListOperations.ShowImageMargin = false;
-			this.contextMenuStripListOperations.Size = new System.Drawing.Size(128, 92);
+			this.contextMenuStripListOperations.Size = new System.Drawing.Size(136, 70);
 			// 
 			// selectAllToolStripMenuItem
 			// 
 			this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.selectAllToolStripMenuItem.Text = "Select all";
-			this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
 			// 
 			// selectNoneToolStripMenuItem
 			// 
 			this.selectNoneToolStripMenuItem.Name = "selectNoneToolStripMenuItem";
-			this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+			this.selectNoneToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.selectNoneToolStripMenuItem.Text = "Select none";
-			this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
 			// 
 			// invertSelectionToolStripMenuItem
 			// 
 			this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
-			this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+			this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.invertSelectionToolStripMenuItem.Text = "Invert selection";
-			this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+			// 
+			// tabPageColors
+			// 
+			this.tabPageColors.Controls.Add(this.groupBoxColorNames);
+			this.tabPageColors.Controls.Add(this.groupBoxColorListPresets);
+			this.tabPageColors.Controls.Add(this.treeViewColorList);
+			this.tabPageColors.Controls.Add(this.groupBoxColor);
+			this.tabPageColors.Location = new System.Drawing.Point(4, 22);
+			this.tabPageColors.Name = "tabPageColors";
+			this.tabPageColors.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageColors.Size = new System.Drawing.Size(472, 329);
+			this.tabPageColors.TabIndex = 6;
+			this.tabPageColors.Text = "Colors";
+			this.tabPageColors.UseVisualStyleBackColor = true;
+			// 
+			// groupBoxColorNames
+			// 
+			this.groupBoxColorNames.Controls.Add(this.buttonColorNameColor);
+			this.groupBoxColorNames.Controls.Add(this.textBoxColorNameColor);
+			this.groupBoxColorNames.Controls.Add(this.buttonColorNameDelete);
+			this.groupBoxColorNames.Controls.Add(this.buttonColorNameAddNew);
+			this.groupBoxColorNames.Controls.Add(this.comboBoxColorNamesName);
+			this.groupBoxColorNames.Enabled = false;
+			this.groupBoxColorNames.Location = new System.Drawing.Point(239, 198);
+			this.groupBoxColorNames.Name = "groupBoxColorNames";
+			this.groupBoxColorNames.Size = new System.Drawing.Size(227, 100);
+			this.groupBoxColorNames.TabIndex = 4;
+			this.groupBoxColorNames.TabStop = false;
+			this.groupBoxColorNames.Text = "Color Names";
+			// 
+			// buttonColorNameColor
+			// 
+			this.buttonColorNameColor.Location = new System.Drawing.Point(87, 42);
+			this.buttonColorNameColor.Name = "buttonColorNameColor";
+			this.buttonColorNameColor.Size = new System.Drawing.Size(50, 23);
+			this.buttonColorNameColor.TabIndex = 9;
+			this.buttonColorNameColor.UseVisualStyleBackColor = true;
+			// 
+			// textBoxColorNameColor
+			// 
+			this.textBoxColorNameColor.Location = new System.Drawing.Point(6, 45);
+			this.textBoxColorNameColor.Name = "textBoxColorNameColor";
+			this.textBoxColorNameColor.Size = new System.Drawing.Size(75, 20);
+			this.textBoxColorNameColor.TabIndex = 5;
+			this.textBoxColorNameColor.Text = "#FFFFFF";
+			// 
+			// buttonColorNameDelete
+			// 
+			this.buttonColorNameDelete.Location = new System.Drawing.Point(87, 71);
+			this.buttonColorNameDelete.Name = "buttonColorNameDelete";
+			this.buttonColorNameDelete.Size = new System.Drawing.Size(75, 23);
+			this.buttonColorNameDelete.TabIndex = 7;
+			this.buttonColorNameDelete.Text = "Delete";
+			this.buttonColorNameDelete.UseVisualStyleBackColor = true;
+			// 
+			// buttonColorNameAddNew
+			// 
+			this.buttonColorNameAddNew.Location = new System.Drawing.Point(6, 71);
+			this.buttonColorNameAddNew.Name = "buttonColorNameAddNew";
+			this.buttonColorNameAddNew.Size = new System.Drawing.Size(75, 23);
+			this.buttonColorNameAddNew.TabIndex = 8;
+			this.buttonColorNameAddNew.Text = "Add New...";
+			this.buttonColorNameAddNew.UseVisualStyleBackColor = true;
+			// 
+			// comboBoxColorNamesName
+			// 
+			this.comboBoxColorNamesName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxColorNamesName.FormattingEnabled = true;
+			this.comboBoxColorNamesName.Location = new System.Drawing.Point(6, 19);
+			this.comboBoxColorNamesName.Name = "comboBoxColorNamesName";
+			this.comboBoxColorNamesName.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxColorNamesName.Sorted = true;
+			this.comboBoxColorNamesName.TabIndex = 6;
+			// 
+			// groupBoxColorListPresets
+			// 
+			this.groupBoxColorListPresets.Controls.Add(this.buttonPresetDelete);
+			this.groupBoxColorListPresets.Controls.Add(this.buttonPresetAddNew);
+			this.groupBoxColorListPresets.Controls.Add(this.comboBox1);
+			this.groupBoxColorListPresets.Enabled = false;
+			this.groupBoxColorListPresets.Location = new System.Drawing.Point(239, 6);
+			this.groupBoxColorListPresets.Name = "groupBoxColorListPresets";
+			this.groupBoxColorListPresets.Size = new System.Drawing.Size(227, 76);
+			this.groupBoxColorListPresets.TabIndex = 3;
+			this.groupBoxColorListPresets.TabStop = false;
+			this.groupBoxColorListPresets.Text = "Color List Presets";
+			// 
+			// buttonPresetDelete
+			// 
+			this.buttonPresetDelete.Location = new System.Drawing.Point(87, 46);
+			this.buttonPresetDelete.Name = "buttonPresetDelete";
+			this.buttonPresetDelete.Size = new System.Drawing.Size(75, 23);
+			this.buttonPresetDelete.TabIndex = 5;
+			this.buttonPresetDelete.Text = "Delete";
+			this.buttonPresetDelete.UseVisualStyleBackColor = true;
+			// 
+			// buttonPresetAddNew
+			// 
+			this.buttonPresetAddNew.Location = new System.Drawing.Point(6, 46);
+			this.buttonPresetAddNew.Name = "buttonPresetAddNew";
+			this.buttonPresetAddNew.Size = new System.Drawing.Size(75, 23);
+			this.buttonPresetAddNew.TabIndex = 5;
+			this.buttonPresetAddNew.Text = "Add New...";
+			this.buttonPresetAddNew.UseVisualStyleBackColor = true;
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(6, 19);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(121, 21);
+			this.comboBox1.TabIndex = 2;
+			// 
+			// treeViewColorList
+			// 
+			this.treeViewColorList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
+			this.treeViewColorList.ContextMenuStrip = this.contextMenuStrip;
+			this.treeViewColorList.Enabled = false;
+			this.treeViewColorList.Location = new System.Drawing.Point(6, 6);
+			this.treeViewColorList.Name = "treeViewColorList";
+			this.treeViewColorList.Size = new System.Drawing.Size(227, 317);
+			this.treeViewColorList.TabIndex = 0;
+			// 
+			// contextMenuStrip
+			// 
+			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetAllToDefaultToolStripMenuItem});
+			this.contextMenuStrip.Name = "contextMenuStrip";
+			this.contextMenuStrip.ShowImageMargin = false;
+			this.contextMenuStrip.Size = new System.Drawing.Size(153, 26);
+			// 
+			// resetAllToDefaultToolStripMenuItem
+			// 
+			this.resetAllToDefaultToolStripMenuItem.Name = "resetAllToDefaultToolStripMenuItem";
+			this.resetAllToDefaultToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.resetAllToDefaultToolStripMenuItem.Text = "Reset all to Default";
+			// 
+			// groupBoxColor
+			// 
+			this.groupBoxColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBoxColor.Controls.Add(this.buttonColorColor);
+			this.groupBoxColor.Controls.Add(this.comboBoxColorName);
+			this.groupBoxColor.Controls.Add(this.textBoxColorColor);
+			this.groupBoxColor.Controls.Add(this.radioButtonColorColor);
+			this.groupBoxColor.Controls.Add(this.radioButtonColorPreset);
+			this.groupBoxColor.Controls.Add(this.radioButtonColorDefault);
+			this.groupBoxColor.Enabled = false;
+			this.groupBoxColor.Location = new System.Drawing.Point(239, 88);
+			this.groupBoxColor.Name = "groupBoxColor";
+			this.groupBoxColor.Size = new System.Drawing.Size(227, 104);
+			this.groupBoxColor.TabIndex = 1;
+			this.groupBoxColor.TabStop = false;
+			this.groupBoxColor.Text = "Color";
+			// 
+			// buttonColorColor
+			// 
+			this.buttonColorColor.Location = new System.Drawing.Point(170, 72);
+			this.buttonColorColor.Name = "buttonColorColor";
+			this.buttonColorColor.Size = new System.Drawing.Size(50, 23);
+			this.buttonColorColor.TabIndex = 10;
+			this.buttonColorColor.UseVisualStyleBackColor = true;
+			// 
+			// comboBoxColorName
+			// 
+			this.comboBoxColorName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxColorName.FormattingEnabled = true;
+			this.comboBoxColorName.Location = new System.Drawing.Point(67, 46);
+			this.comboBoxColorName.Name = "comboBoxColorName";
+			this.comboBoxColorName.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxColorName.Sorted = true;
+			this.comboBoxColorName.TabIndex = 4;
+			// 
+			// textBoxColorColor
+			// 
+			this.textBoxColorColor.Location = new System.Drawing.Point(67, 73);
+			this.textBoxColorColor.Name = "textBoxColorColor";
+			this.textBoxColorColor.Size = new System.Drawing.Size(100, 20);
+			this.textBoxColorColor.TabIndex = 3;
+			this.textBoxColorColor.Text = "#FFFFFF";
+			// 
+			// radioButtonColorColor
+			// 
+			this.radioButtonColorColor.AutoSize = true;
+			this.radioButtonColorColor.Location = new System.Drawing.Point(6, 72);
+			this.radioButtonColorColor.Name = "radioButtonColorColor";
+			this.radioButtonColorColor.Size = new System.Drawing.Size(49, 17);
+			this.radioButtonColorColor.TabIndex = 2;
+			this.radioButtonColorColor.TabStop = true;
+			this.radioButtonColorColor.Text = "Color";
+			this.radioButtonColorColor.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonColorPreset
+			// 
+			this.radioButtonColorPreset.AutoSize = true;
+			this.radioButtonColorPreset.Location = new System.Drawing.Point(6, 46);
+			this.radioButtonColorPreset.Name = "radioButtonColorPreset";
+			this.radioButtonColorPreset.Size = new System.Drawing.Size(53, 17);
+			this.radioButtonColorPreset.TabIndex = 1;
+			this.radioButtonColorPreset.TabStop = true;
+			this.radioButtonColorPreset.Text = "Name";
+			this.radioButtonColorPreset.UseVisualStyleBackColor = true;
+			// 
+			// radioButtonColorDefault
+			// 
+			this.radioButtonColorDefault.AutoSize = true;
+			this.radioButtonColorDefault.Location = new System.Drawing.Point(6, 19);
+			this.radioButtonColorDefault.Name = "radioButtonColorDefault";
+			this.radioButtonColorDefault.Size = new System.Drawing.Size(59, 17);
+			this.radioButtonColorDefault.TabIndex = 0;
+			this.radioButtonColorDefault.TabStop = true;
+			this.radioButtonColorDefault.Text = "Default";
+			this.radioButtonColorDefault.UseVisualStyleBackColor = true;
 			// 
 			// tabPageChestFinder
 			// 
+			this.tabPageChestFinder.Controls.Add(this.checkBoxShowCustomItems);
+			this.tabPageChestFinder.Controls.Add(this.checkBoxShowNormalItems);
+			this.tabPageChestFinder.Controls.Add(this.checkBoxShowChestItems);
 			this.tabPageChestFinder.Controls.Add(this.tableLayoutPanel3);
 			this.tabPageChestFinder.Controls.Add(this.checkBoxFilterChests);
 			this.tabPageChestFinder.Location = new System.Drawing.Point(4, 22);
 			this.tabPageChestFinder.Name = "tabPageChestFinder";
 			this.tabPageChestFinder.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageChestFinder.Size = new System.Drawing.Size(474, 312);
+			this.tabPageChestFinder.Size = new System.Drawing.Size(472, 329);
 			this.tabPageChestFinder.TabIndex = 5;
 			this.tabPageChestFinder.Text = "Chest Finder";
 			this.tabPageChestFinder.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxShowCustomItems
+			// 
+			this.checkBoxShowCustomItems.AutoSize = true;
+			this.checkBoxShowCustomItems.Location = new System.Drawing.Point(347, 6);
+			this.checkBoxShowCustomItems.Name = "checkBoxShowCustomItems";
+			this.checkBoxShowCustomItems.Size = new System.Drawing.Size(119, 17);
+			this.checkBoxShowCustomItems.TabIndex = 5;
+			this.checkBoxShowCustomItems.Text = "Show Custom Items";
+			this.checkBoxShowCustomItems.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxShowNormalItems
+			// 
+			this.checkBoxShowNormalItems.AutoSize = true;
+			this.checkBoxShowNormalItems.Location = new System.Drawing.Point(224, 6);
+			this.checkBoxShowNormalItems.Name = "checkBoxShowNormalItems";
+			this.checkBoxShowNormalItems.Size = new System.Drawing.Size(117, 17);
+			this.checkBoxShowNormalItems.TabIndex = 4;
+			this.checkBoxShowNormalItems.Text = "Show Normal Items";
+			this.checkBoxShowNormalItems.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxShowChestItems
+			// 
+			this.checkBoxShowChestItems.AutoSize = true;
+			this.checkBoxShowChestItems.Location = new System.Drawing.Point(107, 6);
+			this.checkBoxShowChestItems.Name = "checkBoxShowChestItems";
+			this.checkBoxShowChestItems.Size = new System.Drawing.Size(111, 17);
+			this.checkBoxShowChestItems.TabIndex = 3;
+			this.checkBoxShowChestItems.Text = "Show Chest Items";
+			this.checkBoxShowChestItems.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel3
 			// 
@@ -407,18 +741,17 @@
 			this.tableLayoutPanel3.RowCount = 2;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(462, 275);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(460, 292);
 			this.tableLayoutPanel3.TabIndex = 2;
 			// 
 			// buttonMoveAllToFiltered
 			// 
-			this.buttonMoveAllToFiltered.Location = new System.Drawing.Point(3, 248);
+			this.buttonMoveAllToFiltered.Location = new System.Drawing.Point(3, 265);
 			this.buttonMoveAllToFiltered.Name = "buttonMoveAllToFiltered";
 			this.buttonMoveAllToFiltered.Size = new System.Drawing.Size(75, 23);
-			this.buttonMoveAllToFiltered.TabIndex = 5;
+			this.buttonMoveAllToFiltered.TabIndex = 8;
 			this.buttonMoveAllToFiltered.Text = "Move All -->";
 			this.buttonMoveAllToFiltered.UseVisualStyleBackColor = true;
-			this.buttonMoveAllToFiltered.Click += new System.EventHandler(this.buttonMoveAllToFiltered_Click);
 			// 
 			// groupBox2
 			// 
@@ -427,7 +760,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(224, 239);
+			this.groupBox2.Size = new System.Drawing.Size(223, 256);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Available Items";
@@ -440,42 +773,38 @@
 			this.lstAvailableItems.IntegralHeight = false;
 			this.lstAvailableItems.Location = new System.Drawing.Point(3, 16);
 			this.lstAvailableItems.Name = "lstAvailableItems";
-			this.lstAvailableItems.Size = new System.Drawing.Size(218, 220);
+			this.lstAvailableItems.Size = new System.Drawing.Size(217, 237);
 			this.lstAvailableItems.Sorted = true;
-			this.lstAvailableItems.TabIndex = 2;
-			this.lstAvailableItems.SelectedIndexChanged += new System.EventHandler(this.lstAvailableItems_SelectionChanged);
-			this.lstAvailableItems.DoubleClick += new System.EventHandler(this.lstAvailableItems_DoubleClick);
+			this.lstAvailableItems.TabIndex = 6;
 			// 
 			// buttonRemoveCustomItem
 			// 
 			this.buttonRemoveCustomItem.Enabled = false;
-			this.buttonRemoveCustomItem.Location = new System.Drawing.Point(233, 248);
+			this.buttonRemoveCustomItem.Location = new System.Drawing.Point(232, 265);
 			this.buttonRemoveCustomItem.Name = "buttonRemoveCustomItem";
 			this.buttonRemoveCustomItem.Size = new System.Drawing.Size(118, 23);
-			this.buttonRemoveCustomItem.TabIndex = 2;
+			this.buttonRemoveCustomItem.TabIndex = 10;
 			this.buttonRemoveCustomItem.Text = "Remove Custom Item";
 			this.buttonRemoveCustomItem.UseVisualStyleBackColor = true;
-			this.buttonRemoveCustomItem.Click += new System.EventHandler(this.buttonRemoveCustomItem_Click);
 			// 
 			// buttonAddCustomItem
 			// 
 			this.buttonAddCustomItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonAddCustomItem.Location = new System.Drawing.Point(109, 248);
+			this.buttonAddCustomItem.Location = new System.Drawing.Point(108, 265);
 			this.buttonAddCustomItem.Name = "buttonAddCustomItem";
 			this.buttonAddCustomItem.Size = new System.Drawing.Size(118, 23);
-			this.buttonAddCustomItem.TabIndex = 3;
+			this.buttonAddCustomItem.TabIndex = 9;
 			this.buttonAddCustomItem.Text = "Add Custom Item";
 			this.buttonAddCustomItem.UseVisualStyleBackColor = true;
-			this.buttonAddCustomItem.Click += new System.EventHandler(this.buttonAddCustomItem_Click);
 			// 
 			// groupBox3
 			// 
 			this.tableLayoutPanel3.SetColumnSpan(this.groupBox3, 2);
 			this.groupBox3.Controls.Add(this.lstFilteredItems);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox3.Location = new System.Drawing.Point(233, 3);
+			this.groupBox3.Location = new System.Drawing.Point(232, 3);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(226, 239);
+			this.groupBox3.Size = new System.Drawing.Size(225, 256);
 			this.groupBox3.TabIndex = 1;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Selected Items";
@@ -488,34 +817,29 @@
 			this.lstFilteredItems.IntegralHeight = false;
 			this.lstFilteredItems.Location = new System.Drawing.Point(3, 16);
 			this.lstFilteredItems.Name = "lstFilteredItems";
-			this.lstFilteredItems.Size = new System.Drawing.Size(220, 220);
+			this.lstFilteredItems.Size = new System.Drawing.Size(219, 237);
 			this.lstFilteredItems.Sorted = true;
-			this.lstFilteredItems.TabIndex = 0;
-			this.lstFilteredItems.SelectedIndexChanged += new System.EventHandler(this.lstFilteredItems_SelectionChanged);
-			this.lstFilteredItems.DoubleClick += new System.EventHandler(this.lstFilteredItems_DoubleClick);
-			this.lstFilteredItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstFilteredItems_KeyDown);
+			this.lstFilteredItems.TabIndex = 7;
 			// 
 			// buttonMoveAllToAvailable
 			// 
 			this.buttonMoveAllToAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonMoveAllToAvailable.Location = new System.Drawing.Point(384, 248);
+			this.buttonMoveAllToAvailable.Location = new System.Drawing.Point(382, 265);
 			this.buttonMoveAllToAvailable.Name = "buttonMoveAllToAvailable";
 			this.buttonMoveAllToAvailable.Size = new System.Drawing.Size(75, 23);
-			this.buttonMoveAllToAvailable.TabIndex = 4;
+			this.buttonMoveAllToAvailable.TabIndex = 12;
 			this.buttonMoveAllToAvailable.Text = "<-- Move All";
 			this.buttonMoveAllToAvailable.UseVisualStyleBackColor = true;
-			this.buttonMoveAllToAvailable.Click += new System.EventHandler(this.buttonMoveAllToAvailable_Click);
 			// 
 			// checkBoxFilterChests
 			// 
 			this.checkBoxFilterChests.AutoSize = true;
-			this.checkBoxFilterChests.Location = new System.Drawing.Point(6, 8);
+			this.checkBoxFilterChests.Location = new System.Drawing.Point(6, 6);
 			this.checkBoxFilterChests.Name = "checkBoxFilterChests";
-			this.checkBoxFilterChests.Size = new System.Drawing.Size(412, 17);
+			this.checkBoxFilterChests.Size = new System.Drawing.Size(83, 17);
 			this.checkBoxFilterChests.TabIndex = 1;
-			this.checkBoxFilterChests.Text = "Only show Chests that contain one or more of the following weapons/accessories:";
+			this.checkBoxFilterChests.Text = "Filter Chests";
 			this.checkBoxFilterChests.UseVisualStyleBackColor = true;
-			this.checkBoxFilterChests.CheckedChanged += new System.EventHandler(this.checkBoxFilterChests_CheckedChanged);
 			// 
 			// tabPageWorldInformation
 			// 
@@ -523,7 +847,7 @@
 			this.tabPageWorldInformation.Location = new System.Drawing.Point(4, 22);
 			this.tabPageWorldInformation.Name = "tabPageWorldInformation";
 			this.tabPageWorldInformation.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageWorldInformation.Size = new System.Drawing.Size(474, 312);
+			this.tabPageWorldInformation.Size = new System.Drawing.Size(472, 329);
 			this.tabPageWorldInformation.TabIndex = 1;
 			this.tabPageWorldInformation.Text = "World Information";
 			this.tabPageWorldInformation.UseVisualStyleBackColor = true;
@@ -541,10 +865,10 @@
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 3;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(468, 306);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(466, 323);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// worldInfoGroupBox
@@ -556,7 +880,7 @@
 			this.worldInfoGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.worldInfoGroupBox.Name = "worldInfoGroupBox";
 			this.tableLayoutPanel1.SetRowSpan(this.worldInfoGroupBox, 2);
-			this.worldInfoGroupBox.Size = new System.Drawing.Size(228, 251);
+			this.worldInfoGroupBox.Size = new System.Drawing.Size(227, 267);
 			this.worldInfoGroupBox.TabIndex = 3;
 			this.worldInfoGroupBox.TabStop = false;
 			this.worldInfoGroupBox.Text = "World Information";
@@ -567,37 +891,66 @@
 			this.worldPropertyGrid.HelpVisible = false;
 			this.worldPropertyGrid.Location = new System.Drawing.Point(3, 16);
 			this.worldPropertyGrid.Name = "worldPropertyGrid";
-			this.worldPropertyGrid.Size = new System.Drawing.Size(222, 232);
-			this.worldPropertyGrid.TabIndex = 0;
+			this.worldPropertyGrid.Size = new System.Drawing.Size(221, 248);
+			this.worldPropertyGrid.TabIndex = 6;
 			this.worldPropertyGrid.ToolbarVisible = false;
 			// 
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.treeViewChestInformation);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox4.Location = new System.Drawing.Point(237, 3);
+			this.groupBox4.Location = new System.Drawing.Point(236, 3);
 			this.groupBox4.Name = "groupBox4";
 			this.tableLayoutPanel1.SetRowSpan(this.groupBox4, 2);
-			this.groupBox4.Size = new System.Drawing.Size(228, 251);
+			this.groupBox4.Size = new System.Drawing.Size(227, 267);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Chests";
 			// 
 			// treeViewChestInformation
 			// 
+			this.treeViewChestInformation.ContextMenuStrip = this.contextMenuStripSaveChests;
 			this.treeViewChestInformation.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewChestInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.treeViewChestInformation.Location = new System.Drawing.Point(3, 16);
 			this.treeViewChestInformation.Name = "treeViewChestInformation";
-			this.treeViewChestInformation.Size = new System.Drawing.Size(222, 232);
-			this.treeViewChestInformation.TabIndex = 3;
+			this.treeViewChestInformation.Size = new System.Drawing.Size(221, 248);
+			this.treeViewChestInformation.TabIndex = 7;
+			// 
+			// contextMenuStripSaveChests
+			// 
+			this.contextMenuStripSaveChests.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToTextToolStripMenuItem,
+            this.saveToCSVToolStripMenuItem,
+            this.saveToXMLToolStripMenuItem});
+			this.contextMenuStripSaveChests.Name = "contextMenuStripSaveChests";
+			this.contextMenuStripSaveChests.ShowImageMargin = false;
+			this.contextMenuStripSaveChests.Size = new System.Drawing.Size(123, 70);
+			// 
+			// saveToTextToolStripMenuItem
+			// 
+			this.saveToTextToolStripMenuItem.Name = "saveToTextToolStripMenuItem";
+			this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.saveToTextToolStripMenuItem.Text = "Save to Text";
+			// 
+			// saveToCSVToolStripMenuItem
+			// 
+			this.saveToCSVToolStripMenuItem.Name = "saveToCSVToolStripMenuItem";
+			this.saveToCSVToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.saveToCSVToolStripMenuItem.Text = "Save to CSV";
+			// 
+			// saveToXMLToolStripMenuItem
+			// 
+			this.saveToXMLToolStripMenuItem.Name = "saveToXMLToolStripMenuItem";
+			this.saveToXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.saveToXMLToolStripMenuItem.Text = "Save to XML";
 			// 
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.radioButtonSortByX);
 			this.groupBox5.Controls.Add(this.radioButtonSortByY);
 			this.groupBox5.Controls.Add(this.radioButtonSortByNone);
-			this.groupBox5.Location = new System.Drawing.Point(237, 260);
+			this.groupBox5.Location = new System.Drawing.Point(236, 276);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(224, 43);
 			this.groupBox5.TabIndex = 12;
@@ -610,11 +963,10 @@
 			this.radioButtonSortByX.Location = new System.Drawing.Point(63, 18);
 			this.radioButtonSortByX.Name = "radioButtonSortByX";
 			this.radioButtonSortByX.Size = new System.Drawing.Size(32, 17);
-			this.radioButtonSortByX.TabIndex = 3;
+			this.radioButtonSortByX.TabIndex = 10;
 			this.radioButtonSortByX.TabStop = true;
 			this.radioButtonSortByX.Text = "X";
 			this.radioButtonSortByX.UseVisualStyleBackColor = true;
-			this.radioButtonSortByX.CheckedChanged += new System.EventHandler(this.radioButtonSortByX_CheckedChanged);
 			// 
 			// radioButtonSortByY
 			// 
@@ -622,11 +974,10 @@
 			this.radioButtonSortByY.Location = new System.Drawing.Point(101, 18);
 			this.radioButtonSortByY.Name = "radioButtonSortByY";
 			this.radioButtonSortByY.Size = new System.Drawing.Size(32, 17);
-			this.radioButtonSortByY.TabIndex = 2;
+			this.radioButtonSortByY.TabIndex = 11;
 			this.radioButtonSortByY.TabStop = true;
 			this.radioButtonSortByY.Text = "Y";
 			this.radioButtonSortByY.UseVisualStyleBackColor = true;
-			this.radioButtonSortByY.CheckedChanged += new System.EventHandler(this.radioButtonSortByY_CheckedChanged);
 			// 
 			// radioButtonSortByNone
 			// 
@@ -634,23 +985,21 @@
 			this.radioButtonSortByNone.Location = new System.Drawing.Point(6, 18);
 			this.radioButtonSortByNone.Name = "radioButtonSortByNone";
 			this.radioButtonSortByNone.Size = new System.Drawing.Size(51, 17);
-			this.radioButtonSortByNone.TabIndex = 1;
+			this.radioButtonSortByNone.TabIndex = 9;
 			this.radioButtonSortByNone.TabStop = true;
 			this.radioButtonSortByNone.Text = "None";
 			this.radioButtonSortByNone.UseVisualStyleBackColor = true;
-			this.radioButtonSortByNone.CheckedChanged += new System.EventHandler(this.radioButtonSortByNone_CheckedChanged);
 			// 
 			// buttonLoadInformation
 			// 
 			this.buttonLoadInformation.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.buttonLoadInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonLoadInformation.Location = new System.Drawing.Point(3, 260);
+			this.buttonLoadInformation.Location = new System.Drawing.Point(3, 276);
 			this.buttonLoadInformation.Name = "buttonLoadInformation";
-			this.buttonLoadInformation.Size = new System.Drawing.Size(228, 43);
-			this.buttonLoadInformation.TabIndex = 11;
+			this.buttonLoadInformation.Size = new System.Drawing.Size(227, 44);
+			this.buttonLoadInformation.TabIndex = 8;
 			this.buttonLoadInformation.Text = "Load Information";
 			this.buttonLoadInformation.UseVisualStyleBackColor = true;
-			this.buttonLoadInformation.Click += new System.EventHandler(this.buttonLoadInformation_Click);
 			// 
 			// tabPageAbout
 			// 
@@ -663,7 +1012,7 @@
 			this.tabPageAbout.Controls.Add(this.groupBox1);
 			this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
 			this.tabPageAbout.Name = "tabPageAbout";
-			this.tabPageAbout.Size = new System.Drawing.Size(474, 312);
+			this.tabPageAbout.Size = new System.Drawing.Size(472, 329);
 			this.tabPageAbout.TabIndex = 4;
 			this.tabPageAbout.Text = "About";
 			this.tabPageAbout.UseVisualStyleBackColor = true;
@@ -680,7 +1029,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(165, 118);
+			this.label2.Location = new System.Drawing.Point(146, 118);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(62, 13);
 			this.label2.TabIndex = 14;
@@ -689,7 +1038,7 @@
 			// lblVersion
 			// 
 			this.lblVersion.AutoSize = true;
-			this.lblVersion.Location = new System.Drawing.Point(165, 85);
+			this.lblVersion.Location = new System.Drawing.Point(146, 85);
 			this.lblVersion.Name = "lblVersion";
 			this.lblVersion.Size = new System.Drawing.Size(72, 13);
 			this.lblVersion.TabIndex = 13;
@@ -699,7 +1048,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(158, 14);
+			this.label1.Location = new System.Drawing.Point(139, 13);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(249, 55);
 			this.label1.TabIndex = 12;
@@ -707,7 +1056,7 @@
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Image = global::MoreTerra.Properties.Resources.BigCannon;
 			this.pictureBox1.Location = new System.Drawing.Point(3, 3);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(128, 128);
@@ -721,17 +1070,16 @@
 			this.linkLabelHomepage.Location = new System.Drawing.Point(264, 118);
 			this.linkLabelHomepage.Name = "linkLabelHomepage";
 			this.linkLabelHomepage.Size = new System.Drawing.Size(120, 13);
-			this.linkLabelHomepage.TabIndex = 10;
+			this.linkLabelHomepage.TabIndex = 6;
 			this.linkLabelHomepage.TabStop = true;
 			this.linkLabelHomepage.Text = "moreterra.codeplex.com";
-			this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.labelSpecialThanks);
-			this.groupBox1.Location = new System.Drawing.Point(3, 207);
+			this.groupBox1.Location = new System.Drawing.Point(3, 226);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(468, 102);
 			this.groupBox1.TabIndex = 9;
@@ -756,15 +1104,15 @@
 			this.groupBoxSelectWorld.Controls.Add(this.buttonBrowseWorld);
 			this.groupBoxSelectWorld.Location = new System.Drawing.Point(6, 6);
 			this.groupBoxSelectWorld.Name = "groupBoxSelectWorld";
-			this.groupBoxSelectWorld.Size = new System.Drawing.Size(482, 96);
-			this.groupBoxSelectWorld.TabIndex = 6;
+			this.groupBoxSelectWorld.Size = new System.Drawing.Size(306, 77);
+			this.groupBoxSelectWorld.TabIndex = 0;
 			this.groupBoxSelectWorld.TabStop = false;
 			this.groupBoxSelectWorld.Text = "Select World";
 			// 
 			// labelWorldName
 			// 
 			this.labelWorldName.AutoSize = true;
-			this.labelWorldName.Location = new System.Drawing.Point(18, 66);
+			this.labelWorldName.Location = new System.Drawing.Point(6, 46);
 			this.labelWorldName.Name = "labelWorldName";
 			this.labelWorldName.Size = new System.Drawing.Size(85, 13);
 			this.labelWorldName.TabIndex = 4;
@@ -774,49 +1122,77 @@
 			// 
 			this.comboBoxWorldFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxWorldFilePath.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxWorldFilePath.FormattingEnabled = true;
-			this.comboBoxWorldFilePath.Location = new System.Drawing.Point(16, 32);
+			this.comboBoxWorldFilePath.Location = new System.Drawing.Point(6, 19);
 			this.comboBoxWorldFilePath.Name = "comboBoxWorldFilePath";
-			this.comboBoxWorldFilePath.Size = new System.Drawing.Size(450, 21);
-			this.comboBoxWorldFilePath.TabIndex = 3;
-			this.comboBoxWorldFilePath.TextChanged += new System.EventHandler(this.comboBoxWorldFilePath_TextChanged);
+			this.comboBoxWorldFilePath.Size = new System.Drawing.Size(294, 21);
+			this.comboBoxWorldFilePath.TabIndex = 0;
 			// 
 			// buttonBrowseWorld
 			// 
 			this.buttonBrowseWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonBrowseWorld.Location = new System.Drawing.Point(348, 59);
+			this.buttonBrowseWorld.Location = new System.Drawing.Point(215, 46);
 			this.buttonBrowseWorld.Name = "buttonBrowseWorld";
-			this.buttonBrowseWorld.Size = new System.Drawing.Size(118, 28);
-			this.buttonBrowseWorld.TabIndex = 2;
+			this.buttonBrowseWorld.Size = new System.Drawing.Size(85, 25);
+			this.buttonBrowseWorld.TabIndex = 1;
 			this.buttonBrowseWorld.Text = "Browse...";
 			this.buttonBrowseWorld.UseVisualStyleBackColor = true;
-			this.buttonBrowseWorld.Click += new System.EventHandler(this.buttonBrowseWorld_Click);
 			// 
-			// checkBoxDrawWalls
+			// groupBox8
 			// 
-			this.checkBoxDrawWalls.AutoSize = true;
-			this.checkBoxDrawWalls.Checked = true;
-			this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxDrawWalls.Location = new System.Drawing.Point(12, 198);
-			this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
-			this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
-			this.checkBoxDrawWalls.TabIndex = 42;
-			this.checkBoxDrawWalls.Text = "Draw Walls";
-			this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
+			this.groupBox8.Controls.Add(this.buttonSettingsDelete);
+			this.groupBox8.Controls.Add(this.buttonSettingsAddNew);
+			this.groupBox8.Controls.Add(this.comboBoxSettings);
+			this.groupBox8.Location = new System.Drawing.Point(320, 6);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(168, 77);
+			this.groupBox8.TabIndex = 1;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Settings";
+			// 
+			// buttonSettingsDelete
+			// 
+			this.buttonSettingsDelete.Location = new System.Drawing.Point(87, 46);
+			this.buttonSettingsDelete.Name = "buttonSettingsDelete";
+			this.buttonSettingsDelete.Size = new System.Drawing.Size(75, 23);
+			this.buttonSettingsDelete.TabIndex = 4;
+			this.buttonSettingsDelete.Text = "Delete";
+			this.buttonSettingsDelete.UseVisualStyleBackColor = true;
+			// 
+			// buttonSettingsAddNew
+			// 
+			this.buttonSettingsAddNew.Location = new System.Drawing.Point(6, 46);
+			this.buttonSettingsAddNew.Name = "buttonSettingsAddNew";
+			this.buttonSettingsAddNew.Size = new System.Drawing.Size(75, 23);
+			this.buttonSettingsAddNew.TabIndex = 3;
+			this.buttonSettingsAddNew.Text = "Add New...";
+			this.buttonSettingsAddNew.UseVisualStyleBackColor = true;
+			// 
+			// comboBoxSettings
+			// 
+			this.comboBoxSettings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxSettings.FormattingEnabled = true;
+			this.comboBoxSettings.Location = new System.Drawing.Point(6, 19);
+			this.comboBoxSettings.Name = "comboBoxSettings";
+			this.comboBoxSettings.Size = new System.Drawing.Size(156, 21);
+			this.comboBoxSettings.TabIndex = 2;
 			// 
 			// FormWorldView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(494, 452);
+			this.ClientSize = new System.Drawing.Size(492, 450);
+			this.Controls.Add(this.groupBox8);
 			this.Controls.Add(this.groupBoxSelectWorld);
 			this.Controls.Add(this.tabControlSettings);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+			this.MaximumSize = new System.Drawing.Size(502, 486);
 			this.MinimumSize = new System.Drawing.Size(502, 486);
 			this.Name = "FormWorldView";
 			this.Padding = new System.Windows.Forms.Padding(3);
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "MoreTerra (TerrariaWorldViewer)";
-			this.Load += new System.EventHandler(this.WorldViewForm_Load);
 			this.tabControlSettings.ResumeLayout(false);
 			this.tabPageDrawWorld.ResumeLayout(false);
 			this.tabPageDrawWorld.PerformLayout();
@@ -824,11 +1200,20 @@
 			this.groupBoxImageOutput.ResumeLayout(false);
 			this.groupBoxImageOutput.PerformLayout();
 			this.tabPageMarkers.ResumeLayout(false);
-			this.groupBoxSymbols.ResumeLayout(false);
+			this.groupBoxMarkers.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.contextMenuStripListOperations.ResumeLayout(false);
+			this.tabPageColors.ResumeLayout(false);
+			this.groupBoxColorNames.ResumeLayout(false);
+			this.groupBoxColorNames.PerformLayout();
+			this.groupBoxColorListPresets.ResumeLayout(false);
+			this.contextMenuStrip.ResumeLayout(false);
+			this.groupBoxColor.ResumeLayout(false);
+			this.groupBoxColor.PerformLayout();
 			this.tabPageChestFinder.ResumeLayout(false);
 			this.tabPageChestFinder.PerformLayout();
 			this.tableLayoutPanel3.ResumeLayout(false);
@@ -838,6 +1223,7 @@
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.worldInfoGroupBox.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
+			this.contextMenuStripSaveChests.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
 			this.tabPageAbout.ResumeLayout(false);
@@ -846,6 +1232,7 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBoxSelectWorld.ResumeLayout(false);
 			this.groupBoxSelectWorld.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -876,7 +1263,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBoxOpenImage;
         private System.Windows.Forms.Button buttonLoadInformation;
-        private System.Windows.Forms.GroupBox groupBoxSymbols;
+        private System.Windows.Forms.GroupBox groupBoxMarkers;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TabPage tabPageChestFinder;
         private System.Windows.Forms.GroupBox groupBoxSelectWorld;
@@ -895,8 +1282,6 @@
 		private System.Windows.Forms.ToolStripMenuItem invertSelectionToolStripMenuItem;
 		private System.Windows.Forms.TreeView treeViewMarkerList;
 		private System.Windows.Forms.Label labelWorldName;
-		private System.Windows.Forms.Button buttonCustomResources;
-		private System.Windows.Forms.Label labelCustomResources;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.RadioButton radioButtonSortByNone;
 		private System.Windows.Forms.RadioButton radioButtonSortByX;
@@ -911,6 +1296,44 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox checkBoxDrawWalls;
+		private System.Windows.Forms.CheckBox checkBoxShowChestTypes;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStripSaveChests;
+		private System.Windows.Forms.ToolStripMenuItem saveToTextToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToCSVToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToXMLToolStripMenuItem;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.CheckBox checkBoxCustomMarkers;
+		private System.Windows.Forms.Button buttonResetCustomImages;
+		private System.Windows.Forms.Button buttonCustomResources;
+		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.Button buttonSettingsDelete;
+		private System.Windows.Forms.Button buttonSettingsAddNew;
+		private System.Windows.Forms.ComboBox comboBoxSettings;
+		private System.Windows.Forms.TabPage tabPageColors;
+		private System.Windows.Forms.TreeView treeViewColorList;
+		private System.Windows.Forms.GroupBox groupBoxColor;
+		private System.Windows.Forms.ComboBox comboBoxColorName;
+		private System.Windows.Forms.TextBox textBoxColorColor;
+		private System.Windows.Forms.RadioButton radioButtonColorColor;
+		private System.Windows.Forms.RadioButton radioButtonColorPreset;
+		private System.Windows.Forms.RadioButton radioButtonColorDefault;
+		private System.Windows.Forms.CheckBox checkBoxShowCustomItems;
+		private System.Windows.Forms.CheckBox checkBoxShowNormalItems;
+		private System.Windows.Forms.CheckBox checkBoxShowChestItems;
+		private System.Windows.Forms.GroupBox groupBoxColorNames;
+		private System.Windows.Forms.Button buttonColorNameColor;
+		private System.Windows.Forms.TextBox textBoxColorNameColor;
+		private System.Windows.Forms.Button buttonColorNameDelete;
+		private System.Windows.Forms.Button buttonColorNameAddNew;
+		private System.Windows.Forms.ComboBox comboBoxColorNamesName;
+		private System.Windows.Forms.GroupBox groupBoxColorListPresets;
+		private System.Windows.Forms.Button buttonPresetDelete;
+		private System.Windows.Forms.Button buttonPresetAddNew;
+		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.Button buttonColorColor;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem resetAllToDefaultToolStripMenuItem;
+		private System.Windows.Forms.CheckBox checkBoxDrawWires;
 
 
     }

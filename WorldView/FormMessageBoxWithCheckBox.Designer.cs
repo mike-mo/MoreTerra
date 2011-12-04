@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMessageBoxWithCheckBox));
 			this.labelDialogText = new System.Windows.Forms.Label();
 			this.checkBoxDialogItem = new System.Windows.Forms.CheckBox();
 			this.buttonNo = new System.Windows.Forms.Button();
@@ -49,16 +48,17 @@
 			this.checkBoxDialogItem.Location = new System.Drawing.Point(25, 88);
 			this.checkBoxDialogItem.Name = "checkBoxDialogItem";
 			this.checkBoxDialogItem.Size = new System.Drawing.Size(189, 17);
-			this.checkBoxDialogItem.TabIndex = 2;
+			this.checkBoxDialogItem.TabIndex = 3;
 			this.checkBoxDialogItem.Text = "Do not show for this version again.";
 			this.checkBoxDialogItem.UseVisualStyleBackColor = true;
 			// 
 			// buttonNo
 			// 
+			this.buttonNo.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.buttonNo.Location = new System.Drawing.Point(183, 116);
 			this.buttonNo.Name = "buttonNo";
 			this.buttonNo.Size = new System.Drawing.Size(75, 23);
-			this.buttonNo.TabIndex = 3;
+			this.buttonNo.TabIndex = 2;
 			this.buttonNo.Text = "No";
 			this.buttonNo.UseVisualStyleBackColor = true;
 			this.buttonNo.Click += new System.EventHandler(this.buttonNo_Click);
@@ -68,22 +68,23 @@
 			this.buttonYes.Location = new System.Drawing.Point(81, 116);
 			this.buttonYes.Name = "buttonYes";
 			this.buttonYes.Size = new System.Drawing.Size(75, 23);
-			this.buttonYes.TabIndex = 4;
+			this.buttonYes.TabIndex = 0;
 			this.buttonYes.Text = "Yes";
 			this.buttonYes.UseVisualStyleBackColor = true;
 			this.buttonYes.Click += new System.EventHandler(this.buttonYes_Click);
 			// 
 			// FormMessageBoxWithCheckBox
 			// 
+			this.AcceptButton = this.buttonYes;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.buttonNo;
 			this.ClientSize = new System.Drawing.Size(351, 151);
 			this.Controls.Add(this.buttonYes);
 			this.Controls.Add(this.checkBoxDialogItem);
 			this.Controls.Add(this.buttonNo);
 			this.Controls.Add(this.labelDialogText);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FormMessageBoxWithCheckBox";

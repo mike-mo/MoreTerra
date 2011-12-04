@@ -10,6 +10,7 @@ using System.Timers;
 using MoreTerra.Properties;
 using MoreTerra.Structures;
 using MoreTerra.Utilities;
+using MoreTerra.Structures.TerraInfo;
 
 namespace MoreTerra
 {
@@ -17,6 +18,11 @@ namespace MoreTerra
     {
         private delegate void PopulateWorldTreeDelegate();
         private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
+		private delegate DialogResult MessageBoxShowDelegate(String text);
+		private delegate DialogResult MessageBoxShowFullDelegate(String text, String caption,
+			MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
+		private delegate DialogResult MessageBoxWithCheckBoxShowDelegate(FormMessageBoxWithCheckBox box);
+
 
 		#region Variable definitions
 		private WorldMapper mapper = null;
@@ -24,8 +30,11 @@ namespace MoreTerra
 		private System.Timers.Timer tmrMapperProgress;
 
 		// Used to store the images for our TreeView marker list.
-		private ImageList iList = new ImageList();
-		private ImageList siList = new ImageList();
+		private ImageList markerImageList;
+		private ImageList markerThreeStateList;
+		private ImageList chestImageList;
+		private ImageList colorImageList;
+		private ImageList buttonImageList;
 
         private string worldPath = string.Empty;
 
@@ -35,12 +44,6 @@ namespace MoreTerra
 		// This stores the nodes for easy lookup.  Only the subnodes are stored.
 		private Dictionary<String, TreeNode> markerNodes;
 
-		// Used to store the chest TreeNode objects for when we change sorting to None.
-		private List<TreeNode> chestNodes;
-
-		// Gives us a list of nodes that pass the chest finder filter.
-		private List<TreeNode> filteredChestNodes;
-
 		// We use this to see if something new got added to the item list when we are done
 		// drawing/loading information.
 		private Int32 filterCount;
@@ -49,119 +52,184 @@ namespace MoreTerra
 		// changed what's in the filter since we switched tabs.
 		private Boolean filterUpdated;
 
+		// This is used to hold the data for the color TreeView item.
+		private ColorListData colorData;
+
 		private FormProgressDialog progForm;
 		#endregion
 
 		public FormWorldView()
         {
+			FormWorldView.Form = this;
+
             InitializeComponent();
+			RegisterEventHandlers();
 
-			labelCustomResources.Text = "If you wish to change the icons that are shown on the " +
-				                        "drawn map you can do so by replacing the corresponding file " +
-										"found in the resource folder.";
+			this.Icon = Properties.Resources.Cannon;
+		}
 
-            labelSpecialThanks.Text = Constants.Credits + Environment.NewLine + Environment.NewLine +
-                                      "And special thanks to kdfb for donating a copy of the game!";
+		// Done here instead of by the automatic code generator as I'm tired of the code
+		// Generator removing my event handlers when I try to move items around.
+		private void RegisterEventHandlers()
+		{
+			#region Global Handlers
+			this.Load += new System.EventHandler(this.WorldViewForm_Load);
 
-			tmrMapperProgress = new System.Timers.Timer();
-            tmrMapperProgress.Elapsed += new ElapsedEventHandler(tmrMapperProgress_Tick);
-            tmrMapperProgress.Enabled = false;
-            tmrMapperProgress.Interval = 333;
+			// Select World groupbox
+			this.comboBoxWorldFilePath.SelectedIndexChanged += new System.EventHandler(this.comboBoxWorldFilePath_TextChanged);
+			this.comboBoxWorldFilePath.TextChanged += new System.EventHandler(this.comboBoxWorldFilePath_TextChanged);
+			this.buttonBrowseWorld.Click += new System.EventHandler(this.buttonBrowseWorld_Click);
 
-			// If we've updated the software push it into the settings file.
-			if (SettingsManager.Instance.TopVersion < Constants.currentVersion)
-				SettingsManager.Instance.TopVersion = Constants.currentVersion;
+			// Settings groupbox
+			this.comboBoxSettings.SelectedIndexChanged += new System.EventHandler(this.comboBoxSettings_SelectedIndexChanged);
+			this.buttonSettingsAddNew.Click += new System.EventHandler(this.buttonSettingsAddNew_Click);
+			this.buttonSettingsDelete.Click += new System.EventHandler(this.buttonSettingsDelete_Click);
 
-			// Populate Symbol Properties
-            Dictionary<string, bool> symbolStates = SettingsManager.Instance.SymbolStates;
+			// Tab Control
+			this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
+			#endregion
 
-			if (SettingsManager.Instance.FilterItemStates != null)
-				ResetFilterLists();
+			#region Draw World tabPage Handlers
+			// Output Image groupbox
+			this.buttonBrowseOutput.Click += new System.EventHandler(this.buttonBrowseOutput_Click);
 
+			this.checkBoxDrawWires.CheckedChanged += new System.EventHandler(this.checkBoxDrawWires_CheckedChanged);
+			this.checkBoxDrawWalls.CheckedChanged += new System.EventHandler(this.checkBoxDrawWalls_CheckedChanged);
+			this.checkBoxScanForItems.CheckedChanged += new System.EventHandler(this.checkBoxScanForItems_CheckedChanged);
+			this.checkBoxOpenImage.CheckedChanged += new System.EventHandler(this.checkBoxOpenImage_CheckedChanged);
 
-			// This section sets up the Marker list box.  The first part draws the three
-			// states of our checkboxes and then it populates the TreeView.
-			Int32 checkParent;
-			Int32 index = 0;
-			TreeNode tNode;
-			TreeNode baseNode;
+			this.buttonDrawWorld.Click += new System.EventHandler(this.buttonDrawWorld_Click);
 
-			Bitmap bmp = new Bitmap(16, 16);
-			Graphics graph = Graphics.FromImage(bmp);
-			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.UncheckedNormal);
-			siList.Images.Add(bmp);
+			// Unsupported World Version groupbox
+			#endregion
 
-			bmp = new Bitmap(16, 16);
-			graph = Graphics.FromImage(bmp);
-			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.CheckedNormal);
-			siList.Images.Add(bmp);
+			#region Markers tabPage Handlers
+			this.checkBoxShowChestTypes.CheckedChanged += new System.EventHandler(this.checkBoxShowChestTypes_CheckedChanged);
 
-			bmp = new Bitmap(16, 16);
-			graph = Graphics.FromImage(bmp);
-			CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.MixedNormal);
-			siList.Images.Add(bmp);
+			this.treeViewMarkerList.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMarkerList_AfterCheck);
+			this.treeViewMarkerList.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMarkerList_NodeMouseClick);
+			this.treeViewMarkerList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMarkerList_KeyPress);
 
-			treeViewMarkerList.StateImageList = siList;
-			treeViewMarkerList.ImageList = iList;
+			// Use Custom Images groupbox
+			this.checkBoxCustomMarkers.CheckedChanged += new System.EventHandler(this.checkBoxCustomMarkers_CheckedChanged);
+			this.buttonResetCustomImages.Click += new System.EventHandler(this.buttonResetCustomImages_Click);
+			this.buttonCustomResources.Click += new System.EventHandler(this.buttonCustomResources_Click);
 
-			markerNodes = new Dictionary<String, TreeNode>();
+			// ContextMenu for treeViewmarkerList
+			this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+			this.selectNoneToolStripMenuItem.Click += new System.EventHandler(this.selectNoneToolStripMenuItem_Click);
+			this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+			#endregion
 
-			foreach (KeyValuePair<string, string[]> kvp in Constants.SymbolDict)
-			{
-				baseNode = new TreeNode(kvp.Key);
-				iList.Images.Add((Image)Properties.Resources.ResourceManager.GetObject(kvp.Key));
-				baseNode.ImageIndex = index;
-				baseNode.SelectedImageIndex = index++;
-				treeViewMarkerList.Nodes.Add(baseNode);
-				checkParent = 0;
+			#region Colors tabPage Handlers
+			this.treeViewColorList.AfterSelect += new TreeViewEventHandler(treeViewColorList_AfterSelect);
 
-				for (Int32 i = 0; i < kvp.Value.Length; i++)
-				{
-					iList.Images.Add((Image)Properties.Resources.ResourceManager.GetObject(kvp.Value[i]));
-					tNode = new TreeNode(kvp.Value[i]);
-					tNode.ImageIndex = index;
-					tNode.SelectedImageIndex = index++;
-					markerNodes.Add(kvp.Value[i], tNode);
-					baseNode.Nodes.Add(tNode);
+			this.radioButtonColorDefault.CheckedChanged += new EventHandler(radioButtonColorDefault_CheckedChanged);
+			this.radioButtonColorPreset.CheckedChanged += new EventHandler(radioButtonColorName_CheckedChanged);
+			this.radioButtonColorColor.CheckedChanged += new EventHandler(radioButtonColorColor_CheckedChanged);
 
-					if (symbolStates.ContainsKey(kvp.Value[i]))
-					{
-						if (symbolStates[kvp.Value[i]])
-						{
-							tNode.Checked = true;
-							tNode.StateImageIndex = (Int32)CheckState.Checked;
-						}
-						else
-						{
-							tNode.Checked = false;
-							tNode.StateImageIndex = (Int32)CheckState.Unchecked;
-						}
-					}
+			this.textBoxColorColor.TextChanged += new EventHandler(textBoxColorColor_TextChanged);
+			this.comboBoxColorName.SelectedIndexChanged += new EventHandler(comboBoxColorName_SelectedIndexChanged);
+			#endregion
 
-					if (tNode.Checked == true)
-						checkParent += 1;
-				}
+			#region Chest Finder tabPage Handlers
+			this.checkBoxFilterChests.CheckedChanged += new System.EventHandler(this.checkBoxFilterChests_CheckedChanged);
+			this.checkBoxShowChestItems.CheckedChanged +=new EventHandler(checkBoxShowChestItems_CheckedChanged);
+			this.checkBoxShowNormalItems.CheckedChanged +=new EventHandler(checkBoxShowNormalItems_CheckedChanged);
+			this.checkBoxShowCustomItems.CheckedChanged +=new EventHandler(checkBoxShowCustomItems_CheckedChanged);
 
-				if (checkParent == kvp.Value.Length)
-					baseNode.StateImageIndex = (Int32)CheckState.Checked;
-				else if (checkParent == 0)
-					baseNode.StateImageIndex = (Int32)CheckState.Unchecked;
-				else
-					baseNode.StateImageIndex = (Int32) CheckState.Indeterminate;
-			}
+			this.lstAvailableItems.SelectedIndexChanged += new System.EventHandler(this.lstAvailableItems_SelectionChanged);
+			this.lstAvailableItems.DoubleClick += new System.EventHandler(this.lstAvailableItems_DoubleClick);
+			this.buttonMoveAllToFiltered.Click += new System.EventHandler(this.buttonMoveAllToFiltered_Click);
+			this.buttonAddCustomItem.Click += new System.EventHandler(this.buttonAddCustomItem_Click);
+
+			this.lstFilteredItems.SelectedIndexChanged += new System.EventHandler(this.lstFilteredItems_SelectionChanged);
+			this.lstFilteredItems.DoubleClick += new System.EventHandler(this.lstFilteredItems_DoubleClick);
+			this.lstFilteredItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstFilteredItems_KeyDown);
+			this.buttonRemoveCustomItem.Click += new System.EventHandler(this.buttonRemoveCustomItem_Click);
+			this.buttonMoveAllToAvailable.Click += new System.EventHandler(this.buttonMoveAllToAvailable_Click);
+			#endregion
+
+			#region World Information tabPage Handlers
+			this.buttonLoadInformation.Click += new System.EventHandler(this.buttonLoadInformation_Click);
+
+			// Sort By groupBox
+			this.radioButtonSortByNone.CheckedChanged += new System.EventHandler(this.radioButtonSortByNone_CheckedChanged);
+			this.radioButtonSortByX.CheckedChanged += new System.EventHandler(this.radioButtonSortByX_CheckedChanged);
+			this.radioButtonSortByY.CheckedChanged += new System.EventHandler(this.radioButtonSortByY_CheckedChanged);
+	
+			// ContextMenu for Chest list
+			this.saveToTextToolStripMenuItem.Click += new System.EventHandler(this.saveToTextToolStripMenuItem_Click);
+			this.saveToCSVToolStripMenuItem.Click += new System.EventHandler(this.saveToCSVToolStripMenuItem_Click);
+			this.saveToXMLToolStripMenuItem.Click += new System.EventHandler(this.saveToXMLtToolStripMenuItem_Click);
+			#endregion
+
+			#region About tabPage Handlers
+			this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
+			#endregion
 
 		}
 
 		private void WorldViewForm_Load(object sender, EventArgs e)
 		{
-			string ver = Application.ProductVersion;
+			Int32 i;
 
-			while (ver.Length > 3 && ver.Substring(ver.Length - 2) == ".0")
+			for (i = 0; i < SettingsManager.Instance.SettingsCount; i++)
 			{
-				ver = ver.Substring(0, ver.Length - 2);
+				comboBoxSettings.Items.Add(SettingsManager.Instance.SettingsName(i));
 			}
 
-			lblVersion.Text = "Version: " + ver;
+			if (SettingsManager.Instance.SettingsName(SettingsManager.Instance.CurrentSettings) == "Default")
+				buttonSettingsDelete.Enabled = false;
+			else
+				buttonSettingsDelete.Enabled = true;
+
+			comboBoxSettings.SelectedIndex = SettingsManager.Instance.CurrentSettings;
+
+			labelSpecialThanks.Text = Global.Credits;
+
+			lblVersion.Text = "Version: " + GetVersion();
+
+			tmrMapperProgress = new System.Timers.Timer();
+			tmrMapperProgress.Elapsed += new ElapsedEventHandler(tmrMapperProgress_Tick);
+			tmrMapperProgress.Enabled = false;
+			tmrMapperProgress.Interval = 333;
+
+			// If we've updated the software push it into the settings file.
+			if (SettingsManager.Instance.TopVersion < Global.CurrentVersion)
+				SettingsManager.Instance.TopVersion = Global.CurrentVersion;
+
+			// These two lines are outside of SetupMainForm as they get called by event
+			// handlers in there, but the handlers do not fire until the everything is fully
+			// loaded.  So to keep them from getting double called they are here.
+			ResourceManager.Instance.Custom = SettingsManager.Instance.CustomMarkers;
+
+			SetupColorNames();
+			SetupColorData();
+			SetupImageLists();
+			SetupColorButtons();
+
+			SetupMainForm();
+		}
+
+		// This is everything that needs to get reset if the current settings have changed.
+		private void SetupMainForm()
+		{
+			// These event handlers do nothing except ironically set SettingsManager back.
+			checkBoxDrawWires.Checked = SettingsManager.Instance.DrawWires;
+			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
+			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
+			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
+			checkBoxShowChestTypes.Checked = SettingsManager.Instance.ShowChestTypes;
+			checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
+			checkBoxShowChestItems.Checked = SettingsManager.Instance.ShowChestItems;
+			checkBoxShowNormalItems.Checked = SettingsManager.Instance.ShowNormalItems;
+			checkBoxShowCustomItems.Checked = SettingsManager.Instance.ShowCustomItems;
+
+			// This event handler sets both ResourceManager.Custom but also calls
+			// SetupImageLists.  SetupImageLists always needs to be called before
+			// SetupMarkerList.
+			checkBoxCustomMarkers.Checked = SettingsManager.Instance.CustomMarkers;
 
 			string folder = string.Empty;
 
@@ -178,10 +246,14 @@ namespace MoreTerra
 			if (folder != string.Empty)
 				this.worldDirectoryChanged();
 
-			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
-			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
-			checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
-			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
+
+			// SetupImageLists does all boxes so it needs to come before
+			// the Marker list and the Chest list.
+			SetupMarkerListBox();
+			SetupColorListBox();
+
+			if (SettingsManager.Instance.FilterItemStates != null)
+				ResetFilterLists();
 
 			switch (SettingsManager.Instance.SortChestsBy)
 			{
@@ -196,6 +268,7 @@ namespace MoreTerra
 					break;
 			}
 		}
+
 
 		#region SelectWorld groupBox functions
 		private void buttonBrowseWorld_Click(object sender, EventArgs e)
@@ -264,7 +337,78 @@ namespace MoreTerra
 		}
 		#endregion
 
+		#region Settings groupBox functions
+		private void buttonSettingsAddNew_Click(object sender, EventArgs e)
+		{
+			Boolean mainLoop = true;
+			DialogResult result;
+			FormEntryBox nameEntryBox = new FormEntryBox();
+
+			nameEntryBox.FormText = "Add New Settings Preset";
+			nameEntryBox.LabelText = "Enter the a name for a new settings preset:";
+
+			while (mainLoop == true)
+			{
+				result = nameEntryBox.ShowDialog(this);
+
+				if (result == DialogResult.Cancel)
+					return;
+				else
+				{
+					if (!SettingsManager.Instance.AddNewSettings(nameEntryBox.EntryItem))
+					{
+						MessageBox.Show(String.Format("Preset {0} already exists.", nameEntryBox.EntryItem),
+							"Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+					}
+					else
+					{
+						mainLoop = false;
+					}
+				}
+			}
+
+			comboBoxSettings.Items.Add(nameEntryBox.EntryItem);
+		}
+
+		private void buttonSettingsDelete_Click(object sender, EventArgs e)
+		{
+			Int32 toDelete = comboBoxSettings.SelectedIndex;
+			String deleteName = SettingsManager.Instance.SettingsName(toDelete);
+			if ((deleteName == "Default") || (deleteName == String.Empty))
+				return;
+
+			SettingsManager.Instance.DeleteSettings(toDelete);
+			comboBoxSettings.Items.RemoveAt(toDelete);
+
+			if (toDelete >= comboBoxSettings.Items.Count)
+				toDelete = comboBoxSettings.Items.Count - 1;
+
+			comboBoxSettings.SelectedIndex = toDelete;
+		}
+
+		private void comboBoxSettings_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Int32 index = comboBoxSettings.SelectedIndex;
+
+			if ((index == SettingsManager.Instance.CurrentSettings) || (index < 0))
+				return;
+
+			if (SettingsManager.Instance.SettingsName(index) == "Default")
+				buttonSettingsDelete.Enabled = false;
+			else
+				buttonSettingsDelete.Enabled = true;
+
+			SettingsManager.Instance.CurrentSettings = comboBoxSettings.SelectedIndex;
+			SetupMainForm();
+		}
+		#endregion
+
 		#region Draw World tabPage functions
+		private void checkBoxDrawWires_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.DrawWires = checkBoxDrawWires.Checked;
+		}
+
 		private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Instance.DrawWalls = checkBoxDrawWalls.Checked;
@@ -340,6 +484,9 @@ namespace MoreTerra
 
 			if (checkValidPaths(true))
 			{
+				if (SettingsManager.Instance.ShowChestTypes)
+					treeViewChestInformation.ImageList = chestImageList;
+
 				buttonDrawWorld.Enabled = false;
 				filterCount = SettingsManager.Instance.FilterItemStates.Count();
 
@@ -347,6 +494,10 @@ namespace MoreTerra
 				groupBoxImageOutput.Enabled = false;
 				(this.tabPageMarkers as Control).Enabled = false;
 				(this.tabPageWorldInformation as Control).Enabled = false;
+
+				Point pt = this.Location;
+				pt.X += (this.Size.Width / 2);
+				pt.Y += (this.Size.Height / 2);
 
 				mapper = new WorldMapper();
 				mapper.Initialize();
@@ -367,7 +518,7 @@ namespace MoreTerra
 				mapperWorker.RunWorkerAsync(true);
 
 				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
-				progForm.Show();
+				progForm.Show(this);
 			}
 		}
 
@@ -408,8 +559,10 @@ namespace MoreTerra
             catch (Exception ex)
             {
 				tmrMapperProgress.Stop();
-				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + "Details: " + ex.ToString(),
-								 "Error Opening World", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				FormWorldView.MessageBoxShow(ex.Message + Environment.NewLine + Environment.NewLine +
+					"Details: " + ex.ToString() + Environment.NewLine + "Version: " + GetVersion(),
+					"Error Opening World", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+
 
 				return;
 			}
@@ -424,8 +577,13 @@ namespace MoreTerra
 		private void worker_Completed(object sender, FormClosedEventArgs e)
 		{
 			Boolean v = progForm.Success;
+
+			mapper.Cleanup();
+			GC.Collect();
+
 			if (filterCount != SettingsManager.Instance.FilterItemStates.Count())
 				ResetFilterLists();
+
 
 			buttonDrawWorld.Enabled = true;
 
@@ -450,27 +608,36 @@ namespace MoreTerra
 
 		private TreeNode[] GetChests()
 		{
-			List<Chest> chests = this.mapper.Chests;
+			List<Chest> chests;
+			List<TreeNode> chestNodes;
 
-			if (chestNodes == null)
-			{
-				chestNodes = new List<TreeNode>(chests.Count);
+			chestNodes = new List<TreeNode>();
 
-				foreach (Chest c in chests)
-				{
-					TreeNode node = new TreeNode(string.Format("Chest at ({0},{1})", c.Coordinates.X, c.Coordinates.Y, c.ChestId));
-					foreach (Item i in c.Items)
-					{
-						node.Nodes.Add(i.ToString());
-					}
-					chestNodes.Add(node);
-				}
-			}
+			if (this.mapper == null)
+				return chestNodes.ToArray();
 
 			if (SettingsManager.Instance.FilterChests == true)
 			{
-				applyChestFilter();
-				return filteredChestNodes.ToArray();
+				chests = applyChestFilter(this.mapper.Chests);
+			}
+			else
+			{
+				chests = this.mapper.Chests;
+			}
+
+//			chestNodes = new List<TreeNode>(chests.Count);
+
+			foreach (Chest c in chests)
+			{
+				TreeNode node = new TreeNode(string.Format("Chest at ({0},{1})", c.Coordinates.X, c.Coordinates.Y, c.ChestId));
+				node.ImageIndex = (Int32) c.Type + 1;
+				node.SelectedImageIndex = (Int32)c.Type + 1;
+
+				foreach (Item i in c.Items)
+				{
+					node.Nodes.Add(i.ToString());
+				}
+				chestNodes.Add(node);
 			}
 
 			return chestNodes.ToArray();
@@ -679,7 +846,439 @@ namespace MoreTerra
 
 		private void buttonCustomResources_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start(Constants.ApplicationResourceDirectory);
+			System.Diagnostics.Process.Start(Global.ApplicationResourceDirectory);
+		}
+
+		private void checkBoxShowChestTypes_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.ShowChestTypes = checkBoxShowChestTypes.Checked;
+		}
+
+		private void checkBoxCustomMarkers_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.CustomMarkers = checkBoxCustomMarkers.Checked;
+			ResourceManager.Instance.Custom = checkBoxCustomMarkers.Checked;
+			SetupImageLists();
+		}
+
+		private void buttonResetCustomImages_Click(object sender, EventArgs e)
+		{
+			DialogResult res = MessageBox.Show("This will overwrite all files in the Resources directory.  If you have made changes to them they will be lost.  Continue?",
+				"Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+			if (res == DialogResult.No)
+				return;
+
+			ResourceManager.Instance.ResetCustomMarkers();
+			
+			if (SettingsManager.Instance.CustomMarkers)
+				SetupImageLists();
+		}
+
+		private void SetupImageLists()
+		{
+			Graphics graph;
+			Bitmap bmp;
+			if (markerThreeStateList == null)
+			{
+				markerThreeStateList = new ImageList();
+
+				// Set up the images for the three-state box.
+				bmp = new Bitmap(16, 16);
+				graph = Graphics.FromImage(bmp);
+				CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.UncheckedNormal);
+				markerThreeStateList.Images.Add(bmp);
+
+				bmp = new Bitmap(16, 16);
+				graph = Graphics.FromImage(bmp);
+				CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.CheckedNormal);
+				markerThreeStateList.Images.Add(bmp);
+
+				bmp = new Bitmap(16, 16);
+				graph = Graphics.FromImage(bmp);
+				CheckBoxRenderer.DrawCheckBox(graph, new Point(1, 1), CheckBoxState.MixedNormal);
+				markerThreeStateList.Images.Add(bmp);
+			}
+
+			if (chestImageList == null)
+				chestImageList = new ImageList();
+
+			if (markerImageList == null)
+				markerImageList = new ImageList();
+
+			if (colorImageList == null)
+			{
+				colorImageList = new ImageList();
+
+				// This is the empty one we'll use for parent objects.
+				colorImageList.Images.Add(new Bitmap(16, 16));
+
+				bmp = new Bitmap(16, 16);
+				graph = Graphics.FromImage(bmp);
+
+				graph.DrawRectangle(new Pen(Color.Black, 1), 1, 1, 14, 14);
+
+				// We filled the image list with as many copies of the empty square bitmap as
+				// we needed.
+				for (Int32 i = 0; i < colorData.Count; i++)
+				{
+					colorImageList.Images.Add(new Bitmap(bmp));
+				}
+			}
+
+			if (buttonImageList == null)
+			{
+				buttonImageList = new ImageList();
+				buttonImageList.ImageSize = new Size(51, 23);
+
+				bmp = new Bitmap(50, 22);
+
+				buttonImageList.Images.Add(bmp);
+				buttonImageList.Images.Add(new Bitmap(bmp));
+			}
+
+			markerImageList.Images.Clear();
+			chestImageList.Images.Clear();
+
+			// This is our blank image to keep chest list items from having images.
+			bmp = new Bitmap(16, 16);
+			chestImageList.Images.Add(bmp);
+
+			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			{
+				bmp = ResourceManager.Instance.GetMarker(kvp.Value.markerImage);
+
+				markerImageList.Images.Add(bmp);
+
+				if (kvp.Value.markerSet == "Containers")
+					chestImageList.Images.Add(bmp);
+			}
+		}
+
+		private void SetupMarkerListBox()
+		{
+			Dictionary<String, MarkerSettings> markerStates = SettingsManager.Instance.MarkerStates;
+			Boolean[] expList = null;
+
+			// This section sets up the Marker list box.  The first part draws the three
+			// states of our checkboxes and then it populates the TreeView.
+			Int32 index = 0;
+			TreeNode node;
+
+			if (treeViewMarkerList.Nodes.Count > 0)
+			{
+				expList = new Boolean[treeViewMarkerList.Nodes.Count];
+				Int32 count = 0;
+
+				foreach (TreeNode n in treeViewMarkerList.Nodes)
+				{
+					if (n.Parent == null)
+						expList[count++] = n.IsExpanded;
+				}
+			}
+
+			treeViewMarkerList.Nodes.Clear();
+
+			treeViewMarkerList.StateImageList = markerThreeStateList;
+			treeViewMarkerList.ImageList = markerImageList;
+
+			markerNodes = new Dictionary<String, TreeNode>();
+
+			Dictionary<String, TreeNode> parentNodes = new Dictionary<String, TreeNode>();
+
+			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			{
+				if (kvp.Value.notInList == true)
+					continue;
+
+				node = new TreeNode(kvp.Key);
+				node.ImageIndex = index;
+				node.SelectedImageIndex = index;
+
+				if (kvp.Value.markerSet == String.Empty)
+					parentNodes.Add(kvp.Key, node);
+				else
+				{
+					markerNodes.Add(kvp.Key, node);
+
+					if (markerStates[kvp.Key].Drawing)
+					{
+						node.Checked = true;
+						node.StateImageIndex = (Int32)CheckState.Checked;
+					}
+					else
+					{
+						node.Checked = false;
+						node.StateImageIndex = (Int32)CheckState.Unchecked;
+					}
+				}
+
+				index++;
+			}
+
+			// We parse the list again, this time to set the parent/child heirarchy up.
+			// This makes it so that we do not have to have them in the exact order in the XML file.
+			foreach(KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			{
+				if (kvp.Value.markerSet == String.Empty)
+					continue;
+
+				parentNodes[kvp.Value.markerSet].Nodes.Add(markerNodes[kvp.Key]);
+			}
+
+			// Now that it is set up so all child nodes are in the right spot we add them to the
+			// treeNode and force it to update the checked state.
+			foreach(KeyValuePair<String, TreeNode> kvp in parentNodes)
+			{
+				treeViewMarkerList.Nodes.Add(kvp.Value);
+				treeViewMarkerList_updateParentNode(kvp.Value.Nodes[0]);
+			}
+
+			if (expList != null)
+			{
+				Int32 count = 0;
+
+				foreach (TreeNode n in treeViewMarkerList.Nodes)
+				{
+					if ((n.Parent == null) && (expList[count++] == true))
+						n.Expand();
+				}
+			}
+
+
+
+		}
+		#endregion
+
+		#region Color tabPage functions
+		private void treeViewColorList_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			Global.Instance.SkipEvents = true;
+
+			if ((e.Node == null) || (e.Node.Parent == null))
+			{
+				radioButtonColorDefault.Checked = true;
+				comboBoxColorName.SelectedIndex = -1;
+				textBoxColorColor.Text = String.Empty;
+				groupBoxColor.Enabled = false;
+				Global.Instance.SkipEvents = false;
+				return;
+			}
+
+			groupBoxColor.Enabled = true;
+
+			ColorListDataNode data = colorData.GetNode(e.Node.Text, e.Node.Parent.Text);
+			if (data == null)
+			{
+				Global.Instance.SkipEvents = false;
+				return;
+			}
+
+			if (data.defaultColor == data.currentColor)
+				radioButtonColorDefault.Checked = true;
+			else if (data.currentColorName != String.Empty)
+				radioButtonColorPreset.Checked = true;
+			else
+				radioButtonColorColor.Checked = true;
+
+			if (data.currentColorName == String.Empty)
+				comboBoxColorName.SelectedIndex = -1;
+			else
+			{
+				if (comboBoxColorName.Items.Contains(data.currentColorName))
+					comboBoxColorName.SelectedItem = data.currentColorName;
+				else
+					comboBoxColorName.SelectedIndex = -1;
+			}
+
+			textBoxColorColor.Text = Global.ToColorString(data.currentColor);
+			Global.Instance.SkipEvents = false;
+		}
+
+		private void radioButtonColorDefault_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Global.Instance.SkipEvents)
+				return;
+
+			MessageBox.Show("radioButtonColorDefault_CheckedChanged");
+		}
+
+		private void radioButtonColorName_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Global.Instance.SkipEvents)
+				return;
+
+			MessageBox.Show("radioButtonColorName_CheckedChanged");
+		}
+
+		private void radioButtonColorColor_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Global.Instance.SkipEvents)
+				return;
+
+			MessageBox.Show("radioButtonColorColor_CheckedChanged");
+		}
+
+		private void comboBoxColorName_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Global.Instance.SkipEvents)
+				return;
+
+			MessageBox.Show("comboBoxColorName_SelectedIndexChanged");
+		}
+
+		private void textBoxColorColor_TextChanged(object sender, EventArgs e)
+		{
+			if (Global.Instance.SkipEvents)
+				return;
+
+			MessageBox.Show("comboBoxColorColor_TextChanged");
+		}
+
+		private void SetupColorButtons()
+		{
+			buttonColorColor.ImageList = buttonImageList;
+			buttonColorColor.ImageIndex = 0;
+
+			buttonColorNameColor.ImageList = buttonImageList;
+			buttonColorNameColor.ImageIndex = 1;
+		}
+
+		private void SetupColorNames()
+		{
+			Dictionary<String, ColorInfo> colors = Global.Instance.Info.Colors;
+
+			comboBoxColorName.Items.Clear();
+			comboBoxColorNamesName.Items.Clear();
+
+			foreach (KeyValuePair<String, ColorInfo> kvp in colors)
+			{
+				comboBoxColorName.Items.Add(kvp.Key);
+				comboBoxColorNamesName.Items.Add(kvp.Key);
+			}
+
+			comboBoxColorNamesName.SelectedIndex = 0;
+		}
+
+		private void SetupColorData()
+		{
+			treeViewColorList.Nodes.Clear();
+			treeViewColorList.ImageList = colorImageList;
+
+			if (colorData == null)
+				colorData = new ColorListData();
+			else
+				colorData.Clear();
+
+			String parent = "Tiles";
+			Int32 id = 1;
+
+			foreach (KeyValuePair<Int32, TileInfo> kvp in Global.Instance.Info.Tiles)
+			{
+				colorData.AddNewNode(kvp.Value.name, parent, kvp.Value.color,
+					kvp.Value.colorName, id + kvp.Value.tileImage);
+			}
+
+			id += Global.Instance.Info.Tiles.Count - 1;
+
+			parent = "Walls";
+
+			foreach (KeyValuePair<Int32, WallInfo> kvp in Global.Instance.Info.Walls)
+			{
+				colorData.AddNewNode(kvp.Value.name, parent, kvp.Value.color,
+					kvp.Value.colorName, id + kvp.Value.wallImage);
+			}
+
+			id += Global.Instance.Info.Walls.Count + 1;
+
+			foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in Global.Instance.Info.SpecialObjects)
+			{
+				parent = kvp.Key + "s";
+
+				foreach (SpecialObjectInfo soi in kvp.Value)
+				{
+					colorData.AddNewNode(soi.name, parent, soi.color,
+						soi.colorName, id);
+
+					id++;
+				}
+			}
+		}
+
+		private void SetupColorListBox()
+		{
+			Boolean[] expList = null;
+			TreeNode node, parent;
+
+			if (treeViewColorList.Nodes.Count > 0)
+			{
+				expList = new Boolean[treeViewColorList.Nodes.Count];
+				Int32 count = 0;
+
+				foreach (TreeNode n in treeViewColorList.Nodes)
+				{
+					if (n.Parent == null)
+						expList[count++] = n.IsExpanded;
+				}
+			}
+
+			treeViewColorList.Nodes.Clear();
+			treeViewColorList.ImageList = colorImageList;
+
+			foreach (KeyValuePair<String, Dictionary<String, ColorListDataNode>> kvp in colorData.Data)
+			{
+				parent = new TreeNode(kvp.Key);
+				parent.ImageIndex = -1;
+				parent.SelectedImageIndex = -1;
+				treeViewColorList.Nodes.Add(parent);
+
+				foreach (KeyValuePair<String, ColorListDataNode> kvp2 in kvp.Value)
+				{
+					node = new TreeNode(kvp2.Key);
+					node.SelectedImageIndex = kvp2.Value.nodeId;
+					node.ImageIndex = node.SelectedImageIndex;
+
+					UpdateColorImage(node.ImageIndex, kvp2.Value.currentColor);
+
+					parent.Nodes.Add(node);
+				}
+			}
+
+			if (expList != null)
+			{
+				Int32 count = 0;
+
+				foreach (TreeNode n in treeViewColorList.Nodes)
+				{
+					if ((n.Parent == null) && (expList[count++] == true))
+						n.Expand();
+				}
+			}
+		}
+
+		private void UpdateColorImage(Int32 useImage, Color newColor)
+		{
+			if ((useImage < 0) || (useImage >= colorImageList.Images.Count))
+				return;
+
+			Image image = colorImageList.Images[useImage];
+			Graphics graph = Graphics.FromImage(image);
+
+			graph.FillRectangle(new SolidBrush(newColor), 2, 2, 13, 13);
+
+			colorImageList.Images[useImage] = image;
+		}
+
+		private void UpdateColorButton(Int32 useButton, Color newColor)
+		{
+			if ((useButton < 0) || (useButton >= buttonImageList.Images.Count))
+				return;
+
+			Image image = buttonImageList.Images[useButton];
+			Graphics graph = Graphics.FromImage(image);
+
+			graph.FillRectangle(new SolidBrush(newColor), 0, 0, image.Width - 1, image.Height - 1);
+			buttonImageList.Images[useButton] = image;
 		}
 		#endregion
 
@@ -691,6 +1290,27 @@ namespace MoreTerra
 			lstAvailableItems.Enabled = checkBoxFilterChests.Checked;
 			lstFilteredItems.Enabled = checkBoxFilterChests.Checked;
 			filterUpdated = true;
+		}
+
+		private void checkBoxShowChestItems_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.ShowChestItems = checkBoxShowChestItems.Checked;
+
+			ResetFilterLists();
+		}
+
+		private void checkBoxShowNormalItems_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.ShowNormalItems = checkBoxShowNormalItems.Checked;
+
+			ResetFilterLists();
+		}
+
+		private void checkBoxShowCustomItems_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.ShowCustomItems = checkBoxShowCustomItems.Checked;
+
+			ResetFilterLists();
 		}
 
 		private void lstFilteredItems_DoubleClick(object sender, EventArgs e)
@@ -710,16 +1330,18 @@ namespace MoreTerra
 			lstFilteredItems.Items.Add(si);
 
 			lstAvailableItems.Items.Remove(si);
-			lstAvailableItems.SelectedIndex = Math.Min(selected, lstFilteredItems.Items.Count - 1);
+			lstAvailableItems.SelectedIndex = Math.Min(selected, lstAvailableItems.Items.Count - 1);
 
-			// Strip the * off of it, if it had one.
-			si = si.Split('*')[0];
 			SettingsManager.Instance.FilterItem(si, true);
 			filterUpdated = true;
+
+			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
+			buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
 		}
 	
 		private void lstFilteredItems_KeyDown(object sender, KeyEventArgs e)
 		{
+			ItemInfo ii;
 			String si;
 			int selected = lstFilteredItems.SelectedIndex;
 
@@ -729,50 +1351,73 @@ namespace MoreTerra
 			{
 				si = lstFilteredItems.SelectedItem.ToString();
 
-				lstAvailableItems.Items.Add(si);
+				ii = Global.Instance.Info.GetItem(si);
+
+				if (ii.foundIn == "Chest")
+				{
+					if (SettingsManager.Instance.ShowChestItems)
+						lstAvailableItems.Items.Add(si);
+				} else if (ii.isCustom) {
+					if (SettingsManager.Instance.ShowCustomItems)
+						lstAvailableItems.Items.Add(si);
+				} else if (SettingsManager.Instance.ShowNormalItems)
+					lstAvailableItems.Items.Add(si);
 
 				lstFilteredItems.Items.Remove(lstFilteredItems.SelectedItem);
 				lstFilteredItems.SelectedIndex = Math.Min(selected, lstFilteredItems.Items.Count - 1);
 
-				// Strip the * off of it, if it had one.
-				si = si.Split('*')[0];
 				SettingsManager.Instance.FilterItem(si, false);
 				filterUpdated = true;
+
+				buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
+				buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
 			}
 		}
 
 		private void buttonAddCustomItem_Click(object sender, EventArgs e)
 		{
+			ItemEnum ie;
 			String newItem;
 			String error = "";
 			DialogResult res;
 			FormEntryBox entry = new FormEntryBox();
+			entry.FormText = "New Custom Item";
+			entry.LabelText = "Enter a new item to add to the available list. " +
+				"Case does matter, though item names normally start with capitals. " +
+				"Example: Staff of Growth";
 
-			res = entry.ShowDialog();
+			res = entry.ShowDialog(this);
 
 			if (res == DialogResult.Cancel)
 				return;
 
-			newItem = entry.getCustomItem();
+			newItem = entry.EntryItem;
 
-			if (SettingsManager.Instance.IsDefaultItem(newItem))
-			{
-				error = String.Format("Item '{0}' is already coded into the program.", newItem);
-			}
-			else if (SettingsManager.Instance.FilterItemStates.ContainsKey(newItem))
+			ie = Global.Instance.Info.GetItemEnum(newItem);
+
+			if (ie == ItemEnum.Custom)
 			{
 				error = String.Format("Item '{0}' was already added as a custom item.", newItem);
+			}
+			else if (ie != ItemEnum.NotFound)
+			{
+				error = String.Format("Item '{0}' is already coded into the program.", newItem);
 			}
 
 			if (error == "")
 			{
-				SettingsManager.Instance.FilterItemStates.Add(newItem, false);
-				lstAvailableItems.Items.Add(newItem + "*");
+				Global.Instance.Info.AddCustomItem(newItem);
+				if (SettingsManager.Instance.ShowCustomItems)
+					lstAvailableItems.Items.Add(newItem);
 			}
 			else
 			{
 				MessageBox.Show(error, "Item already exists!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
+
+			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
+			buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
+
 		}
 
 		private void buttonRemoveCustomItem_Click(object sender, EventArgs e)
@@ -784,14 +1429,12 @@ namespace MoreTerra
 			{
 				si = lstFilteredItems.SelectedItem.ToString();
 
-				si = si.Split('*')[0];
-
 				// I don't know how someone would get here with a non-custom item but just to be safe.
-				if (SettingsManager.Instance.IsDefaultItem(si))
+				if (Global.Instance.Info.GetItemEnum(si) != ItemEnum.Custom)
 					return;
 
+				Global.Instance.Info.RemoveCustomItem(si);
 				SettingsManager.Instance.FilterItemStates.Remove(si);
-
 				lstFilteredItems.Items.RemoveAt(selection);
 
 				if (lstFilteredItems.Items.Count != 0)
@@ -808,19 +1451,19 @@ namespace MoreTerra
 
 				si = lstAvailableItems.SelectedItem.ToString();
 
-				si = si.Split('*')[0];
-
 				// I don't know how someone would get here with a non-custom item but just to be safe.
-				if (SettingsManager.Instance.IsDefaultItem(si))
+				if (Global.Instance.Info.GetItemEnum(si) != ItemEnum.Custom)
 					return;
 
-				SettingsManager.Instance.FilterItemStates.Remove(si);
-
+				Global.Instance.Info.RemoveCustomItem(si);
 				lstAvailableItems.Items.RemoveAt(selection);
 
 				if (lstAvailableItems.Items.Count != 0)
 					lstAvailableItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
 			}
+
+			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
+			buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
 
 		}
 
@@ -835,14 +1478,16 @@ namespace MoreTerra
 				return;
 			}
 
-			si = lstFilteredItems.SelectedItem.ToString();
-
-			si = si.Split('*')[0];
-
-			buttonRemoveCustomItem.Enabled = !SettingsManager.Instance.IsDefaultItem(si);
-
 			if (lstAvailableItems.SelectedIndex != -1)
 				lstAvailableItems.SelectedIndex = -1;
+
+			si = lstFilteredItems.SelectedItem.ToString();
+
+			if (Global.Instance.Info.GetItemEnum(si) == ItemEnum.Custom)
+				buttonRemoveCustomItem.Enabled = true;
+			else
+				buttonRemoveCustomItem.Enabled = false;
+
 		}
 
 		private void lstAvailableItems_SelectionChanged(object sender, EventArgs e)
@@ -856,46 +1501,40 @@ namespace MoreTerra
 				return;
 			}
 
-			si = lstAvailableItems.SelectedItem.ToString();
-
-			si = si.Split('*')[0];
-
-			buttonRemoveCustomItem.Enabled = !SettingsManager.Instance.IsDefaultItem(si);
-
 			if (lstFilteredItems.SelectedIndex != -1)
 				lstFilteredItems.SelectedIndex = -1;
+
+			si = lstAvailableItems.SelectedItem.ToString();
+
+			if (Global.Instance.Info.GetItemEnum(si) == ItemEnum.Custom)
+				buttonRemoveCustomItem.Enabled = true;
+			else
+				buttonRemoveCustomItem.Enabled = false;
 		}
 
 		private void buttonMoveAllToFiltered_Click(object sender, EventArgs e)
 		{
-			Int32 i, count;
-			List<String> keys;
+			List<String> filter;
 
 			if (lstAvailableItems.Items.Count == 0)
 				return;
 
-			keys = SettingsManager.Instance.FilterItemStates.Keys.ToList();
-			count = keys.Count;
+			filter = SettingsManager.Instance.FilterItemStates;
 
-			for (i = 0; i < count; i++)
-				SettingsManager.Instance.FilterItemStates[keys[i]] = true;
+			foreach (String s in lstAvailableItems.Items)
+			{
+				filter.Add(s);
+			}
 
 			ResetFilterLists();
 		}
 
 		private void buttonMoveAllToAvailable_Click(object sender, EventArgs e)
 		{
-			Int32 i, count;
-			List<String> keys;
-
 			if (lstFilteredItems.Items.Count == 0)
 				return;
 
-			keys = SettingsManager.Instance.FilterItemStates.Keys.ToList();
-			count = keys.Count;
-
-			for (i = 0; i < count; i++)
-				SettingsManager.Instance.FilterItemStates[keys[i]] = false;
+			SettingsManager.Instance.FilterItemStates.Clear();
 
 			ResetFilterLists();
 		}
@@ -903,21 +1542,44 @@ namespace MoreTerra
 		private void ResetFilterLists()
 		{
 			String lstItem;
+			List<String> filterList;
+
+			Boolean showInChest = SettingsManager.Instance.ShowChestItems;
+			Boolean showNormal = SettingsManager.Instance.ShowNormalItems;
+			Boolean showCustom = SettingsManager.Instance.ShowCustomItems;
 
 			lstFilteredItems.Items.Clear();
 			lstAvailableItems.Items.Clear();
 
-			foreach (KeyValuePair<string, bool> kvp in SettingsManager.Instance.FilterItemStates)
-			{
-				if (SettingsManager.Instance.IsDefaultItem(kvp.Key))
-					lstItem = kvp.Key;
-				else
-					lstItem = kvp.Key + "*";
+			filterList = SettingsManager.Instance.FilterItemStates;
 
-				if (kvp.Value == true)
-					lstFilteredItems.Items.Add(lstItem);
+			foreach (KeyValuePair<String, ItemInfo> kvp in Global.Instance.Info.Items)
+			{
+				lstItem = kvp.Key;
+
+				if (filterList.Contains(kvp.Key))
+				{
+					lstFilteredItems.Items.Add(kvp.Key);
+				}
 				else
+				{
+					if (kvp.Value.isCustom == true)
+					{
+						if (showCustom == false)
+							continue;
+					}
+					else if (kvp.Value.foundIn == "Chest")
+					{
+						if (showInChest == false)
+							continue;
+					}
+					else if (showNormal == false)
+					{
+						continue;
+					}
+
 					lstAvailableItems.Items.Add(lstItem);
+				}
 			}
 
 			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
@@ -932,7 +1594,8 @@ namespace MoreTerra
 		{
 			if (checkValidPaths(false))
 			{
-				chestNodes = null;
+				treeViewChestInformation.ImageList = null;
+
 				filterCount = SettingsManager.Instance.FilterItemStates.Count;
 
 				buttonDrawWorld.Enabled = false;
@@ -941,6 +1604,10 @@ namespace MoreTerra
 				groupBoxImageOutput.Enabled = false;
 				(this.tabPageMarkers as Control).Enabled = false;
 				(this.tabPageWorldInformation as Control).Enabled = false;
+
+				Point pt = this.Location;
+				pt.X += (this.Size.Width / 2);
+				pt.Y += (this.Size.Height / 2);
 
 				mapper = new WorldMapper();
 				mapper.Initialize();
@@ -956,7 +1623,7 @@ namespace MoreTerra
 				mapperWorker.RunWorkerAsync(false);
 
 				progForm.FormClosed += new FormClosedEventHandler(worker_Completed);
-				progForm.Show();
+				progForm.Show(this);
 			}
 		}
 
@@ -967,8 +1634,7 @@ namespace MoreTerra
 			treeViewChestInformation.TreeViewNodeSorter = null;
 			treeViewChestInformation.Sorted = false;
 
-			if (chestNodes != null)
-				PopulateChestTree(GetChests());
+			PopulateChestTree(GetChests());
 		}
 
 		private void radioButtonSortByX_CheckedChanged(object sender, EventArgs e)
@@ -985,29 +1651,25 @@ namespace MoreTerra
 			treeViewChestInformation.TreeViewNodeSorter = new ChestComparerY();
 		}
 
-		private void applyChestFilter()
+		private List<Chest> applyChestFilter(List<Chest> chests)
 		{
-			String itemName;
-			Dictionary<string, bool> itemFilters = SettingsManager.Instance.FilterItemStates;
-			filteredChestNodes = new List<TreeNode>();
+			List<String> itemFilters = SettingsManager.Instance.FilterItemStates;
+			List<Chest> filteredChests = new List<Chest>();
 
-			foreach(TreeNode tn in chestNodes)
+			foreach(Chest c in chests)
 			{
 				// If we are checking the chest node itself.
-				if (tn.Parent == null)
+				foreach (Item item in c.Items)
 				{
-					foreach (TreeNode item in tn.Nodes)
+					if (itemFilters.Contains(item.Name))
 					{
-						itemName = item.Text.Split(',')[0];
-
-						if (itemFilters.ContainsKey(itemName) && itemFilters[itemName] == true)
-						{
-							filteredChestNodes.Add(tn);
-							break;
-						}
+						filteredChests.Add(c);
+						break;
 					}
 				}
 			}
+
+			return filteredChests;
 		}
 
 		private void tabControlSettings_SelectedIndexChanged(object sender, EventArgs e)
@@ -1024,12 +1686,459 @@ namespace MoreTerra
 				}
 			}
 		}
+
+		private void saveToTextToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog dialog = new SaveFileDialog();
+			DialogResult result;
+
+			if (treeViewChestInformation.Nodes.Count == 0)
+			{
+				MessageBox.Show("No chests to save!");
+				return;
+			}
+
+			dialog.FileName = String.Format("{0}Chests.txt",
+				Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.SelectedItem.ToString()));
+			dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+			dialog.FilterIndex = 1;
+			dialog.RestoreDirectory = true;
+
+			result = dialog.ShowDialog();
+
+			if (result == DialogResult.Cancel)
+				return;
+
+			SaveChestsAsText(dialog.FileName);
+		}
+
+		private void saveToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog dialog = new SaveFileDialog();
+			DialogResult result;
+
+			if (treeViewChestInformation.Nodes.Count == 0)
+			{
+				MessageBox.Show("No chests to save!");
+				return;
+			}
+
+			dialog.FileName = String.Format("{0}Chests.csv",
+				Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.SelectedItem.ToString()));
+			dialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+			dialog.FilterIndex = 1;
+			dialog.RestoreDirectory = true;
+
+			result = dialog.ShowDialog();
+
+			if (result == DialogResult.Cancel)
+				return;
+
+			SaveChestsAsCSV(dialog.FileName);
+		}
+
+		private void saveToXMLtToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog dialog = new SaveFileDialog();
+			DialogResult result;
+
+			if (treeViewChestInformation.Nodes.Count == 0)
+			{
+				MessageBox.Show("No chests to save!");
+				return;
+			}
+
+			dialog.FileName = String.Format("{0}Chests.xml",
+				Path.GetFileNameWithoutExtension(comboBoxWorldFilePath.SelectedItem.ToString()));
+			dialog.Filter = "XML files (*.XML)|*.xml|All files (*.*)|*.*";
+			dialog.FilterIndex = 1;
+			dialog.RestoreDirectory = true;
+
+			result = dialog.ShowDialog();
+
+			if (result == DialogResult.Cancel)
+				return;
+
+			SaveChestsAsXML(dialog.FileName);
+		}
+
+		private void SaveChestsAsText(String textFile)
+		{
+			List<Chest> chests;
+			String chestType;
+			StreamWriter writer = null;
+			FileStream stream;
+
+#if DEBUG == false
+			try
+			{
+#endif
+			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
+			writer = new StreamWriter(stream);
+
+			if (SettingsManager.Instance.FilterChests)
+			{
+				chests = applyChestFilter(this.mapper.Chests);
+			}
+			else
+			{
+				chests = this.mapper.Chests;
+			}
+
+			if (radioButtonSortByX.Checked == true)
+			{
+				chests.Sort(new ChestListComparerX());
+			}
+			else if (radioButtonSortByY.Checked == true)
+			{
+				chests.Sort(new ChestListComparerY());
+			}
+
+			foreach (Chest c in chests)
+			{
+				switch (c.Type)
+				{
+					case ChestType.GoldChest:
+						chestType = "Gold Chest";
+						break;
+					case ChestType.LockedGoldChest:
+						chestType = "Gold Chest (Locked)";
+						break;
+					case ChestType.ShadowChest:
+						chestType = "Shadow Chest";
+						break;
+					case ChestType.LockedShadowChest:
+						chestType = "Shadow Chest (Locked)";
+						break;
+					case ChestType.Barrel:
+						chestType = "Barrel";
+						break;
+					case ChestType.TrashCan:
+						chestType = "Trash Can";
+						break;
+					case ChestType.Chest:
+					default:
+						chestType = "Chest";
+						break;
+				}
+
+				if (c.Items.Count == 0)
+					chestType = "Empty " + chestType;
+
+				writer.WriteLine(String.Format("{0} at {1}, {2}", chestType, c.Coordinates.X, c.Coordinates.Y));
+
+				foreach (Item i in c.Items)
+				{
+					writer.WriteLine(String.Format("  #{0} - {1} of {2}", i.Id + 1, i.Count, i.Name));
+				}
+
+				writer.WriteLine();
+			}
+
+			writer.Close();
+			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
+
+#if DEBUG == false
+			}
+			catch (IOException e)
+			{
+				if (writer != null)
+					writer.Close();
+
+				MessageBox.Show(e.Message,
+				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				if (File.Exists(textFile))
+					File.Delete(textFile);
+			}
+#endif
+		}
+
+		private void SaveChestsAsCSV(String textFile)
+		{
+			List<Chest> chests;
+			String chestType;
+			StreamWriter writer = null;
+			FileStream stream;
+
+#if DEBUG == false
+			try
+			{
+#endif
+			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
+			writer = new StreamWriter(stream);
+
+			if (SettingsManager.Instance.FilterChests)
+			{
+				chests = applyChestFilter(this.mapper.Chests);
+			}
+			else
+			{
+				chests = this.mapper.Chests;
+			}
+
+			if (radioButtonSortByX.Checked == true)
+			{
+				chests.Sort(new ChestListComparerX());
+			}
+			else if (radioButtonSortByY.Checked == true)
+			{
+				chests.Sort(new ChestListComparerY());
+			}
+
+			String header = "Chest Type, X Coordinate, Y Coordinate";
+
+			for (Int32 i = 0; i < Global.ChestMaxItems; i++)
+				header += String.Format(", Item {0} Count, Item {0} Name", i + 1);
+
+			writer.WriteLine(header);
+
+			foreach (Chest c in chests)
+			{
+				switch (c.Type)
+				{
+					case ChestType.GoldChest:
+						chestType = "Gold Chest";
+						break;
+					case ChestType.LockedGoldChest:
+						chestType = "Gold Chest (Locked)";
+						break;
+					case ChestType.ShadowChest:
+						chestType = "Shadow Chest";
+						break;
+					case ChestType.LockedShadowChest:
+						chestType = "Shadow Chest (Locked)";
+						break;
+					case ChestType.Barrel:
+						chestType = "Barrel";
+						break;
+					case ChestType.TrashCan:
+						chestType = "Trash Can";
+						break;
+					case ChestType.Chest:
+					default:
+						chestType = "Chest";
+						break;
+				}
+
+				if (c.Items.Count == 0)
+					chestType = "Empty " + chestType;
+
+				writer.Write(String.Format("{0}, {1}, {2}", chestType, c.Coordinates.X, c.Coordinates.Y));
+
+				List<Item>.Enumerator itemEnum = c.Items.GetEnumerator();
+				itemEnum.MoveNext();
+				Item i = itemEnum.Current;
+
+				for (Int32 j = 0; j < Global.ChestMaxItems; j++)
+				{
+					if (i == null || i.Id != j)
+					{
+						writer.Write(", , ");
+					}
+					else
+					{
+						writer.Write(String.Format(", {0}, {1}", i.Count, i.Name));
+						itemEnum.MoveNext();
+						i = itemEnum.Current;
+					}
+				}
+
+				writer.Write(Environment.NewLine);
+			}
+
+			writer.Close();
+			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
+
+#if DEBUG == false
+			}
+			catch (IOException e)
+			{
+				if (writer != null)
+					writer.Close();
+
+				MessageBox.Show(e.Message,
+				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				if (File.Exists(textFile))
+					File.Delete(textFile);
+			}
+#endif
+		}
+
+		private void SaveChestsAsXML(String textFile)
+		{
+			List<Chest> chests;
+			String chestType;
+			StreamWriter writer = null;
+			FileStream stream;
+
+#if DEBUG == false
+			try
+			{
+#endif
+			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
+			writer = new StreamWriter(stream);
+
+			if (SettingsManager.Instance.FilterChests)
+			{
+				chests = applyChestFilter(this.mapper.Chests);
+			}
+			else
+			{
+				chests = this.mapper.Chests;
+			}
+
+			if (radioButtonSortByX.Checked == true)
+			{
+				chests.Sort(new ChestListComparerX());
+			}
+			else if (radioButtonSortByY.Checked == true)
+			{
+				chests.Sort(new ChestListComparerY());
+			}
+
+			writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+			writer.WriteLine(String.Format("<chests worldName=\"{0}\">", worldNames[comboBoxWorldFilePath.SelectedItem.ToString()]));
+
+			foreach (Chest c in chests)
+			{
+				switch (c.Type)
+				{
+					case ChestType.GoldChest:
+						chestType = "Gold Chest";
+						break;
+					case ChestType.LockedGoldChest:
+						chestType = "Gold Chest (Locked)";
+						break;
+					case ChestType.ShadowChest:
+						chestType = "Shadow Chest";
+						break;
+					case ChestType.LockedShadowChest:
+						chestType = "Shadow Chest (Locked)";
+						break;
+					case ChestType.Barrel:
+						chestType = "Barrel";
+						break;
+					case ChestType.TrashCan:
+						chestType = "Trash Can";
+						break;
+					case ChestType.Chest:
+					default:
+						chestType = "Chest";
+						break;
+				}
+
+				writer.WriteLine(String.Format("  <chest type=\"{0}\" xPosition=\"{1}\" yPosition=\"{2}\"{3}",
+					chestType, c.Coordinates.X, c.Coordinates.Y,
+					(c.Items.Count == 0) ? " />" : ">"));
+
+				foreach (Item i in c.Items)
+				{
+					writer.WriteLine(String.Format("    <item id=\"{0}\" name=\"{1}\" count=\"{2}\" />",
+						i.Id, i.Name, i.Count));
+				}
+
+				if (c.Items.Count != 0)
+					writer.WriteLine("  </chest>");
+			}
+			writer.WriteLine("</chests>");
+
+			writer.Close();
+			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
+
+#if DEBUG == false
+			}
+			catch (IOException e)
+			{
+				if (writer != null)
+					writer.Close();
+
+				MessageBox.Show(e.Message,
+				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				if (File.Exists(textFile))
+					File.Delete(textFile);
+			}
+#endif
+		}
 		#endregion
 
 		#region About tabPage functions
 		private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			System.Diagnostics.Process.Start("http://moreterra.codeplex.com/");
+		}
+
+		private String GetVersion()
+		{
+			string ver = Application.ProductVersion;
+
+			while (ver.Length > 3 && ver.Substring(ver.Length - 2) == ".0")
+			{
+				ver = ver.Substring(0, ver.Length - 2);
+			}
+
+			return ver;
+		}
+		#endregion
+
+		#region MessageBox delegate calls
+		// This whole section is for handling MessageBox and other DialogBox calls.
+		// They like to stay disconnected from the main form because they are on a seperate
+		// thread.  This means not only that we can not set the IWin32Window owner target
+		// on them without causing a cross-thread issue but they are not considered Modal
+		// so the main window still has focus and can be moved/played with.
+		// I made these calls all static in order to make it so that they can be called
+		// from anywhere in the program without having to putz around with passing the
+		// FormWorldView instance.
+		private static FormWorldView selfReference;
+		public static FormWorldView Form
+		{
+			get
+			{
+				return selfReference;
+			}
+			set
+			{
+				selfReference = value;
+			}
+		}
+
+		public static DialogResult MessageBoxShow(String text, String caption, MessageBoxButtons buttons,
+			MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+		{
+			if (FormWorldView.Form.InvokeRequired)
+			{
+				MessageBoxShowFullDelegate del = new MessageBoxShowFullDelegate(MessageBoxShow);
+				return (DialogResult) FormWorldView.Form.Invoke(del, new Object[] 
+				{ text, caption, buttons, icon, defaultButton });
+			}
+
+			return MessageBox.Show(FormWorldView.Form, text, caption, buttons, icon, defaultButton);
+		}
+
+		public static DialogResult MessageBoxShow(String text)
+		{
+			if (FormWorldView.Form.InvokeRequired)
+			{
+				MessageBoxShowDelegate del = new MessageBoxShowDelegate(MessageBoxShow);
+				return (DialogResult) FormWorldView.Form.Invoke(del, new Object[] { text });
+			}
+
+			return MessageBox.Show(FormWorldView.Form, text);
+		}
+
+		public static DialogResult MessageBoxWithCheckBoxShow(FormMessageBoxWithCheckBox box)
+		{
+			if (FormWorldView.Form.InvokeRequired)
+			{
+				MessageBoxWithCheckBoxShowDelegate del = 
+					new MessageBoxWithCheckBoxShowDelegate(MessageBoxWithCheckBoxShow);
+				return (DialogResult) FormWorldView.Form.Invoke(del, new Object[] { box });
+			}
+
+			return box.ShowDialog(FormWorldView.Form);
 		}
 		#endregion
 

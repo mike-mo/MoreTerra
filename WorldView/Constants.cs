@@ -6,14 +6,17 @@ namespace MoreTerra
 {
     public class Constants
     {
-		public const Int32 currentVersion = 20;
+		public const Int32 UserSettingsVersion = 1;
+
+		public const Int32 currentVersion = 22;
         /// <summary>
         /// List of Credits
         /// </summary>
-        public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, Musluk, Sanktanglia, Metamorf.";
+		public const string Credits = @"TJChap2840, Vib Rib, Infinite Monkeys, Dr VideoGames 0031, " + 
+			"Musluk, Sanktanglia, Metamorf.\r\n\r\nAnd special thanks to kdfb for donating a copy of the game!";
                                        
 
-        public const int WallOffset = 267;
+        public const Byte WallOffset = (MoreTerra.Structures.TileType.WallStone - 1);
 
         /// <summary>
         /// Maximum Number of Items a Chest Can Contain
@@ -49,123 +52,7 @@ namespace MoreTerra
 
         public static string ApplicationUserSettingsFile = System.IO.Path.Combine(ApplicationRootDirectory, "UserSettings.xml");
 
-		public static string[] ObjectSymbols = { "Altar", "Chest", "Heart", "Hellforge", "ShadowOrb", "Sign", "Torch" };
-		public static string[] GemSymbols = {"Amethyst", "Diamond", "Emerald", "Ruby", "Sapphire", "Topaz"};
-		public static string[] OreSymbols = { "Copper", "Iron", "Silver", "Gold", "Demonite", "Obsidian", "Meteorite", "Hellstone" };
-		public static string[] PeopleSymbols = { "ArmsDealer", "Clothier", "Demolitionist", "Dryad", "Guide", "Merchant", "Nurse", "OldMan", "Spawn" };
-		public static string[] ExternalSymbolNames = { };
-
-		public static string[] NPCList = {"Arms Dealer", "Clothier", "Demolitionist", "Dryad", "Guide", "Merchant", "Nurse", "Old Man"};
-
 		public static string[] OldProgramNames = { "TerrariaWorldViewer", "MoreTerrra" };
-
-		public static Dictionary<String, String[]> SymbolDict;
-
-		public static void Initialize()
-		{
-			SymbolDict = new Dictionary<String, String[]>();
-
-			SymbolDict.Add("Objects", ObjectSymbols);
-			SymbolDict.Add("Gems", GemSymbols);
-			SymbolDict.Add("Ores", OreSymbols);
-			SymbolDict.Add("People", PeopleSymbols);
-
-			Int32 i = 0;
-			i += ObjectSymbols.Length;
-			i += GemSymbols.Length;
-			i += OreSymbols.Length;
-			i += PeopleSymbols.Length;
-
-			ExternalSymbolNames = new string[i];
-
-			i = 0;
-			ObjectSymbols.CopyTo(ExternalSymbolNames, i);
-			i += ObjectSymbols.Length;
-
-			GemSymbols.CopyTo(ExternalSymbolNames, i);
-			i += GemSymbols.Length;
-
-			OreSymbols.CopyTo(ExternalSymbolNames, i);
-			i += OreSymbols.Length;
-
-			PeopleSymbols.CopyTo(ExternalSymbolNames, i);
-			i += PeopleSymbols.Length;
-		}
-
-		public static string[] defaultItems = {"Aglet",
-								  "Angel Statue",
-								  "Anklet of the Wind",
-								  "Aqua Scepter",
-								  "Archery Potion",
-								  "Band of Regeneration",
-								  "Battle Potion",
-								  "Blowpipe",
-								  "Blue Moon",
-								  "Bomb",
-								  "Bottle",
-								  "Breathing Reed",
-								  "Cloud in a Bottle",
-								  "Cobalt Shield",
-								  "Copper Bar",
-								  "Dark Lance",
-								  "Dynamite",
-								  "Enchanted Boomerang",
-								  "Featherfall Potion",
-								  "Feral Claws",
-								  "Flaming Arrow",
-								  "Flipper", 
-								  "Flower of Fire",
-								  "Gills potion",
-								  "Glowstick",
-								  "Gold Bar",
-								  "Gold Coin",
-								  "Golden Key",
-								  "Gravitation Potion",
-								  "Grenade",
-								  "Handgun",
-								  "Healing Potion",
-								  "Hellfire Arrow",
-								  "Hermes Boots",
-								  "Hunter Potion",
-								  "Invisibility Potion",
-								  "Iron Bar",
-								  "Ironskin Potion",
-								  "Jester's Arrow",
-								  "Lesser Healing Potion",
-								  "Lesser Restoration Potion",
-								  "Lucky Horseshoe",
-								  "Magic Mirror",
-								  "Magic Missile",
-								  "Magic Power Potion",
-								  "Mana Regeneration Potion",
-								  "Meteorite Bar",
-								  "Muramasa",
-								  "Nature's Gift",
-								  "Night Owl Potion",
-								  "Obsidian Skin Potion",
-								  "Regeneration Potion",
-								  "Restoration Potion",
-								  "Shadow Key",
-								  "Shine Potion",
-								  "Shiny Red Balloon",
-								  "Shuriken",
-								  "Silver Bar",
-								  "Silver Bullet",
-								  "Silver Coin",
-								  "Spear",
-								  "Spelunker Potion",
-								  "Staff of Regrowth",
-								  "Starfury",
-								  "Swiftness Potion",
-								  "Sunfury",
-								  "Suspicious Looking Eye",
-								  "Thorns Potion",
-								  "Throwing Knife",
-								  "Torch",
-								  "Trident",
-								  "Water Walking Potion",
-								  "Wooden Arrow",
-								  "Wooden Boomerang"};
 
         // COLOR CONSTANTS
 
@@ -220,6 +107,7 @@ namespace MoreTerra
             public static Color LAVA = Color.FromArgb(255, 72, 0);
             public static Color WATER = Color.FromArgb(0, 12, 255);
             public static Color SKY = Color.FromArgb(155, 209, 255);
+
             public static Color WALL_STONE = Color.FromArgb(66, 66, 66);
             public static Color WALL_DIRT = Color.FromArgb(88, 61, 46);
             public static Color WALL_EBONSTONE = Color.FromArgb(61, 58, 78);

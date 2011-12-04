@@ -3,6 +3,22 @@ using System.Drawing;
 
 namespace MoreTerra.Structures
 {
+	public enum NPCType
+	{
+		Armsdealer = 0,
+		Clothier,
+		Demolitionist,
+		Dryad,
+		Guide,
+		Mechanic = 5,
+		Merchant,
+		Nurse,
+		Oldman,
+		Tinkerer,
+		Wizard = 10,
+		Unknown = 11
+	}
+		
 	public class NPC
 	{
 		private Int32 npcId;
@@ -12,6 +28,7 @@ namespace MoreTerra.Structures
 
 		private Boolean isNpcHomeless;
 		private Point npcHomeTile;
+		private NPCType npcType;
 
 		#region Constructors
 		public NPC()
@@ -22,6 +39,7 @@ namespace MoreTerra.Structures
 			npcPosition = new PointSingle(0, 0);
 			isNpcHomeless = false;
 			npcHomeTile = new Point(0, 0);
+			npcType = NPCType.Unknown;
 		}
 
 		public NPC(Int32 id, Boolean active, String name, PointSingle pos, Boolean homeless, Point home)
@@ -32,7 +50,7 @@ namespace MoreTerra.Structures
 			isNpcHomeless = homeless;
 			npcHomeTile = home;
 			npcPosition = pos;
-
+			npcType = NPCType.Unknown;
 		}
 		#endregion
 
@@ -106,6 +124,18 @@ namespace MoreTerra.Structures
 			set
 			{
 				npcName = value;
+			}
+		}
+
+		public NPCType Type
+		{
+			get
+			{
+				return npcType;
+			}
+			set
+			{
+				npcType = value;
 			}
 		}
 		#endregion

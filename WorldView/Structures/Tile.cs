@@ -146,6 +146,16 @@ namespace MoreTerra.Structures
 			}
 		}
 
+		public Boolean Wire
+		{
+			get {
+				return (flags &0x40) != 0;
+			}
+			set {
+				flags = (Byte) ((flags &0xBF) + (value ? 0x40 : 0x00));
+			}
+		}
+
 		public Int32 Size
 		{
 			get

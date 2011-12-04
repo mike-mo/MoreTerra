@@ -3,16 +3,15 @@ using System.Drawing;
 
 namespace MoreTerra.Structures
 {
-	// Used to store both the point and the count of a symbol we need to draw on the map.
-	// This way we can place the number directly in the symbol to make it easier to see how
-	// big a spot is as the symbol covers up the actual pixels.
-    public class SymbolLoc
+	// Used to store both the point and the count of a marker we need to draw on the map.
+	// This way we can set up a filter system to show only sets large enough to be of interest.
+    public class MarkerLoc
     {
         private Point _pv;
         private int _count;
 
 		#region Constructors
-		public SymbolLoc(Point p, int c)
+		public MarkerLoc(Point p, int c)
         {
             _pv = p;
             _count = c;

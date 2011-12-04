@@ -5,6 +5,7 @@ using System.IO;
 using System.Drawing;
 using MoreTerra.Structures;
 using MoreTerra.Utilities;
+using MoreTerra.Structures.TerraInfo;
 
 namespace MoreTerra
 {
@@ -14,12 +15,16 @@ namespace MoreTerra
     {
         static ResourceManager instance = null;
         static readonly object mutex = new object();
-
-        private Dictionary<TileType, Bitmap> symbolBitmaps;
+		
+        private Dictionary<String, Bitmap> markerBitmaps;
+		private Dictionary<String, Bitmap> customMarkerBitmaps;
+		private Boolean useCustom;
 
         private ResourceManager()
         {
-            this.symbolBitmaps = new Dictionary<TileType, Bitmap>();
+			useCustom = false;
+            this.markerBitmaps = new Dictionary<String, Bitmap>();
+			this.customMarkerBitmaps = new Dictionary<String, Bitmap>();
         }
 
         public static ResourceManager Instance
@@ -43,15 +48,15 @@ namespace MoreTerra
         public void Initialize()
         {
             // Check to see if root folder directory exists
-            if (!Directory.Exists(Constants.ApplicationRootDirectory))
+            if (!Directory.Exists(Global.ApplicationRootDirectory))
             {
 
 				String oldRoot;
-				String newRoot = Constants.ApplicationRootDirectory;
+				String newRoot = Global.ApplicationRootDirectory;
 
-				Directory.CreateDirectory(Constants.ApplicationRootDirectory);
+				Directory.CreateDirectory(Global.ApplicationRootDirectory);
 
-				foreach(String s in Constants.OldProgramNames)
+				foreach(String s in Global.OldProgramNames)
 				{
 
 					oldRoot = System.IO.Path.Combine(Environment.GetFolderPath(
@@ -65,95 +70,108 @@ namespace MoreTerra
 				}
             }
 
-            if (!Directory.Exists(Constants.ApplicationLogDirectory))
+            if (!Directory.Exists(Global.ApplicationLogDirectory))
             {
                 // Create it
-                Directory.CreateDirectory(Constants.ApplicationLogDirectory);
+                Directory.CreateDirectory(Global.ApplicationLogDirectory);
             }
 
-            if (!Directory.Exists(Constants.ApplicationResourceDirectory))
+            if (!Directory.Exists(Global.ApplicationResourceDirectory))
             {
                 // Create it
-                Directory.CreateDirectory(Constants.ApplicationResourceDirectory);
+                Directory.CreateDirectory(Global.ApplicationResourceDirectory);
             }
-            // Copy all the symbols
-            ValidateSymbolResources();
 
-            // Load
-            LoadSymbols();
+			// Load
+			LoadMarkers();
+			
+			// Copy all the markers
+            ValidateMarkerResources(false);
+
+			// Load custom markers from the files.
+			LoadCustomMarkers();
+
         }
 
 
         /// <summary>
-        /// Copy the symbols externally to the resource directory
+        /// Copy the markers externally to the resource directory
         /// </summary>
-        public void ValidateSymbolResources()
+        private void ValidateMarkerResources(Boolean overwrite)
         {
-            Type resourceType = Util.GetResourceAssemblyType();
-
-            foreach (string symbolName in Constants.ExternalSymbolNames)
+            foreach (KeyValuePair<String, Bitmap> kvp in markerBitmaps)
             {
                 // if it doesnt exist recopy
-                if(!File.Exists(Path.Combine(Constants.ApplicationResourceDirectory, string.Format("{0}.png", symbolName))))
+                if((!File.Exists(Path.Combine(Global.ApplicationResourceDirectory,
+					string.Format("{0}.png", kvp.Key)))) || overwrite == true)
                 {
-                    Bitmap b = (Bitmap)Properties.Resources.ResourceManager.GetObject(symbolName);
-                    SaveSymbolToResourceDirectory(b, symbolName);
+                    SaveMarkerToResourceDirectory(kvp.Value, kvp.Key);
                 }
             }
         }
 
+		private void LoadMarkers()
+		{
+			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			{
+				Bitmap b = (Bitmap)Properties.Resources.ResourceManager.GetObject(kvp.Value.markerImage);
+				markerBitmaps.Add(kvp.Value.markerImage, b);
+			}
+		}
+
+
         /// <summary>
-        /// Loads Symbols, filter which ones are actually enabled
+        /// Loads Markers
         /// </summary>
-        public void LoadSymbols()
+        private void LoadCustomMarkers()
         {
-            //// Property file doesnt exist so recreate/reload
-            //if(!File.Exists(Constants.ApplicationSymbolPropertiesFile))
-            //{
-            //    foreach (string symbolName in Constants.ExternalSymbolNames)
-            //    {
-            //        this.symbolProperties.Add((TileType)Enum.Parse(typeof(TileType), symbolName), new SymbolProperties(symbolName, true, GetSymbolPath(symbolName)));
-            //    }
-
-            //    // Serialize to File
-            //    XmlSerializer outputSerializer = new XmlSerializer(this.symbolProperties.GetType());
-            //    StringBuilder sb = new StringBuilder();
-            //    StringWriter writer = new StringWriter(sb);
-            //    outputSerializer.Serialize(writer, this.symbolProperties);
-            //    XmlDocument xmlDocument = new XmlDocument();
-            //    xmlDocument.LoadXml(sb.ToString());
-            //    xmlDocument.Save(Constants.ApplicationSymbolPropertiesFile);
-            //}
-            //XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.LoadXml(File.ReadAllText(Constants.ApplicationSymbolPropertiesFile));
-            //XmlNodeReader reader = new XmlNodeReader(xmlDoc.DocumentElement);
-            //XmlSerializer inputSerializer = new XmlSerializer(this.symbolProperties.GetType());
-            //this.symbolProperties = (SerializableDictionary<TileType, SymbolProperties>)inputSerializer.Deserialize(reader);
-
-            foreach (string symbolName in Constants.ExternalSymbolNames)
+			// Changed to FileStream as new Bitmap locks the image down.
+			// Once loaded why do we need to keep the file from changing?
+			FileStream stream;
+            foreach (KeyValuePair<String, Bitmap> kvp in markerBitmaps)
             {
-                string symbolPath = GetSymbolPath(symbolName);
-                this.symbolBitmaps.Add((TileType)Enum.Parse(typeof(TileType), symbolName), new Bitmap(symbolPath));
+				string markerPath = GetMarkerPath(kvp.Key);
+				stream = new FileStream(markerPath, FileMode.Open);
+                this.customMarkerBitmaps.Add(kvp.Key, new Bitmap(stream));
+				stream.Close();
             }
         }
 
-        public Bitmap GetSymbol(TileType symbolType)
+		public void ResetCustomMarkers()
+		{
+			this.customMarkerBitmaps.Clear();
+			ValidateMarkerResources(true);
+			LoadCustomMarkers();
+		}
+
+        public Bitmap GetMarker(MarkerType markerType)
         {
-            if (!this.symbolBitmaps.ContainsKey(symbolType))
-            {
-                throw new ApplicationException(string.Format("Tile Type {0} Does not have an associated Symbol", symbolType));
-            }
-            return this.symbolBitmaps[symbolType];
+			return this.GetMarker(Enum.GetName(typeof(MarkerType), markerType));
         }
 
-        public static string GetSymbolPath(string symbolName)
+		public Bitmap GetMarker(String markerName)
+		{
+			if (useCustom == false)
+			{
+				if (this.markerBitmaps.ContainsKey(markerName))
+					return this.markerBitmaps[markerName];
+			}
+			else
+			{
+				if (this.customMarkerBitmaps.ContainsKey(markerName))
+					return this.customMarkerBitmaps[markerName];
+			}
+			throw new ApplicationException(string.Format("Tile type {0} does not have an associated Marker", markerName));
+		}
+
+        private string GetMarkerPath(string markerName)
         {
-            return Path.Combine(Constants.ApplicationResourceDirectory, string.Format("{0}.png", symbolName));
+            return Path.Combine(Global.ApplicationResourceDirectory, string.Format("{0}.png", markerName));
         }
 
-        public static void SaveSymbolToResourceDirectory(Bitmap symbol, string name)
+        private void SaveMarkerToResourceDirectory(Bitmap marker, string name)
         {
-            symbol.Save(Path.Combine(Constants.ApplicationResourceDirectory, string.Format("{0}.png", name)), ImageFormat.Png);
+            marker.Save(Path.Combine(Global.ApplicationResourceDirectory, string.Format("{0}.png", name)), ImageFormat.Png);
         }
 
 		private void MoveAndCombineDirectories(String oldDir, String newDir)
@@ -206,5 +224,18 @@ namespace MoreTerra
 				}
 			}
 		}
+
+		public Boolean Custom
+		{
+			get
+			{
+				return useCustom;
+			}
+			set
+			{
+				useCustom = value;
+			}
+		}
+
     }
 }

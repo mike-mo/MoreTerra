@@ -72,7 +72,7 @@ namespace MoreTerra.Utilities
 		/// <param name="allowEmpty">Whether an empty string is an ok thing to return.</param>
 		/// <param name="maxSize">The highest size string we can attempt to read.</param>
 		/// <returns>The string or null if one was not found.</returns>
-		public String ReadBackwardsString(Boolean allowEmpty = false, Int32 maxSize = 127)
+		public String ReadBackwardsString(Boolean allowEmpty = false, Int32 maxSize = 127, Int32 verificationByte = -1)
 		{
 			Int32 peekSpot;
 			Int32 readEnd = 128;
@@ -102,9 +102,6 @@ namespace MoreTerra.Utilities
 
 			for (i = 1; i < readEnd; i++)
 			{
-				if (i == 0x40)
-					i = 0x40;
-
 				inStream.Seek(-1, SeekOrigin.Current);
 				peekSpot = base.PeekChar();
 
@@ -113,8 +110,13 @@ namespace MoreTerra.Utilities
 
 				if (peekSpot == i)
 				{
-					retStr = base.ReadString();
-					break;
+					peekSpot = PeekBackwardsByte();
+
+					if ((verificationByte == -1) || (peekSpot == verificationByte))
+					{
+						retStr = base.ReadString();
+						break;
+					}
 				}
 
 			}
