@@ -897,46 +897,95 @@ namespace MoreTerra.Structures
 			Boolean theB;
 			Byte theI;
 			Int32 i, j;
+			Int16 RLE = 0;
 
 			if (bw != null)
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Skipping Tiles");
 
-			for (i = 0; i < MaxX; i++)
+			if (header.ReleaseNumber < 0x24)
 			{
-				for (j = 0; j < MaxY; j++)
+				for (i = 0; i < MaxX; i++)
 				{
-					theB = reader.ReadBoolean();
-
-					if (theB == true)
+					for (j = 0; j < MaxY; j++)
 					{
-						theI = reader.ReadByte();
+						theB = reader.ReadBoolean();
 
-						if (tileImportant[theI] == true)
+						if (theB == true)
 						{
-							reader.ReadInt16();
-							reader.ReadInt16();
+							theI = reader.ReadByte();
+
+							if (tileImportant[theI] == true)
+							{
+								reader.ReadInt16();
+								reader.ReadInt16();
+							}
+						}
+
+						reader.ReadBoolean();
+
+						theB = reader.ReadBoolean();
+
+						if (theB == true)
+							reader.ReadByte();
+
+						theB = reader.ReadBoolean();
+
+						if (theB == true)
+						{
+							reader.ReadByte();
+							reader.ReadBoolean();
 						}
 					}
-
-					reader.ReadBoolean();
-
-					theB = reader.ReadBoolean();
-
-					if (theB == true)
-						reader.ReadByte();
-
-					theB = reader.ReadBoolean();
-
-					if (theB == true)
-					{
-						reader.ReadByte();
-						reader.ReadBoolean();
-					}
+					progressPosition = stream.Position;
 				}
-				progressPosition = stream.Position;
 			}
+			else
+			{
+				for (i = 0; i < MaxX; i++)
+				{
+					for (j = 0; j < MaxY; j++)
+					{
+						if (RLE == 0)
+						{
+							theB = reader.ReadBoolean();
 
+							if (theB == true)
+							{
+								theI = reader.ReadByte();
+
+								if (tileImportant[theI] == true)
+								{
+									reader.ReadInt16();
+									reader.ReadInt16();
+								}
+							}
+
+							theB = reader.ReadBoolean();
+
+							if (theB == true)
+								reader.ReadByte();
+
+							theB = reader.ReadBoolean();
+
+							if (theB == true)
+							{
+								reader.ReadByte();
+								reader.ReadBoolean();
+							}
+
+							reader.ReadBoolean();
+
+							RLE = reader.ReadInt16();
+						}
+						else
+						{
+							RLE--;
+						}
+					}
+					progressPosition = stream.Position;
+				}
+			}
 			posChests = stream.Position;
 		}
 

@@ -10,6 +10,7 @@ namespace MoreTerra.Utilities
 		private FileStream stream;
 		private BackwardsBinaryReader backReader;
 		private Int32 MaxX, MaxY;
+		private WorldHeader header;
 
 		#region Constructors
 		public BackwardsScanner(FileStream str, WorldHeader head)
@@ -17,6 +18,7 @@ namespace MoreTerra.Utilities
 			stream = str;
 			MaxX = head.MaxTiles.X;
 			MaxY = head.MaxTiles.Y;
+			header = head;
 			backReader = new BackwardsBinaryReader(stream);
 		}
 		#endregion
@@ -40,6 +42,59 @@ namespace MoreTerra.Utilities
 			// We'll fail if we don't have a good footer object.
 			if (useFooter.Active == false)
 				return 0;
+
+			if (header.ReleaseNumber >= 0x24)
+			{
+				String NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.MechanicsName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.WizardsName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.TinkerersName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.DemolitionistsName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.ClothiersName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.GuidesName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.DryadsName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.ArmsDealersName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.NursesName = NPCName;
+
+				NPCName = backReader.ReadBackwardsString(false);
+				if (NPCName == null)
+					return 0;
+				header.MerchantsName = NPCName;
+			}
 
 			// The NPC section always ends with 00 for "No more NPCs".  
 			if (backReader.ReadBackwardsByte() != 00)
@@ -219,6 +274,9 @@ namespace MoreTerra.Utilities
 			try
 			{
 #endif
+				if (header.ReleaseNumber >= 0x24)
+					returnItem.Prefix = backReader.ReadBackwardsByte();
+
 				returnItem.Name = backReader.ReadBackwardsString();
 
 				if (!String.IsNullOrEmpty(returnItem.Name))

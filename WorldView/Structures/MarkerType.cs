@@ -29,7 +29,8 @@ namespace MoreTerra.Structures
 		Hellstone,
 		Cobalt,
 		Mythril = 20,
-		Adamantite = 21,
+		Adamantite,
+		Statue = 22,
 
 		// Extra space here for improvement room.
 		ArmsDealer = 30,

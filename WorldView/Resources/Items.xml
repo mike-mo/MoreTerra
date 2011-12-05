@@ -11,8 +11,8 @@
     <tile name="Trees" tileImage="5" color="Wood" />
     <tile name="Iron" tileImage="6" autoGenType="Ore Blend"  color="#BD9F8B" marker="Iron" />
     <tile name="Copper" tileImage="7" autoGenType="Ore Blend"  color="#FF9532" marker="Copper" />
-    <tile name="Silver" tileImage="8" autoGenType="Ore Blend"  color="#B9A417" marker="Silver" />
-    <tile name="Gold" tileImage="9" autoGenType="Ore Blend"  color="#D9DFDF" marker="Gold" />
+    <tile name="Gold" tileImage="8" autoGenType="Ore Blend"  color="#D9DFDF" marker="Gold" />
+    <tile name="Silver" tileImage="9" autoGenType="Ore Blend"  color="#B9A417" marker="Silver" />
 
     <tile name="Closed Door" tileImage="10" color="Decorative" />
     <tile name="Open Door" tileImage="11" color="Decorative" />
@@ -169,7 +169,7 @@
     <tile name="Throne" tileImage="102" color="Decorative" />
     <tile name="Bowl" tileImage="103" color="Decorative" />
     <tile name="Grandfather Clock" tileImage="104" color="Decorative" />
-    <tile name="Statue" tileImage="105" color="Decorative" />
+    <tile name="Statue" tileImage="105" color="Decorative" marker="Statue" />
     <tile name="Sawmill" tileImage="106" color="Decorative" />
     
     <tile name="Cobalt" autoGenType="Ore Blend" tileImage="107" color="#0b508f" marker="Cobalt" />
@@ -1816,6 +1816,7 @@
     <marker name="Hellforge" partOfSet="Objects" />
     <marker name="Shadow Orb" markerImage="ShadowOrb" partOfSet="Objects" />
     <marker name="Sign" partOfSet="Objects" />
+    <marker name="Statue" partOfSet="Objects" />
     <marker name="Torch" partOfSet="Objects" />
     <marker name="Tombstone" partOfSet="Objects" />
     

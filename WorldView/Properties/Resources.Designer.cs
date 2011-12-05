@@ -386,6 +386,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Statue {
+            get {
+                object obj = ResourceManager.GetObject("Statue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Tinkerer {
             get {
                 object obj = ResourceManager.GetObject("Tinkerer", resourceCulture);

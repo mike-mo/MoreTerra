@@ -248,6 +248,7 @@
     <Content Include="Resources\chest_sl.png" />
     <Content Include="Resources\chest_t.png" />
     <EmbeddedResource Include="Resources\Items.xml" />
+    <None Include="Resources\objects_statue.png" />
     <Content Include="Resources\objects_tombstone.png" />
     <Content Include="Resources\objects_torch.png" />
     <Content Include="Resources\objects_unknown.png" />
