@@ -219,6 +219,7 @@
         {
 			Int32 CropAmount;
 			int row, col;
+			Bitmap bitmap;
 
 			switch(SettingsManager.Instance.CropImageUsing)
 			{
@@ -233,8 +234,15 @@
 					break;
 			}
 
-			Bitmap bitmap = new Bitmap(maxX - (2 * CropAmount) - 1, maxY - ( 2 * CropAmount) - 1
-				, PixelFormat.Format24bppRgb);
+			if (CropAmount > 0)
+			{
+				bitmap = new Bitmap(maxX - (2 * CropAmount) - 1, maxY - (2 * CropAmount) - 1
+					, PixelFormat.Format24bppRgb);
+			}
+			else
+			{
+				bitmap = new Bitmap(maxX, maxY, PixelFormat.Format24bppRgb);
+			}
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             Graphics graphicsHandle = Graphics.FromImage((Image)bitmap);
 
