@@ -11,8 +11,8 @@
     <tile name="Trees" tileImage="5" color="Wood" />
     <tile name="Iron" tileImage="6" autoGenType="Ore Blend"  color="#BD9F8B" marker="Iron" />
     <tile name="Copper" tileImage="7" autoGenType="Ore Blend"  color="#FF9532" marker="Copper" />
-    <tile name="Gold" tileImage="8" autoGenType="Ore Blend"  color="#D9DFDF" marker="Gold" />
-    <tile name="Silver" tileImage="9" autoGenType="Ore Blend"  color="#B9A417" marker="Silver" />
+    <tile name="Gold" tileImage="8" autoGenType="Ore Blend"  color="#B9A417" marker="Gold" />
+    <tile name="Silver" tileImage="9" autoGenType="Ore Blend"  color="#D9DFDF" marker="Silver" />
 
     <tile name="Closed Door" tileImage="10" color="Decorative" />
     <tile name="Open Door" tileImage="11" color="Decorative" />
@@ -77,7 +77,7 @@
     <tile name="Water Candle" tileImage="49" autoGenType="Single" color="Light Source" />
 
     <tile name="Books" tileImage="50" color="Decorative" />
-    <tile name="Cobweb" tileImage="51" autoGenType="Building Block" color="#FFFFFF" />
+    <tile name="Cobweb" tileImage="51" autoGenType="Building Block" color="#F0F0F0" />
     <tile name="Vines" tileImage="52" autoGenType="Hanging Vine" color="Plants" />
     <tile name="Sand" tileImage="53" autoGenType="Ore Blend" color="#FFDA38" />
     <tile name="Glass" tileImage="54" autoGenType="Building Block" color="Decorative" />
@@ -178,7 +178,7 @@
 
     <tile name="Hallowed Plants" tileImage="110" color="Hallowed Plants" />
     <tile name="Adamantite" autoGenType="Ore Blend" tileImage="111" color="#801a34" marker="Adamantite" />
-    <tile name="Silt" autoGenType="Ore Blend" tileImage="112" color="#67627A" />
+    <tile name="Ebonsand" autoGenType="Ore Blend" tileImage="112" color="#595353" />
     <tile name="Hallowed Plants 2" tileImage="113" color="Hallowed Plants" />
     <tile name="Tinkerer's Workbench" tileImage="114" color="Decorative" />
     <tile name="Hallowed Vines" autoGenType="Hanging Vine" tileImage="115" color="Hallowed Vines" />
@@ -190,7 +190,7 @@
     <tile name="Unknown New Brick" autoGenType="Ore Blend" tileImage="120" color="Unknown" />
     <tile name="Cobalt Brick" autoGenType="Ore Blend" tileImage="121" color="Block" />
     <tile name="Mythril Brick" autoGenType="Ore Blend" tileImage="122" color="Block" />
-    <tile name="Ebonsand" autoGenType="Ore Blend" tileImage="123" color="#595353" />
+    <tile name="Silt" autoGenType="Ore Blend" tileImage="123" color="#67627A" />
     <tile name="Wooden Plank" autoGenType="Building Block" tileImage="124" color="Wood" />
     <tile name="Crystal Ball" tileImage="125" color="Decorative" />
     <tile name="Disco Ball" tileImage="126" color="Decorative" />
@@ -214,6 +214,11 @@
     <tile name="Inlet Pump" tileImage="142" color="Mechanical" />
     <tile name="Outlet Pump" tileImage="143" color="Mechanical" />
     <tile name="Timers" tileImage="144" color="Mechanical" />
+    <tile name="Candy Cane Block" tileImage="145" autoGenType="Building Block" color="Block" />
+    <tile name="Green Candy Cane Block" tileImage="146" autoGenType="Building Block" color="Block" />
+    <tile name="Snow Block" tileImage="147" autoGenType="Building Block" color="#FFFFFF" />
+    <tile name="Snow Brick" tileImage="148" autoGenType="Building Block" color="Block" />
+    <tile name="Holiday Lights" tileImage="149" color="Light Source" />
 
   </tiles>
   <walls>
@@ -248,6 +253,9 @@
     <wall name="Planked Wall" wallImage="27" color="Wall Wood" />
 
     <wall name="Ebonstone Brick Wall" wallImage="28" color="Wall Brick" />
+    <wall name="Candy Cane Wall" wallImage="29" color="Wall Brick" />
+    <wall name="Green Candy Cane Wall" wallImage="30" color="Wall Brick" />
+    <wall name="Snow Brick Wall" wallImage="31" color="Wall Brick" />
   </walls>
   <items>
     <item name="1 Second Timer" type="Unknown" itemImage="0" />
@@ -884,6 +892,23 @@
     <item name="Music Box (Underground Hallow)" type="Unknown" itemImage="0" />
     <item name="Music Box (Boss 3)" type="Unknown" itemImage="0" />
 
+    <item name="Candy Cane Block" type="Unknown" itemImage="586" />
+    <item name="Candy Cane Wall" type="Unknown" itemImage="587" />
+    <item name="Santa Hat" type="Unknown" itemImage="588" />
+    <item name="Santa Shirt" type="Unknown" itemImage="589" />
+    <item name="Santa Pants" type="Unknown" itemImage="590" />
+    <item name="Green Candy Cane Block" type="Unknown" itemImage="591" />
+    <item name="Green Candy Cane Wall" type="Unknown" itemImage="592" />
+    <item name="Snow Block" type="Unknown" itemImage="593" />
+    <item name="Snow Brick" type="Unknown" itemImage="594" />
+    <item name="Snow Brick Wall" type="Unknown" itemImage="595" />
+    <item name="Blue Light" type="Unknown" itemImage="596" />
+    <item name="Red Light" type="Unknown" itemImage="597" />
+    <item name="Green Light" type="Unknown" itemImage="598" />
+    <item name="Blue Present" type="Unknown" itemImage="599" />
+    <item name="Green Present" type="Unknown" itemImage="600" />
+    <item name="Yellow Present" type="Unknown" itemImage="601" />
+    <item name="Snow Globe" type="Unknown" itemImage="602" />
   </items>
   <namechanges>
     <item name="Ball 'O Hurt" newName="Ball O' Hurt" />
@@ -1779,6 +1804,10 @@
     <npc name="Merchant" npcImage="17" />
     <npc name="Nurse" npcImage="18" />
     <npc name="Old Man" npcImage="37" />
+    <npc name="Goblin Tinkerer" npcImage="107" />
+    <npc name="Wizard" npcImage="108" />
+    <npc name="Mechanic" npcImage="124" />
+    <npc name="Santa Claus" npcImage="142" />         
   </npcs>
   <colors>
     <color name="Unknown" red="255" green="0" blue="255" />
@@ -1859,14 +1888,22 @@
     <marker name="Merchant" partOfSet="People" />
     <marker name="Nurse" partOfSet="People" />
     <marker name="Old Man" markerImage="OldMan" partOfSet="People" />
-    <marker name="Goblin Tinkerer" markerImage="Tinkerer" partOfSet="People" />
+    <marker name="Goblin Tinkerer" markerImage="GoblinTinkerer" partOfSet="People" />
     <marker name="Wizard" partOfSet="People" />
     <marker name="Mechanic" partOfSet="People" />
+    <marker name="Santa Claus" markerImage="SantaClaus" partOfSet="People" />
     <marker name="Spawn" partOfSet="People" />
     
     <marker name="Unknown" notInList="true" />
   </markers>
   <specialobjects>
+    <object name="Water" type="Liquid" color="#000CFF" />
+    <object name="Lava" type="Liquid" color="#FF4000" />
+
+    <object name="Wire" type="Wire" color="#FD3A3D" />
+
+    <!-- Backgrounds have to be last so they do not turn off the Lava & Water
+    when Draw Walls is off.-->
     <object name="Sky" type="Background" objectImage="0" color="#9BD1FF" />
     <object name="Dirt Transition" type="Background" objectImage="1" color="Dirt Background" />
     <object name="Dirt" type="Background" objectImage="2" color="Dirt Background" />
@@ -1874,10 +1911,5 @@
     <object name="Rock Transition" type="Background" objectImage="4" color="Rock Background" />
     <object name="Underworld" type="Background" objectImage="5" color="Underworld Background" />
     <object name="Underworld Transition" type="Background" objectImage="6" color="Underworld Background" />
-    
-    <object name="Water" type="Liquid" color="#000CFF" />
-    <object name="Lava" type="Liquid" color="#FF4000" />
-
-    <object name="Wire" type="Wire" color="#FD3A3D" />
   </specialobjects>
 </data>

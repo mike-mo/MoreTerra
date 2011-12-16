@@ -31,12 +31,10 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabControlSettings = new System.Windows.Forms.TabControl();
 			this.tabPageDrawWorld = new System.Windows.Forms.TabPage();
+			this.label4 = new System.Windows.Forms.Label();
+			this.comboBoxCropImage = new System.Windows.Forms.ComboBox();
 			this.checkBoxDrawWires = new System.Windows.Forms.CheckBox();
 			this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.comboBoxDrawUsing = new System.Windows.Forms.ComboBox();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
 			this.checkBoxScanForItems = new System.Windows.Forms.CheckBox();
 			this.checkBoxOpenImage = new System.Windows.Forms.CheckBox();
 			this.buttonDrawWorld = new System.Windows.Forms.Button();
@@ -126,7 +124,6 @@
 			this.comboBoxSettings = new System.Windows.Forms.ComboBox();
 			this.tabControlSettings.SuspendLayout();
 			this.tabPageDrawWorld.SuspendLayout();
-			this.groupBox6.SuspendLayout();
 			this.groupBoxImageOutput.SuspendLayout();
 			this.tabPageMarkers.SuspendLayout();
 			this.groupBoxMarkers.SuspendLayout();
@@ -175,9 +172,10 @@
 			// 
 			// tabPageDrawWorld
 			// 
+			this.tabPageDrawWorld.Controls.Add(this.label4);
+			this.tabPageDrawWorld.Controls.Add(this.comboBoxCropImage);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWires);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWalls);
-			this.tabPageDrawWorld.Controls.Add(this.groupBox6);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxScanForItems);
 			this.tabPageDrawWorld.Controls.Add(this.checkBoxOpenImage);
 			this.tabPageDrawWorld.Controls.Add(this.buttonDrawWorld);
@@ -189,6 +187,30 @@
 			this.tabPageDrawWorld.TabIndex = 0;
 			this.tabPageDrawWorld.Text = "Draw World";
 			this.tabPageDrawWorld.UseVisualStyleBackColor = true;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(208, 261);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(107, 13);
+			this.label4.TabIndex = 5;
+			this.label4.Text = "Crop image based on";
+			// 
+			// comboBoxCropImage
+			// 
+			this.comboBoxCropImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxCropImage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxCropImage.FormattingEnabled = true;
+			this.comboBoxCropImage.Items.AddRange(new object[] {
+            "Nothing",
+            "Old Lighting",
+            "New Lighting"});
+			this.comboBoxCropImage.Location = new System.Drawing.Point(316, 257);
+			this.comboBoxCropImage.Name = "comboBoxCropImage";
+			this.comboBoxCropImage.Size = new System.Drawing.Size(115, 21);
+			this.comboBoxCropImage.TabIndex = 5;
 			// 
 			// checkBoxDrawWires
 			// 
@@ -213,46 +235,6 @@
 			this.checkBoxDrawWalls.TabIndex = 8;
 			this.checkBoxDrawWalls.Text = "Draw Walls";
 			this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Controls.Add(this.comboBoxDrawUsing);
-			this.groupBox6.Controls.Add(this.button2);
-			this.groupBox6.Controls.Add(this.button1);
-			this.groupBox6.Location = new System.Drawing.Point(248, 205);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(218, 73);
-			this.groupBox6.TabIndex = 3;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Unsupported World Version Helper";
-			this.groupBox6.Visible = false;
-			// 
-			// comboBoxDrawUsing
-			// 
-			this.comboBoxDrawUsing.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxDrawUsing.FormattingEnabled = true;
-			this.comboBoxDrawUsing.Location = new System.Drawing.Point(6, 19);
-			this.comboBoxDrawUsing.Name = "comboBoxDrawUsing";
-			this.comboBoxDrawUsing.Size = new System.Drawing.Size(206, 21);
-			this.comboBoxDrawUsing.TabIndex = 12;
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(120, 46);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(92, 23);
-			this.button2.TabIndex = 14;
-			this.button2.Text = "Save as Default";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(6, 46);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(87, 23);
-			this.button1.TabIndex = 13;
-			this.button1.Text = "Scan for Tiles";
-			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxScanForItems
 			// 
@@ -579,7 +561,6 @@
 			this.treeViewColorList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)));
 			this.treeViewColorList.ContextMenuStrip = this.contextMenuStrip;
-			this.treeViewColorList.Enabled = false;
 			this.treeViewColorList.Location = new System.Drawing.Point(6, 6);
 			this.treeViewColorList.Name = "treeViewColorList";
 			this.treeViewColorList.Size = new System.Drawing.Size(227, 317);
@@ -1196,7 +1177,6 @@
 			this.tabControlSettings.ResumeLayout(false);
 			this.tabPageDrawWorld.ResumeLayout(false);
 			this.tabPageDrawWorld.PerformLayout();
-			this.groupBox6.ResumeLayout(false);
 			this.groupBoxImageOutput.ResumeLayout(false);
 			this.groupBoxImageOutput.PerformLayout();
 			this.tabPageMarkers.ResumeLayout(false);
@@ -1291,10 +1271,6 @@
 		private System.Windows.Forms.Button buttonMoveAllToFiltered;
 		private System.Windows.Forms.Button buttonMoveAllToAvailable;
 		private System.Windows.Forms.CheckBox checkBoxScanForItems;
-		private System.Windows.Forms.GroupBox groupBox6;
-		private System.Windows.Forms.ComboBox comboBoxDrawUsing;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox checkBoxDrawWalls;
 		private System.Windows.Forms.CheckBox checkBoxShowChestTypes;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStripSaveChests;
@@ -1334,6 +1310,8 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem resetAllToDefaultToolStripMenuItem;
 		private System.Windows.Forms.CheckBox checkBoxDrawWires;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.ComboBox comboBoxCropImage;
 
 
     }

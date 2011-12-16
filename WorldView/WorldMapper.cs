@@ -217,7 +217,24 @@
 
 		public void CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)
         {
-			Bitmap bitmap = new Bitmap(maxX, maxY, PixelFormat.Format24bppRgb);
+			Int32 CropAmount;
+			int row, col;
+
+			switch(SettingsManager.Instance.CropImageUsing)
+			{
+				case 1:
+					CropAmount = Global.OldLightingCrop;
+					break;
+				case 2:
+					CropAmount = Global.NewLightingCrop;
+					break;
+				default:
+					CropAmount = 0;
+					break;
+			}
+
+			Bitmap bitmap = new Bitmap(maxX - (2 * CropAmount) - 1, maxY - ( 2 * CropAmount) - 1
+				, PixelFormat.Format24bppRgb);
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             Graphics graphicsHandle = Graphics.FromImage((Image)bitmap);
 
@@ -236,19 +253,52 @@
             Byte tileType;
 			Color color;
 
-            //Generate the bitmap
-            int index = -1 * byteOffset;    //first increment will be 0;
-
 			if (bw != null)
 				bw.ReportProgress(50, "Drawing Map");
 
-            for (int row = 0; row < maxY; row++)
+			if (CropAmount > 0)
+			{
+				for (row = 0; row < CropAmount; row++)
+				{
+					for (col = 0; col < maxX; col++)
+					{
+						tiles[col, row] = TileProperties.Cropped;
+					}
+				}
+				for (row = maxY - CropAmount - 1; row < maxY; row++)
+				{
+					for (col = 0; col < maxX; col++)
+					{
+						tiles[col, row] = TileProperties.Cropped;
+					}
+				}
+				for (row = 0; row < maxY; row++)
+				{
+					for (col = 0; col < CropAmount; col++)
+					{
+						tiles[col, row] = TileProperties.Cropped;
+					}
+				}
+				for (row = 0; row < maxY; row++)
+				{
+					for (col = maxX - CropAmount - 1; col < maxX; col++)
+					{
+						tiles[col, row] = TileProperties.Cropped;
+					}
+				}
+			}
+
+            for (row = 0; row < maxY; row++)
             {
                 progress = (int)(((float)row / (float)maxY) * 40f + 50f);
 
-                for (int col = 0; col < maxX; col++)
+				int index = (bmpData.Stride * (row - CropAmount)) - (1 * byteOffset);    //first increment will be 0;
+				for (col = 0; col < maxX; col++)
                 {
-                    index += byteOffset;    //increase here to avoid adding increments to each continue
+					if (tiles[col, row] == TileProperties.Cropped)
+						continue;
+
+					index += byteOffset;    //increase here to avoid adding increments to each continue
                     tileType = tiles[col, row];
 
                     // Skip Walls
@@ -423,7 +473,8 @@
 										tileCount++;
 
 										tiles[i, j] = TileProperties.Processed;
-										tilePos = j * bmpData.Stride + i * byteOffset;
+										tilePos = (j - CropAmount) * bmpData.Stride + 
+												  (i - CropAmount) * byteOffset;
 
 										rgbValues[tilePos] = color.B;
 										rgbValues[tilePos + 1] = color.G;
@@ -482,8 +533,8 @@
 
                 foreach (MarkerLoc sl in kv.Value)
                 {
-                    int x = Math.Max((int)sl.pv.X - (markerBitmap.Width / 2), 0);
-                    int y = Math.Max((int)sl.pv.Y - (markerBitmap.Height / 2), 0);
+                    int x = Math.Max((int)sl.pv.X - (markerBitmap.Width / 2) - CropAmount, 0);
+                    int y = Math.Max((int)sl.pv.Y - (markerBitmap.Height / 2) - CropAmount, 0);
 					
 					if (x > maxX || y > maxY) continue;
 

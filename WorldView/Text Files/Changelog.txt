@@ -1,7 +1,29 @@
+Release 1.10.1
+==============
+=New Features=
+==============
+Added the ability to crop the map to only the playable area.
+
+===========
+=Bug Fixes=
+===========
+Fixed the colors for Gold/Silver.
+
+Fixed locale issues stopping the program from loading.
+
+Fixed an issue that happened when not drawing walls where Lava and Water would vanish.
+
+===============
+=Compatability=
+===============
+All new tiles, walls and NPCs are working.
+
 Release 1.10
 ==============
 =New Features=
 ==============
+Added a marker for Statues.
+
 Added the option to draw the wiring on the map.
 
 It is now possible to have MoreTerra draw different Markers for each type of Chest/Container.
@@ -37,7 +59,7 @@ Dialog boxes now correctly attatch to the main window.
 =Bug Fixes=
 ===========
 Fixed the last bug (I hope) in the code for reading backwards to chests.  It should
- no longer fail for any correctly formed World file.
+ no longer fail for any correctly formed pre-1.1 World file.  1.1 does not work yet.
 
 Refixed the Draw Walls checkbox.
 

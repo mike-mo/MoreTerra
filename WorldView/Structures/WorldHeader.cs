@@ -29,6 +29,7 @@
 		private bool isMechanicSaved;
 		private bool isGoblinArmyDefeated;
 		private bool isClownDefeated;
+		private bool isFrostDefeated;
         private bool isShadowOrbSmashed;
         private bool isMeteorSpawned;
         private byte shadowOrbsSmashed;
@@ -318,7 +319,20 @@
 			}
 		}
 
-        [CategoryAttribute("Meteor Information"), ReadOnlyAttribute(true)]
+		[CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
+		public Boolean IsFrostDefeated
+		{
+			get
+			{
+				return this.isFrostDefeated;
+			}
+			set
+			{
+				this.isFrostDefeated = value;
+			}
+		}
+
+		[CategoryAttribute("Meteor Information"), ReadOnlyAttribute(true)]
         public bool IsShadowOrbSmashed
         {
             get

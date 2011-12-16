@@ -8,20 +8,6 @@ using System.Drawing;
 using MoreTerra.Structures;
 using MoreTerra.Structures.TerraInfo;
 
-/*
- * Patch System
- * ------------
- * Patch Name
- * Patch Creator
- * Patch Creation Date
- * Patch Application Date
- * 
- * Patch Types
- *   ColorName
- *   TileColor
- */
-
-
 namespace MoreTerra
 {
     public sealed class SettingsManager
@@ -42,6 +28,7 @@ namespace MoreTerra
 			public Boolean ShowChestTypes;
 			public Boolean UseCustomMarkers;
 			public Int32 ChestListSortType;
+			public Int32 CropImageType;
 
 //            public SerializableDictionary<string, MarkerInfo> MarkerStates;
 			public Dictionary<String, MarkerSettings> MarkerStates;
@@ -146,8 +133,10 @@ namespace MoreTerra
 			us.ShowChestItems = true;
 			us.ShowNormalItems = false;
 			us.ShowCustomItems = true;
+			us.AreWiresDrawable = true;
 
 			us.ChestListSortType = 0;
+			us.CropImageType = 0;
 
 			us.InputWorldDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games\\Terraria\\Worlds");
 			if (!Directory.Exists(us.InputWorldDirectory))
@@ -416,6 +405,18 @@ namespace MoreTerra
 			set
 			{
 				this.settings.ChestListSortType = value;
+			}
+		}
+
+		public Int32 CropImageUsing
+		{
+			get
+			{
+				return this.settings.CropImageType;
+			}
+			set
+			{
+				this.settings.CropImageType = value;
 			}
 		}
 
@@ -791,6 +792,12 @@ namespace MoreTerra
 									if (parseNode != null)
 										us.ChestListSortType = Int32.Parse(parseNode.Value);
 									break;
+								case "CropImageType":
+									parseNode = node.Attributes["value"];
+
+									if (parseNode != null)
+										us.CropImageType = Int32.Parse(parseNode.Value);
+									break;
 								case "ShowChestItems":
 									parseNode = node.Attributes["value"];
 
@@ -962,6 +969,8 @@ namespace MoreTerra
 					us.ScanForNewChestItems);
 				writer.WriteLine("    <item name=\"ShowChestTypes\" value=\"{0}\" />",
 					us.ShowChestTypes);
+				writer.WriteLine("    <item name=\"CropImageType\" value=\"{0}\" />",
+					us.CropImageType);
 				writer.WriteLine("    <item name=\"UseCustomMarkers\" value=\"{0}\" />",
 					us.UseCustomMarkers);
 				writer.WriteLine("    <item name=\"ChestListSortType\" value=\"{0}\" />",

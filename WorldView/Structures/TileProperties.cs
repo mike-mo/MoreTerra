@@ -79,6 +79,7 @@ namespace MoreTerra.Structures
 		public static Byte Chest;
 		public static Byte Unknown;
 		public static Byte Processed;
+		public static Byte Cropped;
 		public static Byte BackgroundOffset;
 		public static Byte Water;
 		public static Byte Lava;
@@ -118,7 +119,7 @@ namespace MoreTerra.Structures
 			}
 			TileProperties.Unknown = startPos;
 
-			startPos = (Byte) (255 - Global.Instance.Info.Walls.Count);
+			startPos = (Byte) (254 - Global.Instance.Info.Walls.Count);
 
 			foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in Global.Instance.Info.SpecialObjects)
 			{
@@ -126,6 +127,8 @@ namespace MoreTerra.Structures
 			}
 
 			TileProperties.Processed = startPos;
+			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue);
+			TileProperties.Cropped = startPos;
 			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue);
 
 			foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in Global.Instance.Info.SpecialObjects)

@@ -247,7 +247,9 @@
     <Content Include="Resources\chest_s.png" />
     <Content Include="Resources\chest_sl.png" />
     <Content Include="Resources\chest_t.png" />
-    <EmbeddedResource Include="Resources\Items.xml" />
+    <EmbeddedResource Include="Resources\Items.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Resources\objects_statue.png" />
     <Content Include="Resources\objects_tombstone.png" />
     <Content Include="Resources\objects_torch.png" />
@@ -259,6 +261,7 @@
     <None Include="Resources\people_mech.png" />
     <None Include="Resources\people_tinker.png" />
     <None Include="Resources\people_wizard.png" />
+    <None Include="Resources\people_santa.png" />
     <Content Include="Text Files\Changelog.txt" />
     <Content Include="Resources\gem_base.png" />
     <Content Include="Resources\objects_base.png" />

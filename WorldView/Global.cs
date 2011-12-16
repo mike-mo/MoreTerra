@@ -33,6 +33,9 @@ namespace MoreTerra
 		public const Int32 SignMaxNumber = 1000;
 		public const Int32 SignMaxSize = 1500;
 
+		public const Int32 OldLightingCrop = 24;
+		public const Int32 NewLightingCrop = 41;
+
 		public static readonly string ApplicationRootDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MoreTerra");
 
 		public static readonly string ApplicationLogDirectory = System.IO.Path.Combine(ApplicationRootDirectory, "Logs");

@@ -98,6 +98,8 @@ namespace MoreTerra
 			this.checkBoxScanForItems.CheckedChanged += new System.EventHandler(this.checkBoxScanForItems_CheckedChanged);
 			this.checkBoxOpenImage.CheckedChanged += new System.EventHandler(this.checkBoxOpenImage_CheckedChanged);
 
+			this.comboBoxCropImage.SelectedIndexChanged += new System.EventHandler(this.comboBoxCropImage_SelectedIndexChanged);
+
 			this.buttonDrawWorld.Click += new System.EventHandler(this.buttonDrawWorld_Click);
 
 			// Unsupported World Version groupbox
@@ -225,6 +227,7 @@ namespace MoreTerra
 			checkBoxShowChestItems.Checked = SettingsManager.Instance.ShowChestItems;
 			checkBoxShowNormalItems.Checked = SettingsManager.Instance.ShowNormalItems;
 			checkBoxShowCustomItems.Checked = SettingsManager.Instance.ShowCustomItems;
+			comboBoxCropImage.SelectedIndex = SettingsManager.Instance.CropImageUsing;
 
 			// This event handler sets both ResourceManager.Custom but also calls
 			// SetupImageLists.  SetupImageLists always needs to be called before
@@ -2141,6 +2144,16 @@ namespace MoreTerra
 			return box.ShowDialog(FormWorldView.Form);
 		}
 		#endregion
+
+		private void comboBoxCropImage_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.CropImageUsing = comboBoxCropImage.SelectedIndex;
+		}
+
+		private void comboBoxCropImage_SelectedIndexChanged_1(object sender, EventArgs e)
+		{
+
+		}
 
 	}
 }

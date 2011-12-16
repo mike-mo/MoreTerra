@@ -186,6 +186,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap GoblinTinkerer {
+            get {
+                object obj = ResourceManager.GetObject("GoblinTinkerer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Gold {
             get {
                 object obj = ResourceManager.GetObject("Gold", resourceCulture);
@@ -344,6 +351,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SantaClaus {
+            get {
+                object obj = ResourceManager.GetObject("SantaClaus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Sapphire {
             get {
                 object obj = ResourceManager.GetObject("Sapphire", resourceCulture);
@@ -389,13 +403,6 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Statue {
             get {
                 object obj = ResourceManager.GetObject("Statue", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Tinkerer {
-            get {
-                object obj = ResourceManager.GetObject("Tinkerer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

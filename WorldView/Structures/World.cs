@@ -312,6 +312,10 @@ namespace MoreTerra.Structures
 				header.IsGoblinArmyDefeated = reader.ReadBoolean();
 				header.IsClownDefeated = reader.ReadBoolean();
 			}
+			if (version >= 0x25)
+			{
+				header.IsFrostDefeated = reader.ReadBoolean();
+			}
 			header.IsShadowOrbSmashed = reader.ReadBoolean();
 			header.IsMeteorSpawned = reader.ReadBoolean();
 			header.ShadowOrbsSmashed = reader.ReadByte();
