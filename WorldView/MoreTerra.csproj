@@ -223,37 +223,37 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\gem_a.png" />
-    <EmbeddedResource Include="Resources\gem_d.png" />
-    <EmbeddedResource Include="Resources\gem_e.png" />
-    <EmbeddedResource Include="Resources\gem_r.png" />
-    <EmbeddedResource Include="Resources\gem_s.png" />
-    <EmbeddedResource Include="Resources\gem_t.png" />
-    <EmbeddedResource Include="Resources\objects_heart.png" />
-    <EmbeddedResource Include="Resources\objects_shadow.png" />
-    <EmbeddedResource Include="Resources\people_spawn.png" />
+    <None Include="Resources\gem_a.png" />
+    <None Include="Resources\gem_d.png" />
+    <None Include="Resources\gem_e.png" />
+    <None Include="Resources\gem_r.png" />
+    <None Include="Resources\gem_s.png" />
+    <None Include="Resources\gem_t.png" />
+    <None Include="Resources\objects_heart.png" />
+    <None Include="Resources\objects_shadow.png" />
+    <None Include="Resources\people_spawn.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\objects_altar.png" />
+    <None Include="Resources\objects_altar.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BigCannon.png" />
-    <Content Include="Resources\cannon.ico" />
-    <Content Include="Resources\chest_b.png" />
-    <Content Include="Resources\chest_base.png" />
-    <Content Include="Resources\chest_c.png" />
-    <Content Include="Resources\chest_g.png" />
-    <Content Include="Resources\chest_gl.png" />
-    <Content Include="Resources\chest_s.png" />
-    <Content Include="Resources\chest_sl.png" />
-    <Content Include="Resources\chest_t.png" />
-    <EmbeddedResource Include="Resources\Items.xml">
+    <None Include="Resources\cannon.ico" />
+    <None Include="Resources\chest_b.png" />
+    <None Include="Resources\chest_base.png" />
+    <None Include="Resources\chest_c.png" />
+    <None Include="Resources\chest_g.png" />
+    <None Include="Resources\chest_gl.png" />
+    <None Include="Resources\chest_s.png" />
+    <None Include="Resources\chest_sl.png" />
+    <None Include="Resources\chest_t.png" />
+    <None Include="Resources\Items.xml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </None>
     <None Include="Resources\objects_statue.png" />
-    <Content Include="Resources\objects_tombstone.png" />
-    <Content Include="Resources\objects_torch.png" />
-    <Content Include="Resources\objects_unknown.png" />
+    <None Include="Resources\objects_tombstone.png" />
+    <None Include="Resources\objects_torch.png" />
+    <None Include="Resources\objects_unknown.png" />
     <None Include="Resources\SmallCannon.ico" />
     <None Include="Resources\ore_a.png" />
     <None Include="Resources\ore_cob.png" />
@@ -263,29 +263,29 @@
     <None Include="Resources\people_wizard.png" />
     <None Include="Resources\people_santa.png" />
     <Content Include="Text Files\Changelog.txt" />
-    <Content Include="Resources\gem_base.png" />
-    <Content Include="Resources\objects_base.png" />
-    <Content Include="Resources\objects_sign.png" />
-    <Content Include="Resources\ore_base.png" />
-    <Content Include="Resources\people_arms.png" />
-    <Content Include="Resources\people_base.png" />
-    <Content Include="Resources\people_cloth.png" />
-    <Content Include="Resources\people_demo.png" />
-    <Content Include="Resources\people_dryad.png" />
-    <Content Include="Resources\people_guide.png" />
-    <Content Include="Resources\people_merch.png" />
-    <Content Include="Resources\people_nurse.png" />
-    <Content Include="Resources\people_oldman.png" />
+    <None Include="Resources\gem_base.png" />
+    <None Include="Resources\objects_base.png" />
+    <None Include="Resources\objects_sign.png" />
+    <None Include="Resources\ore_base.png" />
+    <None Include="Resources\people_arms.png" />
+    <None Include="Resources\people_base.png" />
+    <None Include="Resources\people_cloth.png" />
+    <None Include="Resources\people_demo.png" />
+    <None Include="Resources\people_dryad.png" />
+    <None Include="Resources\people_guide.png" />
+    <None Include="Resources\people_merch.png" />
+    <None Include="Resources\people_nurse.png" />
+    <None Include="Resources\people_oldman.png" />
     <Content Include="Text Files\Regexes to extract chest item list from wiki site.txt" />
-    <EmbeddedResource Include="Resources\ore_o.png" />
-    <EmbeddedResource Include="Resources\ore_i.png" />
-    <EmbeddedResource Include="Resources\ore_s.png" />
-    <EmbeddedResource Include="Resources\ore_g.png" />
-    <EmbeddedResource Include="Resources\ore_m.png" />
-    <EmbeddedResource Include="Resources\ore_d.png" />
-    <EmbeddedResource Include="Resources\ore_h.png" />
-    <EmbeddedResource Include="Resources\ore_c.png" />
-    <EmbeddedResource Include="Resources\objects_hellforge.png" />
+    <None Include="Resources\ore_o.png" />
+    <None Include="Resources\ore_i.png" />
+    <None Include="Resources\ore_s.png" />
+    <None Include="Resources\ore_g.png" />
+    <None Include="Resources\ore_m.png" />
+    <None Include="Resources\ore_d.png" />
+    <None Include="Resources\ore_h.png" />
+    <None Include="Resources\ore_c.png" />
+    <None Include="Resources\objects_hellforge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

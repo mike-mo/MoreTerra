@@ -22,6 +22,7 @@ namespace MoreTerra.Structures.TerraInfo
 		private Dictionary<String, CraftingSpotInfo> craftingspots;
 		private Dictionary<Int32, RecipeInfo> recipes;
 		private Dictionary<String, List<SpecialObjectInfo>> specialobjects;
+		private Dictionary<Int32, String> itemNames;
 
 		private StringBuilder errorLog;
 
@@ -29,6 +30,7 @@ namespace MoreTerra.Structures.TerraInfo
 		{
 			markers = new Dictionary<String, MarkerInfo>();
 			items = new Dictionary<String, ItemInfo>();
+			itemNames = new Dictionary<Int32, String>();
 			itemTypes = new Dictionary<String, ItemTypeInfo>();
 			recolors = new Dictionary<String, RecolorInfo>();
 			renames = new Dictionary<String, RenameInfo>();
@@ -80,7 +82,9 @@ namespace MoreTerra.Structures.TerraInfo
 
 			LoadCrafting(dataNode.SelectSingleNode("crafting").SelectNodes("craftingspot"));
 			LoadSpecialObjects(dataNode.SelectSingleNode("specialobjects").SelectNodes("object"));
-			
+
+			SetupItemNames();
+
 			return errorLog.ToString();
 		}
 
@@ -802,6 +806,7 @@ namespace MoreTerra.Structures.TerraInfo
 				String recolor = String.Empty;
 				String droppedBy = String.Empty;
 
+				Int32 netId = 0;
 				Int32 imageId = -1;
 				Int32 stack = -1;
 				Int32 defaultStack = -1;
@@ -816,6 +821,14 @@ namespace MoreTerra.Structures.TerraInfo
 							break;
 						case "type":
 							type = att.Value;
+							break;
+						case "netId":
+							if (Int32.TryParse(att.Value, out netId) == false)
+							{
+								errorLog.AppendLine(String.Format("Item #{0} has an invalid netId attribute. Value = \"{1}\"",
+									count, att.Value));
+								continue;
+							}
 							break;
 						case "itemImage":
 							if (Int32.TryParse(att.Value, out imageId) == false)
@@ -904,6 +917,8 @@ namespace MoreTerra.Structures.TerraInfo
 					continue;
 				}
 
+				if (netId == 0)
+					netId = imageId;
 
 				if (items.ContainsKey(name))
 				{
@@ -917,6 +932,7 @@ namespace MoreTerra.Structures.TerraInfo
 				item.droppedBy = droppedBy;
 				item.foundIn = found;
 				item.recolor = recolor;
+				item.netId = netId;
 				item.imageId = imageId;
 				item.stackSize = stack;
 
@@ -1008,6 +1024,7 @@ namespace MoreTerra.Structures.TerraInfo
 			foreach (XmlNode recolorNode in recolorNodes)
 			{
 				String name = String.Empty;
+				Int32 inTint;
 				Single tintR = -1;
 				Single tintG = -1;
 				Single tintB = -1;
@@ -1021,12 +1038,14 @@ namespace MoreTerra.Structures.TerraInfo
 							name = att.Value;
 							break;
 						case "tintRed":
-							if (Single.TryParse(att.Value, out tintR) == false)
+							if (Int32.TryParse(att.Value, out inTint) == false)
 							{
 								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintRed attribute.  Value=\"{1}\"",
 									count, att.Value));
 								continue;
 							}
+
+							tintR = inTint / 10000;
 
 							if ((tintR < 0) || (tintR > 2))
 							{
@@ -1036,12 +1055,14 @@ namespace MoreTerra.Structures.TerraInfo
 							}
 							break;
 						case "tintGreen":
-							if (Single.TryParse(att.Value, out tintG) == false)
+							if (Int32.TryParse(att.Value, out inTint) == false)
 							{
 								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintGreen attribute.  Value=\"{1}\"",
 									count, att.Value));
 								continue;
 							}
+
+							tintG = inTint / 10000;
 
 							if ((tintG < 0) || (tintG > 2))
 							{
@@ -1051,12 +1072,14 @@ namespace MoreTerra.Structures.TerraInfo
 							}
 							break;
 						case "tintBlue":
-							if (Single.TryParse(att.Value, out tintB) == false)
+							if (Int32.TryParse(att.Value, out inTint) == false)
 							{
 								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintBlue attribute.  Value=\"{1}\"",
 									count, att.Value));
 								continue;
 							}
+
+							tintB = inTint / 10000;
 
 							if ((tintB < 0) || (tintB > 2))
 							{
@@ -1433,6 +1456,23 @@ namespace MoreTerra.Structures.TerraInfo
 			}
 		}
 
+		private void SetupItemNames()
+		{
+			itemNames.Add(0, "Unknown Item");
+
+			foreach (KeyValuePair<String, ItemInfo> kvp in items)
+			{
+				if (itemNames.ContainsKey(kvp.Value.netId))
+				{
+					errorLog.AppendLine(String.Format("Item {0} had a duplicate netId: \"{1}\"",
+						kvp.Value.name, kvp.Value.netId));
+				}
+				else
+				{
+					itemNames.Add(kvp.Value.netId, kvp.Value.name);
+				}
+			}
+		}
 
 		public ItemInfo GetItem(String itemName)
 		{
@@ -1513,6 +1553,14 @@ namespace MoreTerra.Structures.TerraInfo
 			}
 
 			return String.Empty;
+		}
+
+		public String GetItemName(Int32 netId)
+		{
+			if (itemNames.ContainsKey(netId))
+				return itemNames[netId];
+
+			return "Unknown Item";
 		}
 
 		public ItemEnum GetItemEnum(String itemName)

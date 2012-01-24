@@ -61,16 +61,7 @@ namespace MoreTerra
         [STAThread]
         static void Main(string[] args)
         {
-			// Set up the culture so floating point strings are read in properly.
-			// We only do this around the section where it is needed to keep other
-			// issues from developing from the culture switch.
-			CultureInfo previousCulture = Application.CurrentCulture;
-
-			Application.CurrentCulture = new CultureInfo("en-US");
-
 			String error = Global.Instance.Initialize();
-
-			Application.CurrentCulture = previousCulture;
 
 #if DEBUG == true
 			if (error != String.Empty)

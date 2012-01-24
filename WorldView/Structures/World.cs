@@ -448,7 +448,15 @@ namespace MoreTerra.Structures
 							theItem = new Item();
 							theItem.Id = j;
 							theItem.Count = itemCount;
-							theItem.Name = reader.ReadString();
+
+							if (header.ReleaseNumber >= 0x26)
+							{
+								theItem.Name = Global.Instance.Info.GetItemName(reader.ReadInt32());
+							}
+							else
+							{
+								theItem.Name = reader.ReadString();
+							}
 
 							if (header.ReleaseNumber >= 0x24)
 								theItem.Prefix = reader.ReadByte();

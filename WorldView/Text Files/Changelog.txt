@@ -1,3 +1,21 @@
+Release 1.10.2
+===========
+=Bug Fixes=
+===========
+Redid the way I handled the locale issues by removing the floating point values from the data file.
+
+===============
+=Compatibility=
+===============
+Added missing items from Terraria 1.1
+Got the chest reading working with Terraria 1.1.2
+
+==============
+=Optimization=
+==============
+Discovered why the XML file was getting added more than once.  
+
+
 Release 1.10.1
 ==============
 =New Features=
