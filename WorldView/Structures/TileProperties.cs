@@ -83,6 +83,7 @@ namespace MoreTerra.Structures
 		public static Byte BackgroundOffset;
 		public static Byte Water;
 		public static Byte Lava;
+        public static Byte Honey;
 		public static Byte Wire;
 		public static Byte WallOffset;
 

@@ -292,7 +292,52 @@ namespace MoreTerra.Structures
 			MaxX = x;
 			MaxY = y;
 			header.MaxTiles = new Point(x, y);
+			if (version >= 0x3F)
+				header.MoonType = (int)reader.ReadByte();
 
+			if (version >= 0x2C)
+			{
+				//Main.treeX[0] = 
+					reader.ReadInt32();
+				//Main.treeX[1] = 
+				reader.ReadInt32();
+				//Main.treeX[2] = 
+				reader.ReadInt32();
+				//Main.treeStyle[0] = 
+				reader.ReadInt32();
+				//Main.treeStyle[1] = 
+				reader.ReadInt32();
+				//Main.treeStyle[2] = 
+				reader.ReadInt32();
+				//Main.treeStyle[3] = 
+				reader.ReadInt32();
+			}
+			if (version >= 60)
+			{
+				//Main.caveBackX[0] = 
+				reader.ReadInt32();
+				//Main.caveBackX[1] = 
+				reader.ReadInt32();
+				//Main.caveBackX[2] = 
+				reader.ReadInt32();
+				//Main.caveBackStyle[0] = 
+				reader.ReadInt32();
+				//Main.caveBackStyle[1] = 
+				reader.ReadInt32();
+				//Main.caveBackStyle[2] = 
+				reader.ReadInt32();
+				//Main.caveBackStyle[3] = 
+				reader.ReadInt32();
+				//Main.iceBackStyle = 
+				reader.ReadInt32();
+				if (version >= 61)
+				{
+					//Main.jungleBackStyle = 
+					reader.ReadInt32();
+					//Main.hellBackStyle = 
+					reader.ReadInt32();
+				}
+			}
 			header.SpawnPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
 			header.SurfaceLevel = reader.ReadDouble();
 			header.RockLayer = reader.ReadDouble();
@@ -301,9 +346,32 @@ namespace MoreTerra.Structures
 			header.MoonPhase = reader.ReadInt32();
 			header.IsBloodMoon = reader.ReadBoolean();
 			header.DungeonPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
+			//crimson
+			reader.ReadBoolean();
 			header.IsBoss1Dead = reader.ReadBoolean();
 			header.IsBoss2Dead = reader.ReadBoolean();
 			header.IsBoss3Dead = reader.ReadBoolean();
+			if (version >= 66)
+				//NPC.downedQueenBee = 
+				reader.ReadBoolean();
+			if (version >= 44)
+			{
+				//NPC.downedMechBoss1 = 
+				reader.ReadBoolean();
+				//NPC.downedMechBoss2 = 
+				reader.ReadBoolean();
+				//NPC.downedMechBoss3 = 
+				reader.ReadBoolean();
+				//NPC.downedMechBossAny = 
+				reader.ReadBoolean();
+			}
+			if (version >= 64)
+			{
+				//NPC.downedPlantBoss = 
+				reader.ReadBoolean();
+				//NPC.downedGolemBoss = 
+				reader.ReadBoolean();
+			}
 			if (version >= 0x24)
 			{
 				header.IsGoblinSaved = reader.ReadBoolean();
@@ -316,6 +384,9 @@ namespace MoreTerra.Structures
 			{
 				header.IsFrostDefeated = reader.ReadBoolean();
 			}
+			if (version >= 56)
+				//NPC.downedPirates = 
+				reader.ReadBoolean();
 			header.IsShadowOrbSmashed = reader.ReadBoolean();
 			header.IsMeteorSpawned = reader.ReadBoolean();
 			header.ShadowOrbsSmashed = reader.ReadByte();
@@ -331,7 +402,61 @@ namespace MoreTerra.Structures
 			header.InvasionType = reader.ReadInt32();
 			header.InvasionPointX = reader.ReadDouble();
 
+			if (version >= 53)
+			{
+				//WorldGen.tempRaining = 
+				reader.ReadBoolean();
+				//WorldGen.tempRainTime = 
+				reader.ReadInt32();
+				//WorldGen.tempMaxRain = 
+				reader.ReadSingle();
+			}
+			if (version >= 54)
+			{
+				//WorldGen.oreTier1 = 
+				reader.ReadInt32();
+				//WorldGen.oreTier2 = 
+				reader.ReadInt32();
+				//WorldGen.oreTier3 = 
+				reader.ReadInt32();
+			}
 
+			int style1 = 0;
+			int style2 = 0;
+			int style3 = 0;
+			int style4 = 0;
+			int style5 = 0;
+			int style6 = 0;
+			int style7 = 0;
+			int style8 = 0;
+			if (version >= 55)
+			{
+				style1 = (int)reader.ReadByte();
+				style2 = (int)reader.ReadByte();
+				style3 = (int)reader.ReadByte();
+			}
+			if (version >= 60)
+			{
+				style4 = (int)reader.ReadByte();
+				style5 = (int)reader.ReadByte();
+				style6 = (int)reader.ReadByte();
+				style7 = (int)reader.ReadByte();
+				style8 = (int)reader.ReadByte();
+			}
+			if (version >= 60)
+			{
+				//Main.cloudBGActive = 
+				reader.ReadInt32();
+
+			}
+			if (version >= 62)
+			{
+				//Main.numClouds = 
+				reader.ReadInt16();
+				//Main.windSpeedSet = 
+				reader.ReadSingle();
+				
+			}
 			posTiles = stream.Position;
 			progressPosition = stream.Position;
 		}
@@ -377,12 +502,18 @@ namespace MoreTerra.Structures
 					}
 
 					theTile.Lighted = reader.ReadBoolean();
+					if(theTile.Lighted)
+						reader.ReadByte(); //lightcolor
 
 					theB = reader.ReadBoolean();
 
 					theTile.Wall = theB;
 					if (theB == true)
+					{
 						theTile.WallType = reader.ReadByte();
+						if (reader.ReadBoolean())
+							reader.ReadByte(); //wall color
+					}
 
 					if (theTile.WallType == 0 && theTile.Wall == true)
 						theTile.Wall = true;
@@ -394,6 +525,8 @@ namespace MoreTerra.Structures
 					{
 						theTile.LiquidLevel = reader.ReadByte();
 						theTile.Lava = reader.ReadBoolean();
+						//if (version >= 51)
+							reader.ReadBoolean(); //honey
 					}
 
 					tiles[i, j] = theTile;
@@ -407,7 +540,7 @@ namespace MoreTerra.Structures
 		private void ReadChests()
 		{
 			Boolean isChest;
-			Byte itemCount;
+			short itemCount;
 			Chest theChest = null;
 			Item theItem;
 			Int32 i, j;
@@ -421,7 +554,7 @@ namespace MoreTerra.Structures
 			{
 				isChest = reader.ReadBoolean();
 
-				if (isChest == true)
+				if (isChest)
 				{
 					theChest = new Chest();
 					theChest.ChestId = i;
@@ -439,9 +572,9 @@ namespace MoreTerra.Structures
 						theChest.Type = ChestType.Chest;
 					}
 
-					for (j = 0; j < 20; j++)
+					for (j = 0; j < 40; j++)
 					{
-						itemCount = reader.ReadByte();
+						itemCount = reader.ReadInt16();
 
 						if (itemCount > 0)
 						{
@@ -568,6 +701,14 @@ namespace MoreTerra.Structures
 				header.TinkerersName = reader.ReadString();
 				header.WizardsName = reader.ReadString();
 				header.MechanicsName = reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
+				reader.ReadString();
 			}
 			else
 			{
@@ -647,110 +788,14 @@ namespace MoreTerra.Structures
 				if (bw != null)
 					bw.ReportProgress(0, "Reading and Processing Tiles");
 
-				if (header.ReleaseNumber < 0x24)
-				{
-					//Read all the tile data using the pre-1.1 format.
-					for (col = 0; col < MaxX; col++)
-					{
-						progressPosition = stream.Position;
 
-						for (row = 0; row < MaxY; row++)
-						{
-							isTileActive = reader.ReadBoolean();
 
-							if (isTileActive)
-							{
-								tileType = reader.ReadByte();
-
-								if (TileProperties.tileTypeDefs[tileType].IsImportant)
-								{
-									if ((tileType == TileProperties.Chest) && (chestTypeList != null))
-									{
-										Int16 typeX = reader.ReadInt16();
-										Int16 typeY = reader.ReadInt16();
-
-										// We need to be sure we're only capturing the upper left square.
-										if ((typeX % 36 == 0) && (typeY == 0))
-										{
-											if ((typeX / 36) <= (Int32)ChestType.TrashCan)
-												chestTypeList.Add(new Point(col, row), (ChestType)(typeX / 36));
-											else
-												chestTypeList.Add(new Point(col, row), ChestType.Unknown);
-										}
-									}
-									else
-									{
-										reader.ReadInt16();
-										reader.ReadInt16();
-									}
-								}
-							}
-							else
-							{
-								if (row < header.SurfaceLevel)
-									tileType = TileProperties.BackgroundOffset;
-								else if (row == header.SurfaceLevel)
-									tileType = (Byte)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-								else if (row < (header.RockLayer + 38))
-									tileType = (Byte)(TileProperties.BackgroundOffset + 2); // Dirt
-								else if (row == (header.RockLayer + 38))
-									tileType = (Byte)(TileProperties.BackgroundOffset + 4); // Rock Transition
-								else if (row < (header.MaxTiles.Y - 202))
-									tileType = (Byte)(TileProperties.BackgroundOffset + 3); // Rock 
-								else if (row == (header.MaxTiles.Y - 202))
-									tileType = (Byte)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-								else
-									tileType = (Byte)(TileProperties.BackgroundOffset + 5); // Underworld
-							}
-
-							isLighted = reader.ReadBoolean();
-
-							isWall = reader.ReadBoolean();
-							if (isWall)
-							{
-								wallType = reader.ReadByte();
-
-								if (tileType >= TileProperties.Unknown)
-								{
-									if (wallType + TileProperties.WallOffset > 255)
-									{
-										tileType = TileProperties.Unknown;
-									}
-									else
-									{
-										tileType = (Byte)(wallType + TileProperties.WallOffset);
-									}
-								}
-							}
-
-							isLiquid = reader.ReadBoolean();
-							if (isLiquid)
-							{
-								liquidLevel = reader.ReadByte();
-								isLava = reader.ReadBoolean();
-
-								if (tileType > TileProperties.Unknown)
-								{
-									tileType = isLava ? TileProperties.Lava : TileProperties.Water;
-								}
-
-							}
-
-							retTiles[col, row] = tileType;
-						}
-					}
-				}
-				else
-				{
 					Int16 RLERemaining = 0;
 
 					//Read all the tile data using the RLE format.
 					for (col = 0; col < MaxX; col++)
 					{
 						progressPosition = stream.Position;
-
-						if (col == 201)
-							col = 201;
 
 						for (row = 0; row < MaxY; row++)
 						{
@@ -784,6 +829,8 @@ namespace MoreTerra.Structures
 											reader.ReadInt16();
 										}
 									}
+									if (reader.ReadBoolean())
+										reader.ReadByte(); //a color?
 								}
 								else
 								{
@@ -803,6 +850,7 @@ namespace MoreTerra.Structures
 										tileType = (Byte)(TileProperties.BackgroundOffset + 5); // Underworld
 
 								}
+								
 
 								isWall = reader.ReadBoolean();
 								if (isWall)
@@ -820,6 +868,8 @@ namespace MoreTerra.Structures
 											tileType = (Byte)(wallType + TileProperties.WallOffset);
 										}
 									}
+									if (reader.ReadBoolean())
+										reader.ReadByte(); //wall color
 								}
 
 								isLiquid = reader.ReadBoolean();
@@ -827,6 +877,7 @@ namespace MoreTerra.Structures
 								{
 									liquidLevel = reader.ReadByte();
 									isLava = reader.ReadBoolean();
+									reader.ReadBoolean(); //honey
 
 									if (tileType > TileProperties.Unknown)
 									{
@@ -839,6 +890,29 @@ namespace MoreTerra.Structures
 
 								if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
 									tileType = TileProperties.Wire;
+
+								//if (version >= 43)
+							  
+									reader.ReadBoolean(); // wire2
+									reader.ReadBoolean(); //wire3
+							  
+							   // if (release >= 41)
+
+									reader.ReadBoolean(); //half brick
+								   // if (!Main.tileSolid[(int)Main.tile[index1, index2].type])
+									//    Main.tile[index1, index2].halfBrick(false);
+									//if (release >= 49)
+								   // {
+										reader.ReadByte(); //slope
+									   // if (!Main.tileSolid[(int)Main.tile[index1, index2].type])
+									   //     Main.tile[index1, index2].slope((byte)0);
+								  //  }
+								
+								//if (release >= 42)
+
+								   bool actuator = reader.ReadBoolean(); //actuator
+									reader.ReadBoolean(); //inactive
+								
 
 								RLERemaining = reader.ReadInt16();
 
@@ -868,7 +942,7 @@ namespace MoreTerra.Structures
 								retTiles[col, row] = tileType;
 								RLERemaining--;
 							}
-						}
+						
 					}
 				}
 

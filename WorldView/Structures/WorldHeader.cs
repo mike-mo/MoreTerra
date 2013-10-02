@@ -19,6 +19,7 @@
         private double temporaryTime;
         private bool isDayTime;
         private int moonPhase;
+        private int moonType;
         private bool isBloodMoon;
         private Point dungeonPoint;
         private bool isBoss1Dead;
@@ -191,6 +192,19 @@
 
         [CategoryAttribute("World Information"), ReadOnlyAttribute(true)]
         public int MoonPhase
+        {
+            get
+            {
+                return this.moonPhase;
+            }
+            set
+            {
+                this.moonPhase = value;
+            }
+        }
+
+        [CategoryAttribute("World Information"), ReadOnlyAttribute(true)]
+        public int MoonType
         {
             get
             {
