@@ -80,6 +80,7 @@
     <tile name="Cobweb" tileImage="51" autoGenType="Building Block" color="#F0F0F0" />
     <tile name="Vines" tileImage="52" autoGenType="Hanging Vine" color="Plants" />
     <tile name="Sand" tileImage="53" autoGenType="Ore Blend" color="#FFDA38" />
+    <tile name="Sandstone" tileImage="151" autoGenType="Building  Block" color="#FFDA38" />
     <tile name="Glass" tileImage="54" autoGenType="Building Block" color="Decorative" />
     <tile name="Signs" tileImage="55" color="Decorative">
       <subtype name="Sign" frameX="0" frameY="0" />
@@ -219,6 +220,7 @@
     <tile name="Snow Block" tileImage="147" autoGenType="Building Block" color="#FFFFFF" />
     <tile name="Snow Brick" tileImage="148" autoGenType="Building Block" color="Block" />
     <tile name="Holiday Lights" tileImage="149" color="Light Source" />
+    <tile name="Ice Block" tileImage="161" autoGenType="Building Block" color="#FFFFFF" />
 
   </tiles>
   <walls>
