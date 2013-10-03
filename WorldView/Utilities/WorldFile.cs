@@ -241,6 +241,24 @@ namespace MoreTerra
                             reader.ReadByte(); //a color?
 
                     }
+                    else
+                    {
+                        if (row < world.Header.SurfaceLevel)
+                            tileType = TileProperties.BackgroundOffset;
+                        else if (row == world.Header.SurfaceLevel)
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+                        else if (row < (world.Header.RockLayer + 38))
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 2); // Dirt
+                        else if (row == (world.Header.RockLayer + 38))
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 4); // Rock Transition
+                        else if (row < (world.Header.MaxTiles.Y - 202))
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 3); // Rock 
+                        else if (row == (world.Header.MaxTiles.Y - 202))
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+                        else
+                            tileType = (Byte)(TileProperties.BackgroundOffset + 5); // Underworld
+
+                    }
                     
 
                     //Check if tile is a wall.
@@ -311,7 +329,13 @@ namespace MoreTerra
                    var RLERemaining = reader.ReadInt16();
                    mapTiles[column, row] = tileType;
                    if (RLERemaining > 0)
+                   {
+                       for (int fillRow = row + 1; fillRow < row + RLERemaining + 1; ++fillRow)
+                       {
+                           mapTiles[column, fillRow] = tileType;
+                       }
                        row += RLERemaining;
+                   }
 
                 }
 

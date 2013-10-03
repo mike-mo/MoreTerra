@@ -447,9 +447,9 @@ namespace MoreTerra.Structures
 						}
 						else
 							theTile.Important = false;
-                        theTile.Lighted = reader.ReadBoolean();
-                        if (theTile.Lighted)
-                            reader.ReadByte(); //lightcolor
+						theTile.Lighted = reader.ReadBoolean();
+						if (theTile.Lighted)
+							reader.ReadByte(); //lightcolor
 					}
 
 
@@ -817,7 +817,7 @@ namespace MoreTerra.Structures
 											tileType = (Byte)(wallType + TileProperties.WallOffset);
 										}
 									}
-                                    if (header.ReleaseNumber >= 48 && reader.ReadBoolean())
+									if (header.ReleaseNumber >= 48 && reader.ReadBoolean())
 										reader.ReadByte(); //wall color
 								}
 
@@ -867,28 +867,28 @@ namespace MoreTerra.Structures
 							}
 							else
 							{
-                            //    if ((tileType >= TileProperties.BackgroundOffset)
-                            //        && (tileType <= TileProperties.BackgroundOffset + 6))
-                            //    {
-                            //        if (row < header.SurfaceLevel)
-                            //            tileType = TileProperties.BackgroundOffset;
-                            //        else if (row == header.SurfaceLevel)
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-                            //        else if (row < (header.RockLayer + 38))
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 2); // Dirt
-                            //        else if (row == (header.RockLayer + 38))
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 4); // Rock Transition
-                            //        else if (row < (header.MaxTiles.Y - 202))
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 3); // Rock 
-                            //        else if (row == (header.MaxTiles.Y - 202))
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-                            //        else
-                            //            tileType = (Byte)(TileProperties.BackgroundOffset + 5); // Underworld
-                            //    }
+							//    if ((tileType >= TileProperties.BackgroundOffset)
+							//        && (tileType <= TileProperties.BackgroundOffset + 6))
+							//    {
+							//        if (row < header.SurfaceLevel)
+							//            tileType = TileProperties.BackgroundOffset;
+							//        else if (row == header.SurfaceLevel)
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+							//        else if (row < (header.RockLayer + 38))
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 2); // Dirt
+							//        else if (row == (header.RockLayer + 38))
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 4); // Rock Transition
+							//        else if (row < (header.MaxTiles.Y - 202))
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 3); // Rock 
+							//        else if (row == (header.MaxTiles.Y - 202))
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+							//        else
+							//            tileType = (Byte)(TileProperties.BackgroundOffset + 5); // Underworld
+							//    }
 
-                            //    retTiles[col, row] = tileType;
-                                RLERemaining--;
-                            }
+							//    retTiles[col, row] = tileType;
+								RLERemaining--;
+							}
 						
 					}
 				}
@@ -1563,7 +1563,7 @@ namespace MoreTerra.Structures
 		public WorldHeader Header { get; set; }
 
 		public Tile[,] Tiles  { get; set; }
-        public byte[,] TileTypes { get; set; }
+		public byte[,] TileTypes { get; set; }
 		public List<Chest> Chests { get; set; }
 
 		public List<Sign> Signs { get; set; }
@@ -1574,10 +1574,10 @@ namespace MoreTerra.Structures
 			{
 				return npcs;
 			}
-            set
-            {
-                npcs = value;
-            }
+			set
+			{
+				npcs = value;
+			}
 		}
 
 		public Footer Footer
