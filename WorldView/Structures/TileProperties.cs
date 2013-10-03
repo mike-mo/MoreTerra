@@ -30,21 +30,21 @@ namespace MoreTerra.Structures
 		#endregion
 
 		#region GetSet Functions
-        public Color Colour
-        {
-            get
-            {
-                return this.colour;
-            }
-        }
+		public Color Colour
+		{
+			get
+			{
+				return this.colour;
+			}
+		}
 
-        public bool IsImportant
-        {
-            get
-            {
-                return this.isImportant;
-            }
-        }
+		public bool IsImportant
+		{
+			get
+			{
+				return this.isImportant;
+			}
+		}
 
 		public bool DrawMarker
 		{
@@ -83,7 +83,7 @@ namespace MoreTerra.Structures
 		public static Byte BackgroundOffset;
 		public static Byte Water;
 		public static Byte Lava;
-        public static Byte Honey;
+		public static Byte Honey;
 		public static Byte Wire;
 		public static Byte WallOffset;
 
@@ -151,6 +151,8 @@ namespace MoreTerra.Structures
 								TileProperties.Lava = startPos;
 							else if (soi.name == "Water")
 								TileProperties.Water = startPos;
+							else if (soi.name == "Honey")
+								TileProperties.Honey = startPos;
 
 							tileTypeDefs[startPos++] = new TileData(false, soi.color);
 						}

@@ -56,7 +56,10 @@
         {
 			Int32 i;
 
-			tiles = world.ReadAndProcessWorld(worldPath, bw);
+            var worldFile = new WorldFile();
+            world = worldFile.LoadFile(worldPath);
+            tiles = world.TileTypes;
+			//tiles = world.ReadAndProcessWorld(worldPath, bw);
 			if (tiles == null)
 				return;
 	

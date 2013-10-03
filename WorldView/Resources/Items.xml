@@ -1904,7 +1904,7 @@
   <specialobjects>
     <object name="Water" type="Liquid" color="#000CFF" />
     <object name="Lava" type="Liquid" color="#FF4000" />
-
+    <object name="Honey" type="Liquid" color="#FF9B00" />
     <object name="Wire" type="Wire" color="#FD3A3D" />
 
     <!-- Backgrounds have to be last so they do not turn off the Lava & Water

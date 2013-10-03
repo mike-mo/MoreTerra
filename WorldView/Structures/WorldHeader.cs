@@ -29,8 +29,9 @@
 		private bool isWizardSaved;
 		private bool isMechanicSaved;
 		private bool isGoblinArmyDefeated;
+        private bool isFrostDefeated;
+        private bool isPiratesDefeated;
 		private bool isClownDefeated;
-		private bool isFrostDefeated;
         private bool isShadowOrbSmashed;
         private bool isMeteorSpawned;
         private byte shadowOrbsSmashed;
@@ -332,6 +333,19 @@
 				this.isClownDefeated = value;
 			}
 		}
+
+        [CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
+        public Boolean IsPiratesDefeated
+        {
+            get
+            {
+                return this.isPiratesDefeated;
+            }
+            set
+            {
+                this.isPiratesDefeated = value;
+            }
+        }
 
 		[CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
 		public Boolean IsFrostDefeated
