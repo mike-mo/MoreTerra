@@ -132,6 +132,7 @@ namespace MoreTerra
 
 			this.textBoxColorColor.TextChanged += new EventHandler(textBoxColorColor_TextChanged);
 			this.comboBoxColorName.SelectedIndexChanged += new EventHandler(comboBoxColorName_SelectedIndexChanged);
+            this.buttonColorColor.Click += buttonColorColor_Click;
 			#endregion
 
 			#region Chest Finder tabPage Handlers
@@ -171,6 +172,16 @@ namespace MoreTerra
 			#endregion
 
 		}
+
+        void buttonColorColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                var rgb = new byte[]{colorDialog.Color.R,colorDialog.Color.G, colorDialog.Color.B};
+                textBoxColorColor.Text = string.Format("#{0}", BitConverter.ToString(rgb).Replace("-", string.Empty));
+            }
+                
+        }
 
 		private void WorldViewForm_Load(object sender, EventArgs e)
 		{
@@ -1103,7 +1114,7 @@ namespace MoreTerra
 			if (Global.Instance.SkipEvents)
 				return;
 
-			MessageBox.Show("radioButtonColorDefault_CheckedChanged");
+			//MessageBox.Show("radioButtonColorDefault_CheckedChanged");
 		}
 
 		private void radioButtonColorName_CheckedChanged(object sender, EventArgs e)
@@ -1111,7 +1122,7 @@ namespace MoreTerra
 			if (Global.Instance.SkipEvents)
 				return;
 
-			MessageBox.Show("radioButtonColorName_CheckedChanged");
+			//MessageBox.Show("radioButtonColorName_CheckedChanged");
 		}
 
 		private void radioButtonColorColor_CheckedChanged(object sender, EventArgs e)
@@ -1119,7 +1130,7 @@ namespace MoreTerra
 			if (Global.Instance.SkipEvents)
 				return;
 
-			MessageBox.Show("radioButtonColorColor_CheckedChanged");
+			//MessageBox.Show("radioButtonColorColor_CheckedChanged");
 		}
 
 		private void comboBoxColorName_SelectedIndexChanged(object sender, EventArgs e)
@@ -1135,7 +1146,7 @@ namespace MoreTerra
 			if (Global.Instance.SkipEvents)
 				return;
 
-			MessageBox.Show("comboBoxColorColor_TextChanged");
+			
 		}
 
 		private void SetupColorButtons()
@@ -2150,10 +2161,8 @@ namespace MoreTerra
 			SettingsManager.Instance.CropImageUsing = comboBoxCropImage.SelectedIndex;
 		}
 
-		private void comboBoxCropImage_SelectedIndexChanged_1(object sender, EventArgs e)
-		{
 
-		}
+
 
 	}
 }
