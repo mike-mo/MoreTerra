@@ -526,6 +526,7 @@ namespace MoreTerra
                 header.WizardsName = "Not Set";
                 header.MechanicsName = "Not Set";
             }
+            world.Header = header;
         }
     }
 }

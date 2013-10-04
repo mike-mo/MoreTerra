@@ -123,6 +123,7 @@
             this.buttonSettingsAddNew = new System.Windows.Forms.Button();
             this.comboBoxSettings = new System.Windows.Forms.ComboBox();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.tabControlSettings.SuspendLayout();
             this.tabPageDrawWorld.SuspendLayout();
             this.groupBoxImageOutput.SuspendLayout();
@@ -152,6 +153,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBoxSelectWorld.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSettings
@@ -168,11 +170,12 @@
             this.tabControlSettings.Location = new System.Drawing.Point(6, 89);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(480, 355);
+            this.tabControlSettings.Size = new System.Drawing.Size(488, 369);
             this.tabControlSettings.TabIndex = 5;
             // 
             // tabPageDrawWorld
             // 
+            this.tabPageDrawWorld.Controls.Add(this.pictureBox);
             this.tabPageDrawWorld.Controls.Add(this.label4);
             this.tabPageDrawWorld.Controls.Add(this.comboBoxCropImage);
             this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWires);
@@ -184,7 +187,7 @@
             this.tabPageDrawWorld.Location = new System.Drawing.Point(4, 22);
             this.tabPageDrawWorld.Name = "tabPageDrawWorld";
             this.tabPageDrawWorld.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDrawWorld.Size = new System.Drawing.Size(472, 329);
+            this.tabPageDrawWorld.Size = new System.Drawing.Size(480, 343);
             this.tabPageDrawWorld.TabIndex = 0;
             this.tabPageDrawWorld.Text = "Draw World";
             this.tabPageDrawWorld.UseVisualStyleBackColor = true;
@@ -210,7 +213,7 @@
             "New Lighting"});
             this.comboBoxCropImage.Location = new System.Drawing.Point(316, 257);
             this.comboBoxCropImage.Name = "comboBoxCropImage";
-            this.comboBoxCropImage.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxCropImage.Size = new System.Drawing.Size(123, 21);
             this.comboBoxCropImage.TabIndex = 5;
             // 
             // checkBoxDrawWires
@@ -218,7 +221,7 @@
             this.checkBoxDrawWires.AutoSize = true;
             this.checkBoxDrawWires.Checked = true;
             this.checkBoxDrawWires.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDrawWires.Location = new System.Drawing.Point(12, 194);
+            this.checkBoxDrawWires.Location = new System.Drawing.Point(101, 229);
             this.checkBoxDrawWires.Name = "checkBoxDrawWires";
             this.checkBoxDrawWires.Size = new System.Drawing.Size(81, 17);
             this.checkBoxDrawWires.TabIndex = 12;
@@ -230,7 +233,7 @@
             this.checkBoxDrawWalls.AutoSize = true;
             this.checkBoxDrawWalls.Checked = true;
             this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDrawWalls.Location = new System.Drawing.Point(12, 217);
+            this.checkBoxDrawWalls.Location = new System.Drawing.Point(12, 229);
             this.checkBoxDrawWalls.Name = "checkBoxDrawWalls";
             this.checkBoxDrawWalls.Size = new System.Drawing.Size(80, 17);
             this.checkBoxDrawWalls.TabIndex = 8;
@@ -241,7 +244,7 @@
             // 
             this.checkBoxScanForItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxScanForItems.AutoSize = true;
-            this.checkBoxScanForItems.Location = new System.Drawing.Point(12, 238);
+            this.checkBoxScanForItems.Location = new System.Drawing.Point(12, 252);
             this.checkBoxScanForItems.Name = "checkBoxScanForItems";
             this.checkBoxScanForItems.Size = new System.Drawing.Size(161, 17);
             this.checkBoxScanForItems.TabIndex = 9;
@@ -254,7 +257,7 @@
             this.checkBoxOpenImage.AutoSize = true;
             this.checkBoxOpenImage.Checked = true;
             this.checkBoxOpenImage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOpenImage.Location = new System.Drawing.Point(12, 261);
+            this.checkBoxOpenImage.Location = new System.Drawing.Point(12, 275);
             this.checkBoxOpenImage.Name = "checkBoxOpenImage";
             this.checkBoxOpenImage.Size = new System.Drawing.Size(170, 17);
             this.checkBoxOpenImage.TabIndex = 10;
@@ -266,9 +269,9 @@
             this.buttonDrawWorld.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDrawWorld.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDrawWorld.Location = new System.Drawing.Point(6, 284);
+            this.buttonDrawWorld.Location = new System.Drawing.Point(6, 298);
             this.buttonDrawWorld.Name = "buttonDrawWorld";
-            this.buttonDrawWorld.Size = new System.Drawing.Size(460, 39);
+            this.buttonDrawWorld.Size = new System.Drawing.Size(468, 39);
             this.buttonDrawWorld.TabIndex = 11;
             this.buttonDrawWorld.Text = "Draw World";
             this.buttonDrawWorld.UseVisualStyleBackColor = true;
@@ -281,7 +284,7 @@
             this.groupBoxImageOutput.Controls.Add(this.buttonBrowseOutput);
             this.groupBoxImageOutput.Location = new System.Drawing.Point(6, 6);
             this.groupBoxImageOutput.Name = "groupBoxImageOutput";
-            this.groupBoxImageOutput.Size = new System.Drawing.Size(460, 96);
+            this.groupBoxImageOutput.Size = new System.Drawing.Size(468, 96);
             this.groupBoxImageOutput.TabIndex = 2;
             this.groupBoxImageOutput.TabStop = false;
             this.groupBoxImageOutput.Text = "Image Output";
@@ -292,13 +295,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputFile.Location = new System.Drawing.Point(6, 32);
             this.textBoxOutputFile.Name = "textBoxOutputFile";
-            this.textBoxOutputFile.Size = new System.Drawing.Size(448, 20);
+            this.textBoxOutputFile.Size = new System.Drawing.Size(456, 20);
             this.textBoxOutputFile.TabIndex = 6;
             // 
             // buttonBrowseOutput
             // 
             this.buttonBrowseOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseOutput.Location = new System.Drawing.Point(336, 58);
+            this.buttonBrowseOutput.Location = new System.Drawing.Point(344, 58);
             this.buttonBrowseOutput.Name = "buttonBrowseOutput";
             this.buttonBrowseOutput.Size = new System.Drawing.Size(118, 28);
             this.buttonBrowseOutput.TabIndex = 7;
@@ -311,7 +314,7 @@
             this.tabPageMarkers.Location = new System.Drawing.Point(4, 22);
             this.tabPageMarkers.Name = "tabPageMarkers";
             this.tabPageMarkers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMarkers.Size = new System.Drawing.Size(472, 329);
+            this.tabPageMarkers.Size = new System.Drawing.Size(475, 329);
             this.tabPageMarkers.TabIndex = 2;
             this.tabPageMarkers.Text = "Markers";
             this.tabPageMarkers.UseVisualStyleBackColor = true;
@@ -322,7 +325,7 @@
             this.groupBoxMarkers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMarkers.Location = new System.Drawing.Point(3, 3);
             this.groupBoxMarkers.Name = "groupBoxMarkers";
-            this.groupBoxMarkers.Size = new System.Drawing.Size(466, 323);
+            this.groupBoxMarkers.Size = new System.Drawing.Size(469, 323);
             this.groupBoxMarkers.TabIndex = 7;
             this.groupBoxMarkers.TabStop = false;
             this.groupBoxMarkers.Text = "World Markers";
@@ -340,7 +343,7 @@
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 304F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(460, 304);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(463, 304);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -350,7 +353,7 @@
             this.tableLayoutPanel2.Controls.Add(this.checkBoxShowChestTypes, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox7, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(229, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(232, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208F));
@@ -454,7 +457,7 @@
             this.tabPageColors.Location = new System.Drawing.Point(4, 22);
             this.tabPageColors.Name = "tabPageColors";
             this.tabPageColors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageColors.Size = new System.Drawing.Size(472, 329);
+            this.tabPageColors.Size = new System.Drawing.Size(475, 329);
             this.tabPageColors.TabIndex = 6;
             this.tabPageColors.Text = "Colors";
             this.tabPageColors.UseVisualStyleBackColor = true;
@@ -668,7 +671,7 @@
             this.tabPageChestFinder.Location = new System.Drawing.Point(4, 22);
             this.tabPageChestFinder.Name = "tabPageChestFinder";
             this.tabPageChestFinder.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageChestFinder.Size = new System.Drawing.Size(472, 329);
+            this.tabPageChestFinder.Size = new System.Drawing.Size(475, 329);
             this.tabPageChestFinder.TabIndex = 5;
             this.tabPageChestFinder.Text = "Chest Finder";
             this.tabPageChestFinder.UseVisualStyleBackColor = true;
@@ -830,7 +833,7 @@
             this.tabPageWorldInformation.Location = new System.Drawing.Point(4, 22);
             this.tabPageWorldInformation.Name = "tabPageWorldInformation";
             this.tabPageWorldInformation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageWorldInformation.Size = new System.Drawing.Size(472, 329);
+            this.tabPageWorldInformation.Size = new System.Drawing.Size(475, 329);
             this.tabPageWorldInformation.TabIndex = 1;
             this.tabPageWorldInformation.Text = "World Information";
             this.tabPageWorldInformation.UseVisualStyleBackColor = true;
@@ -851,7 +854,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(466, 323);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(469, 323);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // worldInfoGroupBox
@@ -863,7 +866,7 @@
             this.worldInfoGroupBox.Location = new System.Drawing.Point(3, 3);
             this.worldInfoGroupBox.Name = "worldInfoGroupBox";
             this.tableLayoutPanel1.SetRowSpan(this.worldInfoGroupBox, 2);
-            this.worldInfoGroupBox.Size = new System.Drawing.Size(227, 267);
+            this.worldInfoGroupBox.Size = new System.Drawing.Size(228, 267);
             this.worldInfoGroupBox.TabIndex = 3;
             this.worldInfoGroupBox.TabStop = false;
             this.worldInfoGroupBox.Text = "World Information";
@@ -874,7 +877,7 @@
             this.worldPropertyGrid.HelpVisible = false;
             this.worldPropertyGrid.Location = new System.Drawing.Point(3, 16);
             this.worldPropertyGrid.Name = "worldPropertyGrid";
-            this.worldPropertyGrid.Size = new System.Drawing.Size(221, 248);
+            this.worldPropertyGrid.Size = new System.Drawing.Size(222, 248);
             this.worldPropertyGrid.TabIndex = 6;
             this.worldPropertyGrid.ToolbarVisible = false;
             // 
@@ -882,10 +885,10 @@
             // 
             this.groupBox4.Controls.Add(this.treeViewChestInformation);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(236, 3);
+            this.groupBox4.Location = new System.Drawing.Point(237, 3);
             this.groupBox4.Name = "groupBox4";
             this.tableLayoutPanel1.SetRowSpan(this.groupBox4, 2);
-            this.groupBox4.Size = new System.Drawing.Size(227, 267);
+            this.groupBox4.Size = new System.Drawing.Size(229, 267);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Chests";
@@ -897,7 +900,7 @@
             this.treeViewChestInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeViewChestInformation.Location = new System.Drawing.Point(3, 16);
             this.treeViewChestInformation.Name = "treeViewChestInformation";
-            this.treeViewChestInformation.Size = new System.Drawing.Size(221, 248);
+            this.treeViewChestInformation.Size = new System.Drawing.Size(223, 248);
             this.treeViewChestInformation.TabIndex = 7;
             // 
             // contextMenuStripSaveChests
@@ -933,7 +936,7 @@
             this.groupBox5.Controls.Add(this.radioButtonSortByX);
             this.groupBox5.Controls.Add(this.radioButtonSortByY);
             this.groupBox5.Controls.Add(this.radioButtonSortByNone);
-            this.groupBox5.Location = new System.Drawing.Point(236, 276);
+            this.groupBox5.Location = new System.Drawing.Point(237, 276);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(224, 43);
             this.groupBox5.TabIndex = 12;
@@ -979,7 +982,7 @@
             this.buttonLoadInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLoadInformation.Location = new System.Drawing.Point(3, 276);
             this.buttonLoadInformation.Name = "buttonLoadInformation";
-            this.buttonLoadInformation.Size = new System.Drawing.Size(227, 44);
+            this.buttonLoadInformation.Size = new System.Drawing.Size(228, 44);
             this.buttonLoadInformation.TabIndex = 8;
             this.buttonLoadInformation.Text = "Load Information";
             this.buttonLoadInformation.UseVisualStyleBackColor = true;
@@ -995,7 +998,7 @@
             this.tabPageAbout.Controls.Add(this.groupBox1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(472, 329);
+            this.tabPageAbout.Size = new System.Drawing.Size(480, 329);
             this.tabPageAbout.TabIndex = 4;
             this.tabPageAbout.Text = "About";
             this.tabPageAbout.UseVisualStyleBackColor = true;
@@ -1064,7 +1067,7 @@
             this.groupBox1.Controls.Add(this.labelSpecialThanks);
             this.groupBox1.Location = new System.Drawing.Point(3, 226);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(468, 102);
+            this.groupBox1.Size = new System.Drawing.Size(473, 102);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Special Thanks To:";
@@ -1074,7 +1077,7 @@
             this.labelSpecialThanks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelSpecialThanks.Location = new System.Drawing.Point(3, 16);
             this.labelSpecialThanks.Name = "labelSpecialThanks";
-            this.labelSpecialThanks.Size = new System.Drawing.Size(462, 83);
+            this.labelSpecialThanks.Size = new System.Drawing.Size(467, 83);
             this.labelSpecialThanks.TabIndex = 0;
             this.labelSpecialThanks.Text = "SpecialThanks";
             // 
@@ -1087,7 +1090,7 @@
             this.groupBoxSelectWorld.Controls.Add(this.buttonBrowseWorld);
             this.groupBoxSelectWorld.Location = new System.Drawing.Point(6, 6);
             this.groupBoxSelectWorld.Name = "groupBoxSelectWorld";
-            this.groupBoxSelectWorld.Size = new System.Drawing.Size(306, 77);
+            this.groupBoxSelectWorld.Size = new System.Drawing.Size(314, 77);
             this.groupBoxSelectWorld.TabIndex = 0;
             this.groupBoxSelectWorld.TabStop = false;
             this.groupBoxSelectWorld.Text = "Select World";
@@ -1109,13 +1112,13 @@
             this.comboBoxWorldFilePath.FormattingEnabled = true;
             this.comboBoxWorldFilePath.Location = new System.Drawing.Point(6, 19);
             this.comboBoxWorldFilePath.Name = "comboBoxWorldFilePath";
-            this.comboBoxWorldFilePath.Size = new System.Drawing.Size(294, 21);
+            this.comboBoxWorldFilePath.Size = new System.Drawing.Size(302, 21);
             this.comboBoxWorldFilePath.TabIndex = 0;
             // 
             // buttonBrowseWorld
             // 
             this.buttonBrowseWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseWorld.Location = new System.Drawing.Point(215, 46);
+            this.buttonBrowseWorld.Location = new System.Drawing.Point(223, 46);
             this.buttonBrowseWorld.Name = "buttonBrowseWorld";
             this.buttonBrowseWorld.Size = new System.Drawing.Size(85, 25);
             this.buttonBrowseWorld.TabIndex = 1;
@@ -1161,16 +1164,24 @@
             this.comboBoxSettings.Size = new System.Drawing.Size(156, 21);
             this.comboBoxSettings.TabIndex = 2;
             // 
+            // pictureBox
+            // 
+            this.pictureBox.Location = new System.Drawing.Point(6, 108);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(468, 115);
+            this.pictureBox.TabIndex = 13;
+            this.pictureBox.TabStop = false;
+            // 
             // FormWorldView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 443);
+            this.ClientSize = new System.Drawing.Size(490, 457);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBoxSelectWorld);
             this.Controls.Add(this.tabControlSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MaximumSize = new System.Drawing.Size(502, 486);
+            this.MaximumSize = new System.Drawing.Size(510, 500);
             this.MinimumSize = new System.Drawing.Size(502, 486);
             this.Name = "FormWorldView";
             this.Padding = new System.Windows.Forms.Padding(3);
@@ -1215,6 +1226,7 @@
             this.groupBoxSelectWorld.ResumeLayout(false);
             this.groupBoxSelectWorld.PerformLayout();
             this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1315,6 +1327,7 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.ComboBox comboBoxCropImage;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.PictureBox pictureBox;
 
 
     }

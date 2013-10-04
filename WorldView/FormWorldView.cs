@@ -14,10 +14,10 @@ using MoreTerra.Structures.TerraInfo;
 
 namespace MoreTerra
 {
-    public partial class FormWorldView : Form
-    {
-        private delegate void PopulateWorldTreeDelegate();
-        private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
+	public partial class FormWorldView : Form
+	{
+		private delegate void PopulateWorldTreeDelegate();
+		private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
 		private delegate DialogResult MessageBoxShowDelegate(String text);
 		private delegate DialogResult MessageBoxShowFullDelegate(String text, String caption,
 			MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
@@ -26,7 +26,7 @@ namespace MoreTerra
 
 		#region Variable definitions
 		private WorldMapper mapper = null;
-        private BackgroundWorker mapperWorker = null;
+		private BackgroundWorker mapperWorker = null;
 		private System.Timers.Timer tmrMapperProgress;
 
 		// Used to store the images for our TreeView marker list.
@@ -36,7 +36,7 @@ namespace MoreTerra
 		private ImageList colorImageList;
 		private ImageList buttonImageList;
 
-        private string worldPath = string.Empty;
+		private string worldPath = string.Empty;
 
 		// Used to store the real names of each .WLD file in the chosen directory.
 		private Dictionary<String, String> worldNames = new Dictionary<String, String>();
@@ -59,10 +59,10 @@ namespace MoreTerra
 		#endregion
 
 		public FormWorldView()
-        {
+		{
 			FormWorldView.Form = this;
 
-            InitializeComponent();
+			InitializeComponent();
 			RegisterEventHandlers();
 
 			this.Icon = Properties.Resources.Cannon;
@@ -132,7 +132,7 @@ namespace MoreTerra
 
 			this.textBoxColorColor.TextChanged += new EventHandler(textBoxColorColor_TextChanged);
 			this.comboBoxColorName.SelectedIndexChanged += new EventHandler(comboBoxColorName_SelectedIndexChanged);
-            this.buttonColorColor.Click += buttonColorColor_Click;
+			this.buttonColorColor.Click += buttonColorColor_Click;
 			#endregion
 
 			#region Chest Finder tabPage Handlers
@@ -173,15 +173,15 @@ namespace MoreTerra
 
 		}
 
-        void buttonColorColor_Click(object sender, EventArgs e)
-        {
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                var rgb = new byte[]{colorDialog.Color.R,colorDialog.Color.G, colorDialog.Color.B};
-                textBoxColorColor.Text = string.Format("#{0}", BitConverter.ToString(rgb).Replace("-", string.Empty));
-            }
-                
-        }
+		void buttonColorColor_Click(object sender, EventArgs e)
+		{
+			if (colorDialog.ShowDialog() == DialogResult.OK)
+			{
+				var rgb = new byte[]{colorDialog.Color.R,colorDialog.Color.G, colorDialog.Color.B};
+				textBoxColorColor.Text = string.Format("#{0}", BitConverter.ToString(rgb).Replace("-", string.Empty));
+			}
+				
+		}
 
 		private void WorldViewForm_Load(object sender, EventArgs e)
 		{
@@ -543,8 +543,8 @@ namespace MoreTerra
 			tmrMapperProgress.Start();
 
 			#if  (DEBUG == false)
-            try
-            {
+			try
+			{
 			#endif
 			mapper.OpenWorld();
 
@@ -562,16 +562,21 @@ namespace MoreTerra
 			//we're drawing a map
 			if ((bool)e.Argument == true)
 			{
-				mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
+            //    pictureBox.BackgroundImageLayout = ImageLayout.
+                 
+                pictureBox.Image = mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
+                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+              //  pictureBox.Update();
+                                   
 				if (SettingsManager.Instance.OpenImage)
 					System.Diagnostics.Process.Start(textBoxOutputFile.Text);
 			}
 
 			tmrMapperProgress.Stop();
 			#if  (DEBUG == false)
-            }
-            catch (Exception ex)
-            {
+			}
+			catch (Exception ex)
+			{
 				tmrMapperProgress.Stop();
 				FormWorldView.MessageBoxShow(ex.Message + Environment.NewLine + Environment.NewLine +
 					"Details: " + ex.ToString() + Environment.NewLine + "Version: " + GetVersion(),
@@ -1860,7 +1865,7 @@ namespace MoreTerra
 					writer.Close();
 
 				MessageBox.Show(e.Message,
-				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (File.Exists(textFile))
 					File.Delete(textFile);
@@ -1972,7 +1977,7 @@ namespace MoreTerra
 					writer.Close();
 
 				MessageBox.Show(e.Message,
-				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (File.Exists(textFile))
 					File.Delete(textFile);
@@ -2069,7 +2074,7 @@ namespace MoreTerra
 					writer.Close();
 
 				MessageBox.Show(e.Message,
-				                 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								 "Error writing to Textfile", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				if (File.Exists(textFile))
 					File.Delete(textFile);

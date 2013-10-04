@@ -218,7 +218,7 @@
 			}
         }
 
-		public void CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)
+		public Bitmap CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)
         {
 			Int32 CropAmount;
 			int row, col;
@@ -554,8 +554,10 @@
             }
 			if (bw != null)
 				bw.ReportProgress(99, "Saving image");
+            
             bitmap.Save(outputPngPath, ImageFormat.Png);
             progress = 100;
+            return bitmap;
         }
 
 		public void Cleanup()

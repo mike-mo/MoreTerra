@@ -25,6 +25,7 @@
         private bool isBoss1Dead;
         private bool isBoss2Dead;
         private bool isBoss3Dead;
+        private bool isMechBoss1Dead;
 		private bool isGoblinSaved;
 		private bool isWizardSaved;
 		private bool isMechanicSaved;
@@ -279,6 +280,19 @@
             set
             {
                 this.isBoss3Dead = value;
+            }
+        }
+
+        [CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
+        public bool IsMechBoss1Dead
+        {
+            get
+            {
+                return this.isMechBoss1Dead;
+            }
+            set
+            {
+                this.isMechBoss1Dead = value;
             }
         }
 
