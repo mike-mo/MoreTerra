@@ -1,3 +1,13 @@
+Release 1.11
+===========
+=Bug Fixes=
+===========
+Now correctly parses 1.2 wld file.
+==============
+=Known Issues=
+==============
+Not all items and tiles are represented correctly.
+
 Release 1.10.2
 ===========
 =Bug Fixes=

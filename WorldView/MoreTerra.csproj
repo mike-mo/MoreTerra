@@ -264,6 +264,8 @@
     <None Include="Resources\people_wizard.png" />
     <None Include="Resources\people_santa.png" />
     <None Include="Resources\DyeTrader.bmp" />
+    <None Include="Resources\ore_l.png" />
+    <None Include="Resources\ore_t.png" />
     <Content Include="Resources\people_dyetrader.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />

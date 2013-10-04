@@ -13,6 +13,8 @@
     <tile name="Copper" tileImage="7" autoGenType="Ore Blend"  color="#FF9532" marker="Copper" />
     <tile name="Gold" tileImage="8" autoGenType="Ore Blend"  color="#B9A417" marker="Gold" />
     <tile name="Silver" tileImage="9" autoGenType="Ore Blend"  color="#D9DFDF" marker="Silver" />
+    <tile name="Tin" tileImage="166" autoGenType="Ore Blend"  color="#BD9F8B" marker="Tin" />
+    <tile name="Lead" tileImage="167" autoGenType="Ore Blend"  color="#BD9F8B" marker="Lead" />
 
     <tile name="Closed Door" tileImage="10" color="Decorative" />
     <tile name="Open Door" tileImage="11" color="Decorative" />
@@ -221,6 +223,9 @@
     <tile name="Snow Brick" tileImage="148" autoGenType="Building Block" color="Block" />
     <tile name="Holiday Lights" tileImage="149" color="Light Source" />
     <tile name="Ice Block" tileImage="161" autoGenType="Building Block" color="#FFFFFF" />
+    <tile name="Cloud" tileImage="189" autoGenType="Building Block" color="#FFFFFF" />
+    <tile name="Crimstone Block" tileImage="203" autoGenType="Building Block" color="#FF0000" />
+   
 
   </tiles>
   <walls>
@@ -258,6 +263,7 @@
     <wall name="Candy Cane Wall" wallImage="29" color="Wall Brick" />
     <wall name="Green Candy Cane Wall" wallImage="30" color="Wall Brick" />
     <wall name="Snow Brick Wall" wallImage="31" color="Wall Brick" />
+    <wall name="Ice Brick Wall" wallImage="84" color="Wall Brick" />
   </walls>
   <items>
     <item name="1 Second Timer" type="Unknown" itemImage="583" />
@@ -320,6 +326,7 @@
     <item name="Blue Phaseblade" type="Weapon" itemImage="198" />
     <item name="Blue Phasesaber" type="Unknown" itemImage="198" netId="-19" />
     <item name="Blue Torch" type="Unknown" itemImage="427" />
+    <item name="Binoculars" type="Usable" foundIn="Chest" itemImage="1299" />
     <item name="Bomb" type="Explosive" foundIn="Chest" itemImage="166" />
     <item name="Bomb Statue" type="Unknown" itemImage="453" />
     <item name="Bone" type="Thrown Weapon" itemImage="154" />
@@ -675,6 +682,7 @@
     <item name="Pink Brick" type="Building Block" itemImage="139" />
     <item name="Pink Brick Wall" type="Wall" itemImage="140" />
     <item name="Pink Vase" type="Placeable Object" itemImage="350" />
+    <item name="Piranha Gun" type="Weapon" foundIn="Chest" itemImage="1156" />
     <item name="Pirahna Statue" type="Unknown" itemImage="478" />
     <item name="Pixie Dust" type="Unknown" itemImage="501" />
     <item name="Planked Wall" type="Unknown" itemImage="479" />
@@ -709,6 +717,7 @@
     <item name="Robe" type="Body Equipment" itemImage="262" />
     <item name="Robot Hat" type="Head Costume" itemImage="263" />
     <item name="Rocket Boots" type="Accessory" itemImage="128" />
+    <item name="Rope" type="Usable" itemImage="965" />
     <item name="Rotten Chunk" itemImage="68" />
     <item name="Ruby" type="Gem" itemImage="178" />
     <item name="Ruler" type="Unknown" itemImage="486" />
@@ -1886,6 +1895,8 @@
     <marker name="Cobalt" partOfSet="Ores" />
     <marker name="Mythril" partOfSet="Ores" />
     <marker name="Adamantite" partOfSet="Ores" />
+    <marker name="Lead" partOfSet="Ores" />
+    <marker name="Tin" partOfSet="Ores" />
     
     <marker name="People" />
     <marker name="Arms Dealer" markerImage="ArmsDealer" partOfSet="People" />

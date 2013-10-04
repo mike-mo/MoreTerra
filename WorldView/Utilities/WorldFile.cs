@@ -234,8 +234,25 @@ namespace MoreTerra
 
                         if (importantTiles.Contains(tileType)) //TileProperties.tileTypeDefs[tileType].IsImportant)
                         {
+                            if ((tileType == TileProperties.Chest) && (world.chestTypeList != null))
+                            {
+                                Int16 typeX = reader.ReadInt16();
+                                Int16 typeY = reader.ReadInt16();
+
+                                // We need to be sure we're only capturing the upper left square.
+                                if ((typeX % 36 == 0) && (typeY == 0))
+                                {
+                                    if ((typeX / 36) <= (Int32)ChestType.TrashCan)
+                                        world.chestTypeList.Add(new Point(column, row), (ChestType)(typeX / 36));
+                                    else
+                                        world.chestTypeList.Add(new Point(column, row), ChestType.Unknown);
+                                }
+                            }
+                            else
+                            {
                                 reader.ReadInt16();
                                 reader.ReadInt16();
+                            }
                         }
                         if (world.Header.ReleaseNumber >= 48 && reader.ReadBoolean())
                             reader.ReadByte(); //a color?
@@ -351,7 +368,7 @@ namespace MoreTerra
             Chest theChest = null;
             Item theItem;
             Int32 i, j;
-            Dictionary<Point, ChestType> chestTypeList = new Dictionary<Point, ChestType>();
+            
             var chests = new List<Chest>();
 
             for (i = 0; i < 1000; i++)
@@ -366,10 +383,10 @@ namespace MoreTerra
 
                     theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-                    if (chestTypeList != null)
+                    if (world.chestTypeList != null)
                     {
-                        if (chestTypeList.ContainsKey(theChest.Coordinates))
-                            theChest.Type = chestTypeList[theChest.Coordinates];
+                        if (world.chestTypeList.ContainsKey(theChest.Coordinates))
+                            theChest.Type = world.chestTypeList[theChest.Coordinates];
                     }
                     else
                     {

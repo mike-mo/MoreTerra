@@ -311,6 +311,7 @@
 
 					index += byteOffset;    //increase here to avoid adding increments to each continue
                     tileType = tiles[col, row];
+                
 
                     // Skip Walls
                     if (!SettingsManager.Instance.DrawWalls && tileType > TileProperties.BackgroundOffset)

@@ -30,7 +30,9 @@ namespace MoreTerra.Structures
 		Cobalt,
 		Mythril = 20,
 		Adamantite,
-		Statue = 22,
+        Lead,
+        Tin,
+		Statue = 24,
 
 		// Extra space here for improvement room.
 		ArmsDealer = 30,

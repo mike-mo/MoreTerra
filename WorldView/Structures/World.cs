@@ -46,7 +46,7 @@ namespace MoreTerra.Structures
 		private Single readWorldPerc = 50;
 
 		// List generated from reading in chest tiles.
-		private Dictionary<Point, ChestType> chestTypeList;
+		internal Dictionary<Point, ChestType> chestTypeList;
 
 		#region Structures
 		// Helper structure for storing information for tile scanning.

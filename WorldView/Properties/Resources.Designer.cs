@@ -351,6 +351,16 @@ namespace MoreTerra.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Lead {
+            get {
+                object obj = ResourceManager.GetObject("Lead", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LockedGoldChest {
             get {
                 object obj = ResourceManager.GetObject("LockedGoldChest", resourceCulture);
@@ -554,6 +564,16 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Statue {
             get {
                 object obj = ResourceManager.GetObject("Statue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tin {
+            get {
+                object obj = ResourceManager.GetObject("Tin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
