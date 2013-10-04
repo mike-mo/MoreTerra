@@ -54,6 +54,7 @@
 		private String wizardsName; //0x6C
 		private String mechanicsName; //0x7C
 
+
         [CategoryAttribute("General"), ReadOnlyAttribute(true)]
         public int ReleaseNumber
         {
@@ -613,6 +614,10 @@
 				mechanicsName = value;
 			}
 		}
+
+        [CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+        public String DyeTradersName { get; set; }
+
 
 
 	}

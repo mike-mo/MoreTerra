@@ -506,7 +506,7 @@ namespace MoreTerra
                 header.MechanicsName = reader.ReadString();
                 reader.ReadString();
                 reader.ReadString();
-                reader.ReadString();
+                header.DyeTradersName =  reader.ReadString();
                 reader.ReadString();
                 reader.ReadString();
                 reader.ReadString();

@@ -552,7 +552,7 @@ namespace MoreTerra
 			if ((bool)e.Argument == true)
 				mapper.ProcessWorld(worldPath, bw);
 			else
-				mapper.ReadChests(worldPath, bw);
+                mapper.ProcessWorld(worldPath, bw);//mapper.ReadChests(worldPath, bw);
 
 			TreeNode[] chests = GetChests();
 
@@ -1150,8 +1150,7 @@ namespace MoreTerra
 		{
 			if (Global.Instance.SkipEvents)
 				return;
-
-			
+            
 		}
 
 		private void SetupColorButtons()

@@ -9,15 +9,16 @@ namespace MoreTerra.Structures
 		Clothier,
 		Demolitionist,
 		Dryad,
-		GoblinTinkerer,
-		Guide = 5,
+        DyeTrader,
+		GoblinTinkerer = 5,
+		Guide,
 		Mechanic,
 		Merchant,
 		Nurse,
-		Oldman,
-		SantaClaus = 10,
+		Oldman = 10,
+		SantaClaus,
 		Wizard,
-		Unknown = 12
+		Unknown = 13
 	}
 		
 	public class NPC

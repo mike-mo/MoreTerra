@@ -1814,7 +1814,8 @@
     <npc name="Goblin Tinkerer" npcImage="107" />
     <npc name="Wizard" npcImage="108" />
     <npc name="Mechanic" npcImage="124" />
-    <npc name="Santa Claus" npcImage="142" />         
+    <npc name="Santa Claus" npcImage="142" />
+    <npc name="DyeTrader" npcImage="142" /> 
   </npcs>
   <colors>
     <color name="Unknown" red="255" green="0" blue="255" />
@@ -1891,6 +1892,7 @@
     <marker name="Clothier" partOfSet="People" />
     <marker name="Demolitionist" partOfSet="People" />
     <marker name="Dryad" partOfSet="People" />
+    <marker name="Dye Trader" markerImage="DyeTrader" partOfSet="People" />
     <marker name="Guide" partOfSet="People" />
     <marker name="Merchant" partOfSet="People" />
     <marker name="Nurse" partOfSet="People" />

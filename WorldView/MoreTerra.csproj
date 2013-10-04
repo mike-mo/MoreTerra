@@ -263,6 +263,8 @@
     <None Include="Resources\people_tinker.png" />
     <None Include="Resources\people_wizard.png" />
     <None Include="Resources\people_santa.png" />
+    <None Include="Resources\DyeTrader.bmp" />
+    <Content Include="Resources\people_dyetrader.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />
