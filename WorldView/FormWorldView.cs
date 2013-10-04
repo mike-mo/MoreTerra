@@ -562,12 +562,12 @@ namespace MoreTerra
 			//we're drawing a map
 			if ((bool)e.Argument == true)
 			{
-            //    pictureBox.BackgroundImageLayout = ImageLayout.
-                 
-                pictureBox.Image = mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
-                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-              //  pictureBox.Update();
-                                   
+			//    pictureBox.BackgroundImageLayout = ImageLayout.
+				 
+				pictureBox.Image = mapper.CreatePreviewPNG(textBoxOutputFile.Text, bw);
+				pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+			  //  pictureBox.Update();
+								   
 				if (SettingsManager.Instance.OpenImage)
 					System.Diagnostics.Process.Start(textBoxOutputFile.Text);
 			}
