@@ -280,7 +280,9 @@ namespace MoreTerra.Structures.TerraInfo
 			{
 				String name = String.Empty;
 				String color = String.Empty;
+                String officialColor = String.Empty;
 				Color useColor;
+                Color useOfficialColor;
 				Boolean safe = false;
 
 				Int32 wallImage = -1;
@@ -296,6 +298,9 @@ namespace MoreTerra.Structures.TerraInfo
 						case "color":
 							color = att.Value;
 							break;
+                        case "officialColor":
+                            officialColor = att.Value;
+                            break;
 						case "wallImage":
 							if (Int32.TryParse(att.Value, out wallImage) == false)
 							{
@@ -333,31 +338,48 @@ namespace MoreTerra.Structures.TerraInfo
 					continue;
 				}
 
-				if (color == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("Wall #{0} had no color attribute.", count));
-					continue;
-				}
+                if (color == String.Empty)
+                {
+                    errorLog.AppendLine(String.Format("Wall #{0} had no color attribute.", count));
+                    continue;
+                }
 
-				if (Global.TryParseColor(color, out useColor) == false)
-				{
-					if (!colors.ContainsKey(color))
-					{
-						errorLog.AppendLine(String.Format("Wall #{0} had a color attribute that was not a color or a color lookup name. Value=\"{1}\"",
-							count, color));
-						continue;
-					}
-					else
-					{
-						useColor = colors[color].color;
-					}
-				}
-				else
-				{
-					color = String.Empty;
-				}
+                if (Global.TryParseColor(color, out useColor) == false)
+                {
+                    if (!colors.ContainsKey(color))
+                    {
+                        errorLog.AppendLine(String.Format("Wall #{0} had a color attribute that was not a color or a color lookup name. Value=\"{1}\"",
+                            count, color));
+                        continue;
+                    }
+                    else
+                    {
+                        useColor = colors[color].color;
+                    }
+                }
+                else
+                {
+                    color = String.Empty;
+                }
 
-				if (wallImage == -1)
+                if (officialColor == String.Empty)
+                {
+                    errorLog.AppendLine(String.Format("Wall #{0} had no officialColor attribute.", count));
+                    continue;
+                }
+
+                if (Global.TryParseColor(officialColor, out useOfficialColor) == false)
+                {
+                    errorLog.AppendLine(String.Format("Wall #{0} had a officialColor attribute that was not a color. Value=\"{1}\"",
+                            count, officialColor));
+                    continue;
+                }
+                else
+                {
+                    officialColor = String.Empty;
+                }
+
+                if (wallImage == -1)
 				{
 					errorLog.AppendLine(String.Format("Wall #{0} had no wallImage attribute.", count));
 					continue;
@@ -374,7 +396,8 @@ namespace MoreTerra.Structures.TerraInfo
 				wall.wallImage = wallImage;
 				wall.colorName = color;
 				wall.color = useColor;
-				wall.safe = safe;
+                wall.officialColor = useOfficialColor;
+                wall.safe = safe;
 
 				walls.Add(wallImage, wall);
 			}
@@ -596,8 +619,10 @@ namespace MoreTerra.Structures.TerraInfo
 				String autoGen = String.Empty;
 				String blendWith = String.Empty;
 				String color = String.Empty;
+                String officialColor = String.Empty;
 				String marker = String.Empty;
 				Color useColor;
+                Color useOfficialColor;
 
 				Int32 tileImage = -1;
 
@@ -635,6 +660,9 @@ namespace MoreTerra.Structures.TerraInfo
 						case "color":
 							color = att.Value;
 							break;
+                        case "officialColor":
+                            officialColor = att.Value;
+                            break;
 						case "marker":
 							marker = att.Value;
 							break;
@@ -677,13 +705,13 @@ namespace MoreTerra.Structures.TerraInfo
 					continue;
 				}
 
-				if (color == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("Tile #{0} had no color attribute.", count));
-					continue;
-				}
+                if (color == String.Empty)
+                {
+                    errorLog.AppendLine(String.Format("Tile #{0} had no color attribute.", count));
+                    continue;
+                }
 
-				if (Global.TryParseColor(color, out useColor) == false)
+                if (Global.TryParseColor(color, out useColor) == false)
 				{
 					if (!colors.ContainsKey(color))
 					{
@@ -696,10 +724,28 @@ namespace MoreTerra.Structures.TerraInfo
 						useColor = colors[color].color;
 					}
 				}
-				else
-				{
-					color = String.Empty;
-				}
+                else
+                {
+                    color = String.Empty;
+                }
+
+                if (officialColor == String.Empty)
+                {
+                    //errorLog.AppendLine(String.Format("Tile #{0} had no officialColor attribute.", count));
+                    officialColor = "#FF00FF";
+//                    continue;
+                }
+
+                if (Global.TryParseColor(officialColor, out useOfficialColor) == false)
+                {
+                    errorLog.AppendLine(String.Format("Tile #{0} had an officialColor attribute that was not a color. Value=\"{1}\"",
+                        count, officialColor));
+                    continue;
+                }
+                else
+                {
+                    officialColor = String.Empty;
+                }
 
 				TileInfo tile = new TileInfo();
 				tile.name = name;
@@ -707,81 +753,9 @@ namespace MoreTerra.Structures.TerraInfo
 				tile.blendWith = blendWith;
 				tile.colorName = color;
 				tile.color = useColor;
+                tile.officialColor = useOfficialColor;
 				tile.markerName = marker;
 				tile.tileImage = tileImage;
-
-/*				XmlNodeList materialNodes = recipeNode.SelectNodes("material");
-				Int32 materialCount = -1;
-
-				foreach (XmlNode materialNode in materialNodes)
-				{
-					String materialName = String.Empty;
-					Int32 materialNeeded = -1;
-					materialCount++;
-
-					foreach (XmlAttribute att in materialNode.Attributes)
-					{
-						switch (att.Name)
-						{
-							case "name":
-								materialName = att.Value;
-								break;
-							case "quantity":
-								if (Int32.TryParse(att.Value, out materialNeeded) == false)
-								{
-									errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has an invalid quantity attribute. Value=\"{2}\"",
-										materialCount, count, att.Value));
-									continue;
-								}
-
-								if ((materialNeeded < 0) || (materialNeeded > 255))
-								{
-									errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has an out of range quantity attribute. Value=\"{2}\"",
-										materialCount, count, att.Value));
-									continue;
-								}
-								break;
-							default:
-								errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has unknown attribute \"{2}\" has value \"{3}\"",
-									materialCount, count, att.Name, att.Value));
-								break;
-						}
-					}
-
-					if (materialName == String.Empty)
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has no name attribute.",
-							materialCount, count));
-						continue;
-					}
-
-					if (!items.ContainsKey(materialName))
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} is for an item that does not exist. Value=\"{2}\"",
-							materialCount, count, materialName));
-						continue;
-					}
-
-					if (recipe.materials.ContainsKey(materialName))
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} is a duplicate material to \"{2}\"",
-							materialCount, count, materialName));
-						continue;
-					}
-
-					if (materialNeeded == -1)
-						materialNeeded = 1;
-
-					recipe.materials.Add(materialName, materialNeeded);
-
-				}
-
-				if (recipe.materials.Count == 0)
-				{
-					errorLog.AppendLine(String.Format("Recipe #{0} does not have any materials to craft it.",
-						count));
-					continue;
-				} */
 
 				tiles.Add(tileImage, tile);
 			}
@@ -1364,7 +1338,9 @@ namespace MoreTerra.Structures.TerraInfo
 				String name = String.Empty;
 				String type = String.Empty;
 				String color = String.Empty;
+                String officialColor = String.Empty;
 				Color useColor;
+                Color useOfficialColor;
 
 				Int32 objectImage = -1;
 
@@ -1399,6 +1375,9 @@ namespace MoreTerra.Structures.TerraInfo
 						case "color":
 							color = att.Value;
 							break;
+                        case "officialColor":
+                            officialColor = att.Value;
+                            break;
 						default:
 							errorLog.AppendLine(String.Format("Special Object #{0} has unknown attribute \"{1}\" has value \"{2}\"",
 								count, att.Name, att.Value));
@@ -1418,36 +1397,54 @@ namespace MoreTerra.Structures.TerraInfo
 					continue;
 				}
 
-				if (color == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("Special Object #{0} had no color attribute.", count));
-					continue;
-				}
+                if (color == String.Empty)
+                {
+                    errorLog.AppendLine(String.Format("Special Object #{0} had no color attribute.", count));
+                    continue;
+                }
 
-				if (Global.TryParseColor(color, out useColor) == false)
-				{
-					if (!colors.ContainsKey(color))
-					{
-						errorLog.AppendLine(String.Format("Special Object #{0} had a color attribute that was not a color or a color lookup name. Value=\"{1}\"",
-							count, color));
-						continue;
-					}
-					else
-					{
-						useColor = colors[color].color;
-					}
-				}
-				else
-				{
-					color = String.Empty;
-				}
+                if (Global.TryParseColor(color, out useColor) == false)
+                {
+                    if (!colors.ContainsKey(color))
+                    {
+                        errorLog.AppendLine(String.Format("Special Object #{0} had a color attribute that was not a color or a color lookup name. Value=\"{1}\"",
+                            count, color));
+                        continue;
+                    }
+                    else
+                    {
+                        useColor = colors[color].color;
+                    }
+                }
+                else
+                {
+                    color = String.Empty;
+                }
 
-				SpecialObjectInfo so = new SpecialObjectInfo();
+                if (officialColor == String.Empty)
+                {
+                    errorLog.AppendLine(String.Format("Special Object #{0} had no officialColor attribute.", count));
+                    continue;
+                }
+
+                if (Global.TryParseColor(officialColor, out useOfficialColor) == false)
+                {
+                    errorLog.AppendLine(String.Format("Special Object #{0} had a officialColor attribute that was not a color. Value=\"{1}\"",
+                        count, officialColor));
+                    continue;
+                }
+                else
+                {
+                    color = String.Empty;
+                }
+
+                SpecialObjectInfo so = new SpecialObjectInfo();
 				so.name = name;
 				so.type = type;
 				so.colorName = color;
 				so.color = useColor;
-				so.objectImage = objectImage;
+                so.officialColor = useOfficialColor;
+                so.objectImage = objectImage;
 
 				if (!specialobjects.ContainsKey(type))
 					specialobjects.Add(type, new List<SpecialObjectInfo>());

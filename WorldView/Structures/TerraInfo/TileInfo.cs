@@ -12,6 +12,7 @@ namespace MoreTerra.Structures.TerraInfo
 		public String markerName;
 
 		public Color color;
+        public Color officialColor;
 
 		public Int32 tileImage;
 

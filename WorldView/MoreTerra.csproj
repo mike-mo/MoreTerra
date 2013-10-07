@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="Structures\ColorListData.cs" />
+    <Compile Include="Structures\Map.cs" />
     <Compile Include="Structures\MarkerType.cs" />
     <Compile Include="Structures\PointInt16.cs" />
     <Compile Include="Structures\PointSingle.cs" />
@@ -224,12 +225,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\gem_a.png" />
-    <None Include="Resources\gem_d.png" />
-    <None Include="Resources\gem_e.png" />
-    <None Include="Resources\gem_r.png" />
-    <None Include="Resources\gem_s.png" />
-    <None Include="Resources\gem_t.png" />
     <None Include="Resources\objects_heart.png" />
     <None Include="Resources\objects_shadow.png" />
     <None Include="Resources\people_spawn.png" />
@@ -240,14 +235,7 @@
   <ItemGroup>
     <None Include="Resources\BigCannon.png" />
     <None Include="Resources\cannon.ico" />
-    <None Include="Resources\chest_b.png" />
     <None Include="Resources\chest_base.png" />
-    <None Include="Resources\chest_c.png" />
-    <None Include="Resources\chest_g.png" />
-    <None Include="Resources\chest_gl.png" />
-    <None Include="Resources\chest_s.png" />
-    <None Include="Resources\chest_sl.png" />
-    <None Include="Resources\chest_t.png" />
     <None Include="Resources\Items.xml">
       <SubType>Designer</SubType>
     </None>
@@ -256,17 +244,73 @@
     <None Include="Resources\objects_torch.png" />
     <None Include="Resources\objects_unknown.png" />
     <None Include="Resources\SmallCannon.ico" />
-    <None Include="Resources\ore_a.png" />
-    <None Include="Resources\ore_cob.png" />
-    <None Include="Resources\ore_myth.png" />
     <None Include="Resources\people_mech.png" />
     <None Include="Resources\people_tinker.png" />
     <None Include="Resources\people_wizard.png" />
     <None Include="Resources\people_santa.png" />
-    <None Include="Resources\DyeTrader.bmp" />
-    <None Include="Resources\ore_l.png" />
-    <None Include="Resources\ore_t.png" />
-    <Content Include="Resources\people_dyetrader.png" />
+    <None Include="Resources\chest_barrel.png" />
+    <None Include="Resources\chest_chest.png" />
+    <None Include="Resources\chest_corruption.png" />
+    <None Include="Resources\chest_corruptionlocked.png" />
+    <None Include="Resources\chest_crimsonlocked.png" />
+    <None Include="Resources\chest_ebonwood.png" />
+    <None Include="Resources\chest_frozen.png" />
+    <None Include="Resources\chest_frozenlocked.png" />
+    <None Include="Resources\chest_gold.png" />
+    <None Include="Resources\chest_goldlocked.png" />
+    <None Include="Resources\chest_hallowed.png" />
+    <None Include="Resources\chest_hallowedlocked.png" />
+    <None Include="Resources\chest_ice.png" />
+    <None Include="Resources\chest_ivy.png" />
+    <None Include="Resources\chest_jungle.png" />
+    <None Include="Resources\chest_junglelocked.png" />
+    <None Include="Resources\chest_lihzahrd.png" />
+    <None Include="Resources\chest_livingwood.png" />
+    <None Include="Resources\chest_mahogany.png" />
+    <None Include="Resources\chest_pearlwood.png" />
+    <None Include="Resources\chest_shadewood.png" />
+    <None Include="Resources\chest_shadow.png" />
+    <None Include="Resources\chest_shadowlocked.png" />
+    <None Include="Resources\chest_skyware.png" />
+    <None Include="Resources\chest_trash.png" />
+    <None Include="Resources\chest_water.png" />
+    <None Include="Resources\chest_webcovered.png" />
+    <None Include="Resources\gem_amethyst.png" />
+    <None Include="Resources\gem_diamond.png" />
+    <None Include="Resources\gem_emerald.png" />
+    <None Include="Resources\gem_ruby.png" />
+    <None Include="Resources\gem_sapphire.png" />
+    <None Include="Resources\gem_topaz.png" />
+    <None Include="Resources\ore_chlorophyte.png" />
+    <None Include="Resources\ore_cobalt.png" />
+    <None Include="Resources\ore_copper.png" />
+    <None Include="Resources\ore_demonite.png" />
+    <None Include="Resources\ore_gold.png" />
+    <None Include="Resources\ore_hellstone.png" />
+    <None Include="Resources\ore_iron.png" />
+    <None Include="Resources\ore_lead.png" />
+    <None Include="Resources\ore_meteorite.png" />
+    <None Include="Resources\ore_mythril.png" />
+    <None Include="Resources\ore_obsidian.png" />
+    <None Include="Resources\ore_orichalcum.png" />
+    <None Include="Resources\ore_palladium.png" />
+    <None Include="Resources\ore_platinum.png" />
+    <None Include="Resources\ore_silver.png" />
+    <None Include="Resources\ore_tin.png" />
+    <None Include="Resources\ore_titanium.png" />
+    <None Include="Resources\ore_tungsten.png" />
+    <None Include="Resources\people_cyborg.png" />
+    <None Include="Resources\people_dyetrader.png" />
+    <None Include="Resources\people_painter.png" />
+    <None Include="Resources\people_partygirl.png" />
+    <None Include="Resources\people_pirate.png" />
+    <None Include="Resources\people_steampunker.png" />
+    <None Include="Resources\people_truffle.png" />
+    <None Include="Resources\people_witchdoctor.png" />
+    <None Include="Resources\ore_adamantite.png" />
+    <None Include="Resources\chest_crimson.png" />
+    <None Include="Resources\ore_crimtane.png" />
+    <None Include="Resources\objects_picture.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />
@@ -282,14 +326,6 @@
     <None Include="Resources\people_nurse.png" />
     <None Include="Resources\people_oldman.png" />
     <Content Include="Text Files\Regexes to extract chest item list from wiki site.txt" />
-    <None Include="Resources\ore_o.png" />
-    <None Include="Resources\ore_i.png" />
-    <None Include="Resources\ore_s.png" />
-    <None Include="Resources\ore_g.png" />
-    <None Include="Resources\ore_m.png" />
-    <None Include="Resources\ore_d.png" />
-    <None Include="Resources\ore_h.png" />
-    <None Include="Resources\ore_c.png" />
     <None Include="Resources\objects_hellforge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

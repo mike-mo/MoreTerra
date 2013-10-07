@@ -15,7 +15,7 @@
     {
         private List<Chest> chests;
         private Dictionary<MarkerType, List<MarkerLoc>> tileMarkersToAdd;
-        private Byte[,] tiles;
+        private Int16[,] tiles;
 		private List<String> alreadyDenied;
 
 		private World world;
@@ -56,10 +56,7 @@
         {
 			Int32 i;
 
-            var worldFile = new WorldFile();
-            world = worldFile.LoadFile(worldPath);
-            tiles = world.TileTypes;
-			//tiles = world.ReadAndProcessWorld(worldPath, bw);
+			tiles = world.ReadAndProcessWorld(worldPath, bw);
 			if (tiles == null)
 				return;
 	
@@ -220,6 +217,7 @@
 
 		public Bitmap CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)
         {
+            Boolean useOfficialColors = SettingsManager.Instance.OfficialColors;
 			Int32 CropAmount;
 			int row, col;
 			Bitmap bitmap;
@@ -261,7 +259,7 @@
 
 			TileData tileInfo;
 			MarkerType markerType;
-            Byte tileType;
+            Int16 tileType;
 			Color color;
 
 			if (bw != null)
@@ -312,7 +310,6 @@
 					index += byteOffset;    //increase here to avoid adding increments to each continue
                     tileType = tiles[col, row];
                 
-
                     // Skip Walls
                     if (!SettingsManager.Instance.DrawWalls && tileType > TileProperties.BackgroundOffset)
 						tileType = TileProperties.BackgroundOffset;
@@ -477,7 +474,12 @@
 
 							Int32 tilePos;
 							tileCount = 0;
-							color = tileInfo.Colour;
+
+                            if (useOfficialColors == true)
+                                color = tileInfo.OfficialColor;
+                            else
+							    color = tileInfo.Color;
+
 							for (j = bounds.Y; j < bounds.Bottom; j++)
 								for (i = bounds.X; i < bounds.Right; i++)
 									if (tiles[i, j] == tileType)
@@ -510,7 +512,10 @@
 					// means that you might see some of the color hanging out the edge.
 					if (tileType != TileProperties.Processed)
 					{
-						color = TileProperties.tileTypeDefs[tileType].Colour;
+                        if (useOfficialColors)
+                            color = TileProperties.tileTypeDefs[tileType].OfficialColor;
+						else 
+                            color = TileProperties.tileTypeDefs[tileType].Color;
 
 						rgbValues[index] = color.B;
 						rgbValues[index + 1] = color.G;

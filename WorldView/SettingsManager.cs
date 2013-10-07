@@ -18,6 +18,7 @@ namespace MoreTerra
             public string InputWorldDirectory;
             public string OutputPreviewDirectory;
             public bool IsChestFilterEnabled;
+            public Boolean UseOfficialColors;
 			public Boolean AreWiresDrawable;
             public bool AreWallsDrawable;
 			public Boolean OpenImageAfterDraw;
@@ -47,6 +48,7 @@ namespace MoreTerra
 				InputWorldDirectory = copy.InputWorldDirectory;
 				OutputPreviewDirectory = copy.OutputPreviewDirectory;
 				IsChestFilterEnabled = copy.IsChestFilterEnabled;
+                UseOfficialColors = copy.UseOfficialColors;
 				AreWallsDrawable = copy.AreWallsDrawable;
 				OpenImageAfterDraw = copy.OpenImageAfterDraw;
 				ScanForNewChestItems = copy.ScanForNewChestItems;
@@ -125,6 +127,7 @@ namespace MoreTerra
 
 			us.SettingsName = "Default";
 			us.IsChestFilterEnabled = false;
+            us.UseOfficialColors = true;
 			us.AreWallsDrawable = true;
 			us.OpenImageAfterDraw = true;
 			us.ScanForNewChestItems = false;
@@ -357,6 +360,18 @@ namespace MoreTerra
             set
             {
                 this.settings.IsChestFilterEnabled = value;
+            }
+        }
+
+        public Boolean OfficialColors
+        {
+            get
+            {
+                return this.settings.UseOfficialColors;
+            }
+            set
+            {
+                this.settings.UseOfficialColors = value;
             }
         }
 
@@ -750,6 +765,12 @@ namespace MoreTerra
 									if (parseNode != null)
 										us.IsChestFilterEnabled = Boolean.Parse(parseNode.Value);
 									break;
+                                case "UseOfficialColors":
+                                    parseNode = node.Attributes["value"];
+
+                                    if (parseNode != null)
+                                        us.UseOfficialColors = Boolean.Parse(parseNode.Value);
+                                    break;
 								case "AreWiresDrawable":
 									parseNode = node.Attributes["value"];
 

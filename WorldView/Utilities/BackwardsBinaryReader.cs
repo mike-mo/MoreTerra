@@ -183,7 +183,6 @@ namespace MoreTerra.Utilities
 			inStream.Seek(-1, SeekOrigin.Current);
 
 			return (Byte)retByte;
-			//return (Byte)base.PeekChar();
 		}
 
 		public Byte PeekBackwardsByte()
@@ -220,6 +219,20 @@ namespace MoreTerra.Utilities
 			inStream.Seek(-sizeof(Double), SeekOrigin.Current);
 			retVal = base.ReadDouble();
 			inStream.Seek(-sizeof(Double), SeekOrigin.Current);
+
+			return retVal;
+		}
+
+		public Int16 ReadBackwardsInt16()
+		{
+			Int16 retVal;
+
+			if (inStream.Position < sizeof(Int16))
+				throw new EndOfStreamException();
+
+			inStream.Seek(-sizeof(Int16), SeekOrigin.Current);
+			retVal = base.ReadInt16();
+			inStream.Seek(-sizeof(Int16), SeekOrigin.Current);
 
 			return retVal;
 		}

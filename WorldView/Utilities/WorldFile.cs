@@ -25,7 +25,7 @@ namespace MoreTerra
             ReadSigns(world);
             ReadNPCs(world);
             ReadNPCNames(world);
-            world.TileTypes = mapTiles;
+            //world.TileTypes = mapTiles;
             return world;
         }
 
@@ -51,7 +51,7 @@ namespace MoreTerra
             header.MaxTiles = new Point(x, y);
 
             if (version >= 0x3F)
-                header.MoonType = (int)reader.ReadByte();
+                header.MoonType = (byte)reader.ReadByte();
 
             if (version >= 0x2C)
             {
@@ -212,6 +212,7 @@ namespace MoreTerra
           //  progressPosition = stream.Position;
             world.Header = header;
         }
+        
 
         private byte[,] ReadTiles(World world)
         {
@@ -234,7 +235,7 @@ namespace MoreTerra
 
                         if (importantTiles.Contains(tileType)) //TileProperties.tileTypeDefs[tileType].IsImportant)
                         {
-                            if ((tileType == TileProperties.Chest) && (world.chestTypeList != null))
+                            if ((tileType == TileProperties.Chest) && (world.ChestTypeList != null))
                             {
                                 Int16 typeX = reader.ReadInt16();
                                 Int16 typeY = reader.ReadInt16();
@@ -243,9 +244,9 @@ namespace MoreTerra
                                 if ((typeX % 36 == 0) && (typeY == 0))
                                 {
                                     if ((typeX / 36) <= (Int32)ChestType.TrashCan)
-                                        world.chestTypeList.Add(new Point(column, row), (ChestType)(typeX / 36));
+                                        world.ChestTypeList.Add(new Point(column, row), (ChestType)(typeX / 36));
                                     else
-                                        world.chestTypeList.Add(new Point(column, row), ChestType.Unknown);
+                                        world.ChestTypeList.Add(new Point(column, row), ChestType.Unknown);
                                 }
                             }
                             else
@@ -261,7 +262,7 @@ namespace MoreTerra
                     else
                     {
                         if (row < world.Header.SurfaceLevel)
-                            tileType = TileProperties.BackgroundOffset;
+                            tileType = (byte)TileProperties.BackgroundOffset;
                         else if (row == world.Header.SurfaceLevel)
                             tileType = (Byte)(TileProperties.BackgroundOffset + 1); // Dirt Transition
                         else if (row < (world.Header.RockLayer + 38))
@@ -287,7 +288,7 @@ namespace MoreTerra
                         {
                             if (wallType + TileProperties.WallOffset > 255)
                             {
-                                tileType = TileProperties.Unknown;
+                                tileType = (byte)TileProperties.Unknown;
                             }
                             else
                             {
@@ -308,11 +309,11 @@ namespace MoreTerra
 
 
                         if (isLava)
-                            tileType = TileProperties.Lava;
+                            tileType = (byte)TileProperties.Lava;
                         else if (isHoney)
-                            tileType = TileProperties.Honey;
+                            tileType = (byte)TileProperties.Honey;
                         else
-                            tileType = TileProperties.Water;
+                            tileType = (byte)TileProperties.Water;
 
                     }
 
@@ -325,7 +326,7 @@ namespace MoreTerra
                     }
 
                     if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
-                        tileType = TileProperties.Wire;
+                        tileType = (byte)TileProperties.RedWire;
 
                     //Check if tileis half brick
                     if (world.Header.ReleaseNumber >= 41)
@@ -383,10 +384,10 @@ namespace MoreTerra
 
                     theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-                    if (world.chestTypeList != null)
+                    if (world.ChestTypeList != null)
                     {
-                        if (world.chestTypeList.ContainsKey(theChest.Coordinates))
-                            theChest.Type = world.chestTypeList[theChest.Coordinates];
+                        if (world.ChestTypeList.ContainsKey(theChest.Coordinates))
+                            theChest.Type = world.ChestTypeList[theChest.Coordinates];
                     }
                     else
                     {

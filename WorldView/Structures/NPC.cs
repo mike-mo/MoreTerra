@@ -5,20 +5,27 @@ namespace MoreTerra.Structures
 {
 	public enum NPCType
 	{
-		Armsdealer = 0,
+        ArmsDealer = 0,
 		Clothier,
+        Cyborg,
 		Demolitionist,
 		Dryad,
-        DyeTrader,
-		GoblinTinkerer = 5,
+        DyeTrader = 5,
+        GoblinTinkerer,
 		Guide,
 		Mechanic,
 		Merchant,
-		Nurse,
-		Oldman = 10,
-		SantaClaus,
+        Nurse = 10,
+        OldMan,
+        Painter,
+        PartyGirl,
+        Pirate,
+        SantaClaus = 15,
+        Steampunker,
+        Truffle,
+        WitchDoctor,
 		Wizard,
-		Unknown = 13
+        Unknown = 20
 	}
 		
 	public class NPC

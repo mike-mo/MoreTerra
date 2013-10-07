@@ -45,7 +45,51 @@ namespace MoreTerra.Utilities
 
 			if (header.ReleaseNumber >= 0x24)
 			{
-				String NPCName = backReader.ReadBackwardsString(false);
+				String NPCName;
+				if (header.ReleaseNumber >= 68)
+				{
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.PiratesName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.WitchDoctorsName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.PaintersName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.CyborgsName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.PartyGirlsName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.DyeTradersName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.SteamPunkersName = NPCName;
+
+					NPCName = backReader.ReadBackwardsString(false);
+					if (NPCName == null)
+						return 0;
+					header.TrufflesName = NPCName;
+				}
+
+				NPCName = backReader.ReadBackwardsString(false);
 				if (NPCName == null)
 					return 0;
 				header.MechanicsName = NPCName;
@@ -164,11 +208,17 @@ namespace MoreTerra.Utilities
 				chestCount -= (23);
 			}
 
+			int numChestItems;
+			if (header.ReleaseNumber < 68)
+				numChestItems = 20;
+			else
+				numChestItems = 40;
+
 			for (i = chestCount; i < 1000; i++)
 			{
 				beforeReads = stream.Position;
 
-				for (j = 0; j < 20; j++)
+				for (j = 0; j < numChestItems; j++)
 				{
 					countByte = backReader.PeekBackwardsByte();
 
@@ -240,7 +290,7 @@ namespace MoreTerra.Utilities
 				if (strictBool == 1)
 					returnChest.Active = true;
 
-				if (returnChest.Active == true && x != 00 && y != 00 && x < MaxX && y < MaxY)
+				if (returnChest.Active == true && x > 0&& y > 0 && x < MaxX && y < MaxY)
 					validChest = true;
 #if (DEBUG == false)
 			}
@@ -275,12 +325,22 @@ namespace MoreTerra.Utilities
 			{
 #endif
 				if (header.ReleaseNumber >= 0x24)
+				{
 					returnItem.Prefix = backReader.ReadBackwardsByte();
 
+					returnItem.Id = backReader.ReadBackwardsInt32();
+					returnItem.Name = Global.Instance.Info.GetItemName(returnItem.Id);
+				}
+				else
+				{
 				returnItem.Name = backReader.ReadBackwardsString();
+				}
 
 				if (!String.IsNullOrEmpty(returnItem.Name))
 				{
+					if (header.ReleaseNumber >= 68)
+						returnItem.Count = backReader.ReadBackwardsInt16();
+					else
 					returnItem.Count = backReader.ReadBackwardsByte();
 
 					if (returnItem.Count != 0)
@@ -311,6 +371,7 @@ namespace MoreTerra.Utilities
 		private Sign tryReadSignBackwards()
 		{
 			Int32 x, y;
+			Int32 strictbool;
 			Sign returnSign = new Sign();
 			long oldPosition = stream.Position;
 			Boolean validSign = false;
@@ -326,12 +387,15 @@ namespace MoreTerra.Utilities
 
 				// We're going to try to read in the string.  In a Sign the string should
 				// always have a 0x01 before it to show it was an active Sign.
-//				returnSign.Text = backReader.ReadBackwardsString(true, 1500, 1);
-				returnSign.Text = backReader.ReadBackwardsString(true, 1500);
+				returnSign.Text = backReader.ReadBackwardsString(true, 1500, 1);
+				//returnSign.Text = backReader.ReadBackwardsString(true, 1500);
 
 				if (returnSign.Text != null)
 				{
-					returnSign.Active = backReader.ReadBackwardsBoolean();
+					strictbool = backReader.ReadBackwardsByte();
+
+					if (strictbool == 1)
+						returnSign.Active = true;
 
 					if (returnSign.Active == true && y != 0 && x != 0)
 						validSign = true;

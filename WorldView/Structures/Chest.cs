@@ -12,8 +12,29 @@ namespace MoreTerra.Structures
 		LockedGoldChest,
 		ShadowChest,
 		LockedShadowChest,
-		Barrel,
-		TrashCan
+        Barrel = 5,
+        TrashCan,
+        EbonwoodChest,
+        RichMahoganyChest,
+        PearlwoodChest,
+        IvyChest = 10,
+        IceChest,
+        LivingWoodChest,
+        SkywareChest,
+        ShadewoodChest,
+        WebCoveredChest = 15,
+        LihzahrdChest,
+        WaterChest,
+        JungleChest,
+        CorruptionChest,
+        CrimsonChest = 20,
+        HallowedChest,
+        FrozenChest,
+        LockedJungleChest,
+        LockedCorruptionChest,
+        LockedCrimsonChest = 25,
+        LockedHallowedChest,
+        LockedFrozenChest = 27
 	}
 
 

@@ -338,6 +338,30 @@ Renamed project to MoreTerra.
 
 
 Future Versions
+================
+= Cleanup TODO =
+================
+Custom item buttons and functionality are no longer needed.  Items.xml file has all the items in it and
+ chests no longer store items based on their name but instead on NetID.  So when a new version comes out
+ using custom items by name, not by NetID will do no good at all.
+
+Scan for new Items in Chests needs to go away for the very same reason.  It's outdated with the new chest setup.
+
+The backwards reading system either needs to be gotten working again or it just fully needs to be removed.  Skipping
+ past the tiles instead of reading backwords isn't near as painful these days with the world file RLE compression.
+
+Possibly remove the whole Color tab.
+
+============
+= 1.2 TODO =
+============
+Find out the new map bounds.  Someone posted they've changed again.
+  *Done* They haven't changed at all.  What changed is the viewing distance does not change as you change
+  lighting models.  They're always the same.
+
+
+
+
 ==============
 = MAYBE TODO =
 ==============

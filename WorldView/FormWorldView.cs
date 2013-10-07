@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -93,6 +93,7 @@ namespace MoreTerra
 			// Output Image groupbox
 			this.buttonBrowseOutput.Click += new System.EventHandler(this.buttonBrowseOutput_Click);
 
+            this.checkBoxOfficialColors.CheckedChanged += new System.EventHandler(this.checkBoxOfficialColors_CheckedChanged);
 			this.checkBoxDrawWires.CheckedChanged += new System.EventHandler(this.checkBoxDrawWires_CheckedChanged);
 			this.checkBoxDrawWalls.CheckedChanged += new System.EventHandler(this.checkBoxDrawWalls_CheckedChanged);
 			this.checkBoxScanForItems.CheckedChanged += new System.EventHandler(this.checkBoxScanForItems_CheckedChanged);
@@ -229,6 +230,7 @@ namespace MoreTerra
 		private void SetupMainForm()
 		{
 			// These event handlers do nothing except ironically set SettingsManager back.
+            checkBoxOfficialColors.Checked = SettingsManager.Instance.OfficialColors;
 			checkBoxDrawWires.Checked = SettingsManager.Instance.DrawWires;
 			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
 			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
@@ -418,6 +420,11 @@ namespace MoreTerra
 		#endregion
 
 		#region Draw World tabPage functions
+        private void checkBoxOfficialColors_CheckedChanged(object sender, EventArgs e)
+        {
+            SettingsManager.Instance.DrawWires = checkBoxOfficialColors.Checked;
+        }
+
 		private void checkBoxDrawWires_CheckedChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Instance.DrawWires = checkBoxDrawWires.Checked;
@@ -552,7 +559,7 @@ namespace MoreTerra
 			if ((bool)e.Argument == true)
 				mapper.ProcessWorld(worldPath, bw);
 			else
-                mapper.ProcessWorld(worldPath, bw);//mapper.ReadChests(worldPath, bw);
+				mapper.ReadChests(worldPath, bw);
 
 			TreeNode[] chests = GetChests();
 
@@ -2164,9 +2171,6 @@ namespace MoreTerra
 		{
 			SettingsManager.Instance.CropImageUsing = comboBoxCropImage.SelectedIndex;
 		}
-
-
-
 
 	}
 }

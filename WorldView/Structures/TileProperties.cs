@@ -8,7 +8,8 @@ namespace MoreTerra.Structures
 	public class TileData
 	{
 		private Boolean isImportant;
-		private Color colour;
+		private Color color;
+        private Color officialColor;
 		private Boolean drawMarker;
 		private MarkerType markerType;
 
@@ -16,25 +17,35 @@ namespace MoreTerra.Structures
 		public TileData()
 		{
 			this.isImportant = false;
-			this.colour = Color.Magenta;
+			this.color = Color.Magenta;
+            this.officialColor = Color.Magenta;
 			this.markerType = MarkerType.Unknown;
 		}
 
-		public TileData(bool isTileImportant, Color colour, MarkerType hasMarker = MarkerType.Unknown)
+		public TileData(bool isTileImportant, Color color, Color officialColor, MarkerType hasMarker = MarkerType.Unknown)
 		{
 			this.isImportant = isTileImportant;
-			this.colour = colour;
+			this.color = color;
+            this.officialColor = officialColor;
 			this.drawMarker = false;
 			this.markerType = hasMarker;
 		}
 		#endregion
 
 		#region GetSet Functions
-		public Color Colour
+        public Color Color
 		{
 			get
 			{
-				return this.colour;
+                return this.color;
+            }
+        }
+
+        public Color OfficialColor
+        {
+            get
+            {
+                return this.officialColor;
 			}
 		}
 
@@ -43,6 +54,10 @@ namespace MoreTerra.Structures
 			get
 			{
 				return this.isImportant;
+			}
+			set
+			{
+				this.isImportant = value;
 			}
 		}
 
@@ -75,33 +90,58 @@ namespace MoreTerra.Structures
 	{
 		public static TileData[] tileTypeDefs;
 
-		public static Byte Sign;
-		public static Byte Chest;
-		public static Byte Unknown;
-		public static Byte Processed;
-		public static Byte Cropped;
-		public static Byte BackgroundOffset;
-		public static Byte Water;
-		public static Byte Lava;
-		public static Byte Honey;
-		public static Byte Wire;
-		public static Byte WallOffset;
+		public static Int16 Sign;
+		public static Int16 Chest;
+        public static Int16 Amethyst;
+        public static Int16 Diamond;
+        public static Int16 Emerald;
+        public static Int16 Ruby;
+        public static Int16 Sapphire;
+        public static Int16 Topaz;
+        public static Int16 ExposedGems;
+        public static Int16 Unknown;
+		public static Int16 Processed;
+		public static Int16 Cropped;
+		public static Int16 BackgroundOffset;
+		public static Int16 Water;
+		public static Int16 Lava;
+		public static Int16 Honey;
+		public static Int16 RedWire;
+		public static Int16 BlueWire;
+		public static Int16 GreenWire;
+		public static Int16 WallOffset;
+
+		public const int TYPES = 512;
 
 		public static void Initialize()
 		{
 			Boolean Important;
 			MarkerType mt;
-			Byte startPos;
+			Int16 startPos;
 
-			tileTypeDefs = new TileData[256];
+			tileTypeDefs = new TileData[TileProperties.TYPES];
 
 			startPos = 0;
 			foreach (KeyValuePair<Int32, TileInfo> kvp in Global.Instance.Info.Tiles)
 			{
 				if (kvp.Value.name == "Signs")
-					TileProperties.Sign = (Byte)kvp.Key;
+                    TileProperties.Sign = (Int16)kvp.Key;
 				else if (kvp.Value.name == "Containers")
-					TileProperties.Chest = (Byte)kvp.Key;
+                    TileProperties.Chest = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Amethyst")
+                    TileProperties.Amethyst = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Diamond")
+                    TileProperties.Diamond = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Emerald")
+                    TileProperties.Emerald = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Ruby")
+                    TileProperties.Ruby = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Sapphire")
+                    TileProperties.Sapphire = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Topaz")
+                    TileProperties.Topaz = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Exposed Gems")
+                    TileProperties.ExposedGems = (Int16)kvp.Key;
 
 				Important = (kvp.Value.autoGenType == String.Empty);
 
@@ -115,22 +155,22 @@ namespace MoreTerra.Structures
 					mt = MarkerType.Unknown;
 				}
 
-				tileTypeDefs[kvp.Key] = new TileData(Important, kvp.Value.color, mt);
+				tileTypeDefs[kvp.Key] = new TileData(Important, kvp.Value.color, kvp.Value.officialColor, mt);
 				startPos++;
 			}
-            TileProperties.Unknown = 210; // startPos;
+			TileProperties.Unknown = startPos;
 
-			startPos = (Byte) (254 - Global.Instance.Info.Walls.Count);
+			startPos = (Int16) ((TileProperties.TYPES - 2) - Global.Instance.Info.Walls.Count);
 
 			foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in Global.Instance.Info.SpecialObjects)
 			{
-				startPos -= (Byte) kvp.Value.Count;
+				startPos -= (Int16) kvp.Value.Count;
 			}
 
 			TileProperties.Processed = startPos;
-			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue);
+			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue, Color.AliceBlue);
 			TileProperties.Cropped = startPos;
-			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue);
+			tileTypeDefs[startPos++] = new TileData(false, Color.AliceBlue, Color.AliceBlue);
 
 			foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in Global.Instance.Info.SpecialObjects)
 			{
@@ -141,29 +181,33 @@ namespace MoreTerra.Structures
 
 						foreach (SpecialObjectInfo soi in kvp.Value)
 						{
-							tileTypeDefs[startPos++] = new TileData(false, soi.color);
+							tileTypeDefs[startPos++] = new TileData(false, soi.color, soi.officialColor);
 						}
 						break;
 					case "Liquid":
 						foreach (SpecialObjectInfo soi in kvp.Value)
 						{
-							if (soi.name == "Lava")
+							if (soi.name == "Honey")
+								TileProperties.Honey = startPos;
+							else if (soi.name == "Lava")
 								TileProperties.Lava = startPos;
 							else if (soi.name == "Water")
 								TileProperties.Water = startPos;
-							else if (soi.name == "Honey")
-								TileProperties.Honey = startPos;
 
-							tileTypeDefs[startPos++] = new TileData(false, soi.color);
+							tileTypeDefs[startPos++] = new TileData(false, soi.color, soi.officialColor);
 						}
 						break;
 					case "Wire":
 						foreach (SpecialObjectInfo soi in kvp.Value)
 						{
-							if (soi.name == "Wire")
-								TileProperties.Wire = startPos;
+							if (soi.name == "Red Wire")
+								TileProperties.RedWire = startPos;
+							else if (soi.name == "Green Wire")
+								TileProperties.GreenWire = startPos;
+							else if (soi.name == "Blue Wire")
+								TileProperties.BlueWire = startPos;
 
-							tileTypeDefs[startPos++] = new TileData(false, soi.color);
+							tileTypeDefs[startPos++] = new TileData(false, soi.color, soi.officialColor);
 						}
 						break;
 					default:
@@ -173,19 +217,18 @@ namespace MoreTerra.Structures
 			}
 
 			// This is a startPos -1 because walls start at 1, not at zero.
-			TileProperties.WallOffset = (Byte) (startPos - 1);
+			TileProperties.WallOffset = (Int16) (startPos - 1);
 			foreach (KeyValuePair<Int32, WallInfo> kvp in Global.Instance.Info.Walls)
 			{
-				tileTypeDefs[startPos] = new TileData(false, kvp.Value.color);
+				tileTypeDefs[startPos] = new TileData(false, kvp.Value.color, kvp.Value.officialColor);
 				startPos++;
 			}
 
 
-
-			for (Int32 i = 0; i < 256; i++)
+			for (Int32 i = 0; i < TileProperties.TYPES; i++)
 			{
 				if (tileTypeDefs[i] == null)
-					tileTypeDefs[i] = new TileData(false, Color.Magenta);
+					tileTypeDefs[i] = new TileData(false, Color.Magenta, Color.Magenta);
 			}
 
 		}

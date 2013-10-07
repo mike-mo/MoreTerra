@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPageDrawWorld = new System.Windows.Forms.TabPage();
+            this.checkBoxOfficialColors = new System.Windows.Forms.CheckBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxCropImage = new System.Windows.Forms.ComboBox();
@@ -175,6 +176,7 @@
             // 
             // tabPageDrawWorld
             // 
+            this.tabPageDrawWorld.Controls.Add(this.checkBoxOfficialColors);
             this.tabPageDrawWorld.Controls.Add(this.pictureBox);
             this.tabPageDrawWorld.Controls.Add(this.label4);
             this.tabPageDrawWorld.Controls.Add(this.comboBoxCropImage);
@@ -191,6 +193,19 @@
             this.tabPageDrawWorld.TabIndex = 0;
             this.tabPageDrawWorld.Text = "Draw World";
             this.tabPageDrawWorld.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOfficialColors
+            // 
+            this.checkBoxOfficialColors.AutoSize = true;
+            this.checkBoxOfficialColors.Checked = true;
+            this.checkBoxOfficialColors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOfficialColors.Location = new System.Drawing.Point(188, 229);
+            this.checkBoxOfficialColors.Name = "checkBoxOfficialColors";
+            this.checkBoxOfficialColors.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxOfficialColors.TabIndex = 13;
+            this.checkBoxOfficialColors.Text = "Use Official Colors";
+            this.checkBoxOfficialColors.UseVisualStyleBackColor = true;
+            this.checkBoxOfficialColors.CheckedChanged += new System.EventHandler(this.checkBoxOfficialColors_CheckedChanged);
             // 
             // pictureBox
             // 
@@ -1176,7 +1191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(490, 457);
+            this.ClientSize = new System.Drawing.Size(492, 457);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBoxSelectWorld);
             this.Controls.Add(this.tabControlSettings);
@@ -1326,6 +1341,7 @@
 		private System.Windows.Forms.CheckBox checkBoxDrawWires;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.ComboBox comboBoxCropImage;
+        private System.Windows.Forms.CheckBox checkBoxOfficialColors;
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.PictureBox pictureBox;
 
