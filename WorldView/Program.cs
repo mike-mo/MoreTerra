@@ -40,76 +40,91 @@ namespace MoreTerra
         static extern bool AttachConsole(int dwProcessId);
         private const int ATTACH_PARENT_PROCESS = -1;
 
-		static void ReadUpdate()
-		{
-			WebClient wc = new WebClient();
-			String page = wc.DownloadString("http://moreterra.codeplex.com/wikipage?title=Updates");
-			String header = "<div class=\"wikidoc\">";
-			Int32 start = page.IndexOf(header) + header.Length;
-			Int32 end = page.IndexOf("</div>", start);
+        static void ReadUpdate()
+        {
+            WebClient wc = new WebClient();
+            String page = wc.DownloadString("http://moreterra.codeplex.com/wikipage?title=Updates");
+            String header = "<div class=\"wikidoc\">";
+            Int32 start = page.IndexOf(header) + header.Length;
+            Int32 end = page.IndexOf("</div>", start);
 
-			String versionString = String.Empty;
-			versionString = page.Substring(start, end - start);
-			versionString = versionString.Replace("&amp;", "&");
+            String versionString = String.Empty;
+            versionString = page.Substring(start, end - start);
+            versionString = versionString.Replace("&amp;", "&");
 
-			XmlDocument xmlDoc = new XmlDocument();
-			xmlDoc.Load(versionString);
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(versionString);
 
-			MessageBox.Show(xmlDoc.InnerXml);
-		}
+            MessageBox.Show(xmlDoc.InnerXml);
+        }
 
         [STAThread]
         static void Main(string[] args)
         {
-			String error = Global.Instance.Initialize();
+            String error = Global.Instance.Initialize();
 
 #if DEBUG == true
-			if (error != String.Empty)
-			{
-				MessageBox.Show(error);
-				return;
-			}
+            if (error != String.Empty)
+            {
+                MessageBox.Show(error);
+                return;
+            }
 #endif
-			
-            // Initialize Managers
-			TileProperties.Initialize();
-            ResourceManager.Instance.Initialize();
-            SettingsManager.Instance.Initialize();
 
-//            DumpNewWalls();
-//            DumpNewTiles();
-//            return;
-//            World w = new World();
-            //w.SanityCheckWorld("c:\\Users\\Jason\\Documents\\My Games\\Terraria\\Worlds\\1-2_World.wld");
-            //return;
+            // Initialize Managers
+            try
+            {
+                TileProperties.Initialize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("I failed Initilaizing TileProperties: " + ex.Message);
+            }
+            try
+            {
+                ResourceManager.Instance.Initialize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("I failed Initilaizing Resource Manager: " + ex.Message);
+            }
+            try
+            {
+                SettingsManager.Instance.Initialize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("I failed Initilaizing Settings Manager: " + ex.Message);
+            }
+
 
             if (args.Length == 0) //started from windows
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new FormWorldView());
-                SettingsManager.Instance.Shutdown();                
+                SettingsManager.Instance.Shutdown();
             }
             else
             {
-            
+
                 //for (int i = 1; i < args.Length; i += 2)
                 //{
                 //    MessageBox.Show(args[i - 1] + args[i]);
                 //}
 
-				// See if we are running in Mono and if so do not do the Attach.
-				// Ugly but at least it lets the code run.
-				Type t = Type.GetType("Mono.Runtime");
-				
-				if (t == null)
-					AttachConsole(ATTACH_PARENT_PROCESS);
+                // See if we are running in Mono and if so do not do the Attach.
+                // Ugly but at least it lets the code run.
+                Type t = Type.GetType("Mono.Runtime");
 
-				bool show_help = false;
+                if (t == null)
+                    AttachConsole(ATTACH_PARENT_PROCESS);
+
+                bool show_help = false;
                 string worldPath = string.Empty;
                 string mapPath = string.Empty;
 
-                var p = new OptionSet () {
+                var p = new OptionSet() {
                     { "w|world=", "The path to the {WORLD} to map.",
                        v => worldPath = v },
                     { "o|output=", "The path to the {OUTPUT} file where the map PNG will be written.",
@@ -124,7 +139,7 @@ namespace MoreTerra
                 try
                 {
 #endif
-                    extra = p.Parse(args);
+                extra = p.Parse(args);
 #if (DEBUG == false)
                 }
                 catch (OptionException e)
@@ -156,23 +171,23 @@ namespace MoreTerra
                 }
                 else
                 {
-                    Console.WriteLine(Environment.NewLine + "Generating map from:" + 
-						Environment.NewLine + " " + worldPath);                    
+                    Console.WriteLine(Environment.NewLine + "Generating map from:" +
+                        Environment.NewLine + " " + worldPath);
 
                     WorldMapper mapper = new WorldMapper();
 
-					Global.Instance.InConsole = true;
+                    Global.Instance.InConsole = true;
 #if (DEBUG == false)
                     try
                     {
 #endif
-                        mapper.Initialize();
-                        Console.WriteLine("Reading World file...");
-                        mapper.OpenWorld();
-						mapper.ProcessWorld(worldPath, null);
-                        Console.WriteLine("World file closed. Generating PNG...");
-                        mapper.CreatePreviewPNG(mapPath, null);
-                        Console.WriteLine("Done! Saved to: " + Environment.NewLine + " " + mapPath);
+                    mapper.Initialize();
+                    Console.WriteLine("Reading World file...");
+                    mapper.OpenWorld();
+                    mapper.ProcessWorld(worldPath, null);
+                    Console.WriteLine("World file closed. Generating PNG...");
+                    mapper.CreatePreviewPNG(mapPath, null);
+                    Console.WriteLine("Done! Saved to: " + Environment.NewLine + " " + mapPath);
 #if (DEBUG == false)
                     }
                     catch (Exception ex)
@@ -180,93 +195,9 @@ namespace MoreTerra
                         Console.WriteLine("Error: " + ex.ToString());
                     }
 #endif
-                }    
-            }          
-        }
+                }
 
-        public static void DumpNewTiles()
-        {
-            Dictionary<int, TileInfo> tiles = Global.Instance.Info.Tiles;
-            TileInfo ti;
-            Map useMap = new Map();
-            useMap.active(true);
-            String tileXML;
-            FileStream stream = new FileStream("newTileXML.txt", FileMode.Create);
-            StreamWriter writer = new StreamWriter(stream);
-
-            for (int i = 0; i < tiles.Count; i++)
-            {
-                useMap.type = (byte)i;
-
-                ti = tiles[i];
-
-                tileXML = "    <tile ";
-                if (ti.name != null)
-                    tileXML = tileXML + "name=\"" + ti.name + "\" ";
-
-                tileXML = tileXML + "tileImage=\"" + i + "\" ";
-
-                if (!String.IsNullOrEmpty(ti.autoGenType))
-                    tileXML = tileXML + "autoGenType=\"" + ti.autoGenType + "\" ";
-
-                if (!String.IsNullOrEmpty(ti.colorName))
-                    tileXML = tileXML + "color=\"" + ti.colorName + "\" ";
-                else
-                    tileXML = tileXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ", ti.color.R, ti.color.G, ti.color.B);
-
-                OfficialColor c = useMap.tileColor(0);
-                tileXML = tileXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ", c.R, c.G, c.B);
-
-                if (!String.IsNullOrEmpty(ti.markerName))
-                    tileXML = tileXML + "marker=\"" + ti.markerName + "\" ";
-
-                tileXML = tileXML + "/>";
-
-                writer.WriteLine(tileXML);
             }
-            writer.Close();
         }
-
-        public static void DumpNewWalls()
-        {
-            Dictionary<int, WallInfo> walls = Global.Instance.Info.Walls;
-            WallInfo wi;
-            Map useMap = new Map();
-            useMap.wall(true);
-            String tileXML;
-            FileStream stream = new FileStream("newWallXML.txt", FileMode.Create);
-            StreamWriter writer = new StreamWriter(stream);
-
-            for (int i = 1; i <= walls.Count; i++)
-            {
-                useMap.type = (byte)i;
-
-                wi = walls[i];
-
-                tileXML = "    <wall ";
-                if (wi.name != null)
-                    tileXML = tileXML + "name=\"" + wi.name + "\" ";
-
-                tileXML = tileXML + "wallImage=\"" + i + "\" ";
-
-                if (wi.safe == false)
-                    tileXML = tileXML + "unsafe=\"true\" ";
-
-                if (!String.IsNullOrEmpty(wi.colorName))
-                    tileXML = tileXML + "color=\"" + wi.colorName + "\" ";
-                else
-                    tileXML = tileXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ", wi.color.R, wi.color.G, wi.color.B);
-
-                OfficialColor c = useMap.tileColor(0);
-                tileXML = tileXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ", c.R, c.G, c.B);
-
-                tileXML = tileXML + "/>";
-                //            <wall name="Blue Dungeon Brick" wallImage="7" unsafe="true" color="Wall Dungeon Blue" />
-
-                writer.WriteLine(tileXML);
-            }
-            writer.Close();
-        }
-
     }
 }
