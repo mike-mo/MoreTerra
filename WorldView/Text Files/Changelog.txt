@@ -1,3 +1,14 @@
+Release 1.11.2
+===========
+=Bug Fixes=
+===========
+We have all ores and chest markers
+solsund made sure the tile and background colors are correct. (map looks correct with no missing pink)
+==============
+=Known Issues=
+==============
+Not all items and tiles are represented correctly.
+
 Release 1.11
 ===========
 =Bug Fixes=
