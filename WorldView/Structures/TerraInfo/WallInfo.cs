@@ -10,6 +10,7 @@ namespace MoreTerra.Structures.TerraInfo
 		public Int32 wallImage;
 		public Color color;
         public Color officialColor;
+        public Boolean transparent;
 		public Boolean safe;
 	}
 }

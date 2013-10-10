@@ -1,3 +1,15 @@
+Release 1.11.3
+==============
+=New Features=
+==============
+New Markers added for Plantera's Bulb, Heart Fruits and Gold Cache.
+Markers now correctly display for the gems found in rock debris on the floor.
+
+===============
+=Compatibility=
+===============
+Fixed header changes found in Terraria 1.0.3.1
+
 Release 1.11.2
 ===========
 =Bug Fixes=
@@ -8,10 +20,11 @@ Added better error tracking for those having trouble.
 
 
 Release 1.11
-===========
-=Bug Fixes=
-===========
+===============
+=Compatibility=
+===============
 Now correctly parses 1.2 wld file.
+
 ==============
 =Known Issues=
 ==============

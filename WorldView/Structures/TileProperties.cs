@@ -10,6 +10,7 @@ namespace MoreTerra.Structures
 		private Boolean isImportant;
 		private Color color;
         private Color officialColor;
+        private Boolean transparent;
 		private Boolean drawMarker;
 		private MarkerType markerType;
 
@@ -19,6 +20,7 @@ namespace MoreTerra.Structures
 			this.isImportant = false;
 			this.color = Color.Magenta;
             this.officialColor = Color.Magenta;
+            this.transparent = false;
 			this.markerType = MarkerType.Unknown;
 		}
 
@@ -27,6 +29,7 @@ namespace MoreTerra.Structures
 			this.isImportant = isTileImportant;
 			this.color = color;
             this.officialColor = officialColor;
+            this.transparent = false;
 			this.drawMarker = false;
 			this.markerType = hasMarker;
 		}
@@ -99,6 +102,11 @@ namespace MoreTerra.Structures
         public static Int16 Sapphire;
         public static Int16 Topaz;
         public static Int16 ExposedGems;
+        public static Int16 SmallDetritus;
+        public static Int16 LargeDetritus;
+        public static Int16 CopperCache;
+        public static Int16 SilverCache;
+        public static Int16 GoldCache;
         public static Int16 Unknown;
 		public static Int16 Processed;
 		public static Int16 Cropped;
@@ -142,6 +150,12 @@ namespace MoreTerra.Structures
                     TileProperties.Topaz = (Int16)kvp.Key;
                 else if (kvp.Value.name == "Exposed Gems")
                     TileProperties.ExposedGems = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Small Detritus")
+                    TileProperties.SmallDetritus = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Large Detritus")
+                    TileProperties.LargeDetritus = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Gold Cache")
+                    TileProperties.GoldCache = (Int16)kvp.Key;
 
 				Important = (kvp.Value.autoGenType == String.Empty);
 

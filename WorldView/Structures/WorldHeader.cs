@@ -28,6 +28,7 @@
         private bool isDayTime;
         private int moonPhase;
         private bool isBloodMoon;
+        private bool isEclipse;
         private Point dungeonPoint;
 		private bool crimson; // What is this?
         private bool isBoss1Dead;
@@ -349,6 +350,19 @@
             set
             {
                 this.isBloodMoon = value;
+            }
+        }
+
+        [CategoryAttribute("World Information"), ReadOnlyAttribute(true)]
+        public bool IsEclipse
+        {
+            get
+            {
+                return this.isEclipse;
+            }
+            set
+            {
+                this.isEclipse = value;
             }
         }
 

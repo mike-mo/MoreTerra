@@ -312,6 +312,9 @@
     <None Include="Resources\chest_crimson.png" />
     <None Include="Resources\ore_crimtane.png" />
     <None Include="Resources\objects_picture.png" />
+    <None Include="Resources\objects_goldcache.png" />
+    <None Include="Resources\objects_heartfruit.png" />
+    <None Include="Resources\objects_planterabulb.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />

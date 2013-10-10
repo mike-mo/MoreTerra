@@ -203,9 +203,9 @@
     <tile name="Unknown" tileImage="181" autoGenType="Unknown" color="Unknown" officialColor="#863B31" />
     <tile name="Unknown" tileImage="182" autoGenType="Unknown" color="Unknown" officialColor="#2B568C" />
     <tile name="Unknown" tileImage="183" autoGenType="BuildingBlock" color="Unknown" officialColor="#793186" />
-    <tile name="Unknown" tileImage="184" color="Unknown" officialColor="#1D6A58" />
-    <tile name="Unknown" tileImage="185" color="Unknown" officialColor="#636363" />
-    <tile name="Unknown" tileImage="186" color="Unknown" officialColor="#636363" />
+    <tile name="Long Moss" tileImage="184" color="Unknown" officialColor="#1D6A58" />
+    <tile name="Small Detritus" tileImage="185" color="Unknown" officialColor="#636363" />
+    <tile name="Large Detritus" tileImage="186" color="Unknown" officialColor="#636363" />
     <tile name="Unknown" tileImage="187" color="Unknown" officialColor="#636363" />
     <tile name="Unknown" tileImage="188" autoGenType="Unknown" color="Unknown" officialColor="#497811" />
     <tile name="Unknown" tileImage="189" autoGenType="Unknown" color="Unknown" officialColor="#DFFFFF" />
@@ -260,9 +260,9 @@
     <tile name="Unknown" tileImage="233" color="Unknown" officialColor="#6BB61D" />
     <tile name="Unknown" tileImage="234" autoGenType="Unknown" color="Unknown" officialColor="#352C29" />
     <tile name="Teleporter" tileImage="235" color="Unknown" officialColor="#D6B82E" />
-    <tile name="Life Fruit" tileImage="236" color="Unknown" officialColor="#95E857" />
+    <tile name="Life Fruit" tileImage="236" color="Unknown" officialColor="#95E857" marker="Heart Fruit" />
     <tile name="Lihzahrd Altar" tileImage="237" color="Unknown" officialColor="#FFF133" />
-    <tile name="Plantera's Bulb" tileImage="238" color="Unknown" officialColor="#E180CE" />
+    <tile name="Plantera's Bulb" tileImage="238" color="Unknown" officialColor="#E180CE" marker="Plantera Bulb" />
     <tile name="Metal Bar" tileImage="239" color="Unknown" officialColor="#E0C265" />
     
     <tile name="Picture (3x3)" tileImage="240" color="Unknown" officialColor="#78553C" marker="Picture" />
@@ -277,6 +277,9 @@
     <tile name="Unknown" tileImage="249" autoGenType="Unknown" color="Unknown" officialColor="#FF00FF" />
     
     <tile name="Unknown" tileImage="250" autoGenType="Unknown" color="Unknown" officialColor="#FF00FF" />
+
+    <!-- Tiles after this are a hack and not meant to be kept past testing -->
+    <tile name="Gold Cache" tileImage="251" autoGenType="Unknown" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
   </tiles>
   <walls>
     <wall name="Stone" wallImage="1" unsafe="true" color="#424242" officialColor="#343434" />
@@ -301,7 +304,7 @@
     <wall name="Pink Brick" wallImage="19" unsafe="true" color="Wall Dungeon Pink" officialColor="#291C24" />
 
     <wall name="Obsidian" wallImage="20" unsafe="true" color="Wall Dirt" officialColor="#0F0F0F" />
-    <wall name="Glass Wall" wallImage="21" unsafe="true" color="Wall Brick" officialColor="#FF00FF" />
+    <wall name="Glass Wall" wallImage="21" unsafe="true" color="Wall Brick" officialColor="#FF00FF" transparent="true" />
     <wall name="Pearlstone Brick Wall" wallImage="22" unsafe="true" color="Wall Brick" officialColor="#716363" />
     <wall name="Iridescent Brick Wall" wallImage="23" unsafe="true" color="Wall Brick" officialColor="#26262B" />
     <wall name="Mudstone Brick Wall" wallImage="24" unsafe="true" color="Wall Brick" officialColor="#352729" />
@@ -373,7 +376,7 @@
     <wall name="Unknown" wallImage="84" unsafe="true" color="Unknown" officialColor="#304E5D" />
     <wall name="Unknown" wallImage="85" unsafe="true" color="Unknown" officialColor="#363F45" />
     <wall name="Unknown" wallImage="86" unsafe="true" color="Unknown" officialColor="#8A4926" />
-    <wall name="Unknown" wallImage="87" unsafe="true" color="Unknown" officialColor="#320F08" />
+    <wall name="Lihzahrd Brick Wall (unsafe)" wallImage="87" unsafe="true" color="Unknown" officialColor="#320F08" />
     <wall name="Unknown" wallImage="88" unsafe="true" color="Unknown" officialColor="#FF00FF" />
     <wall name="Unknown" wallImage="89" unsafe="true" color="Unknown" officialColor="#FF00FF" />
     
@@ -401,6 +404,7 @@
     <wall name="Unknown" wallImage="110" unsafe="true" color="Unknown" officialColor="#FF00FF" />
     
     <wall name="Unknown" wallImage="111" unsafe="true" color="Unknown" officialColor="#FF00FF" />
+    <wall name="Lihzahrd Brick Wall" wallImage="112" color="Unknown" officialColor="#320F08" />
   </walls>
   <items>
     <item name="1 Second Timer" type="Unknown" itemImage="583" />
@@ -453,13 +457,18 @@
     <item name="Ancient Shadow Scalemail" type="Unknown" itemImage="957" />
     <item name="Angel Statue" foundIn="Chest" maxStack="1" itemImage="52" />
     <item name="Angel Wings" type="Unknown" itemImage="493" />
+    <item name="Angler Fish Banner" type="Unknown" itemImage="1615" />
+    <item name="Angry Nimbus Banner" type="Unknown" itemImage="1616" />
     <item name="Ankh Banner" type="Unknown" itemImage="789" />
     <item name="Ankh Charm" type="Unknown" itemImage="1612" />
     <item name="Ankh Shield" type="Unknown" itemImage="1613" />
     <item name="Anklet of the Wind" type="Accessory" foundIn="Chest" itemImage="212" />
+    <item name="Anomura Fungus Banner" type="Unknown" itemImage="1617" />
+    <item name="Antlion Banner" type="Unknown" itemImage="1618" />
     <item name="Antlion Mandible" itemImage="323" />
     <item name="Anvil Statue" type="Unknown" itemImage="468" />
     <item name="Aqua Scepter" type="Weapon" foundIn="Chest" itemImage="157" />
+    <item name="Arapaima Banner" type="Unknown" itemImage="1619" />
     <item name="Archaeologist's Hat" type="Head Costume" itemImage="251" />
     <item name="Archaeologist's Jacket" type="Body Costume" itemImage="252" />
     <item name="Archaeologist's Pants" type="Leg Costume" itemImage="253" />
@@ -467,6 +476,7 @@
     <item name="Armor Bracing" type="Unknown" itemImage="901" />
     <item name="Armor Polish" type="Unknown" itemImage="886" />
     <item name="Armor Statue" type="Placeable Object" itemImage="360" />
+    <item name="Armored Skeleton Banner" type="Unknown" itemImage="1620" />
     <item name="Ash Block" type="Building Block" itemImage="172" />
     <item name="Asphalt Block" type="Unknown" itemImage="775" />
     <item name="Autohammer" type="Unknown" itemImage="1551" />
@@ -478,7 +488,11 @@
     <item name="Bananarang" type="Unknown" itemImage="1324" />
     <item name="Band of Regeneration" type="Accessory" foundIn="Chest" itemImage="49" />
     <item name="Band of Starpower" type="Accessory" foundIn="Shadow Orb" itemImage="111" />
+    <item name="Banquet Table" type="Unknown" itemImage="1714" />
+    <item name="Bar Stool" type="Unknown" itemImage="1706" />
+    <item name="Bar" type="Unknown" itemImage="1715" />
     <item name="Barrel" type="Container" itemImage="343" />
+    <item name="Bat Banner" type="Unknown" itemImage="1621" />
     <item name="Bat Statue" type="Unknown" itemImage="443" />
     <item name="Bat Wings" type="Unknown" itemImage="1165" />
     <item name="Bathtub" type="Placeable Object" itemImage="336" />
@@ -499,12 +513,14 @@
     <item name="Bench" type="Placeable Object" itemImage="335" />
     <item name="Bezoar" type="Unknown" itemImage="887" />
     <item name="Binoculars" type="Unknown" itemImage="1299" />
+    <item name="Bird Banner" type="Unknown" itemImage="1622" />
     <item name="Bird Statue" type="Unknown" itemImage="464" />
     <item name="Black Belt" type="Unknown" itemImage="963" />
     <item name="Black Dye" type="Unknown" itemImage="1050" />
     <item name="Black Ink" type="Unknown" itemImage="1119" />
     <item name="Black Lens" itemImage="236" />
     <item name="Black Paint" type="Unknown" itemImage="1097" />
+    <item name="Black Recluse Banner" type="Unknown" itemImage="1623" />
     <item name="Black Thread" itemImage="254" />
     <item name="Blade of Grass" type="Weapon" itemImage="190" />
     <item name="Blend-O-Matic" type="Unknown" itemImage="995" />
@@ -514,6 +530,9 @@
     <item name="Blizzard in a Balloon" type="Unknown" itemImage="1163" />
     <item name="Blizzard in a Bottle" type="Unknown" foundIn="Chest" itemImage="987" />
     <item name="Blood Butcherer" type="Unknown" itemImage="795" />
+    <item name="Blood Crawler Banner" type="Unknown" itemImage="1626" />
+    <item name="Blood Feeder Banner" type="Unknown" itemImage="1624" />
+    <item name="Blood Jelly Banner" type="Unknown" itemImage="1625" />
     <item name="Blood Lust Cluster" type="Unknown" itemImage="799" />
     <item name="Blood Moon Rising" type="Unknown" itemImage="1372" />
     <item name="Blood Water Fountain" type="Unknown" itemImage="945" />
@@ -563,6 +582,7 @@
     <item name="Bone Key" type="Unknown" itemImage="1169" />
     <item name="Bone Pickaxe" type="Unknown" itemImage="1320" />
     <item name="Bone Platform" type="Unknown" itemImage="634" />
+    <item name="Bone Serpent Banner" type="Unknown" itemImage="1627" />
     <item name="Bone Sword" type="Unknown" itemImage="1166" />
     <item name="Bone Table" type="Unknown" itemImage="827" />
     <item name="Bone Wand" type="Unknown" itemImage="932" />
@@ -608,6 +628,7 @@
     <item name="Bubblegum Block Wall" type="Unknown" itemImage="1592" />
     <item name="Bubblegum Block" type="Unknown" itemImage="1591" />
     <item name="Bundle of Balloons" type="Unknown" itemImage="1164" />
+    <item name="Bunny Banner" type="Unknown" itemImage="1628" />
     <item name="Bunny Cannon" type="Unknown" itemImage="1337" />
     <item name="Bunny Hood" type="Head Costume" itemImage="243" />
     <item name="Bunny Statue" type="Unknown" itemImage="445" />
@@ -643,6 +664,7 @@
     <item name="Cenx's Wings" type="Unknown" itemImage="1586" />
     <item name="Chain Knife" type="Unknown" itemImage="1325" />
     <item name="Chain Lantern" type="Placeable Object" subType="Light" itemImage="136" />
+    <item name="Chaos Elemental Banner" type="Unknown" itemImage="1629" />
     <item name="Charm of Myths" type="Unknown" itemImage="860" />
     <item name="Chest Statue" type="Unknown" itemImage="463" />
     <item name="Chest" type="Container" itemImage="48" />
@@ -676,6 +698,7 @@
     <item name="Cloud in a Balloon" type="Unknown" itemImage="399" />
     <item name="Cloud in a Bottle" type="Accessory" foundIn="Chest" itemImage="53" />
     <item name="Cloud" type="Unknown" itemImage="751" />
+    <item name="Clown Banner" type="Unknown" itemImage="1631" />
     <item name="Clown Hat" type="Unknown" itemImage="503" />
     <item name="Clown Pants" type="Unknown" itemImage="505" />
     <item name="Clown Shirt" type="Unknown" itemImage="504" />
@@ -722,6 +745,8 @@
     <item name="Copper Shortsword" type="Weapon" itemImage="6" netId="-15"  recolor="Copper" />
     <item name="Copper Watch" type="Accessory" itemImage="15" />
     <item name="Coral" itemImage="275" />
+    <item name="Corrupt Bunny Banner" type="Unknown" itemImage="1632" />
+    <item name="Corrupt Goldfish Banner" type="Unknown" itemImage="1633" />
     <item name="Corrupt Seeds" type="Seed" plantsIn="Dirt" itemImage="59" />
     <item name="Corrupt Statue" type="Unknown" itemImage="466" />
     <item name="Corrupt Water Fountain" type="Unknown" itemImage="942" />
@@ -731,8 +756,11 @@
     <item name="Cowboy Hat" type="Unknown" itemImage="873" />
     <item name="Cowboy Jacket" type="Unknown" itemImage="874" />
     <item name="Cowboy Pants" type="Unknown" itemImage="875" />
+    <item name="Crab Banner" type="Unknown" itemImage="1634" />
     <item name="Crab Statue" type="Unknown" itemImage="454" />
+    <item name="Crimera Banner" type="Unknown" itemImage="1635" />
     <item name="Crimsand Block" type="Unknown" itemImage="1246" />
+    <item name="Crimson Axe Banner" type="Unknown" itemImage="1636" />
     <item name="Crimson Chest" type="Unknown" itemImage="1530" />
     <item name="Crimson Greaves" type="Unknown" itemImage="794" />
     <item name="Crimson Helmet" type="Unknown" itemImage="792" />
@@ -760,6 +788,7 @@
     <item name="Cursed Bullet" type="Unknown" itemImage="546" />
     <item name="Cursed Flame" type="Unknown" itemImage="522" />
     <item name="Cursed Flames" type="Unknown" itemImage="519" />
+    <item name="Cursed Hammer Banner" type="Unknown" itemImage="1637" />
     <item name="Cursed Torch" type="Unknown" itemImage="523" />
     <item name="Cutlass" type="Unknown" itemImage="672" />
     <item name="Cyan Dye" type="Unknown" itemImage="1013" />
@@ -800,7 +829,9 @@
     <item name="Deep Teal Paint" type="Unknown" itemImage="1090" />
     <item name="Deep Violet Paint" type="Unknown" itemImage="1095" />
     <item name="Deep Yellow Paint" type="Unknown" itemImage="1087" />
+    <item name="Demon Banner" type="Unknown" itemImage="1638" />
     <item name="Demon Bow" type="Ranged Weapon" ammoType="Arrow" itemImage="44" />
+    <item name="Demon Eye Banner" type="Unknown" itemImage="1639" />
     <item name="Demon Scythe" type="Magical Weapon" itemImage="272" />
     <item name="Demon Torch" type="Unknown" itemImage="433" />
     <item name="Demon Wings" type="Unknown" itemImage="492" />
@@ -810,6 +841,7 @@
     <item name="Demonite Brick" type="Unknown" itemImage="577" />
     <item name="Demonite Ore" type="Ore" itemImage="56" />
     <item name="Depth Meter" type="Accessory" itemImage="18" />
+    <item name="Derpling Banner" type="Unknown" itemImage="1640" />
     <item name="Desert Water Fountain" type="Unknown" itemImage="910" />
     <item name="Destroyer Emblem" type="Unknown" itemImage="1301" />
     <item name="Destroyer Trophy" type="Unknown" itemImage="1366" />
@@ -837,6 +869,7 @@
     <item name="Dye Vat" type="Unknown" itemImage="1120" />
     <item name="Dynamite" type="Explosive" foundIn="Chest" maxStack="5" itemImage="167" />
 
+    <item name="Eater of Souls Banner" type="Unknown" itemImage="1641" />
     <item name="Eater of Worlds Trophy" type="Unknown" itemImage="1361" />
     <item name="Eater's Bone" type="Unknown" itemImage="994" />
     <item name="Ebonsand Block" type="Unknown" itemImage="370" />
@@ -868,6 +901,7 @@
     <item name="Empty Bucket" type="Usable" itemImage="205" />
     <item name="Empty Bullet" type="Unknown" itemImage="1432" />
     <item name="Enchanted Boomerang" type="Weapon" foundIn="Chest" itemImage="55" />
+    <item name="Enchanted Sword Banner" type="Unknown" itemImage="1642" />
     <item name="Enchanted Sword" type="Unknown" itemImage="989" />
     <item name="Eskimo Coat" type="Unknown" itemImage="804" />
     <item name="Eskimo Hood" type="Unknown" itemImage="803" />
@@ -884,14 +918,16 @@
     <item name="Eye of Cthulhu Trophy" type="Unknown" itemImage="1360" />
     <item name="Eye of the Golem" type="Unknown" itemImage="1248" />
     <item name="Eyeball Statue" type="Unknown" itemImage="471" />
-    <item name="Facing the Cerebral Mastermind" type="Unknown" itemImage="1500" />
 
+    <item name="Face Monster Banner" type="Unknown" itemImage="1644" />
+    <item name="Facing the Cerebral Mastermind" type="Unknown" itemImage="1500" />
     <item name="Fairy Bell" type="Unknown" itemImage="425" />
     <item name="Fairy Wings" type="Unknown" itemImage="761" />
     <item name="Fallen Star" type="Consumable" maxStack="100" itemImage="75" />
     <item name="Familiar Pants" type="Leg Costume" itemImage="270" />
     <item name="Familiar Shirt" type="Body Costume" itemImage="269" />
     <item name="Familiar Wig" type="Head Costume" itemImage="271" />
+    <item name="Fart in a Jar" type="Unknown" itemImage="1724" />
     <item name="Fast Clock" type="Unknown" itemImage="889" />
     <item name="Father of Someone" type="Unknown" itemImage="1442" />
     <item name="Feather" foundIn="Chest" itemImage="320" />
@@ -901,6 +937,7 @@
     <item name="Finding Gold" type="Unknown" itemImage="1480" />
     <item name="Fire Feather" type="Unknown" itemImage="1518" />
     <item name="Fire Gauntlet" type="Unknown" itemImage="1343" />
+    <item name="Fire Imp Banner" type="Unknown" itemImage="1664" />
     <item name="Fireblossom Seeds" type="Seed" plantsIn="Ash" itemImage="312" />
     <item name="Fireblossom" type="Herb" itemImage="318" />
     <item name="First Encounter" type="Unknown" itemImage="1481" />
@@ -933,6 +970,7 @@
     <item name="Flesh Work Bench" type="Unknown" itemImage="813" />
     <item name="Flintlock Pistol" type="Ranged Weapon" ammoType="Bullet" itemImage="95" />
     <item name="Flipper" type="Accessory" foundIn="Chest" itemImage="187" />
+    <item name="Floaty Gross Banner" type="Unknown" itemImage="1645" />
     <item name="Flower Pow" type="Unknown" itemImage="1259" />
     <item name="Flower Wall" type="Unknown" itemImage="747" />
     <item name="Flower of Fire" type="Magical Weapon" foundIn="Chest" itemImage="112" />
@@ -940,6 +978,9 @@
     <item name="Flowing Magma" type="Unknown" itemImage="1542" />
     <item name="Flurry Boots" type="Unknown" foundIn="Chest" itemImage="1579" />
     <item name="Flying Carpet" type="Unknown" foundIn="Chest" itemImage="934" />
+    <item name="Flying Fish Banner" type="Unknown" itemImage="1646" />
+    <item name="Flying Snake Banner" type="Unknown" itemImage="1647" />
+    <item name="Frankenstein Banner" type="Unknown" itemImage="1648" />
     <item name="Frost Breastplate" type="Unknown" itemImage="685" />
     <item name="Frost Helmet" type="Unknown" itemImage="684" />
     <item name="Frost Leggings" type="Unknown" itemImage="686" />
@@ -951,15 +992,23 @@
     <item name="Frozen Slime Block" type="Unknown" itemImage="767" />
     <item name="Frozen Turtle Shell" type="Unknown" itemImage="1253" />
     <item name="Frozen Wings" type="Unknown" itemImage="822" />
+    <item name="Fungi Bulb Banner" type="Unknown" itemImage="1649" />
+    <item name="Fungo Fish Banner" type="Unknown" itemImage="1650" />
     <item name="Furnace" type="Placeable Object" itemImage="33" />
 
     <item name="GPS" type="Unknown" itemImage="395" />
     <item name="Gangsta Hat" type="Unknown" itemImage="1276" />
     <item name="Gargoyle Statue" type="Unknown" itemImage="450" />
+    <item name="Gastropod Banner" type="Unknown" itemImage="1651" />
     <item name="Gel" foundIn="Chest" itemImage="23" />
     <item name="Ghost Wings" type="Unknown" itemImage="823" />
     <item name="Giant Harpey Feather" type="Unknown" itemImage="1516" />
     <item name="Gills Potion" type="Potion" foundIn="Chest" itemImage="291" />
+    <item name="Glass Bed" type="Unknown" itemImage="1719" />
+    <item name="Glass Chair" type="Unknown" itemImage="1703" />
+    <item name="Glass Door" type="Unknown" itemImage="1709" />
+    <item name="Glass Platform" type="Unknown" itemImage="1702" />
+    <item name="Glass Table" type="Unknown" itemImage="1713" />
     <item name="Glass Wall" type="Unknown" itemImage="392" />
     <item name="Glass" type="Building Block" itemImage="170" />
     <item name="Gloom Statue" type="Unknown" itemImage="451" />
@@ -967,8 +1016,13 @@
     <item name="Glory of the Fire" type="Unknown" itemImage="1374" />
     <item name="Glowing Mushroom" type="Consumable" itemImage="183" />
     <item name="Glowstick" type="Usable" foundIn="Chest" maxStack="99" itemImage="282" />
+    <item name="Goblin Archer Banner" type="Unknown" itemImage="1652" />
     <item name="Goblin Battle Standard" type="Usable" itemImage="361" />
+    <item name="Goblin Scout Banner" type="Unknown" itemImage="1654" />
+    <item name="Goblin Sorcerer Banner" type="Unknown" itemImage="1653" />
     <item name="Goblin Statue" type="Unknown" itemImage="441" />
+    <item name="Goblin Thief Banner" type="Unknown" itemImage="1655" />
+    <item name="Goblin Warrior Banner" type="Unknown" itemImage="1656" />
     <item name="Goblins Playing Poker" type="Unknown" itemImage="1425" />
     <item name="Goggles" type="Head Equipment" itemImage="37" />
     <item name="Gold Axe" type="Weapon" itemImage="10" netId="-4"  recolor="Gold" />
@@ -990,9 +1044,15 @@
     <item name="Gold Pickaxe" type="Weapon" itemImage="1" netId="-1"  recolor="Gold" />
     <item name="Gold Shortsword" type="Weapon" itemImage="6" netId="-3" recolor="Gold" />
     <item name="Gold Watch" type="Accessory" itemImage="17" />
+    <item name="Golden Bed" type="Unknown" itemImage="1720" />
     <item name="Golden Bullet" type="Unknown" itemImage="1352" />
+    <item name="Golden Chair" type="Unknown" itemImage="1704" />
+    <item name="Golden Door" type="Unknown" itemImage="1710" />
     <item name="Golden Key" type="Key" foundIn="Chest" itemImage="327" />
     <item name="Golden Shower" type="Unknown" itemImage="1336" />
+    <item name="Golden Table" type="Unknown" itemImage="1716" />
+    <item name="Golden Toilet" type="Unknown" itemImage="1705" />
+    <item name="Goldfish Banner" type="Unknown" itemImage="1657" />
     <item name="Goldfish" type="Consumable" itemImage="261" />
     <item name="Golem Fist" type="Unknown" itemImage="1297" />
     <item name="Golem Trophy" type="Unknown" itemImage="1371" />
@@ -1081,6 +1141,7 @@
     <item name="Hanging Skeleton" type="Unknown" itemImage="1377" />
     <item name="Harp" type="Unknown" itemImage="508" />
     <item name="Harpoon" type="Weapon" itemImage="160" />
+    <item name="Harpy Banner" type="Unknown" itemImage="1658" />
     <item name="Harpy Wings" type="Unknown" itemImage="785" />
     <item name="Headstone" type="Unknown" itemImage="1175" />
     <item name="Healing Potion" type="Potion" foundIn="Chest" itemImage="188" />
@@ -1088,6 +1149,7 @@
     <item name="Heart" type="Pickup Item" itemImage="58" />
     <item name="Heat Ray" type="Unknown" itemImage="1295" />
     <item name="Hell Hammer Banner" type="Unknown" itemImage="1465" />
+    <item name="Hellbat Banner" type="Unknown" itemImage="1659" />
     <item name="Hellbound Banner" type="Unknown" itemImage="1464" />
     <item name="Hellfire Arrow" type="Arrow" foundIn="Chest" itemImage="265" />
     <item name="Hellforge" type="Placeable Object" itemImage="221" />
@@ -1100,6 +1162,7 @@
     <item name="Hero's Hat" type="Head Costume" itemImage="247" />
     <item name="Hero's Pants" type="Leg Costume" itemImage="249" />
     <item name="Hero's Shirt" type="Body Costume" itemImage="248" />
+    <item name="Herpling Banner" type="Unknown" itemImage="1660" />
     <item name="High Velocity Bullet" type="Unknown" itemImage="1302" />
     <item name="Hive Wall" type="Unknown" itemImage="1126" />
     <item name="Hive Wand" type="Unknown" itemImage="1129" />
@@ -1107,10 +1170,15 @@
     <item name="Holy Arrow" type="Unknown" itemImage="516" />
     <item name="Holy Water" type="Unknown" itemImage="422" />
     <item name="Honey Balloon" type="Unknown" itemImage="1249" />
+    <item name="Honey Bed" type="Unknown" itemImage="1721" />
     <item name="Honey Block" type="Unknown" itemImage="1125" />
     <item name="Honey Bucket" type="Unknown" itemImage="1128" />
+    <item name="Honey Chair" type="Unknown" itemImage="1707" />
     <item name="Honey Comb" type="Unknown" itemImage="1132" />
+    <item name="Honey Door" type="Unknown" itemImage="1711" />
+    <item name="Honey Table" type="Unknown" itemImage="1717" />
     <item name="Hook" itemImage="118" />
+    <item name="Hornet Banner" type="Unknown" itemImage="1661" />
     <item name="Hornet Statue" type="Unknown" itemImage="452" />
     <item name="Hunter Potion" type="Potion" foundIn="Chest" itemImage="304" />
 
@@ -1121,6 +1189,7 @@
     <item name="Ice Brick Wall" type="Unknown" itemImage="884" />
     <item name="Ice Brick" type="Unknown" itemImage="883" />
     <item name="Ice Chest" type="Unknown" itemImage="681" />
+    <item name="Ice Elemental Banner" type="Unknown" itemImage="1662" />
     <item name="Ice Feather" type="Unknown" itemImage="1519" />
     <item name="Ice Rod" type="Unknown" itemImage="496" />
     <item name="Ice Sickle" type="Unknown" itemImage="1306" />
@@ -1131,6 +1200,7 @@
     <item name="Ichor Bullet" type="Unknown" itemImage="1335" />
     <item name="Ichor Torch" type="Unknown" itemImage="1333" />
     <item name="Ichor" type="Unknown" itemImage="1332" />
+    <item name="Icy Merman Banner" type="Unknown" itemImage="1663" />
     <item name="Icy Water Fountain" type="Unknown" itemImage="941" />
     <item name="Illegal Gun Parts" itemImage="324" />
     <item name="Imbuing Station" type="Unknown" itemImage="1430" />
@@ -1165,6 +1235,7 @@
     <item name="Ivy Chest" type="Unknown" itemImage="680" />
     <item name="Ivy Whip" type="Weapon" itemImage="185" />
 
+    <item name="Jellyfish Banner" type="Unknown" itemImage="1665" />
     <item name="Jellyfish Necklace" type="Unknown" itemImage="1303" />
     <item name="Jellyfish Statue" type="Unknown" itemImage="459" />
     <item name="Jester's Arrow" type="Arrow" foundIn="Chest" itemImage="51" />
@@ -1173,6 +1244,7 @@
     <item name="Jim's Helmet" type="Unknown" itemImage="1563" />
     <item name="Jim's Leggings" type="Unknown" itemImage="1565" />
     <item name="Jungle Chest" type="Unknown" itemImage="1528" />
+    <item name="Jungle Creeper Banner" type="Unknown" itemImage="1666" />
     <item name="Jungle Grass Seeds" type="Seed" plantsIn="Mud" itemImage="195" />
     <item name="Jungle Hat" type="Head Equipment" itemImage="228" />
     <item name="Jungle Key" type="Unknown" itemImage="1533" />
@@ -1233,6 +1305,7 @@
     <item name="Lightless Chasms" type="Unknown" itemImage="1488" />
     <item name="Lightning Boots" type="Unknown" itemImage="898" />
     <item name="Lihzahrd Altar" type="Unknown" itemImage="1292" />
+    <item name="Lihzahrd Banner" type="Unknown" itemImage="1667" />
     <item name="Lihzahrd Brick Wall" type="Unknown" itemImage="1102" />
     <item name="Lihzahrd Brick" type="Unknown" itemImage="1101" />
     <item name="Lihzahrd Chair" type="Unknown" itemImage="1143" />
@@ -1255,6 +1328,7 @@
     <item name="Living Wood Chest" type="Unknown" itemImage="831" />
     <item name="Living Wood Door" type="Unknown" itemImage="819" />
     <item name="Living Wood Table" type="Unknown" itemImage="829" />
+    <item name="Living Wood Wall" type="Unknown" itemImage="1723" />
     <item name="Living Wood Wand" type="Unknown" itemImage="832" />
     <item name="Lizard Egg" type="Unknown" itemImage="1172" />
     <item name="Loom" type="Placeable Object" itemImage="332" />
@@ -1271,6 +1345,7 @@
     <item name="Magical Harp" type="Unknown" itemImage="494" />
     <item name="Magma Stone" type="Unknown" itemImage="1322" />
     <item name="Magnet Sphere" type="Unknown" itemImage="1266" />
+    <item name="Man Eater Banner" type="Unknown" itemImage="1668" />
     <item name="Mana Crystal" type="Consumable" itemImage="109" />
     <item name="Mana Flower" type="Unknown" itemImage="555" />
     <item name="Mana Potion" type="Potion" itemImage="189" />
@@ -1294,6 +1369,7 @@
     <item name="Metal Fence" type="Unknown" itemImage="1448" />
     <item name="Metal Shelf" type="Unknown" itemImage="1387" />
     <item name="Meteor Hamaxe" type="Weapon" itemImage="204" />
+    <item name="Meteor Head Banner" type="Unknown" itemImage="1669" />
     <item name="Meteor Helmet" type="Head Equipment" itemImage="123" />
     <item name="Meteor Leggings" type="Leg Equipment" itemImage="125" />
     <item name="Meteor Shot" type="Bullet" itemImage="234" />
@@ -1301,6 +1377,7 @@
     <item name="Meteorite Bar" type="Metal Bar" foundIn="Chest" itemImage="117" />
     <item name="Meteorite" type="Ore" itemImage="116" />
     <item name="Mime Mask" type="Head Costume" itemImage="322" />
+    <item name="Mimic Banner" type="Unknown" itemImage="1630" />
     <item name="Mining Helmet" type="Head Equipment" itemImage="88" />
     <item name="Mining Pants" type="Unknown" itemImage="411" />
     <item name="Mining Shirt" type="Unknown" itemImage="410" />
@@ -1317,15 +1394,18 @@
     <item name="Moon Stone" type="Unknown" itemImage="900" />
     <item name="Moonglow Seeds" type="Seed" plantsIn="Jungle Grass" itemImage="308" />
     <item name="Moonglow" type="Herb" itemImage="314" />
+    <item name="Moth Banner" type="Unknown" itemImage="1670" />
     <item name="Mud Block" type="Building Block" itemImage="176" />
     <item name="Mudstone Block" type="Building Block" itemImage="414" />
     <item name="Mudstone Brick Wall" type="Unknown" itemImage="419" />
     <item name="Mug" type="Placeable Object" itemImage="351" />
     <item name="Multicolored Stained Glass" type="Unknown" itemImage="1272" />
+    <item name="Mummy Banner" type="Unknown" itemImage="1671" />
     <item name="Mummy Mask" type="Unknown" itemImage="870" />
     <item name="Mummy Pants" type="Unknown" itemImage="872" />
     <item name="Mummy Shirt" type="Unknown" itemImage="871" />
     <item name="Muramasa" type="Weapon" foundIn="Chest" itemImage="155" />
+    <item name="Mushi Ladybug Banner" type="Unknown" itemImage="1672" />
     <item name="Mushroom Cap" type="Unknown" itemImage="868" />
     <item name="Mushroom Chair" type="Unknown" itemImage="810" />
     <item name="Mushroom Door" type="Unknown" itemImage="818" />
@@ -1383,8 +1463,8 @@
     <item name="Mythril Repeater" type="Unknown" itemImage="436" />
     <item name="Mythril Sword" type="Unknown" itemImage="484" />
     <item name="Mythril Waraxe" type="Unknown" itemImage="992" />
-    <item name="Nanites" type="Unknown" itemImage="1346" />
 
+    <item name="Nanites" type="Unknown" itemImage="1346" />
     <item name="Nano Bullet" type="Unknown" itemImage="1350" />
     <item name="Nature's Gift" type="Accessory" foundIn="Chest" itemImage="223" />
     <item name="Nazar" type="Unknown" itemImage="891" />
@@ -1403,6 +1483,7 @@
     <item name="Ninja Pants" type="Leg Costume" droppedBy="King Slime" itemImage="257" />
     <item name="Ninja Shirt" type="Body Costume" droppedBy="King Slime" itemImage="258" />
     <item name="Nurse Lisa" type="Unknown" itemImage="1443" />
+    <item name="Nypmh Banner" type="Unknown" itemImage="1694" />
 
     <item name="Obelisk" type="Unknown" itemImage="1177" />
     <item name="Obsidian Bed" type="Unknown" itemImage="1473" />
@@ -1473,6 +1554,7 @@
     <item name="Palladium Sword" type="Unknown" itemImage="1185" />
     <item name="Palladium Waraxe" type="Unknown" itemImage="1222" />
     <item name="Panic Necklace" type="Unknown" itemImage="1290" />
+    <item name="Parrot Banner" type="Unknown" itemImage="1673" />
     <item name="Parrot Cracker" type="Unknown" itemImage="1180" />
     <item name="Party Bullet" type="Unknown" itemImage="1349" />
     <item name="Pearlsand Block" type="Unknown" itemImage="408" />
@@ -1505,6 +1587,7 @@
     <item name="Pickaxe Statue" type="Unknown" itemImage="469" />
     <item name="Picksaw" type="Unknown" itemImage="1294" />
     <item name="Piggy Bank" type="Bank" itemImage="87" />
+    <item name="Pigron Banner" type="Unknown" itemImage="1674" />
     <item name="Pillar Statue" type="Unknown" itemImage="472" />
     <item name="Pink Brick Platform" type="Unknown" itemImage="1385" />
     <item name="Pink Brick Wall" type="Wall" itemImage="140" />
@@ -1530,11 +1613,14 @@
     <item name="Pink and Black Dye" type="Unknown" itemImage="1030" />
     <item name="Pink and Silver Dye" type="Unknown" itemImage="1062" />
     <item name="Pirahna Statue" type="Unknown" itemImage="478" />
+    <item name="Piranha Banner" type="Unknown" itemImage="1675" />
     <item name="Piranha Gun" type="Unknown" foundIn="Chest" itemImage="1156" />
+    <item name="Pirate Banner" type="Unknown" itemImage="1676" />
     <item name="Pirate Hat" type="Unknown" itemImage="876" />
     <item name="Pirate Map" type="Unknown" itemImage="1315" />
     <item name="Pirate Pants" type="Unknown" itemImage="878" />
     <item name="Pirate Shirt" type="Unknown" itemImage="877" />
+    <item name="Pixie Banner" type="Unknown" itemImage="1677" />
     <item name="Pixie Dust" type="Unknown" itemImage="501" />
     <item name="Place Above the Clouds" type="Unknown" itemImage="1485" />
     <item name="Planked Wall" type="Unknown" itemImage="479" />
@@ -1600,8 +1686,10 @@
     <item name="Rainbow Dye" type="Unknown" itemImage="1066" />
     <item name="Rainbow Gun" type="Unknown" foundIn="Chest" itemImage="1260" />
     <item name="Rainbow Rod" type="Unknown" itemImage="495" />
+    <item name="Raincoat Zombie Banner" type="Unknown" itemImage="1678" />
     <item name="Ranger Emblem" type="Unknown" itemImage="491" />
     <item name="Rare Enchantment" type="Unknown" itemImage="1576" />
+    <item name="Reaper Banner" type="Unknown" itemImage="1679" />
     <item name="Reaper Statue" type="Unknown" itemImage="447" />
     <item name="Red Banner" type="Placeable Object" itemImage="337" />
     <item name="Red Brick Wall" type="Wall" itemImage="132" />
@@ -1721,6 +1809,7 @@
     <item name="Shadow Scale" itemImage="86" />
     <item name="Shadow Scalemail" type="Body Equipment" itemImage="101" />
     <item name="Shadowbeam Staff" type="Unknown" itemImage="1444" />
+    <item name="Shark Banner" type="Unknown" itemImage="1680" />
     <item name="Shark Fin" itemImage="319" />
     <item name="Shield Statue" type="Unknown" itemImage="442" />
     <item name="Shine Potion" type="Potion" foundIn="Chest" itemImage="298" />
@@ -1757,6 +1846,8 @@
     <item name="Silver Shortsword" type="Weapon" itemImage="6" netId="-9"  recolor="Silver" />
     <item name="Silver Watch" type="Accessory" itemImage="16" />
     <item name="Skelehead" type="Unknown" itemImage="1499" />
+    <item name="Skeleton Banner" type="Unknown" itemImage="1681" />
+    <item name="Skeleton Mage Banner" type="Unknown" itemImage="1682" />
     <item name="Skeleton Statue" type="Unknown" itemImage="446" />
     <item name="Skeletron Hand" type="Unknown" itemImage="1273" />
     <item name="Skeletron Mask" type="Unknown" itemImage="1281" />
@@ -1775,6 +1866,7 @@
     <item name="Skyware Chest" type="Unknown" itemImage="838" />
     <item name="Skyware Door" type="Unknown" itemImage="837" />
     <item name="Skyware Table" type="Unknown" itemImage="830" />
+    <item name="Slime Banner" type="Unknown" itemImage="1683" />
     <item name="Slime Block Wall" type="Unknown" itemImage="769" />
     <item name="Slime Block" type="Unknown" itemImage="762" />
     <item name="Slime Crown" type="Unknown" itemImage="560" />
@@ -1788,6 +1880,7 @@
     <item name="Snow Block" type="Unknown" itemImage="593" />
     <item name="Snow Brick Wall" type="Unknown" itemImage="595" />
     <item name="Snow Brick" type="Unknown" itemImage="594" />
+    <item name="Snow Flinx Banner" type="Unknown" itemImage="1684" />
     <item name="Snow Globe" type="Unknown" itemImage="602" />
     <item name="Snowball Cannon" type="Unknown" foundIn="Chest" itemImage="1319" />
     <item name="Snowball Launcher" type="Unknown" itemImage="951" />
@@ -1819,9 +1912,11 @@
     <item name="Spectre Staff" type="Unknown" itemImage="1446" />
     <item name="Spell tome" type="Unknown" itemImage="531" />
     <item name="Spelunker Potion" type="Potion" foundIn="Chest" itemImage="296" />
+    <item name="Spider Banner" type="Unknown" itemImage="1685" />
     <item name="Spike"  type="Placeable Object" itemImage="147" />
     <item name="Spiky Ball Trap" type="Unknown" itemImage="1148" />
     <item name="Spiky Ball" itemImage="161" />
+    <item name="Spore Zombie Banner" type="Unknown" itemImage="1686" />
     <item name="Staff of Earth" type="Unknown" itemImage="1296" />
     <item name="Staff of Regrowth" type="Magical Item" foundIn="Chest" itemImage="213" />
     <item name="Staff of the Frost Hydra" type="Unknown" foundIn="Chest" itemImage="1572" />
@@ -1833,6 +1928,10 @@
     <item name="Star" type="Pickup Item" itemImage="184" />
     <item name="Starfury" type="Magical Weapon" foundIn="Chest" itemImage="65" />
     <item name="Starry Night" type="Unknown" itemImage="1439" />
+    <item name="Steam Punk Bed" type="Unknown" itemImage="1722" />
+    <item name="Steam Punk Chair" type="Unknown" itemImage="1708" />
+    <item name="Steam Punk Door" type="Unknown" itemImage="1712" />
+    <item name="Steam Punk Table" type="Unknown" itemImage="1718" />
     <item name="Steampunk Hat" type="Unknown" itemImage="839" />
     <item name="Steampunk Pants" type="Unknown" itemImage="841" />
     <item name="Steampunk Shirt" type="Unknown" itemImage="840" />
@@ -1856,6 +1955,7 @@
     <item name="Sunplate Block" type="Unknown" itemImage="824" />
     <item name="Super Dart Trap" type="Unknown" itemImage="1146" />
     <item name="Suspicious Looking Eye" foundIn="Chest" itemImage="43" />
+    <item name="Swamp Thing Banner" type="Unknown" itemImage="1687" />
     <item name="Sweetheart Necklace" type="Unknown" itemImage="1578" />
     <item name="Swiftness Potion" type="Potion" foundIn="Chest" itemImage="290" />
     <item name="Switch" type="Unknown" itemImage="538" />
@@ -1951,6 +2051,8 @@
     <item name="Topaz Staff" type="Unknown" itemImage="740" />
     <item name="Topaz" type="Gem" itemImage="180" />
     <item name="Torch" type="Placeable Object" foundIn="Chest" itemImage="8" />
+    <item name="Tortoise Banner" type="Unknown" itemImage="1688" />
+    <item name="Toxic Sludge Banner" type="Unknown" itemImage="1689" />
     <item name="Toy Sled" type="Unknown" itemImage="1312" />
     <item name="Trapped Ghost" type="Unknown" itemImage="1478" />
     <item name="Trash Can" type="Container" itemImage="348" />
@@ -1983,16 +2085,19 @@
     <item name="Tuxedo Shirt" type="Body Costume" itemImage="241" />
 
     <item name="Umbrella Hat" type="Unknown" itemImage="1243" />
+    <item name="Umbrella Slime Banner" type="Unknown" itemImage="1690" />
     <item name="Umbrella" type="Unknown" foundIn="Chest" itemImage="946" />
     <item name="Underground Reward" type="Unknown" itemImage="1483" />
     <item name="Unholy Arrow" type="Arrow" itemImage="47" />
     <item name="Unholy Trident" type="Unknown" itemImage="683" />
     <item name="Unholy Water" type="Unknown" itemImage="423" />
+    <item name="Unicorn Banner" type="Unknown" itemImage="1691" />
     <item name="Unicorn Crossing the Hallows" type="Unknown" itemImage="1437" />
     <item name="Unicorn Horn" type="Unknown" itemImage="526" />
     <item name="Unicorn on a Stick" type="Unknown" itemImage="856" />
     <item name="Uzi" type="Unknown" itemImage="1265" />
 
+    <item name="Vampire Banner" type="Unknown" itemImage="1692" />
     <item name="Vampire Knives" type="Unknown" foundIn="Chest" itemImage="1569" />
     <item name="Venom Arrow" type="Unknown" itemImage="1341" />
     <item name="Venom Bullet" type="Unknown" itemImage="1342" />
@@ -2011,6 +2116,7 @@
     <item name="Violet and Black Dye" type="Unknown" itemImage="1029" />
     <item name="Violet and Silver Dye" type="Unknown" itemImage="1061" />
     <item name="Vitamins" type="Unknown" itemImage="892" />
+    <item name="Vulture Banner" type="Unknown" itemImage="1693" />
 
     <item name="Waldo" type="Unknown" itemImage="1474" />
     <item name="Wall Skeleton" type="Unknown" itemImage="1376" />
@@ -2028,6 +2134,7 @@
     <item name="Waterleaf" type="Herb" itemImage="317" />
     <item name="Web Covered Chest" type="Unknown" itemImage="952" />
     <item name="Web Slinger" type="Unknown" foundIn="Chest" itemImage="939" />
+    <item name="Werewolf Banner" type="Unknown" itemImage="1695" />
     <item name="White Horseshoe Balloon" type="Unknown" itemImage="1251" />
     <item name="White Paint" type="Unknown" itemImage="1098" />
     <item name="White Phaseblade" type="Weapon" itemImage="202" />
@@ -2044,6 +2151,7 @@
     <item name="Wire" type="Unknown" itemImage="530" />
     <item name="Wisp in a Bottle" type="Unknown" itemImage="1183" />
     <item name="Wizard Hat" type="Head Costume" itemImage="238" />
+    <item name="Wolf Banner" type="Unknown" itemImage="1696" />
     <item name="Woman Statue" type="Unknown" itemImage="448" />
     <item name="Wood Breastplate" type="Unknown" itemImage="728" />
     <item name="Wood Greaves" type="Unknown" itemImage="729" />
@@ -2065,9 +2173,13 @@
     <item name="Wooden Table" type="Placeable Object" itemImage="32" />
     <item name="Work Bench" type="Placeable Object" itemImage="36" />
     <item name="World Banner" type="Unknown" itemImage="845" />
+    <item name="World Feeder Banner" type="Unknown" itemImage="1697" />
+    <item name="Worm Banner" type="Unknown" itemImage="1698" />
     <item name="Worm Food" itemImage="70" />
     <item name="Worm Tooth" itemImage="69" />
+    <item name="Wraith Banner" type="Unknown" itemImage="1699" />
     <item name="Wrench" type="Unknown" itemImage="509" />
+    <item name="Wyvern Banner" type="Unknown" itemImage="1700" />
 
     <item name="Yellow Banner" type="Placeable Object" itemImage="340" />
     <item name="Yellow Dye" type="Unknown" itemImage="1009" />
@@ -2088,8 +2200,8 @@
     <item name="Yellow and Silver Dye" type="Unknown" itemImage="1053" />
 
     <item name="Zombie Arm" type="Unknown" itemImage="1304" />
-
-    <item name="bl" type="Unknown" itemImage="858" />
+    <item name="Zombie Banner" type="Unknown" itemImage="1701" />
+    <item name="Zombie Eskimo Banner" type="Unknown" itemImage="1643" />
 	  </items>
   <namechanges>
     <item name="Ball 'O Hurt" newName="Ball O' Hurt" />
@@ -3031,9 +3143,12 @@
   <markers>
     <marker name="Objects" />
     <marker name="Altar" partOfSet="Objects" />
+    <marker name="Gold Cache" markerImage="GoldCache" partOfSet="Objects" />
     <marker name="Heart" partOfSet="Objects" />
+    <marker name="Heart Fruit" markerImage="HeartFruit" partOfSet="Objects" />
     <marker name="Hellforge" partOfSet="Objects" />
     <marker name="Picture" partOfSet="Objects" />
+    <marker name="Plantera Bulb" markerImage="PlanteraBulb" partOfSet="Objects" />
     <marker name="Shadow Orb" markerImage="ShadowOrb" partOfSet="Objects" />
     <marker name="Sign" partOfSet="Objects" />
     <marker name="Statue" partOfSet="Objects" />

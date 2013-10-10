@@ -256,6 +256,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap GoldCache {
+            get {
+                object obj = ResourceManager.GetObject("GoldCache", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap GoldChest {
             get {
                 object obj = ResourceManager.GetObject("GoldChest", resourceCulture);
@@ -280,6 +287,13 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Heart {
             get {
                 object obj = ResourceManager.GetObject("Heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap HeartFruit {
+            get {
+                object obj = ResourceManager.GetObject("HeartFruit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -527,6 +541,13 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Pirate {
             get {
                 object obj = ResourceManager.GetObject("Pirate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PlanteraBulb {
+            get {
+                object obj = ResourceManager.GetObject("PlanteraBulb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

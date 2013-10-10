@@ -284,6 +284,7 @@ namespace MoreTerra.Structures.TerraInfo
 				Color useColor;
                 Color useOfficialColor;
 				Boolean safe = false;
+                Boolean transparent = false;
 
 				Int32 wallImage = -1;
 				count++;
@@ -319,11 +320,19 @@ namespace MoreTerra.Structures.TerraInfo
 						case "unsafe":
 							if (Boolean.TryParse(att.Value, out safe) == false)
 							{
-								errorLog.AppendLine(String.Format("Wall #{0} had an invalid unsafe attribute.  Value=\"{1\"",
+								errorLog.AppendLine(String.Format("Wall #{0} had an invalid unsafe attribute.  Value=\"{1}\"",
 									count, att.Value));
 								continue;
 							}
 							safe = !safe;
+							break;
+                        case "transparent":
+							if (Boolean.TryParse(att.Value, out transparent) == false)
+							{
+								errorLog.AppendLine(String.Format("Wall #{0} had an invalid transparent attribute.  Value=\"{1}\"",
+									count, att.Value));
+								continue;
+							}
 							break;
 						default:
 								errorLog.AppendLine(String.Format("Wall #{0} has unknown attribute \"{1}\" has value \"{2}\"",
@@ -398,6 +407,7 @@ namespace MoreTerra.Structures.TerraInfo
 				wall.color = useColor;
                 wall.officialColor = useOfficialColor;
                 wall.safe = safe;
+                wall.transparent = transparent;
 
 				walls.Add(wallImage, wall);
 			}
@@ -644,7 +654,7 @@ namespace MoreTerra.Structures.TerraInfo
 								continue;
 							}
 
-							if ((tileImage < 0) || (tileImage > 255))
+							if ((tileImage < 0) || (tileImage >= TileProperties.TYPES))
 							{
 								errorLog.AppendLine(String.Format("Tile #{0} had a out of range numMade attribute.  Value=\"{1}\"",
 									count, tileImage));
