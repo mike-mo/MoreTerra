@@ -14,13 +14,9 @@ namespace MoreTerra.Structures.TerraInfo
 		private Dictionary<Int32, TileInfo> tiles;
 		private Dictionary<Int32, WallInfo> walls;
 		private Dictionary<String, ItemInfo> items;
-		private Dictionary<String, ItemTypeInfo> itemTypes;
-		private Dictionary<String, RecolorInfo> recolors;
 		private Dictionary<String, RenameInfo> renames;
 		private Dictionary<String, ColorInfo> colors;
 		private Dictionary<String, NpcInfo> npcs;
-		private Dictionary<String, CraftingSpotInfo> craftingspots;
-		private Dictionary<Int32, RecipeInfo> recipes;
 		private Dictionary<String, List<SpecialObjectInfo>> specialobjects;
 		private Dictionary<Int32, String> itemNames;
 
@@ -31,14 +27,10 @@ namespace MoreTerra.Structures.TerraInfo
 			markers = new Dictionary<String, MarkerInfo>();
 			items = new Dictionary<String, ItemInfo>();
 			itemNames = new Dictionary<Int32, String>();
-			itemTypes = new Dictionary<String, ItemTypeInfo>();
-			recolors = new Dictionary<String, RecolorInfo>();
 			renames = new Dictionary<String, RenameInfo>();
 			colors = new Dictionary<String, ColorInfo>();
 			npcs = new Dictionary<String, NpcInfo>();
-			craftingspots = new Dictionary<String, CraftingSpotInfo>();
 
-			recipes = new Dictionary<Int32, RecipeInfo>();
 			tiles = new Dictionary<Int32, TileInfo>();
 			walls = new Dictionary<Int32, WallInfo>();
 
@@ -47,50 +39,69 @@ namespace MoreTerra.Structures.TerraInfo
 			errorLog = new StringBuilder();
 		}
 
-		public String LoadInfo(String itemXmlFile)
+        public String LoadInfo(String itemXmlFile)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+
+            try
+            {
+                xmlDoc.LoadXml(itemXmlFile);
+
+            }
+            catch (FileNotFoundException e)
+            {
+                errorLog.AppendLine(e.Message);
+                return errorLog.ToString();
+            }
+
+            XmlNode dataNode = xmlDoc.DocumentElement;
+
+            LoadMarkers(dataNode.SelectSingleNode("markers").SelectNodes("marker"));
+
+            LoadRenames(dataNode.SelectSingleNode("namechanges").SelectNodes("item"));
+            LoadNpcs(dataNode.SelectSingleNode("npcs").SelectNodes("npc"));
+            LoadItems(dataNode.SelectSingleNode("items").SelectNodes("item"));
+
+            LoadColors(dataNode.SelectSingleNode("colors").SelectNodes("color"));
+            LoadTiles(dataNode.SelectSingleNode("tiles").SelectNodes("tile"));
+            LoadWalls(dataNode.SelectSingleNode("walls").SelectNodes("wall"));
+
+            LoadSpecialObjects(dataNode.SelectSingleNode("specialobjects").SelectNodes("object"));
+
+            SetupItemNames();
+
+            return errorLog.ToString();
+        }
+
+        public String SaveInfo(String toFile)
+        {
+            FileStream stream = new FileStream(toFile, FileMode.Create);
+            StreamWriter writer = new StreamWriter(stream);
+
+            writer.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+            writer.WriteLine("<data>");
+
+            SaveTiles(writer);
+            SaveWalls(writer);
+            SaveItems(writer);
+
+            SaveRenames(writer);
+            SaveNPCs(writer);
+            SaveColors(writer);
+            SaveMarkers(writer);
+            SaveSpecialObjects(writer);
+
+            writer.WriteLine("</data>");
+            writer.Close();
+
+            return errorLog.ToString();
+        }
+
+
+#region Load Functions
+        private void LoadMarkers(XmlNodeList markerNodes)
 		{
-			XmlDocument xmlDoc = new XmlDocument();
-			
-#if DEBUG == false
-			try
-			{
-#endif
-				xmlDoc.LoadXml(itemXmlFile);
-
-#if DEBUG == false
-			}
-			catch (FileNotFoundException e)
-			{
-				errorLog.AppendLine(e.Message);
-				return errorLog.ToString();
-			}
-#endif
-			
-			XmlNode dataNode = xmlDoc.DocumentElement;
-
-			LoadMarkers(dataNode.SelectSingleNode("markers").SelectNodes("marker"));
-
-			LoadItemTypes(dataNode.SelectSingleNode("itemtypes").SelectNodes("itemtype"));
-			LoadRecolors(dataNode.SelectSingleNode("recoloring").SelectNodes("recolor"));
-			LoadRenames(dataNode.SelectSingleNode("namechanges").SelectNodes("item"));
-			LoadNpcs(dataNode.SelectSingleNode("npcs").SelectNodes("npc"));
-			LoadItems(dataNode.SelectSingleNode("items").SelectNodes("item"));
-
-			LoadColors(dataNode.SelectSingleNode("colors").SelectNodes("color"));
-			LoadTiles(dataNode.SelectSingleNode("tiles").SelectNodes("tile"));
-			LoadWalls(dataNode.SelectSingleNode("walls").SelectNodes("wall"));
-
-			LoadCrafting(dataNode.SelectSingleNode("crafting").SelectNodes("craftingspot"));
-			LoadSpecialObjects(dataNode.SelectSingleNode("specialobjects").SelectNodes("object"));
-
-			SetupItemNames();
-
-			return errorLog.ToString();
-		}
-
-		private void LoadMarkers(XmlNodeList markerNodes)
-		{
-			Int32 count = recipes.Count - 1;
+			Int32 count = -1;
 
 			if ((markerNodes == null) || (markerNodes.Count == 0))
 			{
@@ -189,7 +200,6 @@ namespace MoreTerra.Structures.TerraInfo
 			foreach (XmlNode npcNode in npcNodes)
 			{
 				String name = String.Empty;
-				String type = String.Empty;
 
 				Int32 imageId = -1;
 				count++;
@@ -200,9 +210,6 @@ namespace MoreTerra.Structures.TerraInfo
 					{
 						case "name":
 							name = att.Value;
-							break;
-						case "type":
-							type = att.Value;
 							break;
 						case "npcImage":
 							if (Int32.TryParse(att.Value, out imageId) == false)
@@ -232,18 +239,6 @@ namespace MoreTerra.Structures.TerraInfo
 					continue;
 				}
 
-				if (type == String.Empty)
-				{
-					type = "enemy";
-				}
-
-				if ((type != "enemy") && (type != "friend"))
-				{
-					errorLog.AppendLine(String.Format("Npc #{0} had an invalid type attribute.  Value=\"{1}\"",
-						count, type));
-					continue;
-				}
-
 				if (imageId == -1)
 				{
 					errorLog.AppendLine(String.Format("Npc #{0} had no npcImage attribute.", count));
@@ -259,7 +254,6 @@ namespace MoreTerra.Structures.TerraInfo
 
 				NpcInfo npc = new NpcInfo();
 				npc.name = name;
-				npc.type = type;
 				npc.imageId = imageId;
 
 				npcs.Add(name, npc);
@@ -406,211 +400,10 @@ namespace MoreTerra.Structures.TerraInfo
 				wall.colorName = color;
 				wall.color = useColor;
                 wall.officialColor = useOfficialColor;
-                wall.safe = safe;
                 wall.transparent = transparent;
 
 				walls.Add(wallImage, wall);
 			}
-		}
-
-		private void LoadCrafting(XmlNodeList craftingSpotNodes)
-		{
-			Int32 count = -1;
-
-			if ((craftingSpotNodes == null) || (craftingSpotNodes.Count == 0))
-			{
-				errorLog.AppendLine("There are no CraftingSpot items to load.");
-				return;
-			}
-
-			foreach (XmlNode craftingSpotNode in craftingSpotNodes)
-			{
-				String name = String.Empty;
-				String type = String.Empty;
-				count++;
-
-				foreach (XmlAttribute att in craftingSpotNode.Attributes)
-				{
-					switch (att.Name)
-					{
-						case "name":
-							name = att.Value;
-							break;
-						case "type":
-							type = att.Value;
-							break;
-						default:
-							errorLog.AppendLine(String.Format("CraftingSpot #{0} has unknown attribute \"{1}\" has value \"{2}\"",
-								count, att.Name, att.Value));
-							break;
-					}
-				}
-
-				if (name == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("CraftingSpot #{0} had no name attribute.", count));
-					continue;
-				}
-
-				if (craftingspots.ContainsKey(name))
-				{
-					errorLog.AppendLine(String.Format("CraftingSpot #{0} had a duplicate name to {1}.",
-						count, name));
-					continue;
-				}
-
-				CraftingSpotInfo craftingSpot = new CraftingSpotInfo();
-				craftingSpot.name = name;
-				craftingSpot.type = type;
-				craftingspots.Add(name, craftingSpot);
-
-				XmlNodeList recipeNodes = craftingSpotNode.SelectNodes("recipe");
-
-				if (recipeNodes.Count > 0)
-					LoadRecipes(recipeNodes, name);
-			}
-		}
-
-		private void LoadRecipes(XmlNodeList recipeNodes, String useCraftingSpot = "")
-		{
-			Int32 count = recipes.Count - 1;
-
-			if ((recipeNodes == null) || (recipeNodes.Count == 0))
-			{
-				errorLog.AppendLine("There are no Recipe items to load.");
-				return;
-			}
-
-			foreach (XmlNode recipeNode in recipeNodes)
-			{
-				String name = String.Empty;
-				Int32 numMade = -1;
-
-				count++;
-
-				foreach (XmlAttribute att in recipeNode.Attributes)
-				{
-
-					switch (att.Name)
-					{
-						case "name":
-							name = att.Value;
-							break;
-						case "numMade":
-							if (Int32.TryParse(att.Value, out numMade) == false)
-							{
-								errorLog.AppendLine(String.Format("Recipe #{0} has an invalid itemImage attribute. Value = \"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							if ((numMade < 0) || (numMade > 255))
-							{
-								errorLog.AppendLine(String.Format("Recipe #{0} had a out of range numMade attribute.  Value=\"{1}\"",
-									count, numMade));
-								continue;
-							}
-							break;
-						default:
-							errorLog.AppendLine(String.Format("Recipe #{0} has unknown attribute \"{1}\" has value \"{2}\"",
-								count, att.Name, att.Value));
-							break;
-					}
-				}
-
-				if (name == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("Recipe #{0} had no name attribute.", count));
-					continue;
-				}
-
-				if (!items.ContainsKey(name))
-				{
-					errorLog.AppendLine(String.Format("Recipe #{0} is for an item that does not exist.  Value=\"{1}\"",
-						count, name));
-					continue;
-				}
-
-				RecipeInfo recipe = new RecipeInfo();
-				recipe.name = name;
-				recipe.craftingSpot = useCraftingSpot;
-
-				XmlNodeList materialNodes = recipeNode.SelectNodes("material");
-				Int32 materialCount = -1;
-
-				foreach (XmlNode materialNode in materialNodes)
-				{
-					String materialName = String.Empty;
-					Int32 materialNeeded = -1;
-					materialCount++;
-
-					foreach (XmlAttribute att in materialNode.Attributes)
-					{
-						switch (att.Name)
-						{
-							case "name":
-								materialName = att.Value;
-								break;
-							case "quantity":
-								if (Int32.TryParse(att.Value, out materialNeeded) == false)
-								{
-									errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has an invalid quantity attribute. Value=\"{2}\"",
-										materialCount, count, att.Value));
-									continue;
-								}
-
-								if ((materialNeeded < 0) || (materialNeeded > 255))
-								{
-									errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has an out of range quantity attribute. Value=\"{2}\"",
-										materialCount, count, att.Value));
-									continue;
-								}
-								break;
-							default:
-								errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has unknown attribute \"{2}\" has value \"{3}\"",
-									materialCount, count, att.Name, att.Value));
-								break;
-						}
-					}
-
-					if (materialName == String.Empty)
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} has no name attribute.",
-							materialCount, count));
-						continue;
-					}
-
-					if (!items.ContainsKey(materialName))
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} is for an item that does not exist. Value=\"{2}\"",
-							materialCount, count, materialName));
-						continue;
-					}
-
-					if (recipe.materials.ContainsKey(materialName))
-					{
-						errorLog.AppendLine(String.Format("Material #{0} in Recipe #{1} is a duplicate material to \"{2}\"",
-							materialCount, count, materialName));
-						continue;
-					}
-
-					if (materialNeeded == -1)
-						materialNeeded = 1;
-
-					recipe.materials.Add(materialName, materialNeeded);
-
-				}
-
-				if (recipe.materials.Count == 0)
-				{
-					errorLog.AppendLine(String.Format("Recipe #{0} does not have any materials to craft it.",
-						count));
-					continue;
-				}
-
-				recipes.Add(count, recipe);
-			}
-
 		}
 
 		private void LoadTiles(XmlNodeList tileNodes)
@@ -626,13 +419,12 @@ namespace MoreTerra.Structures.TerraInfo
 			foreach (XmlNode tileNode in tileNodes)
 			{
 				String name = String.Empty;
-				String autoGen = String.Empty;
-				String blendWith = String.Empty;
 				String color = String.Empty;
                 String officialColor = String.Empty;
 				String marker = String.Empty;
 				Color useColor;
                 Color useOfficialColor;
+                Boolean important = false;
 
 				Int32 tileImage = -1;
 
@@ -661,11 +453,13 @@ namespace MoreTerra.Structures.TerraInfo
 								continue;
 							}
 							break;
-						case "autoGenType":
-							autoGen = att.Value;
-							break;
-						case "blendWith":
-							blendWith = att.Value;
+						case "important":
+							if (!Boolean.TryParse(att.Value, out important))
+                            {
+                                errorLog.AppendLine(String.Format("Tile #{0} had an invalid important attribute. Value=\"{1}\"",
+                                    count, att.Value));
+                                continue;
+                            }
 							break;
 						case "color":
 							color = att.Value;
@@ -692,19 +486,6 @@ namespace MoreTerra.Structures.TerraInfo
 				if (tileImage == -1)
 				{
 					errorLog.AppendLine(String.Format("Tile #{0} had no tileImage attribute.", count));
-					continue;
-				}
-
-				if ((autoGen != String.Empty) && (blendWith == String.Empty))
-				{
-					if ((autoGen == "Ore Blend"))
-						blendWith = "Dirt";
-				}
-
-				if ((blendWith != String.Empty) && (autoGen == String.Empty))
-				{
-					errorLog.AppendLine(String.Format("Tile #{0} had a blend type but had no autoGenType attribute.",
-						count));
 					continue;
 				}
 
@@ -759,10 +540,9 @@ namespace MoreTerra.Structures.TerraInfo
 
 				TileInfo tile = new TileInfo();
 				tile.name = name;
-				tile.autoGenType = autoGen;
-				tile.blendWith = blendWith;
 				tile.colorName = color;
 				tile.color = useColor;
+                tile.important = important;
                 tile.officialColor = useOfficialColor;
 				tile.markerName = marker;
 				tile.tileImage = tileImage;
@@ -785,15 +565,10 @@ namespace MoreTerra.Structures.TerraInfo
 			foreach (XmlNode itemNode in itemNodes)
 			{
 				String name = String.Empty;
-				String type = String.Empty;
 				String found = String.Empty;
-				String recolor = String.Empty;
-				String droppedBy = String.Empty;
 
 				Int32 netId = 0;
 				Int32 imageId = -1;
-				Int32 stack = -1;
-				Int32 defaultStack = -1;
 				count++;
 
 				foreach (XmlAttribute att in itemNode.Attributes)
@@ -802,9 +577,6 @@ namespace MoreTerra.Structures.TerraInfo
 					{
 						case "name":
 							name = att.Value;
-							break;
-						case "type":
-							type = att.Value;
 							break;
 						case "netId":
 							if (Int32.TryParse(att.Value, out netId) == false)
@@ -832,36 +604,6 @@ namespace MoreTerra.Structures.TerraInfo
 						case "foundIn":
 							found = att.Value;
 							break;
-						case "recolor":
-							recolor = att.Value;
-							break;
-						case "maxStack":
-							if (Int32.TryParse(att.Value, out stack) == false)
-							{
-								errorLog.AppendLine(String.Format("Item #{0} has an invalid maxStack attribute.  Value=\"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							if ((stack < 1) || (stack > 255))
-							{
-								errorLog.AppendLine(String.Format("Item #{0} had a out of range maxStack attribute.  Value=\"{1}\"",
-									count, stack));
-								continue;
-							}
-							break;
-						case "droppedBy":
-							droppedBy = att.Value;
-							break;
-						case "subType":
-							// Not implemented yet.
-							break;
-						case "ammoType":
-							// Not implemented yet.
-							break;
-						case "plantsIn":
-							// Not implemented yet.
-							break;
 						default:
 							errorLog.AppendLine(String.Format("Item #{0} has unknown attribute \"{1}\" has value \"{2}\"",
 								count, att.Name, att.Value));
@@ -874,26 +616,6 @@ namespace MoreTerra.Structures.TerraInfo
 					errorLog.AppendLine(String.Format("Item #{0} had no name attribute.", count));
 					continue;
 				}
-
-				if (type == String.Empty)
-					type = "Generic";
-
-				if (!itemTypes.ContainsKey(type))
-				{
-					errorLog.AppendLine(String.Format("Item #{0} has an itemType that does not exist.  Value=\"{1}\"",
-						count, type));
-					continue;
-				}
-				else
-				{
-					defaultStack = itemTypes[type].defaultSize;
-				}
-
-				if (stack == -1)
-				{
-					stack = defaultStack;
-				}
-
 
 				if (imageId == -1)
 				{
@@ -912,210 +634,11 @@ namespace MoreTerra.Structures.TerraInfo
 
 				ItemInfo item = new ItemInfo();
 				item.name = name;
-				item.type = type;
-				item.droppedBy = droppedBy;
 				item.foundIn = found;
-				item.recolor = recolor;
 				item.netId = netId;
 				item.imageId = imageId;
-				item.stackSize = stack;
 
 				items.Add(name, item);
-			}
-		}
-
-		private void LoadItemTypes(XmlNodeList itemTypeNodes)
-		{
-			Int32 count = -1;
-
-			if ((itemTypeNodes == null) || (itemTypeNodes.Count == 0))
-			{
-				errorLog.AppendLine("There are no ItemType items to load.");
-				return;
-			}
-
-			foreach (XmlNode itemTypeNode in itemTypeNodes)
-			{
-				String name = String.Empty;
-				Int32 stack = -1;
-				count++;
-
-				foreach (XmlAttribute att in itemTypeNode.Attributes)
-				{
-					switch (att.Name)
-					{
-						case "name":
-							name = att.Value;
-							break;
-						case "defaultStack":
-							if (Int32.TryParse(att.Value, out stack) == false)
-							{
-								errorLog.AppendLine(String.Format("ItemType #{0} has an invalid defaultStack attribute.  Value=\"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							if ((stack < 1) || (stack > 255))
-							{
-								errorLog.AppendLine(String.Format("ItemType #{0} had a out of range defaultStack attribute.  Value=\"{1}\"",
-									count, stack));
-								continue;
-							}
-							break;
-						default:
-							errorLog.AppendLine(String.Format("ItemType #{0} has unknown attribute \"{1}\" has value \"{2}\"",
-								count, att.Name, att.Value));
-							break;
-					}
-				}
-
-				if (name == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("ItemType #{0} had no name attribute.", count));
-					continue;
-				}
-
-				if (stack == -1)
-				{
-					errorLog.AppendLine(String.Format("ItemType #{0} had no defaultStack attribute.", count));
-					continue;
-				}
-
-				if (itemTypes.ContainsKey(name))
-				{
-					errorLog.AppendLine(String.Format("ItemType #{0} had a duplicate name to {1}.", count, name));
-					continue;
-				}
-
-				ItemTypeInfo type = new ItemTypeInfo();
-				type.name = name;
-				type.defaultSize = stack;
-
-				itemTypes.Add(name, type);
-			}
-		}
-
-		private void LoadRecolors(XmlNodeList recolorNodes)
-		{
-			Int32 count = -1;
-
-			if ((recolorNodes == null) || (recolorNodes.Count == 0))
-			{
-				errorLog.AppendLine("There are no Recolor items to load.");
-				return;
-			}
-
-			foreach (XmlNode recolorNode in recolorNodes)
-			{
-				String name = String.Empty;
-				Int32 inTint;
-				Single tintR = -1;
-				Single tintG = -1;
-				Single tintB = -1;
-				count++;
-
-				foreach (XmlAttribute att in recolorNode.Attributes)
-				{
-					switch (att.Name)
-					{
-						case "name":
-							name = att.Value;
-							break;
-						case "tintRed":
-							if (Int32.TryParse(att.Value, out inTint) == false)
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintRed attribute.  Value=\"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							tintR = inTint / 10000;
-
-							if ((tintR < 0) || (tintR > 2))
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} had a out of range tintRed attribute.  Value=\"{1}\"",
-									count, tintR));
-								continue;
-							}
-							break;
-						case "tintGreen":
-							if (Int32.TryParse(att.Value, out inTint) == false)
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintGreen attribute.  Value=\"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							tintG = inTint / 10000;
-
-							if ((tintG < 0) || (tintG > 2))
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} had a out of range tintGreen attribute.  Value=\"{1}\"",
-									count, tintG));
-								continue;
-							}
-							break;
-						case "tintBlue":
-							if (Int32.TryParse(att.Value, out inTint) == false)
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} has an invalid tintBlue attribute.  Value=\"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							tintB = inTint / 10000;
-
-							if ((tintB < 0) || (tintB > 2))
-							{
-								errorLog.AppendLine(String.Format("Recolor #{0} had a out of range tintBlue attribute.  Value=\"{1}\"",
-									count, tintB));
-								continue;
-							}
-							break;
-						default:
-							errorLog.AppendLine(String.Format("Recolor #{0} has unknown attribute \"{1}\" has value \"{2}\"",
-								count, att.Name, att.Value));
-							break;
-					}
-				}
-				if (name == String.Empty)
-				{
-					errorLog.AppendLine(String.Format("Recolor #{0} had no name attribute.", count));
-					continue;
-				}
-
-				if (tintR == -1)
-				{
-					errorLog.AppendLine(String.Format("Recolor #{0} had no tintRed attribute.", count));
-					continue;
-				}
-
-				if (tintG == -1)
-				{
-					errorLog.AppendLine(String.Format("Recolor #{0} had no tintGreen attribute.", count));
-					continue;
-				}
-
-				if (tintB == -1)
-				{
-					errorLog.AppendLine(String.Format("Recolor #{0} had no tintBlue attribute.", count));
-					continue;
-				}
-
-				if (recolors.ContainsKey(name))
-				{
-					errorLog.AppendLine(String.Format("Recolor #{0} had a duplicate name to {1}.", count, name));
-					continue;
-				}
-
-				RecolorInfo recolor = new RecolorInfo();
-				recolor.name = name;
-				recolor.tintR = tintR;
-				recolor.tintG = tintG;
-				recolor.tintB = tintB;
-
-				recolors.Add(name, recolor);
-
 			}
 		}
 
@@ -1339,7 +862,7 @@ namespace MoreTerra.Structures.TerraInfo
 
 			if ((soNodes == null) || (soNodes.Count == 0))
 			{
-				errorLog.AppendLine("There are no Tile items to load.");
+				errorLog.AppendLine("There are no Special Object items to load.");
 				return;
 			}
 
@@ -1352,8 +875,6 @@ namespace MoreTerra.Structures.TerraInfo
 				Color useColor;
                 Color useOfficialColor;
 
-				Int32 objectImage = -1;
-
 				count++;
 
 				foreach (XmlAttribute att in objectNode.Attributes)
@@ -1363,21 +884,6 @@ namespace MoreTerra.Structures.TerraInfo
 					{
 						case "name":
 							name = att.Value;
-							break;
-						case "objectImage":
-							if (Int32.TryParse(att.Value, out objectImage) == false)
-							{
-								errorLog.AppendLine(String.Format("Special Object #{0} has an invalid objectImage attribute. Value = \"{1}\"",
-									count, att.Value));
-								continue;
-							}
-
-							if ((objectImage < 0) || (objectImage > 255))
-							{
-								errorLog.AppendLine(String.Format("Special Object #{0} had a out of range objectImage attribute.  Value=\"{1}\"",
-									count, objectImage));
-								continue;
-							}
 							break;
 						case "type":
 							type = att.Value;
@@ -1443,10 +949,6 @@ namespace MoreTerra.Structures.TerraInfo
                         count, officialColor));
                     continue;
                 }
-                else
-                {
-                    color = String.Empty;
-                }
 
                 SpecialObjectInfo so = new SpecialObjectInfo();
 				so.name = name;
@@ -1454,9 +956,8 @@ namespace MoreTerra.Structures.TerraInfo
 				so.colorName = color;
 				so.color = useColor;
                 so.officialColor = useOfficialColor;
-                so.objectImage = objectImage;
 
-				if (!specialobjects.ContainsKey(type))
+                if (!specialobjects.ContainsKey(type))
 					specialobjects.Add(type, new List<SpecialObjectInfo>());
 
 				specialobjects[type].Add(so);
@@ -1480,8 +981,267 @@ namespace MoreTerra.Structures.TerraInfo
 				}
 			}
 		}
+#endregion
 
-		public ItemInfo GetItem(String itemName)
+#region Save Functions
+        private void SaveTiles(StreamWriter writer)
+        {
+            Dictionary<int, TileInfo> tiles = Global.Instance.Info.Tiles;
+            TileInfo ti;
+            String tileXML;
+
+            writer.WriteLine("  <tiles>");
+
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                ti = tiles[i];
+
+                // Bit of a hack but this needs to stay in until it's coded properly.
+                if (ti.name == "Gold Cache")
+                {
+                    writer.WriteLine();
+                    writer.WriteLine("    <!-- Tiles after this are a hack and not meant to be kept past testing -->");
+                }
+
+                tileXML = "    <tile ";
+                if (ti.name != null)
+                    tileXML = tileXML + "name=\"" + ti.name + "\" ";
+
+                tileXML = tileXML + "tileImage=\"" + i + "\" ";
+
+                if (ti.important)
+                    tileXML = tileXML + "important=\"true\" ";
+
+                if (!String.IsNullOrEmpty(ti.colorName))
+                    tileXML = tileXML + "color=\"" + ti.colorName + "\" ";
+                else
+                    tileXML = tileXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ", ti.color.R, ti.color.G, ti.color.B);
+
+                tileXML = tileXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ", 
+                    ti.officialColor.R, ti.officialColor.G, ti.officialColor.B);
+
+                if (!String.IsNullOrEmpty(ti.markerName))
+                    tileXML = tileXML + "marker=\"" + ti.markerName + "\" ";
+
+                tileXML = tileXML + "/>";
+
+                writer.WriteLine(tileXML);
+
+                if (i % 10 == 9)
+                    writer.WriteLine();
+            }
+            writer.WriteLine("  </tiles>");
+        }
+
+        private void SaveWalls(StreamWriter writer)
+        {
+            Dictionary<int, WallInfo> walls = Global.Instance.Info.Walls;
+            WallInfo wi;
+            String wallXML;
+
+            writer.WriteLine("  <walls>");
+
+            for (int i = 1; i <= walls.Count; i++)
+            {
+                wi = walls[i];
+
+                wallXML = "    <wall ";
+                if (wi.name != null)
+                    wallXML = wallXML + "name=\"" + wi.name + "\" ";
+
+                wallXML = wallXML + "wallImage=\"" + i + "\" ";
+
+                if (!String.IsNullOrEmpty(wi.colorName))
+                    wallXML = wallXML + "color=\"" + wi.colorName + "\" ";
+                else
+                    wallXML = wallXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ", wi.color.R, wi.color.G, wi.color.B);
+
+                wallXML = wallXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ",
+                    wi.officialColor.R, wi.officialColor.G, wi.officialColor.B);
+
+                if (wi.transparent)
+                    wallXML = wallXML + "transparent=\"true\" ";
+
+                wallXML = wallXML + "/>";
+
+                writer.WriteLine(wallXML);
+
+                if (i % 10 == 9)
+                    writer.WriteLine();
+            }
+
+            writer.WriteLine("  </walls>");
+        }
+
+        private void SaveItems(StreamWriter writer)
+        {
+            SortedDictionary<String, ItemInfo> sorted = new SortedDictionary<string,ItemInfo>();
+            String itemXML;
+            String prevLetter = "";
+            String curLetter;
+            String numbers = "1234567890";
+
+            foreach (KeyValuePair<String, ItemInfo> kvp in items)
+            {
+                sorted.Add(kvp.Key, kvp.Value);
+            }
+
+            writer.WriteLine("  <items>");
+
+            foreach (KeyValuePair<String, ItemInfo> kvp in sorted)
+            {
+                curLetter = kvp.Value.name.Substring(0, 1);
+
+                if (numbers.IndexOf(curLetter) == -1)
+                {
+                    if (curLetter != prevLetter)
+                    {
+                        writer.WriteLine();
+                        prevLetter = curLetter;
+                    }
+                }
+
+                itemXML = String.Format("    <item name=\"{0}\" ", kvp.Value.name);
+                
+                if (!String.IsNullOrEmpty(kvp.Value.foundIn))
+                    itemXML = itemXML + String.Format("foundIn=\"{0}\" ", kvp.Value.foundIn);
+
+                itemXML = itemXML + String.Format("itemImage=\"{0}\" ", kvp.Value.imageId);
+
+                if (kvp.Value.netId != kvp.Value.imageId)
+                    itemXML = itemXML + String.Format("netId=\"{0}\" ", kvp.Value.netId);
+
+                itemXML = itemXML + "/>";
+                writer.WriteLine(itemXML);
+
+            }
+
+            writer.WriteLine("  </items>");
+        }
+
+        private void SaveRenames(StreamWriter writer)
+        {
+            writer.WriteLine("  <namechanges>");
+
+            foreach (KeyValuePair<String, RenameInfo> kvp in renames)
+            {
+                writer.WriteLine(String.Format("    <item name=\"{0}\" newName=\"{1}\" />", kvp.Value.name, kvp.Value.newName));
+            }
+
+            writer.WriteLine("  </namechanges>");
+        }
+
+        private void SaveNPCs(StreamWriter writer)
+        {
+            writer.WriteLine("  <npcs>");
+
+            foreach (KeyValuePair<String, NpcInfo> kvp in npcs)
+            {
+                writer.WriteLine(String.Format("    <npc name=\"{0}\" npcImage=\"{1}\" />", kvp.Value.name, kvp.Value.imageId));
+            }
+
+            writer.WriteLine("  </npcs>");
+        }
+
+        private void SaveColors(StreamWriter writer)
+        {
+            String colorXML;
+            writer.WriteLine("  <colors>");
+
+            foreach (KeyValuePair<String, ColorInfo> kvp in colors)
+            {
+                colorXML = String.Format("    <color name=\"{0}\" ", kvp.Value.name);
+
+                colorXML = colorXML + String.Format("red=\"{0}\" green=\"{1}\" blue=\"{2}\" ", 
+                    kvp.Value.color.R, kvp.Value.color.G, kvp.Value.color.B);
+
+                colorXML = colorXML + "/>";
+
+                writer.WriteLine(colorXML);
+            }
+
+            writer.WriteLine("  </colors>");
+        }
+
+        private void SaveMarkers(StreamWriter writer)
+        {
+            String markerXML;
+            bool skipNewline = true;
+
+            writer.WriteLine("  <markers>");
+            foreach (KeyValuePair<String, MarkerInfo> kvp in markers)
+            {
+                if (String.IsNullOrEmpty(kvp.Value.markerSet))
+                {
+                    if (skipNewline == true)
+                        skipNewline = false;
+                    else
+                        writer.WriteLine();
+                }
+
+                markerXML = String.Format("    <marker name=\"{0}\" ", kvp.Value.name);
+
+                if (kvp.Value.markerImage != kvp.Value.name)
+                    markerXML = markerXML + String.Format("markerImage=\"{0}\" ", kvp.Value.markerImage);
+
+                if (!String.IsNullOrEmpty(kvp.Value.markerSet))
+                    markerXML = markerXML + String.Format("partOfSet=\"{0}\" ", kvp.Value.markerSet);
+
+                if (kvp.Value.notInList == true)
+                    markerXML = markerXML + String.Format("notInList=\"true\" ", kvp.Value.notInList);
+
+                markerXML = markerXML + "/>";
+                writer.WriteLine(markerXML);
+            }
+            writer.WriteLine("  </markers>");
+        }
+
+        private void SaveSpecialObjects(StreamWriter writer)
+        {
+            String soXML;
+            Boolean skipNewline = true;
+
+            writer.WriteLine("  <specialobjects>");
+
+            foreach (KeyValuePair<String, List<SpecialObjectInfo>> kvp in specialobjects)
+            {
+                if (skipNewline == true)
+                    skipNewline = false;
+                else
+                    writer.WriteLine();
+
+                // I don't like hacking in the comments but neither do I like leaving them out.
+                if (kvp.Key == "Wire")
+                    writer.WriteLine("    <!-- Wire does not have an official color so it's copied over -->");
+                else if (kvp.Key == "Background")
+                    writer.WriteLine("    <!-- Backgrounds have to be last so they do not turn off the Lava & Water when Draw Walls is off.-->");
+
+                foreach (SpecialObjectInfo soi in kvp.Value)
+                {
+                    soXML = String.Format("    <object name=\"{0}\" type=\"{1}\" ", soi.name, soi.type);
+
+                    if (!String.IsNullOrEmpty(soi.colorName))
+                        soXML = soXML + string.Format("color=\"{0}\" ", soi.colorName);
+                    else
+                        soXML = soXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ",
+                            soi.color.R, soi.color.G, soi.color.B);
+
+                    soXML = soXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ",
+                        soi.officialColor.R, soi.officialColor.G, soi.officialColor.B);
+
+                    soXML = soXML + "/>";
+
+                    writer.WriteLine(soXML);
+
+                }
+            }
+
+            writer.WriteLine("  </specialobjects>");
+        }
+#endregion
+ 
+        public ItemInfo GetItem(String itemName)
 		{
 			if (!items.ContainsKey(itemName))
 			{
@@ -1578,9 +1338,6 @@ namespace MoreTerra.Structures.TerraInfo
 			{
 				ii = items[itemName];
 
-				if (ii.isCustom == true)
-					return ItemEnum.Custom;
-
 				if (ii.foundIn == "Chest")
 					return ItemEnum.InChest;
 
@@ -1590,35 +1347,6 @@ namespace MoreTerra.Structures.TerraInfo
 			{
 				return ItemEnum.NotFound;
 			}
-		}
-
-		public void AddCustomItem(String itemName)
-		{
-			ItemInfo ii = new ItemInfo();
-
-			ii.name = itemName;
-			ii.isCustom = true;
-
-			items.Add(itemName, ii);
-		}
-
-		public void RemoveCustomItem(String itemName)
-		{
-			if (!items.ContainsKey(itemName))
-				return;
-
-			if (items[itemName].isCustom == false)
-				return;
-
-			items.Remove(itemName);
-		}
-
-		public RecolorInfo GetRecolor(String recolorName)
-		{
-			if (recolors.ContainsKey(recolorName))
-				return recolors[recolorName];
-
-			return null;
 		}
 
 		public void AddCustomColor(String colorName, Color newColor)
@@ -1659,8 +1387,7 @@ namespace MoreTerra.Structures.TerraInfo
 	{
 		NotFound = 0,
 		InChest,
-		Normal,
-		Custom
+		Normal
 	}
 	#endregion
 }

@@ -6,8 +6,6 @@ namespace MoreTerra.Structures.TerraInfo
 	public class TileInfo
 	{
 		public String name;
-		public String autoGenType;
-		public String blendWith;
 		public String colorName;
 		public String markerName;
 
@@ -16,13 +14,13 @@ namespace MoreTerra.Structures.TerraInfo
 
 		public Int32 tileImage;
 
+        public Boolean important;
+
 		public Boolean Important
 		{
 			get
 			{
-				if (autoGenType == String.Empty)
-					return true;
-				return false;
+                return important;
 			}
 		}
 	}

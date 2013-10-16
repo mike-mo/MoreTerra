@@ -42,7 +42,7 @@
 
 				if (td.MarkerType != MarkerType.Unknown)
 				{
-					td.DrawMarker = SettingsManager.Instance.DrawMarker((Byte) i);
+					td.DrawMarker = SettingsManager.Instance.DrawMarker((Int16) i);
 				}
 			}
         }
@@ -112,12 +112,6 @@
 				}
             }
 
-			if (SettingsManager.Instance.ScanForNewItems && Global.Instance.InConsole == false)
-			{
-				bw.ReportProgress(50, "Scanning chests for new items");
-				ScanChests(this.chests);
-			}
-
 			if (bw != null)
 				bw.ReportProgress(50, "Processing Signs");
 
@@ -170,49 +164,6 @@
             progress = 0;
 
 			chests = world.GetChests(worldPath, bw);
-
-			if (SettingsManager.Instance.ScanForNewItems && Global.Instance.InConsole == false)
-				ScanChests(this.chests);
-		}
-
-		private void ScanChests(List<Chest> lstChests)
-		{
-			FormMessageBoxWithCheckBox dialogBox = 
-				new FormMessageBoxWithCheckBox("No change", "Turn off item scanning", "New item found!");
-
-			Boolean stopScanning = false;
-
-			foreach (Chest c in this.chests)
-			{
-				foreach (Item it in c.Items)
-				{
-					if (Global.Instance.Info.GetItemEnum(it.Name) == Structures.TerraInfo.ItemEnum.NotFound)
-					{
-						if (!alreadyDenied.Contains(it.Name))
-						{
-							dialogBox.labelText = String.Format(
-								"Item '{0}' was not in the item list." + Environment.NewLine +
-								"Would you like to add it?", it.Name);
-
-
-							DialogResult res = FormWorldView.MessageBoxWithCheckBoxShow(dialogBox);
-									 
-							if (res == DialogResult.Yes)
-								Global.Instance.Info.AddCustomItem(it.Name);
-							else
-								alreadyDenied.Add(it.Name);
-
-							stopScanning = dialogBox.checkBoxChecked;
-
-							if (stopScanning == true)
-							{
-								SettingsManager.Instance.ScanForNewItems = false;
-								return;
-							}
-						}
-					}
-				}
-			}
         }
 
 		public Bitmap CreatePreviewPNG(string outputPngPath, BackgroundWorker bw)

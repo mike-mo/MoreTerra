@@ -129,13 +129,9 @@
     <Compile Include="Structures\PointInt16.cs" />
     <Compile Include="Structures\PointSingle.cs" />
     <Compile Include="Structures\TerraInfo\ColorInfo.cs" />
-    <Compile Include="Structures\TerraInfo\CraftingSpotInfo.cs" />
     <Compile Include="Structures\TerraInfo\ItemInfo.cs" />
-    <Compile Include="Structures\TerraInfo\ItemTypeInfo.cs" />
     <Compile Include="Structures\TerraInfo\MarkerInfo.cs" />
     <Compile Include="Structures\TerraInfo\NpcInfo.cs" />
-    <Compile Include="Structures\TerraInfo\RecipeInfo.cs" />
-    <Compile Include="Structures\TerraInfo\RecolorInfo.cs" />
     <Compile Include="Structures\TerraInfo\RenameInfo.cs" />
     <Compile Include="Structures\TerraInfo\SpecialObjectInfo.cs" />
     <Compile Include="Structures\TerraInfo\TerraInfo.cs" />

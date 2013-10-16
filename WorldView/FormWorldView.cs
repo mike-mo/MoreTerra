@@ -96,7 +96,6 @@ namespace MoreTerra
             this.checkBoxOfficialColors.CheckedChanged += new System.EventHandler(this.checkBoxOfficialColors_CheckedChanged);
 			this.checkBoxDrawWires.CheckedChanged += new System.EventHandler(this.checkBoxDrawWires_CheckedChanged);
 			this.checkBoxDrawWalls.CheckedChanged += new System.EventHandler(this.checkBoxDrawWalls_CheckedChanged);
-			this.checkBoxScanForItems.CheckedChanged += new System.EventHandler(this.checkBoxScanForItems_CheckedChanged);
 			this.checkBoxOpenImage.CheckedChanged += new System.EventHandler(this.checkBoxOpenImage_CheckedChanged);
 
 			this.comboBoxCropImage.SelectedIndexChanged += new System.EventHandler(this.comboBoxCropImage_SelectedIndexChanged);
@@ -140,17 +139,12 @@ namespace MoreTerra
 			this.checkBoxFilterChests.CheckedChanged += new System.EventHandler(this.checkBoxFilterChests_CheckedChanged);
 			this.checkBoxShowChestItems.CheckedChanged +=new EventHandler(checkBoxShowChestItems_CheckedChanged);
 			this.checkBoxShowNormalItems.CheckedChanged +=new EventHandler(checkBoxShowNormalItems_CheckedChanged);
-			this.checkBoxShowCustomItems.CheckedChanged +=new EventHandler(checkBoxShowCustomItems_CheckedChanged);
 
-			this.lstAvailableItems.SelectedIndexChanged += new System.EventHandler(this.lstAvailableItems_SelectionChanged);
 			this.lstAvailableItems.DoubleClick += new System.EventHandler(this.lstAvailableItems_DoubleClick);
 			this.buttonMoveAllToFiltered.Click += new System.EventHandler(this.buttonMoveAllToFiltered_Click);
-			this.buttonAddCustomItem.Click += new System.EventHandler(this.buttonAddCustomItem_Click);
 
-			this.lstFilteredItems.SelectedIndexChanged += new System.EventHandler(this.lstFilteredItems_SelectionChanged);
 			this.lstFilteredItems.DoubleClick += new System.EventHandler(this.lstFilteredItems_DoubleClick);
 			this.lstFilteredItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstFilteredItems_KeyDown);
-			this.buttonRemoveCustomItem.Click += new System.EventHandler(this.buttonRemoveCustomItem_Click);
 			this.buttonMoveAllToAvailable.Click += new System.EventHandler(this.buttonMoveAllToAvailable_Click);
 			#endregion
 
@@ -233,13 +227,11 @@ namespace MoreTerra
             checkBoxOfficialColors.Checked = SettingsManager.Instance.OfficialColors;
 			checkBoxDrawWires.Checked = SettingsManager.Instance.DrawWires;
 			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
-			checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
 			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
 			checkBoxShowChestTypes.Checked = SettingsManager.Instance.ShowChestTypes;
 			checkBoxFilterChests.Checked = SettingsManager.Instance.FilterChests;
 			checkBoxShowChestItems.Checked = SettingsManager.Instance.ShowChestItems;
 			checkBoxShowNormalItems.Checked = SettingsManager.Instance.ShowNormalItems;
-			checkBoxShowCustomItems.Checked = SettingsManager.Instance.ShowCustomItems;
 			comboBoxCropImage.SelectedIndex = SettingsManager.Instance.CropImageUsing;
 
 			// This event handler sets both ResourceManager.Custom but also calls
@@ -422,7 +414,7 @@ namespace MoreTerra
 		#region Draw World tabPage functions
         private void checkBoxOfficialColors_CheckedChanged(object sender, EventArgs e)
         {
-            SettingsManager.Instance.DrawWires = checkBoxOfficialColors.Checked;
+            SettingsManager.Instance.OfficialColors = checkBoxOfficialColors.Checked;
         }
 
 		private void checkBoxDrawWires_CheckedChanged(object sender, EventArgs e)
@@ -433,11 +425,6 @@ namespace MoreTerra
 		private void checkBoxDrawWalls_CheckedChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Instance.DrawWalls = checkBoxDrawWalls.Checked;
-		}
-
-		private void checkBoxScanForItems_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Instance.ScanForNewItems = checkBoxScanForItems.Checked;
 		}
 
 		private void checkBoxOpenImage_CheckedChanged(object sender, EventArgs e)
@@ -617,7 +604,6 @@ namespace MoreTerra
 			groupBoxImageOutput.Enabled = true;
 			(this.tabPageMarkers as Control).Enabled = true;
 			(this.tabPageWorldInformation as Control).Enabled = true;
-			this.checkBoxScanForItems.Checked = SettingsManager.Instance.ScanForNewItems;
 		}
 
 		private void PopulateWorldTree()
@@ -1331,13 +1317,6 @@ namespace MoreTerra
 			ResetFilterLists();
 		}
 
-		private void checkBoxShowCustomItems_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Instance.ShowCustomItems = checkBoxShowCustomItems.Checked;
-
-			ResetFilterLists();
-		}
-
 		private void lstFilteredItems_DoubleClick(object sender, EventArgs e)
 		{
 			lstFilteredItems_KeyDown(sender, new KeyEventArgs(Keys.Delete));
@@ -1382,9 +1361,6 @@ namespace MoreTerra
 				{
 					if (SettingsManager.Instance.ShowChestItems)
 						lstAvailableItems.Items.Add(si);
-				} else if (ii.isCustom) {
-					if (SettingsManager.Instance.ShowCustomItems)
-						lstAvailableItems.Items.Add(si);
 				} else if (SettingsManager.Instance.ShowNormalItems)
 					lstAvailableItems.Items.Add(si);
 
@@ -1397,144 +1373,6 @@ namespace MoreTerra
 				buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
 				buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
 			}
-		}
-
-		private void buttonAddCustomItem_Click(object sender, EventArgs e)
-		{
-			ItemEnum ie;
-			String newItem;
-			String error = "";
-			DialogResult res;
-			FormEntryBox entry = new FormEntryBox();
-			entry.FormText = "New Custom Item";
-			entry.LabelText = "Enter a new item to add to the available list. " +
-				"Case does matter, though item names normally start with capitals. " +
-				"Example: Staff of Growth";
-
-			res = entry.ShowDialog(this);
-
-			if (res == DialogResult.Cancel)
-				return;
-
-			newItem = entry.EntryItem;
-
-			ie = Global.Instance.Info.GetItemEnum(newItem);
-
-			if (ie == ItemEnum.Custom)
-			{
-				error = String.Format("Item '{0}' was already added as a custom item.", newItem);
-			}
-			else if (ie != ItemEnum.NotFound)
-			{
-				error = String.Format("Item '{0}' is already coded into the program.", newItem);
-			}
-
-			if (error == "")
-			{
-				Global.Instance.Info.AddCustomItem(newItem);
-				if (SettingsManager.Instance.ShowCustomItems)
-					lstAvailableItems.Items.Add(newItem);
-			}
-			else
-			{
-				MessageBox.Show(error, "Item already exists!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
-
-			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
-			buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
-
-		}
-
-		private void buttonRemoveCustomItem_Click(object sender, EventArgs e)
-		{
-			String si;
-			Int32 selection = lstFilteredItems.SelectedIndex;
-
-			if (selection != -1)
-			{
-				si = lstFilteredItems.SelectedItem.ToString();
-
-				// I don't know how someone would get here with a non-custom item but just to be safe.
-				if (Global.Instance.Info.GetItemEnum(si) != ItemEnum.Custom)
-					return;
-
-				Global.Instance.Info.RemoveCustomItem(si);
-				SettingsManager.Instance.FilterItemStates.Remove(si);
-				lstFilteredItems.Items.RemoveAt(selection);
-
-				if (lstFilteredItems.Items.Count != 0)
-					lstFilteredItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
-
-				filterUpdated = true;
-			}
-			else
-			{
-				selection = lstAvailableItems.SelectedIndex;
-
-				if (selection == -1)
-					return;
-
-				si = lstAvailableItems.SelectedItem.ToString();
-
-				// I don't know how someone would get here with a non-custom item but just to be safe.
-				if (Global.Instance.Info.GetItemEnum(si) != ItemEnum.Custom)
-					return;
-
-				Global.Instance.Info.RemoveCustomItem(si);
-				lstAvailableItems.Items.RemoveAt(selection);
-
-				if (lstAvailableItems.Items.Count != 0)
-					lstAvailableItems.SelectedIndex = Math.Min(selection, lstFilteredItems.Items.Count);
-			}
-
-			buttonMoveAllToAvailable.Enabled = (lstFilteredItems.Items.Count != 0);
-			buttonMoveAllToFiltered.Enabled = (lstAvailableItems.Items.Count != 0);
-
-		}
-
-		private void lstFilteredItems_SelectionChanged(object sender, EventArgs e)
-		{
-			String si;
-			Int32 selection = lstFilteredItems.SelectedIndex;
-
-			if (selection == -1)
-			{
-				buttonRemoveCustomItem.Enabled = false;
-				return;
-			}
-
-			if (lstAvailableItems.SelectedIndex != -1)
-				lstAvailableItems.SelectedIndex = -1;
-
-			si = lstFilteredItems.SelectedItem.ToString();
-
-			if (Global.Instance.Info.GetItemEnum(si) == ItemEnum.Custom)
-				buttonRemoveCustomItem.Enabled = true;
-			else
-				buttonRemoveCustomItem.Enabled = false;
-
-		}
-
-		private void lstAvailableItems_SelectionChanged(object sender, EventArgs e)
-		{
-			String si;
-			Int32 selection = lstAvailableItems.SelectedIndex;
-
-			if (selection == -1)
-			{
-				buttonRemoveCustomItem.Enabled = false;
-				return;
-			}
-
-			if (lstFilteredItems.SelectedIndex != -1)
-				lstFilteredItems.SelectedIndex = -1;
-
-			si = lstAvailableItems.SelectedItem.ToString();
-
-			if (Global.Instance.Info.GetItemEnum(si) == ItemEnum.Custom)
-				buttonRemoveCustomItem.Enabled = true;
-			else
-				buttonRemoveCustomItem.Enabled = false;
 		}
 
 		private void buttonMoveAllToFiltered_Click(object sender, EventArgs e)
@@ -1571,7 +1409,6 @@ namespace MoreTerra
 
 			Boolean showInChest = SettingsManager.Instance.ShowChestItems;
 			Boolean showNormal = SettingsManager.Instance.ShowNormalItems;
-			Boolean showCustom = SettingsManager.Instance.ShowCustomItems;
 
 			lstFilteredItems.Items.Clear();
 			lstAvailableItems.Items.Clear();
@@ -1588,12 +1425,7 @@ namespace MoreTerra
 				}
 				else
 				{
-					if (kvp.Value.isCustom == true)
-					{
-						if (showCustom == false)
-							continue;
-					}
-					else if (kvp.Value.foundIn == "Chest")
+					if (kvp.Value.foundIn == "Chest")
 					{
 						if (showInChest == false)
 							continue;
@@ -1794,10 +1626,8 @@ namespace MoreTerra
 			StreamWriter writer = null;
 			FileStream stream;
 
-#if DEBUG == false
 			try
 			{
-#endif
 			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
 			writer = new StreamWriter(stream);
 
@@ -1863,7 +1693,6 @@ namespace MoreTerra
 			writer.Close();
 			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
 
-#if DEBUG == false
 			}
 			catch (IOException e)
 			{
@@ -1876,7 +1705,6 @@ namespace MoreTerra
 				if (File.Exists(textFile))
 					File.Delete(textFile);
 			}
-#endif
 		}
 
 		private void SaveChestsAsCSV(String textFile)
@@ -1886,10 +1714,8 @@ namespace MoreTerra
 			StreamWriter writer = null;
 			FileStream stream;
 
-#if DEBUG == false
 			try
 			{
-#endif
 			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
 			writer = new StreamWriter(stream);
 
@@ -1974,8 +1800,6 @@ namespace MoreTerra
 
 			writer.Close();
 			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
-
-#if DEBUG == false
 			}
 			catch (IOException e)
 			{
@@ -1988,7 +1812,6 @@ namespace MoreTerra
 				if (File.Exists(textFile))
 					File.Delete(textFile);
 			}
-#endif
 		}
 
 		private void SaveChestsAsXML(String textFile)
@@ -1998,10 +1821,8 @@ namespace MoreTerra
 			StreamWriter writer = null;
 			FileStream stream;
 
-#if DEBUG == false
 			try
 			{
-#endif
 			stream = new FileStream(textFile, FileMode.Create, FileAccess.Write);
 			writer = new StreamWriter(stream);
 
@@ -2071,8 +1892,6 @@ namespace MoreTerra
 
 			writer.Close();
 			MessageBox.Show("Chests saved to " + Path.GetFileName(textFile));
-
-#if DEBUG == false
 			}
 			catch (IOException e)
 			{
@@ -2085,7 +1904,6 @@ namespace MoreTerra
 				if (File.Exists(textFile))
 					File.Delete(textFile);
 			}
-#endif
 		}
 		#endregion
 

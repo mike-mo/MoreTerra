@@ -80,6 +80,7 @@ namespace MoreTerra
             {
                 MessageBox.Show("I failed Initilaizing TileProperties: " + ex.Message);
             }
+
             try
             {
                 ResourceManager.Instance.Initialize();
@@ -88,6 +89,7 @@ namespace MoreTerra
             {
                 MessageBox.Show("I failed Initilaizing Resource Manager: " + ex.Message);
             }
+
             try
             {
                 SettingsManager.Instance.Initialize();
@@ -96,7 +98,6 @@ namespace MoreTerra
             {
                 MessageBox.Show("I failed Initilaizing Settings Manager: " + ex.Message);
             }
-
 
             if (args.Length == 0) //started from windows
             {

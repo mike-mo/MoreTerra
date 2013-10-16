@@ -32,8 +32,8 @@ namespace MoreTerra.Utilities
 
                 tileXML = tileXML + "tileImage=\"" + i + "\" ";
 
-                if (!String.IsNullOrEmpty(ti.autoGenType))
-                    tileXML = tileXML + "autoGenType=\"" + ti.autoGenType + "\" ";
+                if (ti.important)
+                    tileXML = tileXML + "important=\"true\" ";
 
                 if (!String.IsNullOrEmpty(ti.colorName))
                     tileXML = tileXML + "color=\"" + ti.colorName + "\" ";
@@ -52,6 +52,7 @@ namespace MoreTerra.Utilities
             }
             writer.Close();
         }
+
         public static void DumpNewWalls()
         {
             Dictionary<int, WallInfo> walls = Global.Instance.Info.Walls;
@@ -73,9 +74,6 @@ namespace MoreTerra.Utilities
                     tileXML = tileXML + "name=\"" + wi.name + "\" ";
 
                 tileXML = tileXML + "wallImage=\"" + i + "\" ";
-
-                if (wi.safe == false)
-                    tileXML = tileXML + "unsafe=\"true\" ";
 
                 if (!String.IsNullOrEmpty(wi.colorName))
                     tileXML = tileXML + "color=\"" + wi.colorName + "\" ";

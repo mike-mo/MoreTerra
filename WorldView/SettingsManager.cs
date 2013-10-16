@@ -22,8 +22,6 @@ namespace MoreTerra
 			public Boolean AreWiresDrawable;
             public bool AreWallsDrawable;
 			public Boolean OpenImageAfterDraw;
-			public Boolean ScanForNewChestItems;
-			public Boolean ShowCustomItems;
 			public Boolean ShowChestItems;
 			public Boolean ShowNormalItems;
 			public Boolean ShowChestTypes;
@@ -51,12 +49,10 @@ namespace MoreTerra
                 UseOfficialColors = copy.UseOfficialColors;
 				AreWallsDrawable = copy.AreWallsDrawable;
 				OpenImageAfterDraw = copy.OpenImageAfterDraw;
-				ScanForNewChestItems = copy.ScanForNewChestItems;
 				ShowChestTypes = copy.ShowChestTypes;
 				UseCustomMarkers = copy.UseCustomMarkers;
 				ChestListSortType = copy.ChestListSortType;
 				ShowChestItems = copy.ShowChestItems;
-				ShowCustomItems = copy.ShowCustomItems;
 				ShowNormalItems = copy.ShowNormalItems;
 
 				MarkerStates = new Dictionary<String, MarkerSettings>();
@@ -130,12 +126,10 @@ namespace MoreTerra
             us.UseOfficialColors = true;
 			us.AreWallsDrawable = true;
 			us.OpenImageAfterDraw = true;
-			us.ScanForNewChestItems = false;
 			us.ShowChestTypes = false;
 			us.UseCustomMarkers = false;
 			us.ShowChestItems = true;
 			us.ShowNormalItems = false;
-			us.ShowCustomItems = true;
 			us.AreWiresDrawable = true;
 
 			us.ChestListSortType = 0;
@@ -244,7 +238,7 @@ namespace MoreTerra
 		#endregion
 
 		#region Marker Helper Functions
-		public bool DrawMarker(Byte type)
+		public bool DrawMarker(Int16 type)
 		{
 			if (type >= TileProperties.Unknown)
 				return false;
@@ -456,18 +450,6 @@ namespace MoreTerra
 			}
 		}
 
-		public Boolean ScanForNewItems
-		{
-			get
-			{
-				return this.settings.ScanForNewChestItems;
-			}
-			set
-			{
-				this.settings.ScanForNewChestItems = value;
-			}
-		}
-
 		public Boolean ShowChestTypes
 		{
 			get
@@ -513,18 +495,6 @@ namespace MoreTerra
 			set
 			{
 				settings.ShowNormalItems = value;
-			}
-		}
-
-		public Boolean ShowCustomItems
-		{
-			get
-			{
-				return settings.ShowCustomItems;
-			}
-			set
-			{
-				settings.ShowCustomItems = value;
 			}
 		}
 		#endregion
@@ -660,9 +630,6 @@ namespace MoreTerra
 								case "OpenImageAfterDraw":
 									us.OpenImageAfterDraw = Boolean.Parse(node.InnerXml);
 									break;
-								case "ScanForNewChestItems":
-									us.ScanForNewChestItems = Boolean.Parse(node.InnerXml);
-									break;
 								case "ShowChestTypes":
 									us.ShowChestTypes = Boolean.Parse(node.InnerXml);
 									break;
@@ -789,12 +756,6 @@ namespace MoreTerra
 									if (parseNode != null)
 										us.OpenImageAfterDraw = Boolean.Parse(parseNode.Value);
 									break;
-								case "ScanForNewChestItems":
-									parseNode = node.Attributes["value"];
-
-									if (parseNode != null)
-										us.ScanForNewChestItems = Boolean.Parse(parseNode.Value);
-									break;
 								case "ShowChestTypes":
 									parseNode = node.Attributes["value"];
 
@@ -830,12 +791,6 @@ namespace MoreTerra
 
 									if (parseNode != null)
 										us.ShowNormalItems = Boolean.Parse(parseNode.Value);
-									break;
-								case "ShowCustomItems":
-									parseNode = node.Attributes["value"];
-
-									if (parseNode != null)
-										us.ShowCustomItems = Boolean.Parse(parseNode.Value);
 									break;
 								case "MarkerStates":
 									parseNodeList = node.SelectNodes("listitem");
@@ -903,24 +858,6 @@ namespace MoreTerra
 				}
 			}
 
-			parseNode = baseNode.SelectSingleNode("CustomItems");
-
-			if (parseNode != null)
-			{
-				parseNode = parseNode.Attributes["list"];
-
-				if (parseNode != null)
-				{
-					String[] itemList = parseNode.Value.Split(';');
-
-					foreach (String s in itemList)
-					{
-						if (!Global.Instance.Info.Items.ContainsKey(s))
-							Global.Instance.Info.AddCustomItem(s);
-					}
-				}
-			}
-
 			parseNode = baseNode.SelectSingleNode("CustomColors");
 
 			if (parseNode != null)
@@ -974,20 +911,18 @@ namespace MoreTerra
 					us.OutputPreviewDirectory);
 				writer.WriteLine("    <item name=\"IsChestFilterEnabled\" value=\"{0}\" />",
 					us.IsChestFilterEnabled);
+                writer.WriteLine("    <item name=\"UseOfficialColors\" value=\"{0}\" />",
+                    us.UseOfficialColors);
 				writer.WriteLine("    <item name=\"ShowChestItems\" value=\"{0}\" />",
 					us.ShowChestItems);
 				writer.WriteLine("    <item name=\"ShowNormalItems\" value=\"{0}\" />",
 					us.ShowNormalItems);
-				writer.WriteLine("    <item name=\"ShowCustomItems\" value=\"{0}\" />",
-					us.ShowCustomItems);
 				writer.WriteLine("    <item name=\"AreWiresDrawable\" value=\"{0}\" />",
 					us.AreWiresDrawable);
 				writer.WriteLine("    <item name=\"AreWallsDrawable\" value=\"{0}\" />",
 					us.AreWallsDrawable);
 				writer.WriteLine("    <item name=\"OpenImageAfterDraw\" value=\"{0}\" />",
 					us.OpenImageAfterDraw);
-				writer.WriteLine("    <item name=\"ScanForNewChestItems\" value=\"{0}\" />",
-					us.ScanForNewChestItems);
 				writer.WriteLine("    <item name=\"ShowChestTypes\" value=\"{0}\" />",
 					us.ShowChestTypes);
 				writer.WriteLine("    <item name=\"CropImageType\" value=\"{0}\" />",
@@ -1018,20 +953,6 @@ namespace MoreTerra
 
 				writer.WriteLine("  </Settings>");
 			}
-
-			sb.Clear();
-			splitter = "";
-			foreach (KeyValuePair<String, ItemInfo> kvp in Global.Instance.Info.Items)
-			{
-				if (kvp.Value.isCustom == true)
-				{
-					sb.Append(splitter + kvp.Key);
-					splitter = ";";
-				}
-			}
-
-			if (sb.Length != 0)
-				writer.WriteLine("  <CustomItems list=\"{0}\" />", sb.ToString());
 
 			sb.Clear();
 			splitter = "";

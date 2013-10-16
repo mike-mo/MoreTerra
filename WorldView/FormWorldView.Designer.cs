@@ -37,7 +37,6 @@
             this.comboBoxCropImage = new System.Windows.Forms.ComboBox();
             this.checkBoxDrawWires = new System.Windows.Forms.CheckBox();
             this.checkBoxDrawWalls = new System.Windows.Forms.CheckBox();
-            this.checkBoxScanForItems = new System.Windows.Forms.CheckBox();
             this.checkBoxOpenImage = new System.Windows.Forms.CheckBox();
             this.buttonDrawWorld = new System.Windows.Forms.Button();
             this.groupBoxImageOutput = new System.Windows.Forms.GroupBox();
@@ -79,15 +78,12 @@
             this.radioButtonColorPreset = new System.Windows.Forms.RadioButton();
             this.radioButtonColorDefault = new System.Windows.Forms.RadioButton();
             this.tabPageChestFinder = new System.Windows.Forms.TabPage();
-            this.checkBoxShowCustomItems = new System.Windows.Forms.CheckBox();
             this.checkBoxShowNormalItems = new System.Windows.Forms.CheckBox();
             this.checkBoxShowChestItems = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonMoveAllToFiltered = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lstAvailableItems = new System.Windows.Forms.ListBox();
-            this.buttonRemoveCustomItem = new System.Windows.Forms.Button();
-            this.buttonAddCustomItem = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstFilteredItems = new System.Windows.Forms.ListBox();
             this.buttonMoveAllToAvailable = new System.Windows.Forms.Button();
@@ -182,7 +178,6 @@
             this.tabPageDrawWorld.Controls.Add(this.comboBoxCropImage);
             this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWires);
             this.tabPageDrawWorld.Controls.Add(this.checkBoxDrawWalls);
-            this.tabPageDrawWorld.Controls.Add(this.checkBoxScanForItems);
             this.tabPageDrawWorld.Controls.Add(this.checkBoxOpenImage);
             this.tabPageDrawWorld.Controls.Add(this.buttonDrawWorld);
             this.tabPageDrawWorld.Controls.Add(this.groupBoxImageOutput);
@@ -262,17 +257,6 @@
             this.checkBoxDrawWalls.TabIndex = 8;
             this.checkBoxDrawWalls.Text = "Draw Walls";
             this.checkBoxDrawWalls.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxScanForItems
-            // 
-            this.checkBoxScanForItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxScanForItems.AutoSize = true;
-            this.checkBoxScanForItems.Location = new System.Drawing.Point(12, 252);
-            this.checkBoxScanForItems.Name = "checkBoxScanForItems";
-            this.checkBoxScanForItems.Size = new System.Drawing.Size(161, 17);
-            this.checkBoxScanForItems.TabIndex = 9;
-            this.checkBoxScanForItems.Text = "Scan for new items in chests";
-            this.checkBoxScanForItems.UseVisualStyleBackColor = true;
             // 
             // checkBoxOpenImage
             // 
@@ -686,7 +670,6 @@
             // 
             // tabPageChestFinder
             // 
-            this.tabPageChestFinder.Controls.Add(this.checkBoxShowCustomItems);
             this.tabPageChestFinder.Controls.Add(this.checkBoxShowNormalItems);
             this.tabPageChestFinder.Controls.Add(this.checkBoxShowChestItems);
             this.tabPageChestFinder.Controls.Add(this.tableLayoutPanel3);
@@ -698,16 +681,6 @@
             this.tabPageChestFinder.TabIndex = 5;
             this.tabPageChestFinder.Text = "Chest Finder";
             this.tabPageChestFinder.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxShowCustomItems
-            // 
-            this.checkBoxShowCustomItems.AutoSize = true;
-            this.checkBoxShowCustomItems.Location = new System.Drawing.Point(347, 6);
-            this.checkBoxShowCustomItems.Name = "checkBoxShowCustomItems";
-            this.checkBoxShowCustomItems.Size = new System.Drawing.Size(119, 17);
-            this.checkBoxShowCustomItems.TabIndex = 5;
-            this.checkBoxShowCustomItems.Text = "Show Custom Items";
-            this.checkBoxShowCustomItems.UseVisualStyleBackColor = true;
             // 
             // checkBoxShowNormalItems
             // 
@@ -741,8 +714,6 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
             this.tableLayoutPanel3.Controls.Add(this.buttonMoveAllToFiltered, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.groupBox2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonRemoveCustomItem, 2, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAddCustomItem, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.groupBox3, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonMoveAllToAvailable, 3, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 31);
@@ -785,26 +756,6 @@
             this.lstAvailableItems.Size = new System.Drawing.Size(217, 237);
             this.lstAvailableItems.Sorted = true;
             this.lstAvailableItems.TabIndex = 6;
-            // 
-            // buttonRemoveCustomItem
-            // 
-            this.buttonRemoveCustomItem.Enabled = false;
-            this.buttonRemoveCustomItem.Location = new System.Drawing.Point(232, 265);
-            this.buttonRemoveCustomItem.Name = "buttonRemoveCustomItem";
-            this.buttonRemoveCustomItem.Size = new System.Drawing.Size(118, 23);
-            this.buttonRemoveCustomItem.TabIndex = 10;
-            this.buttonRemoveCustomItem.Text = "Remove Custom Item";
-            this.buttonRemoveCustomItem.UseVisualStyleBackColor = true;
-            // 
-            // buttonAddCustomItem
-            // 
-            this.buttonAddCustomItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddCustomItem.Location = new System.Drawing.Point(108, 265);
-            this.buttonAddCustomItem.Name = "buttonAddCustomItem";
-            this.buttonAddCustomItem.Size = new System.Drawing.Size(118, 23);
-            this.buttonAddCustomItem.TabIndex = 9;
-            this.buttonAddCustomItem.Text = "Add Custom Item";
-            this.buttonAddCustomItem.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -1295,11 +1246,8 @@
 		private System.Windows.Forms.RadioButton radioButtonSortByNone;
 		private System.Windows.Forms.RadioButton radioButtonSortByX;
 		private System.Windows.Forms.RadioButton radioButtonSortByY;
-		private System.Windows.Forms.Button buttonAddCustomItem;
-		private System.Windows.Forms.Button buttonRemoveCustomItem;
 		private System.Windows.Forms.Button buttonMoveAllToFiltered;
 		private System.Windows.Forms.Button buttonMoveAllToAvailable;
-		private System.Windows.Forms.CheckBox checkBoxScanForItems;
 		private System.Windows.Forms.CheckBox checkBoxDrawWalls;
 		private System.Windows.Forms.CheckBox checkBoxShowChestTypes;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStripSaveChests;
@@ -1322,7 +1270,6 @@
 		private System.Windows.Forms.RadioButton radioButtonColorColor;
 		private System.Windows.Forms.RadioButton radioButtonColorPreset;
 		private System.Windows.Forms.RadioButton radioButtonColorDefault;
-		private System.Windows.Forms.CheckBox checkBoxShowCustomItems;
 		private System.Windows.Forms.CheckBox checkBoxShowNormalItems;
 		private System.Windows.Forms.CheckBox checkBoxShowChestItems;
 		private System.Windows.Forms.GroupBox groupBoxColorNames;

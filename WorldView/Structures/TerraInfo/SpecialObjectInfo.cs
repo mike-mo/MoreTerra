@@ -7,7 +7,6 @@ namespace MoreTerra.Structures.TerraInfo
 	{
 		public String name;
 		public String type;
-		public Int32 objectImage;
 		public String colorName;
 		public Color color;
         public Color officialColor;

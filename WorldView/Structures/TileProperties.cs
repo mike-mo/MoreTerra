@@ -123,7 +123,6 @@ namespace MoreTerra.Structures
 
 		public static void Initialize()
 		{
-			Boolean Important;
 			MarkerType mt;
 			Int16 startPos;
 
@@ -157,8 +156,6 @@ namespace MoreTerra.Structures
                 else if (kvp.Value.name == "Gold Cache")
                     TileProperties.GoldCache = (Int16)kvp.Key;
 
-				Important = (kvp.Value.autoGenType == String.Empty);
-
 				if (kvp.Value.markerName != "")
 				{
 					if (Enum.TryParse<MarkerType>(Global.Instance.Info.Markers[kvp.Value.markerName].markerImage, out mt) == false)
@@ -169,7 +166,7 @@ namespace MoreTerra.Structures
 					mt = MarkerType.Unknown;
 				}
 
-				tileTypeDefs[kvp.Key] = new TileData(Important, kvp.Value.color, kvp.Value.officialColor, mt);
+				tileTypeDefs[kvp.Key] = new TileData(kvp.Value.important, kvp.Value.color, kvp.Value.officialColor, mt);
 				startPos++;
 			}
 			TileProperties.Unknown = startPos;

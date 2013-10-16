@@ -57,7 +57,6 @@ namespace MoreTerra
 		{
 			info = new TerraInfo();
 
-
 			String errors = info.LoadInfo(Properties.Resources.Items);
 
 			if (errors != String.Empty)

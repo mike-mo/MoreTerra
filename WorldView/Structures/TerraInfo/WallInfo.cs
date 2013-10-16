@@ -11,6 +11,5 @@ namespace MoreTerra.Structures.TerraInfo
 		public Color color;
         public Color officialColor;
         public Boolean transparent;
-		public Boolean safe;
 	}
 }

@@ -298,7 +298,7 @@ namespace MoreTerra.Structures
 			header.TreeStyle = new int[4];
 			header.CaveBackX = new int[3];
 			header.CaveBackStyle = new int[4];
-			if (version >= 68)
+			if (version >= 66)
 			{
 				header.MoonType = reader.ReadByte();
 
@@ -334,7 +334,7 @@ namespace MoreTerra.Structures
                 header.IsEclipse = reader.ReadBoolean();
 
 			header.DungeonPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
-			if (version >= 68)
+			if (version >= 66)
 			{
 				header.Crimson = reader.ReadBoolean();
 			}
@@ -342,7 +342,7 @@ namespace MoreTerra.Structures
 			header.IsBoss2Dead = reader.ReadBoolean();
 			header.IsBoss3Dead = reader.ReadBoolean();
 
-			if (version >= 68)
+			if (version >= 66)
 			{
 				header.IsQueenBeeDead = reader.ReadBoolean();
 				header.IsMechBoss1Dead = reader.ReadBoolean();
@@ -364,7 +364,7 @@ namespace MoreTerra.Structures
 			{
 				header.IsFrostDefeated = reader.ReadBoolean();
 			}
-			if (version >= 68)
+			if (version >= 66)
 			{
 				header.IsPiratesDefeated = reader.ReadBoolean();
 			}
@@ -385,7 +385,7 @@ namespace MoreTerra.Structures
 
 			header.OreTiers = new int[3];
 			header.Styles = new byte[8];
-			if (version >= 68)
+			if (version >= 66)
 			{
 				header.IsRaining = reader.ReadBoolean();
 				header.RainTime = reader.ReadInt32();
@@ -754,7 +754,7 @@ namespace MoreTerra.Structures
 				retTiles = new Int16[MaxX, MaxY];
 
 				// Bit of a hack to handle the new platform types.
-				if (header.ReleaseNumber < 68)
+				if (header.ReleaseNumber < 66)
 				{
 					TileProperties.tileTypeDefs[19].IsImportant = false;
 				} else {
@@ -857,7 +857,7 @@ namespace MoreTerra.Structures
 						}
 					}
 				}
-				else if (header.ReleaseNumber < 68)
+				else if (header.ReleaseNumber < 66)
 				{
 					Int16 RLERemaining = 0;
 
@@ -2250,22 +2250,34 @@ namespace MoreTerra.Structures
 		public String GetWorldName(String worldFile)
 		{
 			String worldName;
+            String headerName;
+            int headerId;
 
+            try
+            {
 			stream = new FileStream(worldFile, FileMode.Open, FileAccess.Read);
 			reader = new BinaryReader(stream);
 			backReader = new BackwardsBinaryReader(stream);
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                return "Error loading worldname";
+            }
 			
-			ReadHeader();
+            // Skip the release number.
+            reader.ReadInt32();
+            headerName = reader.ReadString();
+            headerId = reader.ReadInt32();
 
-			if (CompareFooter(header.Name, header.Id) == true)
-				worldName = header.Name;
+			if (CompareFooter(headerName, headerId) == true)
+				worldName = headerName;
 			else
 				worldName = "Not a valid World file";
 
 			reader.Close();
 
 			return worldName;
-
 		}
 
 		private Boolean CompareFooter(String worldName, Int32 worldId)
@@ -2304,6 +2316,5 @@ namespace MoreTerra.Structures
 			this.stream.Seek(position, SeekOrigin.Begin);
 			return returnVal;
 		}
-	
 	}
 }
