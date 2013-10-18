@@ -1074,6 +1074,16 @@ namespace MoreTerra.Structures
                                                     tileType = TileProperties.GoldCache;
                                             }
                                         }
+                                        else if (tileType == TileProperties.LargeDetritus2)
+                                        {
+                                            if ((typeX % 54 == 0) && (typeY == 0))
+                                            {
+                                                int type = typeX / 54;
+
+                                                if (type == 17)
+                                                    tileType = TileProperties.SilverCache;
+                                            }
+                                        }
                                         else if ((tileType == TileProperties.Chest) && (chestTypeList != null))
 										{
 											// We need to be sure we're only capturing the upper left square.

@@ -104,6 +104,7 @@ namespace MoreTerra.Structures
         public static Int16 ExposedGems;
         public static Int16 SmallDetritus;
         public static Int16 LargeDetritus;
+        public static Int16 LargeDetritus2;
         public static Int16 CopperCache;
         public static Int16 SilverCache;
         public static Int16 GoldCache;
@@ -153,13 +154,26 @@ namespace MoreTerra.Structures
                     TileProperties.SmallDetritus = (Int16)kvp.Key;
                 else if (kvp.Value.name == "Large Detritus")
                     TileProperties.LargeDetritus = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Large Detritus2")
+                    TileProperties.LargeDetritus2 = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Copper Cache")
+                    TileProperties.CopperCache = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Silver Cache")
+                    TileProperties.SilverCache = (Int16)kvp.Key;
                 else if (kvp.Value.name == "Gold Cache")
                     TileProperties.GoldCache = (Int16)kvp.Key;
 
 				if (kvp.Value.markerName != "")
 				{
-					if (Enum.TryParse<MarkerType>(Global.Instance.Info.Markers[kvp.Value.markerName].markerImage, out mt) == false)
+                    MarkerInfo mi = Global.Instance.Info.GetMarkerByName(kvp.Value.markerName);
+
+                    if (mi == null)
 						mt = MarkerType.Unknown;
+                    else
+                    {
+                        if (Enum.TryParse<MarkerType>(mi.markerImage, out mt) == false)
+                            mt = MarkerType.Unknown;
+                    }
 				}
 				else
 				{

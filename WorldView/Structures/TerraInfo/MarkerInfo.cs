@@ -7,6 +7,5 @@ namespace MoreTerra.Structures.TerraInfo
 		public String name;
 		public String markerSet;
 		public String markerImage;
-		public Boolean notInList;
 	}
 }

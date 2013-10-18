@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MoreTerra.Structures
+﻿namespace MoreTerra.Structures
 {
 	public enum MarkerType
 	{
 		Unknown = -1, 
 		Altar = 0,
+        CopperCache,
         GoldCache,
 		Heart,
         HeartFruit,
-		Hellforge,
-        Picture = 5,
+		Hellforge = 5,
+        Picture,
         PlanteraBulb,
 		ShadowOrb,
         Sign,
+        SilverCache = 10,
         Statue,
-        Torch = 10,
-        Tombstone = 11,
+        Torch,
+        Tombstone = 13,
 
 		Amethyst = 20,
 		Diamond,

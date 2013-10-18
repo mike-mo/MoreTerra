@@ -109,12 +109,9 @@ namespace MoreTerra
 			// Initialize Marker States
 			us.MarkerStates = new Dictionary<String, MarkerSettings>();
 
-			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			foreach (KeyValuePair<Int32, MarkerInfo> kvp in Global.Instance.Info.Markers)
 			{
-				if ((kvp.Value.notInList == true) || (kvp.Value.markerSet == String.Empty))
-					continue;
-
-				us.MarkerStates.Add(kvp.Key, new MarkerSettings());
+                us.MarkerStates.Add(kvp.Value.name, new MarkerSettings());
 			}
 
 			// Initialize Item Filter

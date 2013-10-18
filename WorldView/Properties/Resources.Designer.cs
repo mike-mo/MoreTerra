@@ -151,6 +151,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CopperCache {
+            get {
+                object obj = ResourceManager.GetObject("CopperCache", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap CorruptionChest {
             get {
                 object obj = ResourceManager.GetObject("CorruptionChest", resourceCulture);
@@ -330,11 +337,11 @@ namespace MoreTerra.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;data&gt;
         ///  &lt;tiles&gt;
-        ///    &lt;tile name=&quot;Dirt&quot; tileImage=&quot;0&quot; autoGenType=&quot;Building Block&quot; color=&quot;#AF8365&quot; officialColor=&quot;#976B4B&quot; /&gt;
-        ///    &lt;tile name=&quot;Stone&quot; tileImage=&quot;1&quot; autoGenType=&quot;Ore Blend&quot; color=&quot;#808080&quot; officialColor=&quot;#808080&quot; /&gt;
-        ///    &lt;tile name=&quot;Grass&quot; tileImage=&quot;2&quot; autoGenType=&quot;Grass Blend&quot; color=&quot;#1CD85E&quot; officialColor=&quot;#1CD85E&quot; /&gt;
-        ///    &lt;tile name=&quot;Plants&quot; tileImage=&quot;3&quot; color=&quot;Plants&quot; officialColor=&quot;#1AC454&quot; /&gt;
-        ///    &lt;tile name=&quot;Torch&quot; tileImage=&quot;4&quot; color=&quot;Light  [rest of string was truncated]&quot;;.
+        ///    &lt;tile name=&quot;Dirt&quot; tileImage=&quot;0&quot; color=&quot;#AF8365&quot; officialColor=&quot;#976B4B&quot; /&gt;
+        ///    &lt;tile name=&quot;Stone&quot; tileImage=&quot;1&quot; color=&quot;#808080&quot; officialColor=&quot;#808080&quot; /&gt;
+        ///    &lt;tile name=&quot;Grass&quot; tileImage=&quot;2&quot; color=&quot;#1CD85E&quot; officialColor=&quot;#1CD85E&quot; /&gt;
+        ///    &lt;tile name=&quot;Plants&quot; tileImage=&quot;3&quot; important=&quot;true&quot; color=&quot;Plants&quot; officialColor=&quot;#1AC454&quot; /&gt;
+        ///    &lt;tile name=&quot;Torch&quot; tileImage=&quot;4&quot; important=&quot;true&quot; color=&quot;Light Source&quot; officialColor=&quot;#A97D5D&quot; marker=&quot;Torch [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {
@@ -622,6 +629,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SilverCache {
+            get {
+                object obj = ResourceManager.GetObject("SilverCache", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap SkywareChest {
             get {
                 object obj = ResourceManager.GetObject("SkywareChest", resourceCulture);
@@ -702,13 +716,6 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Tungsten {
             get {
                 object obj = ResourceManager.GetObject("Tungsten", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Unknown {
-            get {
-                object obj = ResourceManager.GetObject("Unknown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

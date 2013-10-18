@@ -112,10 +112,16 @@ namespace MoreTerra
 
 		private void LoadMarkers()
 		{
-			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			foreach (KeyValuePair<String, List<MarkerInfo>> kvp in Global.Instance.Info.MarkerSets)
 			{
-				Bitmap b = (Bitmap)Properties.Resources.ResourceManager.GetObject(kvp.Value.markerImage);
-				markerBitmaps.Add(kvp.Value.markerImage, b);
+                Bitmap b = (Bitmap)Properties.Resources.ResourceManager.GetObject(kvp.Key);
+                markerBitmaps.Add(kvp.Key, b);
+
+                foreach (MarkerInfo mi in kvp.Value)
+                {
+                    b = (Bitmap)Properties.Resources.ResourceManager.GetObject(mi.markerImage);
+                    markerBitmaps.Add(mi.markerImage, b);
+                }
 			}
 		}
 

@@ -239,7 +239,6 @@
     <None Include="Resources\objects_statue.png" />
     <None Include="Resources\objects_tombstone.png" />
     <None Include="Resources\objects_torch.png" />
-    <None Include="Resources\objects_unknown.png" />
     <None Include="Resources\SmallCannon.ico" />
     <None Include="Resources\people_mech.png" />
     <None Include="Resources\people_tinker.png" />
@@ -311,6 +310,8 @@
     <None Include="Resources\objects_goldcache.png" />
     <None Include="Resources\objects_heartfruit.png" />
     <None Include="Resources\objects_planterabulb.png" />
+    <None Include="Resources\objects_silvercache.png" />
+    <None Include="Resources\objects_coppercache.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />

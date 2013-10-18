@@ -280,6 +280,8 @@
 
     <!-- Tiles after this are a hack and not meant to be kept past testing -->
     <tile name="Gold Cache" tileImage="251" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
+    <tile name="Silver Cache" tileImage="252" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
+    <tile name="Copper Cache" tileImage="253" color="Unknown" officialColor="#964316" marker="Copper Cache" />
   </tiles>
   <walls>
     <wall name="Stone Wall" wallImage="1" color="#424242" officialColor="#343434" />
@@ -2262,104 +2264,105 @@
     <color name="Wall Dungeon Green" red="14" green="68" blue="16" />
   </colors>
   <markers>
-    <marker name="Objects" />
-    <marker name="Altar" partOfSet="Objects" />
-    <marker name="Gold Cache" markerImage="GoldCache" partOfSet="Objects" />
-    <marker name="Heart" partOfSet="Objects" />
-    <marker name="Heart Fruit" markerImage="HeartFruit" partOfSet="Objects" />
-    <marker name="Hellforge" partOfSet="Objects" />
-    <marker name="Picture" partOfSet="Objects" />
-    <marker name="Plantera Bulb" markerImage="PlanteraBulb" partOfSet="Objects" />
-    <marker name="Shadow Orb" markerImage="ShadowOrb" partOfSet="Objects" />
-    <marker name="Sign" partOfSet="Objects" />
-    <marker name="Statue" partOfSet="Objects" />
-    <marker name="Torch" partOfSet="Objects" />
-    <marker name="Tombstone" partOfSet="Objects" />
-
-    <marker name="Containers" />
-    <marker name="Chest" partOfSet="Containers" />
-    <marker name="Gold Chest" markerImage="GoldChest" partOfSet="Containers" />
-    <marker name="Locked Gold Chest" markerImage="LockedGoldChest" partOfSet="Containers" />
-    <marker name="Shadow Chest" markerImage="ShadowChest" partOfSet="Containers" />
-    <marker name="Locked Shadow Chest" markerImage="LockedShadowChest" partOfSet="Containers" />
-    <marker name="Barrel" partOfSet="Containers" />
-    <marker name="Trash Can" markerImage="TrashCan" partOfSet="Containers" />
-    <marker name="Ebonwood Chest" markerImage="EbonwoodChest" partOfSet="Containers" />
-    <marker name="Rich Mahogany Chest" markerImage="RichMahoganyChest" partOfSet="Containers" />
-    <marker name="Pearlwood Chest" markerImage="PearlwoodChest" partOfSet="Containers" />
-    <marker name="Ivy Chest" markerImage="IvyChest" partOfSet="Containers" />
-    <marker name="Ice Chest" markerImage="IceChest" partOfSet="Containers" />
-    <marker name="Living Wood Chest" markerImage="LivingWoodChest" partOfSet="Containers" />
-    <marker name="Skyware Chest" markerImage="SkywareChest" partOfSet="Containers" />
-    <marker name="Shadewood Chest" markerImage="ShadewoodChest" partOfSet="Containers" />
-    <marker name="Web Covered Chest" markerImage="WebCoveredChest" partOfSet="Containers" />
-    <marker name="Lihzahrd Chest" markerImage="LihzahrdChest" partOfSet="Containers" />
-    <marker name="Water Chest" markerImage="WaterChest" partOfSet="Containers" />
-    <marker name="Jungle Chest" markerImage="JungleChest" partOfSet="Containers" />
-    <marker name="Corruption Chest" markerImage="CorruptionChest" partOfSet="Containers" />
-    <marker name="Crimson Chest" markerImage="CrimsonChest" partOfSet="Containers" />
-    <marker name="Hallowed Chest" markerImage="HallowedChest" partOfSet="Containers" />
-    <marker name="Frozen Chest" markerImage="FrozenChest" partOfSet="Containers" />
-    <marker name="Locked Jungle Chest" markerImage="LockedJungleChest" partOfSet="Containers" />
-    <marker name="Locked Corruption Chest" markerImage="LockedCorruptionChest" partOfSet="Containers" />
-    <marker name="Locked Crimson Chest" markerImage="LockedCrimsonChest" partOfSet="Containers" />
-    <marker name="Locked Hallowed Chest" markerImage="LockedHallowedChest" partOfSet="Containers" />
-    <marker name="Locked Frozen Chest" markerImage="LockedFrozenChest" partOfSet="Containers" />
-
-    <marker name="Gems" />
-    <marker name="Amethyst" partOfSet="Gems" />
-    <marker name="Diamond" partOfSet="Gems" />
-    <marker name="Emerald" partOfSet="Gems" />
-    <marker name="Ruby" partOfSet="Gems" />
-    <marker name="Sapphire" partOfSet="Gems" />
-    <marker name="Topaz" partOfSet="Gems" />
-    
-    <marker name="Ores" />
-    <marker name="Copper" partOfSet="Ores" />
-    <marker name="Iron" partOfSet="Ores" />
-    <marker name="Silver" partOfSet="Ores" />
-    <marker name="Gold" partOfSet="Ores" />
-    <marker name="Demonite" partOfSet="Ores" />
-    <marker name="Obsidian" partOfSet="Ores" />
-    <marker name="Meteorite" partOfSet="Ores" />
-    <marker name="Hellstone" partOfSet="Ores" />
-    <marker name="Cobalt" partOfSet="Ores" />
-    <marker name="Mythril" partOfSet="Ores" />
-    <marker name="Adamantite" partOfSet="Ores" />
-    <marker name="Tin" partOfSet="Ores" />
-    <marker name="Lead" partOfSet="Ores" />
-    <marker name="Tungsten" partOfSet="Ores" />
-    <marker name="Platinum" partOfSet="Ores" />
-    <marker name="Crimtane" partOfSet="Ores" />
-    <marker name="Chlorophyte" partOfSet="Ores" />
-    <marker name="Palladium" partOfSet="Ores" />
-    <marker name="Orichalcum" partOfSet="Ores" />
-    <marker name="Titanium" partOfSet="Ores" />
-
-    <marker name="People" />
-    <marker name="Arms Dealer" markerImage="ArmsDealer" partOfSet="People" />
-    <marker name="Clothier" partOfSet="People" />
-    <marker name="Cyborg" partOfSet="People" />
-    <marker name="Demolitionist" partOfSet="People" />
-    <marker name="Dryad" partOfSet="People" />
-    <marker name="Dye Trader" markerImage="DyeTrader" partOfSet="People" />
-    <marker name="Goblin Tinkerer" markerImage="GoblinTinkerer" partOfSet="People" />
-    <marker name="Guide" partOfSet="People" />
-    <marker name="Mechanic" partOfSet="People" />
-    <marker name="Merchant" partOfSet="People" />
-    <marker name="Nurse" partOfSet="People" />
-    <marker name="Old Man" markerImage="OldMan" partOfSet="People" />
-    <marker name="Painter" partOfSet="People" />
-    <marker name="Party Girl" markerImage="PartyGirl" partOfSet="People" />
-    <marker name="Pirate" partOfSet="People" />
-    <marker name="Santa Claus" markerImage="SantaClaus" partOfSet="People" />
-    <marker name="Spawn" partOfSet="People" />
-    <marker name="Steampunker" partOfSet="People" />
-    <marker name="Truffle" partOfSet="People" />
-    <marker name="Witch Doctor" markerImage="WitchDoctor" partOfSet="People" />
-    <marker name="Wizard" partOfSet="People" />
-
-    <marker name="Unknown" notInList="true" />
+    <markerset name="Objects">
+      <marker name="Altar" />
+      <marker name="Copper Cache" />
+      <marker name="Gold Cache" />
+      <marker name="Heart" />
+      <marker name="Heart Fruit" />
+      <marker name="Hellforge" />
+      <marker name="Picture" />
+      <marker name="Plantera Bulb" />
+      <marker name="Shadow Orb" />
+      <marker name="Sign" />
+      <marker name="Silver Cache" />
+      <marker name="Statue" />
+      <marker name="Torch" />
+      <marker name="Tombstone" />
+    </markerset>
+    <markerset name="Containers">
+      <marker name="Chest" />
+      <marker name="Gold Chest" />
+      <marker name="Locked Gold Chest" />
+      <marker name="Shadow Chest" />
+      <marker name="Locked Shadow Chest" />
+      <marker name="Barrel" />
+      <marker name="Trash Can" />
+      <marker name="Ebonwood Chest" />
+      <marker name="Rich Mahogany Chest" />
+      <marker name="Pearlwood Chest" />
+      <marker name="Ivy Chest" />
+      <marker name="Ice Chest" />
+      <marker name="Living Wood Chest" />
+      <marker name="Skyware Chest" />
+      <marker name="Shadewood Chest" />
+      <marker name="Web Covered Chest" />
+      <marker name="Lihzahrd Chest" />
+      <marker name="Water Chest" />
+      <marker name="Jungle Chest" />
+      <marker name="Corruption Chest" />
+      <marker name="Crimson Chest" />
+      <marker name="Hallowed Chest" />
+      <marker name="Frozen Chest" />
+      <marker name="Locked Jungle Chest" />
+      <marker name="Locked Corruption Chest" />
+      <marker name="Locked Crimson Chest" />
+      <marker name="Locked Hallowed Chest" />
+      <marker name="Locked Frozen Chest" />
+    </markerset>
+    <markerset name="Gems">
+      <marker name="Amethyst" />
+      <marker name="Diamond" />
+      <marker name="Emerald" />
+      <marker name="Ruby" />
+      <marker name="Sapphire" />
+      <marker name="Topaz" />
+    </markerset>
+    <markerset name="Ores">
+      <marker name="Copper" />
+      <marker name="Iron" />
+      <marker name="Silver" />
+      <marker name="Gold" />
+      <marker name="Demonite" />
+      <marker name="Obsidian" />
+      <marker name="Meteorite" />
+      <marker name="Hellstone" />
+      <marker name="Cobalt" />
+      <marker name="Mythril" />
+      <marker name="Adamantite" />
+      <marker name="Tin" />
+      <marker name="Lead" />
+      <marker name="Tungsten" />
+      <marker name="Platinum" />
+      <marker name="Crimtane" />
+      <marker name="Chlorophyte" />
+      <marker name="Palladium" />
+      <marker name="Orichalcum" />
+      <marker name="Titanium" />
+    </markerset>
+    <markerset name="People">
+      <marker name="Arms Dealer" />
+      <marker name="Clothier" />
+      <marker name="Cyborg" />
+      <marker name="Demolitionist" />
+      <marker name="Dryad" />
+      <marker name="Dye Trader" />
+      <marker name="Goblin Tinkerer" />
+      <marker name="Guide" />
+      <marker name="Mechanic" />
+      <marker name="Merchant" />
+      <marker name="Nurse" />
+      <marker name="Old Man" />
+      <marker name="Painter" />
+      <marker name="Party Girl" />
+      <marker name="Pirate" />
+      <marker name="Santa Claus" />
+      <marker name="Spawn" />
+      <marker name="Steampunker" />
+      <marker name="Truffle" />
+      <marker name="Witch Doctor" />
+      <marker name="Wizard" />
+    </markerset>
   </markers>
   <specialobjects>
     <object name="Water" type="Liquid" color="#000CFF" officialColor="#093DBF" />

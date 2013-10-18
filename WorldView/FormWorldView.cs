@@ -956,15 +956,21 @@ namespace MoreTerra
 			bmp = new Bitmap(16, 16);
 			chestImageList.Images.Add(bmp);
 
-			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			foreach (KeyValuePair<String, List<MarkerInfo>> kvp in Global.Instance.Info.MarkerSets)
 			{
-				bmp = ResourceManager.Instance.GetMarker(kvp.Value.markerImage);
+                bmp = ResourceManager.Instance.GetMarker(kvp.Key);
+                markerImageList.Images.Add(bmp);
+
+                foreach (MarkerInfo mi in kvp.Value)
+                {
+                    bmp = ResourceManager.Instance.GetMarker(mi.markerImage);
 
 				markerImageList.Images.Add(bmp);
 
-				if (kvp.Value.markerSet == "Containers")
+                    if (kvp.Key == "Containers")
 					chestImageList.Images.Add(bmp);
 			}
+		}
 		}
 
 		private void SetupMarkerListBox()
@@ -998,22 +1004,23 @@ namespace MoreTerra
 
 			Dictionary<String, TreeNode> parentNodes = new Dictionary<String, TreeNode>();
 
-			foreach (KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			foreach (KeyValuePair<String, List<MarkerInfo>> kvp in Global.Instance.Info.MarkerSets)
 			{
-				if (kvp.Value.notInList == true)
-					continue;
-
 				node = new TreeNode(kvp.Key);
 				node.ImageIndex = index;
 				node.SelectedImageIndex = index;
 
-				if (kvp.Value.markerSet == String.Empty)
 					parentNodes.Add(kvp.Key, node);
-				else
-				{
-					markerNodes.Add(kvp.Key, node);
 
-					if (markerStates[kvp.Key].Drawing)
+                foreach (MarkerInfo mi in kvp.Value)
+				{
+                    index++;
+                    node = new TreeNode(mi.name);
+                    node.ImageIndex = index;
+                    node.SelectedImageIndex = index;
+                    markerNodes.Add(mi.name, node);
+
+					if (markerStates[mi.name].Drawing)
 					{
 						node.Checked = true;
 						node.StateImageIndex = (Int32)CheckState.Checked;
@@ -1030,12 +1037,9 @@ namespace MoreTerra
 
 			// We parse the list again, this time to set the parent/child heirarchy up.
 			// This makes it so that we do not have to have them in the exact order in the XML file.
-			foreach(KeyValuePair<String, MarkerInfo> kvp in Global.Instance.Info.Markers)
+			foreach(KeyValuePair<Int32, MarkerInfo> kvp in Global.Instance.Info.Markers)
 			{
-				if (kvp.Value.markerSet == String.Empty)
-					continue;
-
-				parentNodes[kvp.Value.markerSet].Nodes.Add(markerNodes[kvp.Key]);
+				parentNodes[kvp.Value.markerSet].Nodes.Add(markerNodes[kvp.Value.name]);
 			}
 
 			// Now that it is set up so all child nodes are in the right spot we add them to the

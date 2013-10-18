@@ -16,7 +16,6 @@
         private List<Chest> chests;
         private Dictionary<MarkerType, List<MarkerLoc>> tileMarkersToAdd;
         private Int16[,] tiles;
-		private List<String> alreadyDenied;
 
 		private World world;
 
@@ -27,7 +26,6 @@
         public WorldMapper()
         {
             chests = new List<Chest>();
-			alreadyDenied = new List<String>();
         }
 
         public void Initialize()
@@ -521,7 +519,6 @@
 		{
 			// We will set everything to null, except for Chests as we still use them
 			// to do our Chest list sorting.
-			this.alreadyDenied = null;
 			this.tileMarkersToAdd = null;
 			this.tiles = null;
 			this.world = null;

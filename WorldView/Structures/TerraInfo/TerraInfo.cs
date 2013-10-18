@@ -10,7 +10,8 @@ namespace MoreTerra.Structures.TerraInfo
 {
 	public class TerraInfo
 	{
-		private Dictionary<String, MarkerInfo> markers;
+        private Dictionary<Int32, MarkerInfo> markers;
+        private Dictionary<String, List<MarkerInfo>> markerSets;
 		private Dictionary<Int32, TileInfo> tiles;
 		private Dictionary<Int32, WallInfo> walls;
 		private Dictionary<String, ItemInfo> items;
@@ -24,7 +25,8 @@ namespace MoreTerra.Structures.TerraInfo
 
 		public TerraInfo()
 		{
-			markers = new Dictionary<String, MarkerInfo>();
+            markers = new Dictionary<Int32, MarkerInfo>();
+			markerSets = new Dictionary<String, List<MarkerInfo>>();
 			items = new Dictionary<String, ItemInfo>();
 			itemNames = new Dictionary<Int32, String>();
 			renames = new Dictionary<String, RenameInfo>();
@@ -56,7 +58,7 @@ namespace MoreTerra.Structures.TerraInfo
 
             XmlNode dataNode = xmlDoc.DocumentElement;
 
-            LoadMarkers(dataNode.SelectSingleNode("markers").SelectNodes("marker"));
+            LoadMarkers(dataNode.SelectSingleNode("markers"));
 
             LoadRenames(dataNode.SelectSingleNode("namechanges").SelectNodes("item"));
             LoadNpcs(dataNode.SelectSingleNode("npcs").SelectNodes("npc"));
@@ -99,91 +101,111 @@ namespace MoreTerra.Structures.TerraInfo
 
 
 #region Load Functions
-        private void LoadMarkers(XmlNodeList markerNodes)
+        private void LoadMarkers(XmlNode markerNodes)
 		{
-			Int32 count = -1;
+			Int32 setCount = -1;
+            Int32 markerCount = -1;
 
-			if ((markerNodes == null) || (markerNodes.Count == 0))
+            if ((markerNodes == null) || (markerNodes.ChildNodes.Count == 0))
 			{
 				errorLog.AppendLine("There are no Marker items to load.");
 				return;
 			}
 
-			foreach (XmlNode markerNode in markerNodes)
+            XmlNodeList markerSetNodes = markerNodes.SelectNodes("markerset");
+
+			foreach (XmlNode setNode in markerSetNodes)
 			{
-				String name = String.Empty;
-				String inSet = String.Empty;
-				String markerImage = String.Empty;
-				Boolean notInList = false;
+                String setName = String.Empty;
+                List<MarkerInfo> curSet;
 
-				count++;
-
-				foreach (XmlAttribute att in markerNode.Attributes)
+                foreach (XmlAttribute att in setNode.Attributes)
 				{
-
 					switch (att.Name)
 					{
 						case "name":
-							name = att.Value;
+                            setName = att.Value;
 							break;
-						case "partOfSet":
-							inSet = att.Value;
+                        default:
+                            errorLog.AppendLine(String.Format("Marker Set #{0} has unknown attribute \"{1}\" has value \"{2}\"",
+                                setCount, att.Name, att.Value));
 							break;
-						case "markerImage":
-							markerImage = att.Value;
-							break;
-						case "notInList":
-							if (Boolean.TryParse(att.Value, out notInList) == false)
+                    }
+
+                    if (setName == String.Empty)
+                    {
+                        errorLog.AppendLine(String.Format("Marker Set #{0} has an empty name attribute.", setCount));
+                        continue;
+                    }
+
+                    if (markerSets.ContainsKey(setName))
 							{
-								errorLog.AppendLine(String.Format("Marker #{0} has an invalid notInList attribute.  Value=\"{1}\"",
-									count, att.Value));
+                        errorLog.AppendLine(String.Format("Marker Set #{0} has a duplicate name. Value=\"{1}\"",
+                            setCount, setName));
 								continue;
 							}
+                    else
+                    {
+                        curSet = new List<MarkerInfo>();
+                        markerSets.Add(setName, curSet);
+                    }
+
+                    XmlNodeList markerNodeList = setNode.SelectNodes("marker");
+
+                    foreach (XmlNode markerNode in markerNodeList)
+                    {
+
+                        String name = String.Empty;
+                        String markerImage = String.Empty;
+
+                        markerCount++;
+
+                        foreach (XmlAttribute markerAtt in markerNode.Attributes)
+                        {
+
+                            switch (markerAtt.Name)
+                            {
+                                case "name":
+                                    name = markerAtt.Value;
 							break;
 						default:
 							errorLog.AppendLine(String.Format("Marker #{0} has unknown attribute \"{1}\" has value \"{2}\"",
-								count, att.Name, att.Value));
+                                        markerCount, markerAtt.Name, markerAtt.Value));
 							break;
 					}
 				}
 
 				if (name == String.Empty)
 				{
-					errorLog.AppendLine(String.Format("Marker #{0} had no name attribute.", count));
+                            errorLog.AppendLine(String.Format("Marker #{0} had no name attribute.", markerCount));
 					continue;
 				}
 
-				if (inSet != String.Empty)
+                        if (name.IndexOf(" ") != -1)
 				{
-					if (!markers.ContainsKey(inSet))
+                            String[] imageSegments = name.Split(' ');
+
+                            markerImage = "";
+                            foreach (String str in imageSegments)
 					{
-						errorLog.AppendLine(String.Format("Marker #{0} is in a set that does not exist. Value=\"{1}\"",
-							count, inSet));
-						continue;
+                                markerImage += str;
 					}
 				}
-
-				if (markerImage == String.Empty)
+                        else
+                        {
 					markerImage = name;
-
-				if (markers.ContainsKey(name))
-				{
-					errorLog.AppendLine(String.Format("Marker #{0} is a duplicate of {1}.",
-						count, name));
-					continue;
 				}
-
-
 
 				MarkerInfo marker = new MarkerInfo();
 				marker.name = name;
-				marker.markerSet = inSet;
+                        marker.markerSet = setName;
 				marker.markerImage = markerImage;
-				marker.notInList = notInList;
 
-				markers.Add(name, marker);
+                        curSet.Add(marker);
+                        markers.Add(markerCount, marker);
+                    }
+                }
 			}
-
 
 		}
 
@@ -1166,33 +1188,16 @@ namespace MoreTerra.Structures.TerraInfo
 
         private void SaveMarkers(StreamWriter writer)
         {
-            String markerXML;
-            bool skipNewline = true;
-
             writer.WriteLine("  <markers>");
-            foreach (KeyValuePair<String, MarkerInfo> kvp in markers)
+            foreach (KeyValuePair<String, List<MarkerInfo>> kvp in markerSets)
             {
-                if (String.IsNullOrEmpty(kvp.Value.markerSet))
+                writer.WriteLine("    <markerset name=\"{0}\">", kvp.Key);
+
+                foreach (MarkerInfo mi in kvp.Value)
                 {
-                    if (skipNewline == true)
-                        skipNewline = false;
-                    else
-                        writer.WriteLine();
+                    writer.WriteLine(String.Format("      <marker name=\"{0}\"  />", mi.name));
                 }
-
-                markerXML = String.Format("    <marker name=\"{0}\" ", kvp.Value.name);
-
-                if (kvp.Value.markerImage != kvp.Value.name)
-                    markerXML = markerXML + String.Format("markerImage=\"{0}\" ", kvp.Value.markerImage);
-
-                if (!String.IsNullOrEmpty(kvp.Value.markerSet))
-                    markerXML = markerXML + String.Format("partOfSet=\"{0}\" ", kvp.Value.markerSet);
-
-                if (kvp.Value.notInList == true)
-                    markerXML = markerXML + String.Format("notInList=\"true\" ", kvp.Value.notInList);
-
-                markerXML = markerXML + "/>";
-                writer.WriteLine(markerXML);
+                writer.WriteLine("    </markerset>");
             }
             writer.WriteLine("  </markers>");
         }
@@ -1287,7 +1292,15 @@ namespace MoreTerra.Structures.TerraInfo
 			}
 		}
 
-		public Dictionary<String, MarkerInfo> Markers
+        public Dictionary<String, List<MarkerInfo>> MarkerSets
+        {
+            get
+            {
+                return markerSets;
+            }
+        }
+
+		public Dictionary<Int32, MarkerInfo> Markers
 		{
 			get
 			{
@@ -1313,14 +1326,23 @@ namespace MoreTerra.Structures.TerraInfo
 
 		public String MarkerImageToName(String findName)
 		{
-			foreach (KeyValuePair<String, MarkerInfo> kvp in markers)
+			foreach (KeyValuePair<Int32, MarkerInfo> kvp in markers)
 			{
 				if (kvp.Value.markerImage == findName)
-					return kvp.Key;
+					return kvp.Value.name;
 			}
 
 			return String.Empty;
 		}
+
+        public MarkerInfo GetMarkerByName(String markerName)
+        {
+            foreach (KeyValuePair<Int32, MarkerInfo> kvp in markers)
+                if (kvp.Value.name == markerName)
+                    return kvp.Value;
+
+            return null;
+        }
 
 		public String GetItemName(Int32 netId)
 		{
