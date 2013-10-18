@@ -1081,7 +1081,7 @@ namespace MoreTerra.Structures
                                                 int type = typeX / 54;
 
                                                 if (type == 17)
-                                                    tileType = TileProperties.SilverCache;
+                                                    tileType = TileProperties.EnchantedSword;
                                             }
                                         }
                                         else if ((tileType == TileProperties.Chest) && (chestTypeList != null))

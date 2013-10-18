@@ -1,10 +1,15 @@
-Release 1.NEXT
+Release 1.11.3.1
+================
+= New Features =
+================
+Added markers for Copper Cache, Silver Cache and the Enchanted Sword.
+
 =============
 = Bug Fixes =
 =============
 Use Official Colors now no longer tries to change the Draw Wires option instead.
 
-World reading was breaking for people with a stick 1.2 Terraria version.
+World reading was breaking for people with a stock 1.2 Terraria version.
 
 Changed world name reading so it does not crash the program if you load MoreTerra while Terraria is saving the world.
 

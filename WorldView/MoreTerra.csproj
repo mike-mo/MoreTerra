@@ -312,6 +312,7 @@
     <None Include="Resources\objects_planterabulb.png" />
     <None Include="Resources\objects_silvercache.png" />
     <None Include="Resources\objects_coppercache.png" />
+    <None Include="Resources\objects_enchantedsword.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />

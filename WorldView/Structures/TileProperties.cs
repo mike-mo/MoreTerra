@@ -108,6 +108,7 @@ namespace MoreTerra.Structures
         public static Int16 CopperCache;
         public static Int16 SilverCache;
         public static Int16 GoldCache;
+        public static Int16 EnchantedSword;
         public static Int16 Unknown;
 		public static Int16 Processed;
 		public static Int16 Cropped;
@@ -162,6 +163,8 @@ namespace MoreTerra.Structures
                     TileProperties.SilverCache = (Int16)kvp.Key;
                 else if (kvp.Value.name == "Gold Cache")
                     TileProperties.GoldCache = (Int16)kvp.Key;
+                else if (kvp.Value.name == "Enchanted Sword")
+                    TileProperties.EnchantedSword = (Int16)kvp.Key;
 
 				if (kvp.Value.markerName != "")
 				{

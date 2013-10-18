@@ -282,6 +282,7 @@
     <tile name="Gold Cache" tileImage="251" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
     <tile name="Silver Cache" tileImage="252" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
     <tile name="Copper Cache" tileImage="253" color="Unknown" officialColor="#964316" marker="Copper Cache" />
+    <tile name="Enchanted Sword" tileImage="254" color="Unknown" officialColor="#7998EF" marker="Enchanted Sword" />
   </tiles>
   <walls>
     <wall name="Stone Wall" wallImage="1" color="#424242" officialColor="#343434" />
@@ -403,7 +404,7 @@
     <wall name="Metal Fence" wallImage="107" color="Unknown" officialColor="#FF00FF" />
     <wall name="Hive Wall" wallImage="108" color="Unknown" officialColor="#8A4926" />
     <wall name="Palladium Column Wall" wallImage="109" color="Unknown" officialColor="#FF00FF" />
-    
+
     <wall name="Bubblegum Block Wall" wallImage="110" color="Unknown" officialColor="#FF00FF" />
     <wall name="Titanstone Block Wall" wallImage="111" color="Unknown" officialColor="#FF00FF" />
     <wall name="Lihzahrd Brick Wall" wallImage="112" color="Unknown" officialColor="#320F08" />
@@ -2267,6 +2268,7 @@
     <markerset name="Objects">
       <marker name="Altar" />
       <marker name="Copper Cache" />
+      <marker name="Enchanted Sword" />
       <marker name="Gold Cache" />
       <marker name="Heart" />
       <marker name="Heart Fruit" />

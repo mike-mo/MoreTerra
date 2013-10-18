@@ -235,6 +235,13 @@ namespace MoreTerra.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap EnchantedSword {
+            get {
+                object obj = ResourceManager.GetObject("EnchantedSword", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap FrozenChest {
             get {
                 object obj = ResourceManager.GetObject("FrozenChest", resourceCulture);
