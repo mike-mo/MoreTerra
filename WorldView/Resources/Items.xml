@@ -273,16 +273,20 @@
     <tile name="Picture (2x3)" tileImage="245" important="true" color="Unknown" officialColor="#63321E" marker="Picture" />
     <tile name="Picture (3x2)" tileImage="246" important="true" color="Unknown" officialColor="#63321E" marker="Picture" />
     <tile name="Autohammer" tileImage="247" important="true" color="Unknown" officialColor="#8C9696" />
-    <tile name="Palladium Column" tileImage="248" color="Unknown" officialColor="#FF00FF" />
-    <tile name="Bubblegum Block" tileImage="249" color="Unknown" officialColor="#FF00FF" />
-    
-    <tile name="Titanstone" tileImage="250" color="Unknown" officialColor="#FF00FF" />
+    <tile name="Palladium Column" tileImage="248" color="Unknown" officialColor="#DB4726" />
+    <tile name="Bubblegum Block" tileImage="249" color="Unknown" officialColor="#EB26E7" />
+
+    <tile name="Titanstone" tileImage="250" color="Unknown" officialColor="#56555C" />
+    <tile name="Pumpkin" tileImage="251" color="Unknown" officialColor="#EB9617" />
+    <tile name="Hay" tileImage="252" color="Unknown" officialColor="#99832C" />
+    <tile name="Spooky Wood" tileImage="253" color="Unknown" officialColor="#393061" />
+    <tile name="Pumpkins" tileImage="254" important="true" color="Unknown" officialColor="#F89E5C" />
 
     <!-- Tiles after this are a hack and not meant to be kept past testing -->
-    <tile name="Gold Cache" tileImage="251" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
-    <tile name="Silver Cache" tileImage="252" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
-    <tile name="Copper Cache" tileImage="253" color="Unknown" officialColor="#964316" marker="Copper Cache" />
-    <tile name="Enchanted Sword" tileImage="254" color="Unknown" officialColor="#7998EF" marker="Enchanted Sword" />
+    <tile name="Gold Cache" tileImage="255" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
+    <tile name="Silver Cache" tileImage="256" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
+    <tile name="Copper Cache" tileImage="257" color="Unknown" officialColor="#964316" marker="Copper Cache" />
+    <tile name="Enchanted Sword" tileImage="258" color="Unknown" officialColor="#7998EF" marker="Enchanted Sword" />
   </tiles>
   <walls>
     <wall name="Stone Wall" wallImage="1" color="#424242" officialColor="#343434" />
@@ -349,7 +353,7 @@
     <wall name="Unique Cave Wall 4 (unsafe)" wallImage="57" color="Unknown" officialColor="#1F2831" />
     <wall name="Unique Cave Wall 5 (unsafe)" wallImage="58" color="Unknown" officialColor="#302334" />
     <wall name="Cave Wall (unsafe)" wallImage="59" color="Unknown" officialColor="#583D2E" />
-    
+
     <wall name="Leaves Wall (unsafe)" wallImage="60" color="Unknown" officialColor="#013414" />
     <wall name="Unique Cave Wall 6 (unsafe)" wallImage="61" color="Unknown" officialColor="#37271A" />
     <wall name="Spider Wall (unsafe)" wallImage="62" color="Unknown" officialColor="#27211A" />
@@ -360,7 +364,7 @@
     <wall name="Jungle Wall" wallImage="67" color="Unknown" officialColor="#35501E" />
     <wall name="Flower Wall" wallImage="68" color="Unknown" officialColor="#1E5030" />
     <wall name="Corrupt Grass Wall (unsafe)" wallImage="69" color="Unknown" officialColor="#2B2A44" />
-    
+
     <wall name="Hallowed Grass Wall (unsafe)" wallImage="70" color="Unknown" officialColor="#1E4650" />
     <wall name="Ice Wall (unsafe)" wallImage="71" color="Unknown" officialColor="#4E6987" />
     <wall name="Cactus Wall" wallImage="72" color="Unknown" officialColor="#34540C" />
@@ -371,7 +375,7 @@
     <wall name="Flesh Block Wall" wallImage="77" color="Unknown" officialColor="#3D0D10" />
     <wall name="Living Wood Wall" wallImage="78" color="Unknown" officialColor="#3F271A" />
     <wall name="Obsidian Back Wall (unsafe)" wallImage="79" color="Unknown" officialColor="#332F60" />
-    
+
     <wall name="Mushroom Wall (unsafe)" wallImage="80" color="Unknown" officialColor="#403E50" />
     <wall name="Crimgrass Wall (unsafe)" wallImage="81" color="Unknown" officialColor="#653333" />
     <wall name="Disc Wall" wallImage="82" color="Unknown" officialColor="#4D4022" />
@@ -379,10 +383,10 @@
     <wall name="Ice Brick Wall" wallImage="84" color="Unknown" officialColor="#304E5D" />
     <wall name="Shadewood Wall" wallImage="85" color="Unknown" officialColor="#363F45" />
     <wall name="Hive Wall (unsafe)" wallImage="86" color="Unknown" officialColor="#8A4926" />
-    <wall name="Lihzahrd Brick Wall (unsafe)" wallImage="87" color="Unknown" officialColor="#320F08" />
+    <wall name="Lihzahrd Brick Wall (unsafe)" wallImage="87" color="Unknown" officialColor="#141311" />
     <wall name="Purple Stained Glass" wallImage="88" color="Unknown" officialColor="#FF00FF" />
     <wall name="Yellow Stained Glass" wallImage="89" color="Unknown" officialColor="#FF00FF" />
-    
+
     <wall name="Blue Stained Glass" wallImage="90" color="Unknown" officialColor="#FF00FF" />
     <wall name="Green Stained Glass" wallImage="91" color="Unknown" officialColor="#FF00FF" />
     <wall name="Red Stained Glass" wallImage="92" color="Unknown" officialColor="#FF00FF" />
@@ -393,7 +397,7 @@
     <wall name="Pink Tiled Wall (unsafe)" wallImage="97" color="Unknown" officialColor="#4E3245" />
     <wall name="Green Slab Wall (unsafe)" wallImage="98" color="Unknown" officialColor="#242D2C" />
     <wall name="Green Tiled Wall (unsafe)" wallImage="99" color="Unknown" officialColor="#263132" />
-    
+
     <wall name="Blue Slab Wall" wallImage="100" color="Unknown" officialColor="#20282D" />
     <wall name="Blue Tiled Wall" wallImage="101" color="Unknown" officialColor="#2C2932" />
     <wall name="Pink Slab Wall" wallImage="102" color="Unknown" officialColor="#48324D" />
@@ -403,11 +407,14 @@
     <wall name="Wooden Fence" wallImage="106" color="Unknown" officialColor="#FF00FF" />
     <wall name="Metal Fence" wallImage="107" color="Unknown" officialColor="#FF00FF" />
     <wall name="Hive Wall" wallImage="108" color="Unknown" officialColor="#8A4926" />
-    <wall name="Palladium Column Wall" wallImage="109" color="Unknown" officialColor="#FF00FF" />
+    <wall name="Palladium Column Wall" wallImage="109" color="Unknown" officialColor="#5E1911" />
 
-    <wall name="Bubblegum Block Wall" wallImage="110" color="Unknown" officialColor="#FF00FF" />
-    <wall name="Titanstone Block Wall" wallImage="111" color="Unknown" officialColor="#FF00FF" />
-    <wall name="Lihzahrd Brick Wall" wallImage="112" color="Unknown" officialColor="#320F08" />
+    <wall name="Bubblegum Block Wall" wallImage="110" color="Unknown" officialColor="#7D247A" />
+    <wall name="Titanstone Block Wall" wallImage="111" color="Unknown" officialColor="#33231B" />
+    <wall name="Lihzahrd Brick Wall" wallImage="112" color="Unknown" officialColor="#141311" />
+    <wall name="Pumpkin Wall" wallImage="113" color="Unknown" officialColor="#873A00" />
+    <wall name="Hay Wall" wallImage="114" color="Unknown" officialColor="#41340F" />
+    <wall name="Spooky Wood Wall" wallImage="115" color="Unknown" officialColor="#272A33" />
   </walls>
   <items>
     <item name="1 Second Timer" itemImage="583" />
@@ -496,6 +503,8 @@
     <item name="Bar Stool" itemImage="1706" />
     <item name="Barrel" itemImage="343" />
     <item name="Bat Banner" itemImage="1621" />
+    <item name="Bat Hook" itemImage="1800" netId="0" />
+    <item name="Bat Scepter" itemImage="1801" netId="0" />
     <item name="Bat Statue" itemImage="443" />
     <item name="Bat Wings" itemImage="1165" />
     <item name="Bathtub" itemImage="336" />
@@ -518,14 +527,17 @@
     <item name="Binoculars" itemImage="1299" />
     <item name="Bird Banner" itemImage="1622" />
     <item name="Bird Statue" itemImage="464" />
+    <item name="Bitter Harvest" itemImage="1847" netId="0" />
     <item name="Black Belt" itemImage="963" />
     <item name="Black Dye" itemImage="1050" />
+    <item name="Black Fairy Dust" itemImage="1811" netId="0" />
     <item name="Black Ink" itemImage="1119" />
     <item name="Black Lens" itemImage="236" />
     <item name="Black Paint" itemImage="1097" />
     <item name="Black Recluse Banner" itemImage="1623" />
     <item name="Black Thread" itemImage="254" />
     <item name="Blade of Grass" itemImage="190" />
+    <item name="Bladed Glove" itemImage="1827" netId="0" />
     <item name="Blend-O-Matic" itemImage="995" />
     <item name="Blindfold" itemImage="888" />
     <item name="Blinkroot" itemImage="315" />
@@ -537,8 +549,10 @@
     <item name="Blood Feeder Banner" itemImage="1624" />
     <item name="Blood Jelly Banner" itemImage="1625" />
     <item name="Blood Lust Cluster" itemImage="799" />
+    <item name="Blood Moon Countess" itemImage="1848" netId="0" />
     <item name="Blood Moon Rising" itemImage="1372" />
     <item name="Blood Water Fountain" itemImage="945" />
+    <item name="Bloody Machete" itemImage="1825" netId="0" />
     <item name="Bloody Spine" itemImage="1331" />
     <item name="Blowgun" itemImage="986" />
     <item name="Blowpipe" foundIn="Chest" itemImage="281" />
@@ -611,6 +625,8 @@
     <item name="Brass Shelf" itemImage="1388" />
     <item name="Breaker Blade" itemImage="426" />
     <item name="Breathing Reed" foundIn="Chest" itemImage="186" />
+    <item name="Bride of Frankenstein Dress" itemImage="1778" netId="0" />
+    <item name="Bride of Frankenstein Mask" itemImage="1777" netId="0" />
     <item name="Bright Blue Dye" itemImage="1046" />
     <item name="Bright Cyan Dye" itemImage="1044" />
     <item name="Bright Green Dye" itemImage="1042" />
@@ -652,13 +668,21 @@
     <item name="Campfire" itemImage="966" />
     <item name="Candelabra" itemImage="349" />
     <item name="Candle" itemImage="105" />
+    <item name="Candy Apple" itemImage="1734" netId="0" />
     <item name="Candy Cane Block" itemImage="586" />
     <item name="Candy Cane Wall" itemImage="587" />
+    <item name="Candy Corn" itemImage="1783" netId="0" />
+    <item name="Candy Corn Rifle" itemImage="1782" netId="0" />
     <item name="Cannon" itemImage="928" />
     <item name="Cannonball" itemImage="929" />
     <item name="Carriage Lantern" itemImage="1392" />
     <item name="Carrot" itemImage="603" />
+    <item name="Cat Ears" itemImage="1824" netId="0" />
+    <item name="Cat Mask" itemImage="1749" netId="0" />
+    <item name="Cat Pants" itemImage="1751" netId="0" />
+    <item name="Cat Shirt" itemImage="1750" netId="0" />
     <item name="Catacomb" itemImage="1417" />
+    <item name="Cauldron" itemImage="1791" netId="0" />
     <item name="Cenx's Breastplate" itemImage="1555" />
     <item name="Cenx's Dress" itemImage="1587" />
     <item name="Cenx's Dress Pants" itemImage="1588" />
@@ -755,12 +779,16 @@
     <item name="Corrupt Water Fountain" itemImage="942" />
     <item name="Corruption Chest" itemImage="1529" />
     <item name="Corruption Key" itemImage="1534" />
+    <item name="Corruption Key Mold" itemImage="1804" netId="0" />
     <item name="Countercurse Mantra" itemImage="904" />
     <item name="Cowboy Hat" itemImage="873" />
     <item name="Cowboy Jacket" itemImage="874" />
     <item name="Cowboy Pants" itemImage="875" />
     <item name="Crab Banner" itemImage="1634" />
     <item name="Crab Statue" itemImage="454" />
+    <item name="Creeper Mask" itemImage="1746" netId="0" />
+    <item name="Creeper Pants" itemImage="1748" netId="0" />
+    <item name="Creeper Shirt" itemImage="1747" netId="0" />
     <item name="Crimera Banner" itemImage="1635" />
     <item name="Crimsand Block" itemImage="1246" />
     <item name="Crimson Axe Banner" itemImage="1636" />
@@ -768,6 +796,7 @@
     <item name="Crimson Greaves" itemImage="794" />
     <item name="Crimson Helmet" itemImage="792" />
     <item name="Crimson Key" itemImage="1535" />
+    <item name="Crimson Key Mold" itemImage="1805" netId="0" />
     <item name="Crimson Rod" itemImage="1256" />
     <item name="Crimson Scalemail" itemImage="793" />
     <item name="Crimson Water Fountain" itemImage="943" />
@@ -792,6 +821,7 @@
     <item name="Cursed Flame" itemImage="522" />
     <item name="Cursed Flames" itemImage="519" />
     <item name="Cursed Hammer Banner" itemImage="1637" />
+    <item name="Cursed Sapling" itemImage="1837" netId="0" />
     <item name="Cursed Torch" itemImage="523" />
     <item name="Cutlass" itemImage="672" />
     <item name="Cyan and Black Dye" itemImage="1025" />
@@ -800,6 +830,9 @@
     <item name="Cyan Gradient Dye" itemImage="1069" />
     <item name="Cyan Husk" itemImage="1116" />
     <item name="Cyan Paint" itemImage="1079" />
+    <item name="Cyborg Helmet" itemImage="1743" netId="0" />
+    <item name="Cyborg Pants" itemImage="1745" netId="0" />
+    <item name="Cyborg Shirt" itemImage="1744" netId="0" />
 
     <item name="Dao of Pow" itemImage="389" />
     <item name="Dark Blue Solution" itemImage="783" />
@@ -861,6 +894,8 @@
     <item name="Diving Helmet" itemImage="268" />
     <item name="Do Not Step on the Grass" itemImage="1486" />
     <item name="Dresser" itemImage="334" />
+    <item name="Dryad Coverings" itemImage="1853" netId="0" />
+    <item name="Dryad Loincloth" itemImage="1854" netId="0" />
     <item name="Dryadisque" itemImage="1426" />
     <item name="D-Town's Breastplate" itemImage="1581" />
     <item name="D-Town's Helmet" itemImage="1580" />
@@ -869,6 +904,7 @@
     <item name="Dual Hook" itemImage="437" />
     <item name="Dungeon Door" itemImage="1138" />
     <item name="Dungeon Shelf" itemImage="1418" />
+    <item name="Dye Trader Robe" itemImage="1741" netId="0" />
     <item name="Dye Vat" itemImage="1120" />
     <item name="Dynamite" foundIn="Chest" itemImage="167" />
 
@@ -913,6 +949,7 @@
     <item name="Excalibur" itemImage="368" />
     <item name="Exploding Bullet" itemImage="1351" />
     <item name="Explosive Bunny" itemImage="1338" />
+    <item name="Explosive Jack 'O Lantern" itemImage="1785" netId="0" />
     <item name="Explosive Powder" itemImage="1347" />
     <item name="Explosives" itemImage="580" />
     <item name="Extractinator" foundIn="Chest" itemImage="997" />
@@ -983,6 +1020,9 @@
     <item name="Flying Carpet" foundIn="Chest" itemImage="934" />
     <item name="Flying Fish Banner" itemImage="1646" />
     <item name="Flying Snake Banner" itemImage="1647" />
+    <item name="Fox Mask" itemImage="1821" netId="0" />
+    <item name="Fox Pants" itemImage="1823" netId="0" />
+    <item name="Fox Shirt" itemImage="1822" netId="0" />
     <item name="Frankenstein Banner" itemImage="1648" />
     <item name="Frost Breastplate" itemImage="685" />
     <item name="Frost Helmet" itemImage="684" />
@@ -992,6 +1032,7 @@
     <item name="Frostburn Arrow" itemImage="988" />
     <item name="Frozen Chest" itemImage="1532" />
     <item name="Frozen Key" itemImage="1537" />
+    <item name="Frozen Key Mold" itemImage="1807" netId="0" />
     <item name="Frozen Slime Block" itemImage="767" />
     <item name="Frozen Turtle Shell" itemImage="1253" />
     <item name="Frozen Wings" itemImage="822" />
@@ -1003,6 +1044,8 @@
     <item name="Gargoyle Statue" itemImage="450" />
     <item name="Gastropod Banner" itemImage="1651" />
     <item name="Gel" foundIn="Chest" itemImage="23" />
+    <item name="Ghost Mask" itemImage="1752" netId="0" />
+    <item name="Ghost Shirt" itemImage="1753" netId="0" />
     <item name="Ghost Wings" itemImage="823" />
     <item name="Giant Harpey Feather" itemImage="1516" />
     <item name="Gills Potion" foundIn="Chest" itemImage="291" />
@@ -1059,6 +1102,7 @@
     <item name="Golem Fist" itemImage="1297" />
     <item name="Golem Trophy" itemImage="1371" />
     <item name="Good Morning" itemImage="1482" />
+    <item name="Goodie Bag" itemImage="1774" netId="0" />
     <item name="Gothic Bookcase" itemImage="1512" />
     <item name="Gothic Chair" itemImage="1509" />
     <item name="Gothic Table" itemImage="1510" />
@@ -1124,6 +1168,7 @@
     <item name="Guide Picasso" itemImage="1440" />
     <item name="Guide Voodoo Doll" itemImage="267" />
     <item name="Gungnir" itemImage="550" />
+    <item name="Guy Fawkes Mask" itemImage="1740" netId="0" />
 
     <item name="Hallowed Bar" itemImage="1225" />
     <item name="Hallowed Chest" itemImage="1531" />
@@ -1131,21 +1176,26 @@
     <item name="Hallowed Headgear" itemImage="558" />
     <item name="Hallowed Helmet" itemImage="553" />
     <item name="Hallowed Key" itemImage="1536" />
+    <item name="Hallowed Key Mold" itemImage="1806" netId="0" />
     <item name="Hallowed Mask" itemImage="559" />
     <item name="Hallowed Plate Mail" itemImage="551" />
     <item name="Hallowed Repeater" itemImage="578" />
     <item name="Hallowed Seeds" itemImage="369" />
     <item name="Hallowed Water Fountain" itemImage="944" />
+    <item name="Hallow's Eve" itemImage="1849" netId="0" />
     <item name="Hamdrax" itemImage="579" />
     <item name="Hammer Statue" itemImage="455" />
     <item name="Hammush" itemImage="787" />
     <item name="Hand Earth" itemImage="1497" />
     <item name="Handgun" foundIn="Chest" itemImage="164" />
+    <item name="Hanging Jack 'O Lantern" itemImage="1808" netId="0" />
     <item name="Hanging Skeleton" itemImage="1377" />
     <item name="Harp" itemImage="508" />
     <item name="Harpoon" itemImage="160" />
     <item name="Harpy Banner" itemImage="1658" />
     <item name="Harpy Wings" itemImage="785" />
+    <item name="Hay" itemImage="1727" netId="0" />
+    <item name="Hay Wall" itemImage="1728" netId="0" />
     <item name="Headstone" itemImage="1175" />
     <item name="Healing Potion" foundIn="Chest" itemImage="188" />
     <item name="Heart" itemImage="58" />
@@ -1238,6 +1288,11 @@
     <item name="Ivy Chest" itemImage="680" />
     <item name="Ivy Whip" itemImage="185" />
 
+    <item name="Jack 'O Lantern" itemImage="1813" netId="0" />
+    <item name="Jack 'O Lantern Launcher" itemImage="1784" netId="0" />
+    <item name="Jack 'O Lantern Mask" itemImage="1857" netId="0" />
+    <item name="Jackelier" itemImage="1812" netId="0" />
+    <item name="Jacking Skeletron" itemImage="1846" netId="0" />
     <item name="Jellyfish Banner" itemImage="1665" />
     <item name="Jellyfish Necklace" itemImage="1303" />
     <item name="Jellyfish Statue" itemImage="459" />
@@ -1251,6 +1306,7 @@
     <item name="Jungle Grass Seeds" itemImage="195" />
     <item name="Jungle Hat" itemImage="228" />
     <item name="Jungle Key" itemImage="1533" />
+    <item name="Jungle Key Mold" itemImage="1803" netId="0" />
     <item name="Jungle Pants" itemImage="230" />
     <item name="Jungle Rose" itemImage="208" />
     <item name="Jungle Shirt" itemImage="229" />
@@ -1258,6 +1314,9 @@
     <item name="Jungle Wall" itemImage="746" />
     <item name="Jungle Water Fountain" itemImage="940" />
 
+    <item name="Karate Tortoise Mask" itemImage="1779" netId="0" />
+    <item name="Karate Tortoise Pants" itemImage="1781" netId="0" />
+    <item name="Karate Tortoise Shirt" itemImage="1780" netId="0" />
     <item name="Keg" itemImage="352" />
     <item name="Keybrand" itemImage="671" />
     <item name="King Statue" itemImage="476" />
@@ -1296,6 +1355,9 @@
     <item name="Leaf Wings" itemImage="1162" />
     <item name="Leather" itemImage="259" />
     <item name="Lens" itemImage="38" />
+    <item name="Leprechaun Hat" itemImage="1767" netId="0" />
+    <item name="Leprechaun Pants" itemImage="1769" netId="0" />
+    <item name="Leprechaun Shirt" itemImage="1768" netId="0" />
     <item name="Lesser Healing Potion" foundIn="Chest" itemImage="28" />
     <item name="Lesser Mana Potion" itemImage="110" />
     <item name="Lesser Restoration Potion" foundIn="Chest" itemImage="226" />
@@ -1346,6 +1408,7 @@
     <item name="Magic Power Potion" foundIn="Chest" itemImage="294" />
     <item name="Magic Quiver" itemImage="1321" />
     <item name="Magical Harp" itemImage="494" />
+    <item name="Magical Pumpkin Seed" itemImage="1799" netId="0" />
     <item name="Magma Stone" itemImage="1322" />
     <item name="Magnet Sphere" itemImage="1266" />
     <item name="Man Eater Banner" itemImage="1668" />
@@ -1397,7 +1460,9 @@
     <item name="Moon Stone" itemImage="900" />
     <item name="Moonglow" itemImage="314" />
     <item name="Moonglow Seeds" itemImage="308" />
+    <item name="Morbid Curiosity" itemImage="1850" netId="0" />
     <item name="Moth Banner" itemImage="1670" />
+    <item name="Mourning Wood Trophy" itemImage="1855" netId="0" />
     <item name="Mud Block" itemImage="176" />
     <item name="Mudstone Block" itemImage="414" />
     <item name="Mudstone Brick Wall" itemImage="419" />
@@ -1474,6 +1539,7 @@
     <item name="Necro Breastplate" itemImage="152" />
     <item name="Necro Greaves" itemImage="153" />
     <item name="Necro Helmet" itemImage="151" />
+    <item name="Necromantic Scroll" itemImage="1845" netId="0" />
     <item name="Necromantic Sign" itemImage="1452" />
     <item name="Nectar" itemImage="1170" />
     <item name="Neptune's Shell" itemImage="497" />
@@ -1485,7 +1551,10 @@
     <item name="Ninja Hood" itemImage="256" />
     <item name="Ninja Pants" itemImage="257" />
     <item name="Ninja Shirt" itemImage="258" />
+    <item name="Nurse Hat" itemImage="1736" netId="0" />
     <item name="Nurse Lisa" itemImage="1443" />
+    <item name="Nurse Pants" itemImage="1738" netId="0" />
+    <item name="Nurse Shirt" itemImage="1737" netId="0" />
     <item name="Nypmh Banner" itemImage="1694" />
 
     <item name="Obelisk" itemImage="1177" />
@@ -1501,7 +1570,7 @@
     <item name="Obsidian Rose" itemImage="1323" />
     <item name="Obsidian Shield" itemImage="397" />
     <item name="Obsidian Skin Potion" foundIn="Chest" itemImage="288" />
-    <item name="Obsidian Skull"  itemImage="193" />
+    <item name="Obsidian Skull" itemImage="193" />
     <item name="Obsidian Table" itemImage="1460" />
     <item name="Obsidian Vase" itemImage="1462" />
     <item name="Obsidian Watcher Banner" itemImage="1468" />
@@ -1625,6 +1694,8 @@
     <item name="Pirate Shirt" itemImage="877" />
     <item name="Pixie Banner" itemImage="1677" />
     <item name="Pixie Dust" itemImage="501" />
+    <item name="Pixie Pants" itemImage="1771" netId="0" />
+    <item name="Pixie Shirt" itemImage="1770" netId="0" />
     <item name="Place Above the Clouds" itemImage="1485" />
     <item name="Planked Wall" itemImage="479" />
     <item name="Plantera Trophy" itemImage="1370" />
@@ -1659,7 +1730,26 @@
     <item name="Power Glove" itemImage="897" />
     <item name="Powered by Birds" itemImage="1434" />
     <item name="Princess Dress" itemImage="865" />
+    <item name="Princess Dress (New)" itemImage="1773" netId="0" />
+    <item name="Princess Hat" itemImage="1772" netId="0" />
     <item name="Proximity Mine Launcher" itemImage="760" />
+    <item name="Pumpkin" itemImage="1725" netId="0" />
+    <item name="Pumpkin Breastplate" itemImage="1732" netId="0" />
+    <item name="Pumpkin Chair" itemImage="1792" netId="0" />
+    <item name="Pumpkin Door" itemImage="1793" netId="0" />
+    <item name="Pumpkin Helmet" itemImage="1731" netId="0" />
+    <item name="Pumpkin Leggings" itemImage="1733" netId="0" />
+    <item name="Pumpkin Mask" itemImage="1754" netId="0" />
+    <item name="Pumpkin Moon Medallion" itemImage="1844" netId="0" />
+    <item name="Pumpkin Pants" itemImage="1756" netId="0" />
+    <item name="Pumpkin Pie" itemImage="1787" netId="0" />
+    <item name="Pumpkin Platform" itemImage="1796" netId="0" />
+    <item name="Pumpkin Seed" itemImage="1828" netId="0" />
+    <item name="Pumpkin Shirt" itemImage="1755" netId="0" />
+    <item name="Pumpkin Table" itemImage="1794" netId="0" />
+    <item name="Pumpkin Wall" itemImage="1726" netId="0" />
+    <item name="Pumpkin Work Bench" itemImage="1795" netId="0" />
+    <item name="Pumpking Trophy" itemImage="1856" netId="0" />
     <item name="Pure Water Fountain" itemImage="909" />
     <item name="Purification Powder" itemImage="66" />
     <item name="Purple and Black Dye" itemImage="1028" />
@@ -1692,7 +1782,10 @@
     <item name="Raincoat Zombie Banner" itemImage="1678" />
     <item name="Ranger Emblem" itemImage="491" />
     <item name="Rare Enchantment" itemImage="1576" />
+    <item name="Raven Staff" itemImage="1802" netId="0" />
     <item name="Reaper Banner" itemImage="1679" />
+    <item name="Reaper Hood" itemImage="1819" netId="0" />
+    <item name="Reaper Robe" itemImage="1820" netId="0" />
     <item name="Reaper Statue" itemImage="447" />
     <item name="Red and Black Dye" itemImage="1019" />
     <item name="Red and Silver Dye" itemImage="1051" />
@@ -1742,6 +1835,9 @@
     <item name="Rifle Scope" itemImage="1300" />
     <item name="Robe" itemImage="262" />
     <item name="Robot Hat" itemImage="263" />
+    <item name="Robot Mask" itemImage="1757" netId="0" />
+    <item name="Robot Pants" itemImage="1759" netId="0" />
+    <item name="Robot Shirt" itemImage="1758" netId="0" />
     <item name="Rocket Boots" itemImage="128" />
     <item name="Rocket I" itemImage="771" />
     <item name="Rocket II" itemImage="772" />
@@ -1752,6 +1848,7 @@
     <item name="Rope" foundIn="Chest" itemImage="965" />
     <item name="Rope Coil" itemImage="985" />
     <item name="Rotten Chunk" itemImage="68" />
+    <item name="Rotten Egg" itemImage="1809" netId="0" />
     <item name="Ruby" itemImage="178" />
     <item name="Ruby Hook" itemImage="1240" />
     <item name="Ruby Robe" itemImage="1286" />
@@ -1780,6 +1877,9 @@
     <item name="Sapphire Robe" itemImage="1284" />
     <item name="Sapphire Staff" itemImage="741" />
     <item name="Sawmill" itemImage="363" />
+    <item name="Scarecrow Hat" itemImage="1788" netId="0" />
+    <item name="Scarecrow Pants" itemImage="1790" netId="0" />
+    <item name="Scarecrow Shirt" itemImage="1789" netId="0" />
     <item name="Scourge of the Corruptor" foundIn="Chest" itemImage="1571" />
     <item name="Scythe" itemImage="677" />
     <item name="Seaweed" itemImage="753" />
@@ -1826,6 +1926,7 @@
     <item name="Shroomite Leggings" itemImage="1550" />
     <item name="Shroomite Mask" itemImage="1547" />
     <item name="Shuriken" foundIn="Chest" itemImage="42" />
+    <item name="Sickle" itemImage="1786" netId="0" />
     <item name="Sign" itemImage="171" />
     <item name="Silk" itemImage="225" />
     <item name="Silt Block" itemImage="424" />
@@ -1890,6 +1991,7 @@
     <item name="Solidifier" itemImage="998" />
     <item name="Something Evil is Watching You" itemImage="1422" />
     <item name="Sorcerer Emblem" itemImage="489" />
+    <item name="Soul Cake" itemImage="1735" netId="0" />
     <item name="Soul of Flight" itemImage="575" />
     <item name="Soul of Fright" itemImage="547" />
     <item name="Soul of Light" itemImage="520" />
@@ -1897,6 +1999,9 @@
     <item name="Soul of Night" itemImage="521" />
     <item name="Soul of Sight" itemImage="549" />
     <item name="Soul Scythe" itemImage="678" />
+    <item name="Space Creature Mask" itemImage="1838" netId="0" />
+    <item name="Space Creature Pants" itemImage="1840" netId="0" />
+    <item name="Space Creature Shirt" itemImage="1839" netId="0" />
     <item name="Space Gun" itemImage="127" />
     <item name="Spazmatism Trophy" itemImage="1369" />
     <item name="Spear" foundIn="Chest" itemImage="280" />
@@ -1915,13 +2020,29 @@
     <item name="Spell tome" itemImage="531" />
     <item name="Spelunker Potion" foundIn="Chest" itemImage="296" />
     <item name="Spider Banner" itemImage="1685" />
-    <item name="Spike"  itemImage="147" />
+    <item name="Spider Egg" itemImage="1798" netId="0" />
+    <item name="Spike" itemImage="147" />
     <item name="Spiky Ball" itemImage="161" />
     <item name="Spiky Ball Trap" itemImage="1148" />
+    <item name="Spooky Breastplate" itemImage="1833" netId="0" />
+    <item name="Spooky Chair" itemImage="1814" netId="0" />
+    <item name="Spooky Door" itemImage="1815" netId="0" />
+    <item name="Spooky Helmet" itemImage="1832" netId="0" />
+    <item name="Spooky Hook" itemImage="1829" netId="0" />
+    <item name="Spooky Leggings" itemImage="1834" netId="0" />
+    <item name="Spooky Platform" itemImage="1818" netId="0" />
+    <item name="Spooky Table" itemImage="1816" netId="0" />
+    <item name="Spooky Twig" itemImage="1831" netId="0" />
+    <item name="Spooky Wings" itemImage="1830" netId="0" />
+    <item name="Spooky Wood" itemImage="1729" netId="0" />
+    <item name="Spooky Wood Wall" itemImage="1730" netId="0" />
+    <item name="Spooky Work Bench" itemImage="1817" netId="0" />
     <item name="Spore Zombie Banner" itemImage="1686" />
     <item name="Staff of Earth" itemImage="1296" />
     <item name="Staff of Regrowth" foundIn="Chest" itemImage="213" />
     <item name="Staff of the Frost Hydra" foundIn="Chest" itemImage="1572" />
+    <item name="Stake" itemImage="1836" netId="0" />
+    <item name="Stake Launcher" itemImage="1835" netId="0" />
     <item name="Star" itemImage="184" />
     <item name="Star Cannon" itemImage="197" />
     <item name="Star Cloak" itemImage="532" />
@@ -1933,6 +2054,7 @@
     <item name="Steam Punk Bed" itemImage="1722" />
     <item name="Steam Punk Chair" itemImage="1708" />
     <item name="Steam Punk Door" itemImage="1712" />
+    <item name="Steam Punk Goggles" itemImage="1742" netId="0" />
     <item name="Steam Punk Table" itemImage="1718" />
     <item name="Steampunk Hat" itemImage="839" />
     <item name="Steampunk Pants" itemImage="841" />
@@ -1969,6 +2091,7 @@
     <item name="Tam O' Shanter" itemImage="869" />
     <item name="Tattered Bee Wing" itemImage="1521" />
     <item name="Tattered Cloth" itemImage="362" />
+    <item name="Tattered Fairy Wings" itemImage="1797" netId="0" />
     <item name="Teal and Black Dye" itemImage="1024" />
     <item name="Teal and Silver Dye" itemImage="1056" />
     <item name="Teal Dye" itemImage="1012" />
@@ -1989,6 +2112,7 @@
     <item name="The Eye Sees the End" itemImage="1421" />
     <item name="The Guardian's Gaze" itemImage="1441" />
     <item name="The Hanged Man" itemImage="1373" />
+    <item name="The Horseman's Blade" itemImage="1826" netId="0" />
     <item name="The Land of Deceiving Looks" itemImage="1489" />
     <item name="The Meatball" itemImage="801" />
     <item name="The Merchant" itemImage="1574" />
@@ -2059,6 +2183,8 @@
     <item name="Toy Sled" itemImage="1312" />
     <item name="Trapped Ghost" itemImage="1478" />
     <item name="Trash Can" itemImage="348" />
+    <item name="Treasure Hunter Pants" itemImage="1852" netId="0" />
+    <item name="Treasure Hunter Shirt" itemImage="1851" netId="0" />
     <item name="Tree Statue" itemImage="467" />
     <item name="Trident" foundIn="Chest" itemImage="277" />
     <item name="Trifold Map" itemImage="893" />
@@ -2097,11 +2223,18 @@
     <item name="Unicorn Banner" itemImage="1691" />
     <item name="Unicorn Crossing the Hallows" itemImage="1437" />
     <item name="Unicorn Horn" itemImage="526" />
+    <item name="Unicorn Mask" itemImage="1760" netId="0" />
     <item name="Unicorn on a Stick" itemImage="856" />
+    <item name="Unicorn Pants" itemImage="1762" netId="0" />
+    <item name="Unicorn Shirt" itemImage="1761" netId="0" />
+    <item name="Unlucky Yarn" itemImage="1810" netId="0" />
     <item name="Uzi" itemImage="1265" />
 
     <item name="Vampire Banner" itemImage="1692" />
     <item name="Vampire Knives" foundIn="Chest" itemImage="1569" />
+    <item name="Vampire Mask" itemImage="1763" netId="0" />
+    <item name="Vampire Pants" itemImage="1765" netId="0" />
+    <item name="Vampire Shirt" itemImage="1764" netId="0" />
     <item name="Venom Arrow" itemImage="1341" />
     <item name="Venom Bullet" itemImage="1342" />
     <item name="Venus Magnum" itemImage="1255" />
@@ -2153,8 +2286,15 @@
     <item name="Wire" itemImage="530" />
     <item name="Wire Cutter" itemImage="510" />
     <item name="Wisp in a Bottle" itemImage="1183" />
+    <item name="Witch Boots" itemImage="1776" netId="0" />
+    <item name="Witch Dress" itemImage="1775" netId="0" />
+    <item name="Witch Hat" itemImage="1766" netId="0" />
     <item name="Wizard Hat" itemImage="238" />
+    <item name="Wizard's Hat" itemImage="1739" netId="0" />
     <item name="Wolf Banner" itemImage="1696" />
+    <item name="Wolf Mask" itemImage="1841" netId="0" />
+    <item name="Wolf Pants" itemImage="1843" netId="0" />
+    <item name="Wolf Shirt" itemImage="1842" netId="0" />
     <item name="Woman Statue" itemImage="448" />
     <item name="Wood" itemImage="9" />
     <item name="Wood Breastplate" itemImage="728" />
@@ -2205,7 +2345,7 @@
     <item name="Zombie Arm" itemImage="1304" />
     <item name="Zombie Banner" itemImage="1701" />
     <item name="Zombie Eskimo Banner" itemImage="1643" />
-	  </items>
+  </items>
   <namechanges>
     <item name="Ball 'O Hurt" newName="Ball O' Hurt" />
     <item name="Gills potion" newName="Gills Potion" />
@@ -2266,104 +2406,104 @@
   </colors>
   <markers>
     <markerset name="Objects">
-      <marker name="Altar" />
-      <marker name="Copper Cache" />
-      <marker name="Enchanted Sword" />
-      <marker name="Gold Cache" />
-      <marker name="Heart" />
-      <marker name="Heart Fruit" />
-      <marker name="Hellforge" />
-      <marker name="Picture" />
-      <marker name="Plantera Bulb" />
-      <marker name="Shadow Orb" />
-      <marker name="Sign" />
-      <marker name="Silver Cache" />
-      <marker name="Statue" />
-      <marker name="Torch" />
-      <marker name="Tombstone" />
+      <marker name="Altar"  />
+      <marker name="Copper Cache"  />
+      <marker name="Enchanted Sword"  />
+      <marker name="Gold Cache"  />
+      <marker name="Heart"  />
+      <marker name="Heart Fruit"  />
+      <marker name="Hellforge"  />
+      <marker name="Picture"  />
+      <marker name="Plantera Bulb"  />
+      <marker name="Shadow Orb"  />
+      <marker name="Sign"  />
+      <marker name="Silver Cache"  />
+      <marker name="Statue"  />
+      <marker name="Torch"  />
+      <marker name="Tombstone"  />
     </markerset>
     <markerset name="Containers">
-      <marker name="Chest" />
-      <marker name="Gold Chest" />
-      <marker name="Locked Gold Chest" />
-      <marker name="Shadow Chest" />
-      <marker name="Locked Shadow Chest" />
-      <marker name="Barrel" />
-      <marker name="Trash Can" />
-      <marker name="Ebonwood Chest" />
-      <marker name="Rich Mahogany Chest" />
-      <marker name="Pearlwood Chest" />
-      <marker name="Ivy Chest" />
-      <marker name="Ice Chest" />
-      <marker name="Living Wood Chest" />
-      <marker name="Skyware Chest" />
-      <marker name="Shadewood Chest" />
-      <marker name="Web Covered Chest" />
-      <marker name="Lihzahrd Chest" />
-      <marker name="Water Chest" />
-      <marker name="Jungle Chest" />
-      <marker name="Corruption Chest" />
-      <marker name="Crimson Chest" />
-      <marker name="Hallowed Chest" />
-      <marker name="Frozen Chest" />
-      <marker name="Locked Jungle Chest" />
-      <marker name="Locked Corruption Chest" />
-      <marker name="Locked Crimson Chest" />
-      <marker name="Locked Hallowed Chest" />
-      <marker name="Locked Frozen Chest" />
+      <marker name="Chest"  />
+      <marker name="Gold Chest"  />
+      <marker name="Locked Gold Chest"  />
+      <marker name="Shadow Chest"  />
+      <marker name="Locked Shadow Chest"  />
+      <marker name="Barrel"  />
+      <marker name="Trash Can"  />
+      <marker name="Ebonwood Chest"  />
+      <marker name="Rich Mahogany Chest"  />
+      <marker name="Pearlwood Chest"  />
+      <marker name="Ivy Chest"  />
+      <marker name="Ice Chest"  />
+      <marker name="Living Wood Chest"  />
+      <marker name="Skyware Chest"  />
+      <marker name="Shadewood Chest"  />
+      <marker name="Web Covered Chest"  />
+      <marker name="Lihzahrd Chest"  />
+      <marker name="Water Chest"  />
+      <marker name="Jungle Chest"  />
+      <marker name="Corruption Chest"  />
+      <marker name="Crimson Chest"  />
+      <marker name="Hallowed Chest"  />
+      <marker name="Frozen Chest"  />
+      <marker name="Locked Jungle Chest"  />
+      <marker name="Locked Corruption Chest"  />
+      <marker name="Locked Crimson Chest"  />
+      <marker name="Locked Hallowed Chest"  />
+      <marker name="Locked Frozen Chest"  />
     </markerset>
     <markerset name="Gems">
-      <marker name="Amethyst" />
-      <marker name="Diamond" />
-      <marker name="Emerald" />
-      <marker name="Ruby" />
-      <marker name="Sapphire" />
-      <marker name="Topaz" />
+      <marker name="Amethyst"  />
+      <marker name="Diamond"  />
+      <marker name="Emerald"  />
+      <marker name="Ruby"  />
+      <marker name="Sapphire"  />
+      <marker name="Topaz"  />
     </markerset>
     <markerset name="Ores">
-      <marker name="Copper" />
-      <marker name="Iron" />
-      <marker name="Silver" />
-      <marker name="Gold" />
-      <marker name="Demonite" />
-      <marker name="Obsidian" />
-      <marker name="Meteorite" />
-      <marker name="Hellstone" />
-      <marker name="Cobalt" />
-      <marker name="Mythril" />
-      <marker name="Adamantite" />
-      <marker name="Tin" />
-      <marker name="Lead" />
-      <marker name="Tungsten" />
-      <marker name="Platinum" />
-      <marker name="Crimtane" />
-      <marker name="Chlorophyte" />
-      <marker name="Palladium" />
-      <marker name="Orichalcum" />
-      <marker name="Titanium" />
+      <marker name="Copper"  />
+      <marker name="Iron"  />
+      <marker name="Silver"  />
+      <marker name="Gold"  />
+      <marker name="Demonite"  />
+      <marker name="Obsidian"  />
+      <marker name="Meteorite"  />
+      <marker name="Hellstone"  />
+      <marker name="Cobalt"  />
+      <marker name="Mythril"  />
+      <marker name="Adamantite"  />
+      <marker name="Tin"  />
+      <marker name="Lead"  />
+      <marker name="Tungsten"  />
+      <marker name="Platinum"  />
+      <marker name="Crimtane"  />
+      <marker name="Chlorophyte"  />
+      <marker name="Palladium"  />
+      <marker name="Orichalcum"  />
+      <marker name="Titanium"  />
     </markerset>
     <markerset name="People">
-      <marker name="Arms Dealer" />
-      <marker name="Clothier" />
-      <marker name="Cyborg" />
-      <marker name="Demolitionist" />
-      <marker name="Dryad" />
-      <marker name="Dye Trader" />
-      <marker name="Goblin Tinkerer" />
-      <marker name="Guide" />
-      <marker name="Mechanic" />
-      <marker name="Merchant" />
-      <marker name="Nurse" />
-      <marker name="Old Man" />
-      <marker name="Painter" />
-      <marker name="Party Girl" />
-      <marker name="Pirate" />
-      <marker name="Santa Claus" />
-      <marker name="Spawn" />
-      <marker name="Steampunker" />
-      <marker name="Truffle" />
-      <marker name="Witch Doctor" />
-      <marker name="Wizard" />
+      <marker name="Arms Dealer"  />
+      <marker name="Clothier"  />
+      <marker name="Cyborg"  />
+      <marker name="Demolitionist"  />
+      <marker name="Dryad"  />
+      <marker name="Dye Trader"  />
+      <marker name="Goblin Tinkerer"  />
+      <marker name="Guide"  />
+      <marker name="Mechanic"  />
+      <marker name="Merchant"  />
+      <marker name="Nurse"  />
+      <marker name="Old Man"  />
+      <marker name="Painter"  />
+      <marker name="Party Girl"  />
+      <marker name="Pirate"  />
+      <marker name="Santa Claus"  />
+      <marker name="Spawn"  />
+      <marker name="Steampunker"  />
+      <marker name="Truffle"  />
+      <marker name="Witch Doctor"  />
+      <marker name="Wizard"  />
     </markerset>
   </markers>
   <specialobjects>

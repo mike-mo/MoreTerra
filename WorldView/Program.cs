@@ -81,6 +81,9 @@ namespace MoreTerra
                 MessageBox.Show("I failed Initilaizing TileProperties: " + ex.Message);
             }
 
+            if (TestingFunction() == false)
+                return;
+
             try
             {
                 ResourceManager.Instance.Initialize();
@@ -200,5 +203,13 @@ namespace MoreTerra
 
             }
         }
+
+        // This is for single run code for running tests on new code.
+        // Returning false will cause the program to cease.
+        public static Boolean TestingFunction()
+        {
+            return true;
+        }
+
     }
 }
