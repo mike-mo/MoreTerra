@@ -1,3 +1,9 @@
+Release 1.11.5
+=================
+= Compatibility =
+=================
+Updated to add the new tiles/walls in 1.2.2
+
 Release 1.11.4
 =================
 = Compatibility =

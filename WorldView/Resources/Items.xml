@@ -38,9 +38,9 @@
     <tile name="Shadow Orb" tileImage="31" important="true" color="Important" officialColor="#8D78A8" marker="Shadow Orb" />
     <tile name="Corrupt Thorns" tileImage="32" color="#7A618F" officialColor="#9787B7" />
     <tile name="Candle" tileImage="33" important="true" color="Light Source" officialColor="#FDDD03" />
-    <tile name="Copper Chandelier" tileImage="34" important="true" color="Light Source" officialColor="#EBA687" />
-    <tile name="Silver Chandelier" tileImage="35" important="true" color="Light Source" officialColor="#C5D8DB" />
-    <tile name="Gold Chandelier" tileImage="36" important="true" color="Light Source" officialColor="#E5D449" />
+    <tile name="Chandeliers" tileImage="34" important="true" color="Light Source" officialColor="#EBA687" />
+    <tile name="Jack-o-Lanterns" tileImage="35" important="true" color="Light Source" officialColor="#E2911E" />
+    <tile name="Presents" tileImage="36" important="true" color="Decorative" officialColor="#E6595C" />
     <tile name="Meteorite" tileImage="37" color="#FF00FF" officialColor="#685654" marker="Meteorite" />
     <tile name="Gray Brick" tileImage="38" color="Block" officialColor="#808080" />
     <tile name="Red Brick" tileImage="39" color="Block" officialColor="#B53E3B" />
@@ -188,9 +188,9 @@
     <tile name="Tungsten Ore" tileImage="168" color="#5A7D53" officialColor="#849D7F" marker="Tungsten" />
     <tile name="Platinum Ore" tileImage="169" color="#8097B8" officialColor="#98ABC6" marker="Platinum" />
 
-    <tile name="Tin Chandelier" tileImage="170" important="true" color="Unknown" officialColor="#E4DBA2" />
-    <tile name="Tungsten Chandelier" tileImage="171" important="true" color="Unknown" officialColor="#B1C0B0" />
-    <tile name="Platinum Chandelier" tileImage="172" important="true" color="Unknown" officialColor="#B5C2D9" />
+    <tile name="Pine Tree" tileImage="170"  color="Unknown" officialColor="#1B6D45" />
+    <tile name="Christmas Tree" tileImage="171" important="true" color="Unknown" officialColor="#218755" />
+    <tile name="Unused (Platinum Chandelier)" tileImage="172" important="true" color="Unknown" officialColor="#B5C2D9" />
     <tile name="Platinum Candelabra" tileImage="173" important="true" color="Unknown" officialColor="#FDDD03" />
     <tile name="Platinum Candle" tileImage="174" important="true" color="Unknown" officialColor="#FDDD03" />
     <tile name="Tin Brick" tileImage="175" color="Unknown" officialColor="#817D5D" />
@@ -415,6 +415,17 @@
     <wall name="Pumpkin Wall" wallImage="113" color="Unknown" officialColor="#873A00" />
     <wall name="Hay Wall" wallImage="114" color="Unknown" officialColor="#41340F" />
     <wall name="Spooky Wood Wall" wallImage="115" color="Unknown" officialColor="#272A33" />
+    <wall name="Christmas Tree Wallpaper" wallImage="116" color="Unknown" officialColor="#591A1B" />
+    <wall name="Ornament Wallpaper" wallImage="117" color="Unknown" officialColor="#7E7B73" />
+    <wall name="Candy Cane Wallpaper" wallImage="118" color="Unknown" officialColor="#083213" />
+    <wall name="Festive Wallpaper" wallImage="119" color="Unknown" officialColor="#5F1518" />
+
+    <wall name="Stars Wallpaper" wallImage="120" color="Unknown" officialColor="#111F41" />
+    <wall name="Squiggles Wallpaper" wallImage="121" color="Unknown" officialColor="#C0AD8F" />
+    <wall name="Snowflake Wallpaper" wallImage="122" color="Unknown" officialColor="#727283" />
+    <wall name="Krampus Horn Wallpaper" wallImage="123" color="Unknown" officialColor="#887707" />
+    <wall name="Bluegreen Wallpaper" wallImage="124" color="Unknown" officialColor="#084803" />
+    <wall name="Grinch Finger Wallpaper" wallImage="125" color="Unknown" officialColor="#758452" />
   </walls>
   <items>
     <item name="1 Second Timer" itemImage="583" />
