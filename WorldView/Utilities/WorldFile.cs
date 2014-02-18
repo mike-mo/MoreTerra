@@ -12,6 +12,10 @@ namespace MoreTerra
     {
         private BinaryReader reader;
         private int version;
+        private short sectionCount;
+        private int[] sectionPointers;
+        private short tiletypeCount;
+        private bool[] tileImportance;
 
         internal World LoadFile(string worldPath)
         {
@@ -32,11 +36,38 @@ namespace MoreTerra
         private void ReadHeader(World world)
         {
             version = reader.ReadInt32();
+            sectionCount = reader.ReadInt16();
+            sectionPointers = new int[sectionCount];
+            for(int i = 0; i < sectionCount; i++)
+            {
+                sectionPointers[i] = reader.ReadInt32();
+            }
+            tiletypeCount = reader.ReadInt16();
+            tileImportance = new bool[tiletypeCount];
+            byte mask = 0x80;
+            byte flags = 0;
+            for (int i = 0; i < tiletypeCount; i++)
+            {
+                if (mask == 0x80)
+                {
+                    flags = reader.ReadByte();
+                    mask = 0x01;
+                }
+                else
+                {
+                    mask <<= 1;
+                }
+
+                if ((flags & mask) == mask)
+                    tileImportance[i] = true;
+
+                
+            }
             int x, y, w, h;
             
             var header = new WorldHeader();
 
-            header.ReleaseNumber = version;
+           // header.ReleaseNumber = version;
             header.Name = reader.ReadString();
             header.Id = reader.ReadInt32();
             x = reader.ReadInt32();

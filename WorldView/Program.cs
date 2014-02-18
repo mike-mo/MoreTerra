@@ -139,19 +139,18 @@ namespace MoreTerra
 
                 List<string> extra = new List<string>();
 
-#if (DEBUG == false)
                 try
                 {
-#endif
+
                 extra = p.Parse(args);
-#if (DEBUG == false)
+
                 }
                 catch (OptionException e)
                 {
                     Console.WriteLine(e.Message);
                     Console.WriteLine("Try '" + System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath) + " --help' for more information.");
                 }
-#endif
+
 
 
                 if (show_help || args.Contains<string>("-?") || worldPath == string.Empty || mapPath == string.Empty)

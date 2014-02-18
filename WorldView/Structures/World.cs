@@ -164,10 +164,10 @@ namespace MoreTerra.Structures
 		private void Initialize()
 		{
 
-			tileImportant = new Boolean[TileProperties.TYPES];
+		//	tileImportant = new Boolean[TileProperties.TYPES];
 
-			for (Int32 i = 0; i < TileProperties.TYPES; i++)
-				tileImportant[i] = TileProperties.tileTypeDefs[i].IsImportant;
+		//	for (Int32 i = 0; i < TileProperties.TYPES; i++)
+		//		tileImportant[i] = TileProperties.tileTypeDefs[i].IsImportant;
 		}
 
 		public void Clear()
@@ -267,7 +267,34 @@ namespace MoreTerra.Structures
 
 		private void ReadHeader()
 		{
-			Int32 version = reader.ReadInt32();
+			int version = reader.ReadInt32();
+            short sectionCount = reader.ReadInt16();
+            int[]  sectionPointers = new int[sectionCount];
+            for (int j = 0; j < sectionCount; j++)
+            {
+                sectionPointers[j] = reader.ReadInt32();
+            }
+            short tiletypeCount = reader.ReadInt16();
+            tileImportant = new bool[tiletypeCount];
+            byte mask = 0x80;
+            byte flags = 0;
+            for (int k = 0; k < tiletypeCount; k++)
+            {
+                if (mask == 0x80)
+                {
+                    flags = reader.ReadByte();
+                    mask = 0x01;
+                }
+                else
+                {
+                    mask <<= 1;
+                }
+
+                if ((flags & mask) == mask)
+                    tileImportant[k] = true;
+
+
+            }
 			Int32 x, y, w, h;
 			Int32 i;
 
@@ -734,6 +761,8 @@ namespace MoreTerra.Structures
 					t.Start();
 				}
 
+                
+
 				if (SettingsManager.Instance.ShowChestTypes == true)
 					chestTypeList = new Dictionary<Point, ChestType>();
 				else
@@ -743,6 +772,8 @@ namespace MoreTerra.Structures
 
 				stream = new FileStream(worldPath, FileMode.Open, FileAccess.Read);
 				reader = new BinaryReader(stream);
+
+                
 
 
 				ReadHeader();
