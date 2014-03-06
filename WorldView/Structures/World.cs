@@ -45,6 +45,8 @@ namespace MoreTerra.Structures
 
 		private Single readWorldPerc = 50;
 
+        int[] sectionPointers;
+
 		// List generated from reading in chest tiles.
 		private Dictionary<Point, ChestType> chestTypeList;
 
@@ -268,8 +270,10 @@ namespace MoreTerra.Structures
 		private void ReadHeader()
 		{
 			int version = reader.ReadInt32();
+            if (version < 94)
+                throw new Exception("Must use version 1.2.3.1 or higher!");
             short sectionCount = reader.ReadInt16();
-            int[]  sectionPointers = new int[sectionCount];
+            sectionPointers = new int[sectionCount];
             for (int j = 0; j < sectionCount; j++)
             {
                 sectionPointers[j] = reader.ReadInt32();
@@ -531,40 +535,41 @@ namespace MoreTerra.Structures
 			Item theItem;
 			Int32 i, j;
             Int32 maxChests;
+            int maxItems;
 			chests = new List<Chest>();
 
 			if (bw != null)
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Reading Chests");
 			
-            if (header.ReleaseNumber > 68)
-                maxChests = 40;
-            else
-                maxChests = 20;
+            
+                maxChests = reader.ReadInt16();
+                maxItems = reader.ReadInt16();
+          
 
-			for (i = 0; i < 1000; i++)
+			for (i = 0; i < maxChests; i++)
 			{
-				isChest = reader.ReadBoolean();
 
-				if (isChest == true)
-				{
 					theChest = new Chest();
 					theChest.ChestId = i;
-					theChest.Active = isChest;
+					theChest.Active = true;
 
 					theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-					if (chestTypeList != null)
-					{
-						if (chestTypeList.ContainsKey(theChest.Coordinates))
-							theChest.Type = chestTypeList[theChest.Coordinates];
-					}
-					else
-					{
-						theChest.Type = ChestType.Chest;
-					}
+                    theChest.Name = reader.ReadString();
+                    theChest.Type = ChestType.Chest;
 
-					for (j = 0; j < maxChests; j++)
+                    //if (chestTypeList != null)
+                    //{
+                    //    if (chestTypeList.ContainsKey(theChest.Coordinates))
+                    //        theChest.Type = chestTypeList[theChest.Coordinates];
+                    //}
+                    //else
+                    //{
+                    //    theChest.Type = ChestType.Chest;
+                    //}
+
+					for (j = 0; j < maxItems; j++)
 					{
                         if (header.ReleaseNumber > 68)
 						itemCount = reader.ReadInt16();
@@ -593,7 +598,7 @@ namespace MoreTerra.Structures
 						}
 					}
 					chests.Add(theChest);
-				}
+				
 
 				progressPosition = stream.Position;
 			}
@@ -611,20 +616,21 @@ namespace MoreTerra.Structures
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Reading Signs");
 
-			for (Int32 i = 0; i < 1000; i++)
+            int maxSigns = reader.ReadInt16();
+
+			for (Int32 i = 0; i < maxSigns; i++)
 			{
-				isSign = reader.ReadBoolean();
-				if (isSign == true)
-				{
+				//isSign = reader.ReadBoolean();
+			
 					theSign = new Sign();
 					theSign.Id = i;
-					theSign.Active = isSign;
+					theSign.Active = true;
 				
 					theSign.Text = reader.ReadString();
 					theSign.Position = new Point(reader.ReadInt32(), reader.ReadInt32());
 
 					signs.Add(theSign);
-				}
+				
 
 				progressPosition = stream.Position;
 			}
@@ -656,6 +662,7 @@ namespace MoreTerra.Structures
 				theNPC.Id = i;
 
 				theNPC.Active = nextNPC;
+                theNPC.Type = (NPCType)Enum.Parse(typeof(NPCType), reader.ReadString().Replace(" ",""));
 				theNPC.Name = reader.ReadString();
 				theNPC.Position = new PointSingle(reader.ReadSingle(), reader.ReadSingle());
 				theNPC.Homeless = reader.ReadBoolean();
@@ -666,10 +673,10 @@ namespace MoreTerra.Structures
 				for (Int32 j = 0; j < nameArray.Length; j++)
 					nameCrunch += nameArray[j];
 
-				if (Enum.TryParse<NPCType>(nameCrunch, out npcType))
-					theNPC.Type = npcType;
-				else
-					theNPC.Type = NPCType.Unknown;
+                //if (Enum.TryParse<NPCType>(nameCrunch, out npcType))
+                //    theNPC.Type = npcType;
+                //else
+                //    theNPC.Type = NPCType.Unknown;
 					
 				npcs.Add(theNPC);
 				i++;
@@ -748,10 +755,10 @@ namespace MoreTerra.Structures
 			bool hasWire;
 			Timer t = null;
 
-#if (DEBUG == false)
+
 			try
 			{
-#endif
+
 				if (worker != null)
 				{
 					bw = worker;
@@ -783,486 +790,342 @@ namespace MoreTerra.Structures
 
 				// Reset MapTile List
 				retTiles = new Int16[MaxX, MaxY];
+               // WorldFile wf = new WorldFile();
 
-				// Bit of a hack to handle the new platform types.
-				if (header.ReleaseNumber < 66)
-				{
-					TileProperties.tileTypeDefs[19].IsImportant = false;
-				} else {
-					TileProperties.tileTypeDefs[19].IsImportant = true;
-				}
+                if (bw != null)
+                    bw.ReportProgress(0, "Reading and Processing Tiles");
 
-				if (bw != null)
-					bw.ReportProgress(0, "Reading and Processing Tiles");
+                byte firstHeader, secondHeader, thirdHeader = 0;
+                short ntileType = TileProperties.BackgroundOffset;
+              //  reader.BaseStream.Seek(sectionPointers[1],SeekOrigin.Begin);
+                int run = 0;
+                for (int ncolumn = 0; ncolumn < header.MaxTiles.X; ncolumn++)
+                {
+                    for (int nrow = 0; nrow < header.MaxTiles.Y; nrow++)
+                    {
+                        if (run > 0)
+                        {
+                            retTiles[ncolumn, nrow] = ntileType;
+                            run--;
+                            continue;
+                        }
 
-				if (header.ReleaseNumber < 0x24)
-				{
-					//Read all the tile data using the pre-1.1 format.
-					for (col = 0; col < MaxX; col++)
-					{
-						progressPosition = stream.Position;
 
-						for (row = 0; row < MaxY; row++)
-						{
-							isTileActive = reader.ReadBoolean();
+                        if (nrow < header.SurfaceLevel)
+                            ntileType = TileProperties.BackgroundOffset;
+                        else if (nrow == header.SurfaceLevel)
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+                        else if (nrow < (header.RockLayer + 38))
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
+                        else if (nrow == (header.RockLayer + 38))
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
+                        else if (nrow < (header.MaxTiles.Y - 202))
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
+                        else if (nrow == (header.MaxTiles.Y - 202))
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+                        else
+                            ntileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
 
-							if (isTileActive)
-							{
-								tileType = reader.ReadByte();
+                        secondHeader = 0;
+                        thirdHeader = 0;
 
-								if (TileProperties.tileTypeDefs[tileType].IsImportant)
-								{
-									if ((tileType == TileProperties.Chest) && (chestTypeList != null))
-									{
-										Int16 typeX = reader.ReadInt16();
-										Int16 typeY = reader.ReadInt16();
+                        firstHeader = reader.ReadByte();
+                        if ((firstHeader & 1) == 1)
+                        {
+                            secondHeader = reader.ReadByte();
+                            if((secondHeader & 1) == 1)
+                                thirdHeader = reader.ReadByte();
+                        }
 
-										// We need to be sure we're only capturing the upper left square.
-										if ((typeX % 36 == 0) && (typeY == 0))
-										{
-											if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
-												chestTypeList.Add(new Point(col, row), (ChestType)(typeX / 36));
-											else
-												chestTypeList.Add(new Point(col, row), ChestType.Unknown);
-										}
-									}
-									else
-									{
-										reader.ReadInt16();
-										reader.ReadInt16();
-									}
-								}
-							}
-							else
-							{
-								if (row < header.SurfaceLevel)
-									tileType = TileProperties.BackgroundOffset;
-								else if (row == header.SurfaceLevel)
-									tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-								else if (row < (header.RockLayer + 38))
-									tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-								else if (row == (header.RockLayer + 38))
-									tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-								else if (row < (header.MaxTiles.Y - 202))
-									tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-								else if (row == (header.MaxTiles.Y - 202))
-									tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-								else
-									tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-							}
+                        if ((firstHeader & 2) == 2)
+                        {
+                            ntileType = reader.ReadByte();
+                            if (tileImportant[ntileType])
+                            {
+                                 reader.ReadInt16();
+                                 reader.ReadInt16();
+                            }
+                            if ((thirdHeader & 8) == 8)
+                                reader.ReadByte();
 
-							isLighted = reader.ReadBoolean();
+                        }
+                        if ((firstHeader & 4) == 4)
+                        {
+                            reader.ReadByte();
+                            if ((thirdHeader & 16) == 16)
+                                reader.ReadByte();
+                        }
+                        if ((firstHeader & 8) == 8)
+                        {
+                            ntileType = TileProperties.Water;
+                            reader.ReadByte();
+                            
+                        }
+                        else if ((firstHeader & 16) == 16)
+                        {
+                            ntileType = TileProperties.Lava;
+                            reader.ReadByte();
 
-							isWall = reader.ReadBoolean();
-							if (isWall)
-							{
-								wallType = reader.ReadByte();
+                        }
 
-								if (tileType >= TileProperties.Unknown)
-								{
-									if (wallType + TileProperties.WallOffset >= TileProperties.TYPES)
-									{
-										tileType = TileProperties.Unknown;
-									}
-									else
-									{
-										tileType = (Int16)(wallType + TileProperties.WallOffset);
-									}
-								}
-							}
+                        if ((firstHeader & 64) == 64)
+                        {
+                           run = reader.ReadByte();
+                        
+                        }
+                         if ((firstHeader & 128) == 128)
+                               run = reader.ReadInt16();
 
-							isLiquid = reader.ReadBoolean();
-							if (isLiquid)
-							{
-								liquidLevel = reader.ReadByte();
-								isLava = reader.ReadBoolean();
+                       
+                        
+                         retTiles[ncolumn, nrow] = ntileType;
+                         
+                    }
+                    
+                }
 
-								if (tileType > TileProperties.Unknown)
-								{
-									tileType = isLava ? TileProperties.Lava : TileProperties.Water;
-								}
 
-							}
+				
 
-							retTiles[col, row] = tileType;
-						}
-					}
-				}
-				else if (header.ReleaseNumber < 66)
-				{
-					Int16 RLERemaining = 0;
+               
+                //else 
+                //{
+                //    Int16 RLERemaining = 0;
 
-					//Read all the tile data using the RLE format.
-					for (col = 0; col < MaxX; col++)
-					{
-						progressPosition = stream.Position;
+                //    //Read all the tile data using the RLE format.
+                //    for (col = 0; col < MaxX; col++)
+                //    {
+                //        progressPosition = stream.Position;
 
-						if (col == 201)
-							col = 201;
+                //        for (row = 0; row < MaxY; row++)
+                //        {
+                //            if (RLERemaining == 0)
+                //            {
+                //                isTileActive = reader.ReadBoolean();
 
-						for (row = 0; row < MaxY; row++)
-						{
-							if (RLERemaining == 0)
-							{
-								isTileActive = reader.ReadBoolean();
-
-								if (isTileActive)
-								{
-									tileType = reader.ReadByte();
-
-									// This code is here to make it simpler to test for Importance on missing tiles.
-									if (Global.Instance.Info.Tiles[(int)tileType].colorName == "FindImportant")
-									{
-										var streamPos = reader.BaseStream.Position;
-									}
-
-									if (TileProperties.tileTypeDefs[tileType].IsImportant)
-									{
-										if ((tileType == TileProperties.Chest) && (chestTypeList != null))
-										{
-											Int16 typeX = reader.ReadInt16();
-											Int16 typeY = reader.ReadInt16();
-
-											// We need to be sure we're only capturing the upper left square.
-											if ((typeX % 36 == 0) && (typeY == 0))
-											{
-												if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
-													chestTypeList.Add(new Point(col, row), (ChestType)(typeX / 36));
-												else
-													chestTypeList.Add(new Point(col, row), ChestType.Unknown);
-											}
-										}
-										else
-										{
-											reader.ReadInt16();
-											reader.ReadInt16();
-										}
-									}
-								}
-								else
-								{
-									if (row < header.SurfaceLevel)
-										tileType = TileProperties.BackgroundOffset;
-									else if (row == header.SurfaceLevel)
-										tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-									else if (row < (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-									else if (row == (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-									else if (row < (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-									else if (row == (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-									else
-										tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-
-								}
+                //                if (isTileActive)
+                //                {
+                //                    tileType = reader.ReadByte();
 								
-								isWall = reader.ReadBoolean();
-								if (isWall)
-								{
-									wallType = reader.ReadByte();
+                //                    if (tileImportant[tileType])
+                //                    {
+                //                        Int16 typeX = reader.ReadInt16();
+                //                        Int16 typeY = reader.ReadInt16();
+                //                        if (tileType == TileProperties.ExposedGems)
+                //                        {
+                //                            if (typeX == 0)
+                //                                tileType = TileProperties.Amethyst;
+                //                            else if (typeX == 18)
+                //                                tileType = TileProperties.Topaz;
+                //                            else if (typeX == 36)
+                //                                tileType = TileProperties.Sapphire;
+                //                            else if (typeX == 54)
+                //                                tileType = TileProperties.Emerald;
+                //                            else if (typeX == 72)
+                //                                tileType = TileProperties.Ruby;
+                //                            else if (typeX == 90)
+                //                                tileType = TileProperties.Diamond;
+                //                            else if (typeX == 108)
+                //                                tileType = TileProperties.ExposedGems;
+                //                            // If it's 108 we keep it as ExposedGems so it get the Amber marker.
+                //                        }
+                //                        else if (tileType == TileProperties.SmallDetritus)
+                //                        {
+                //                            if ((typeX % 36 == 0) && (typeY == 18))
+                //                            {
+                //                                int type = typeX / 36;
 
-									if (tileType >= TileProperties.Unknown)
-									{
-										if (wallType + TileProperties.WallOffset > 255)
-										{
-											tileType = TileProperties.Unknown;
-										}
-										else
-										{
-											tileType = (Int16)(wallType + TileProperties.WallOffset);
-										}
-									}
-								}
+                //                                if (type == 16)
+                //                                    tileType = TileProperties.CopperCache;
+                //                                else if (type == 17)
+                //                                    tileType = TileProperties.SilverCache;
+                //                                else if (type == 18)
+                //                                    tileType = TileProperties.GoldCache;
+                //                                else if (type == 19)
+                //                                    tileType = TileProperties.Amethyst;
+                //                                else if (type == 20)
+                //                                    tileType = TileProperties.Topaz;
+                //                                else if (type == 21)
+                //                                    tileType = TileProperties.Sapphire;
+                //                                else if (type == 22)
+                //                                    tileType = TileProperties.Emerald;
+                //                                else if (type == 23)
+                //                                    tileType = TileProperties.Ruby;
+                //                                else if (type == 24)
+                //                                    tileType = TileProperties.Diamond;
+                //                            }
+                //                        } else if (tileType == TileProperties.LargeDetritus)
+                //                        {
+                //                            if ((typeX % 54 == 0) && (typeY == 0))
+                //                            {
+                //                                int type = typeX / 54;
 
-								isLiquid = reader.ReadBoolean();
-								if (isLiquid)
-								{
-									liquidLevel = reader.ReadByte();
-									isLava = reader.ReadBoolean();
+                //                                if (type == 16 || type == 17)
+                //                                    tileType = TileProperties.CopperCache;
+                //                                else if (type == 18 || type == 19)
+                //                                    tileType = TileProperties.SilverCache;
+                //                                else if (type == 20 || type == 21)
+                //                                    tileType = TileProperties.GoldCache;
+                //                            }
+                //                        }
+                //                        else if (tileType == TileProperties.LargeDetritus2)
+                //                        {
+                //                            if ((typeX % 54 == 0) && (typeY == 0))
+                //                            {
+                //                                int type = typeX / 54;
 
-									if (tileType > TileProperties.Unknown)
-									{
-										tileType = isLava ? TileProperties.Lava : TileProperties.Water;
-									}
+                //                                if (type == 17)
+                //                                    tileType = TileProperties.EnchantedSword;
+                //                            }
+                //                        }
+                //                        else if ((tileType == TileProperties.Chest) && (chestTypeList != null))
+                //                        {
+                //                            // We need to be sure we're only capturing the upper left square.
+                //                            if ((typeX % 36 == 0) && (typeY == 0))
+                //                            {
+                //                                if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
+                //                                    chestTypeList.Add(new Point(col, row), (ChestType)(typeX / 36));
+                //                                else
+                //                                    chestTypeList.Add(new Point(col, row), ChestType.Unknown);
+                //                            }
+                //                        }
+                //                    }
+                //                    // This reads in the color field.
+                //                    if (reader.ReadBoolean())
+                //                        reader.ReadByte();
+                //                }
+                //                else
+                //                {
+                //                    if (row < header.SurfaceLevel)
+                //                        tileType = TileProperties.BackgroundOffset;
+                //                    else if (row == header.SurfaceLevel)
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+                //                    else if (row < (header.RockLayer + 38))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
+                //                    else if (row == (header.RockLayer + 38))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
+                //                    else if (row < (header.MaxTiles.Y - 202))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
+                //                    else if (row == (header.MaxTiles.Y - 202))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+                //                    else
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
 
-								}
+                //                }
 
-								hasWire = reader.ReadBoolean();
+                //                isWall = reader.ReadBoolean();
+                //                if (isWall)
+                //                {
+                //                    wallType = reader.ReadByte();
 
-								if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
-									tileType = TileProperties.RedWire;
+                //                    if (tileType >= TileProperties.Unknown)
+                //                    {
+                //                        if (wallType + TileProperties.WallOffset > (TileProperties.TYPES - 1))
+                //                        {
+                //                            tileType = TileProperties.Unknown;
+                //                        }
+                //                        else
+                //                        {
+                //                            tileType = (Int16) (wallType + TileProperties.WallOffset);
+                //                        }
+                //                    }
 
-								RLERemaining = reader.ReadInt16();
-							  
-								retTiles[col, row] = tileType;
-							}
-							else
-							{
-								if ((tileType >= TileProperties.BackgroundOffset)
-									&& (tileType <= TileProperties.BackgroundOffset + 6))
-								{
-									if (row < header.SurfaceLevel)
-										tileType = TileProperties.BackgroundOffset;
-									else if (row == header.SurfaceLevel)
-										tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-									else if (row < (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-									else if (row == (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-									else if (row < (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-									else if (row == (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-									else
-										tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-								}
-							  
-								retTiles[col, row] = tileType;
-								RLERemaining--;
-							}
-						}
-					}
-				}  
-				else 
-				{
-					Int16 RLERemaining = 0;
+                //                    // Read in the wall color.
+                //                    if (reader.ReadBoolean())
+                //                        reader.ReadByte();
+                //                }
 
-					//Read all the tile data using the RLE format.
-					for (col = 0; col < MaxX; col++)
-					{
-						progressPosition = stream.Position;
+                //                isLiquid = reader.ReadBoolean();
+                //                if (isLiquid)
+                //                {
+                //                    liquidLevel = reader.ReadByte();
+                //                    isLava = reader.ReadBoolean();
+                //                    isHoney = reader.ReadBoolean();
+                //                    if (tileType > TileProperties.Unknown)
+                //                    {
+                //                        if (isLava == true)
+                //                        {
+                //                            tileType = TileProperties.Lava;
+                //                        }
+                //                        else if (isHoney == true)
+                //                        {
+                //                            tileType = TileProperties.Honey;
+                //                        }
+                //                        else
+                //                        {
+                //                            tileType = TileProperties.Water;
+                //                        }
+                //                    }
 
-						for (row = 0; row < MaxY; row++)
-						{
-							if (RLERemaining == 0)
-							{
-								isTileActive = reader.ReadBoolean();
+                //                }
 
-								if (isTileActive)
-								{
-									tileType = reader.ReadByte();
+                //                // Red Wire
+                //                hasWire = reader.ReadBoolean();
+
+                //                if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
+                //                    tileType = TileProperties.RedWire;
+
+                //                // Blue Wire
+                //                hasWire = reader.ReadBoolean();
+
+                //                if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
+                //                    tileType = TileProperties.BlueWire;
+
+                //                // Green Wire
+                //                hasWire = reader.ReadBoolean();
+
+                //                if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
+                //                    tileType = TileProperties.GreenWire;
+
+                //                // Half bricks.
+                //                reader.ReadBoolean();
 								
-									if (tileImportant[tileType])
-									{
-                                        Int16 typeX = reader.ReadInt16();
-                                        Int16 typeY = reader.ReadInt16();
-                                        if (tileType == TileProperties.ExposedGems)
-                                        {
-                                            if (typeX == 0)
-                                                tileType = TileProperties.Amethyst;
-                                            else if (typeX == 18)
-                                                tileType = TileProperties.Topaz;
-                                            else if (typeX == 36)
-                                                tileType = TileProperties.Sapphire;
-                                            else if (typeX == 54)
-                                                tileType = TileProperties.Emerald;
-                                            else if (typeX == 72)
-                                                tileType = TileProperties.Ruby;
-                                            else if (typeX == 90)
-                                                tileType = TileProperties.Diamond;
-                                            else if (typeX == 108)
-                                                tileType = TileProperties.ExposedGems;
-                                            // If it's 108 we keep it as ExposedGems so it get the Amber marker.
-                                        }
-                                        else if (tileType == TileProperties.SmallDetritus)
-                                        {
-                                            if ((typeX % 36 == 0) && (typeY == 18))
-                                            {
-                                                int type = typeX / 36;
-
-                                                if (type == 16)
-                                                    tileType = TileProperties.CopperCache;
-                                                else if (type == 17)
-                                                    tileType = TileProperties.SilverCache;
-                                                else if (type == 18)
-                                                    tileType = TileProperties.GoldCache;
-                                                else if (type == 19)
-                                                    tileType = TileProperties.Amethyst;
-                                                else if (type == 20)
-                                                    tileType = TileProperties.Topaz;
-                                                else if (type == 21)
-                                                    tileType = TileProperties.Sapphire;
-                                                else if (type == 22)
-                                                    tileType = TileProperties.Emerald;
-                                                else if (type == 23)
-                                                    tileType = TileProperties.Ruby;
-                                                else if (type == 24)
-                                                    tileType = TileProperties.Diamond;
-                                            }
-                                        } else if (tileType == TileProperties.LargeDetritus)
-                                        {
-                                            if ((typeX % 54 == 0) && (typeY == 0))
-                                            {
-                                                int type = typeX / 54;
-
-                                                if (type == 16 || type == 17)
-                                                    tileType = TileProperties.CopperCache;
-                                                else if (type == 18 || type == 19)
-                                                    tileType = TileProperties.SilverCache;
-                                                else if (type == 20 || type == 21)
-                                                    tileType = TileProperties.GoldCache;
-                                            }
-                                        }
-                                        else if (tileType == TileProperties.LargeDetritus2)
-                                        {
-                                            if ((typeX % 54 == 0) && (typeY == 0))
-                                            {
-                                                int type = typeX / 54;
-
-                                                if (type == 17)
-                                                    tileType = TileProperties.EnchantedSword;
-                                            }
-                                        }
-                                        else if ((tileType == TileProperties.Chest) && (chestTypeList != null))
-										{
-											// We need to be sure we're only capturing the upper left square.
-											if ((typeX % 36 == 0) && (typeY == 0))
-											{
-												if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
-													chestTypeList.Add(new Point(col, row), (ChestType)(typeX / 36));
-												else
-													chestTypeList.Add(new Point(col, row), ChestType.Unknown);
-											}
-										}
-									}
-                                    // This reads in the color field.
-                                    if (reader.ReadBoolean())
-                                        reader.ReadByte();
-                                }
-								else
-								{
-									if (row < header.SurfaceLevel)
-										tileType = TileProperties.BackgroundOffset;
-									else if (row == header.SurfaceLevel)
-										tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-									else if (row < (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-									else if (row == (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-									else if (row < (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-									else if (row == (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-									else
-										tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-
-								}
-
-								isWall = reader.ReadBoolean();
-								if (isWall)
-								{
-									wallType = reader.ReadByte();
-
-									if (tileType >= TileProperties.Unknown)
-									{
-										if (wallType + TileProperties.WallOffset > (TileProperties.TYPES - 1))
-										{
-											tileType = TileProperties.Unknown;
-										}
-										else
-										{
-											tileType = (Int16) (wallType + TileProperties.WallOffset);
-										}
-									}
-
-									// Read in the wall color.
-									if (reader.ReadBoolean())
-										reader.ReadByte();
-								}
-
-								isLiquid = reader.ReadBoolean();
-								if (isLiquid)
-								{
-									liquidLevel = reader.ReadByte();
-									isLava = reader.ReadBoolean();
-									isHoney = reader.ReadBoolean();
-									if (tileType > TileProperties.Unknown)
-									{
-										if (isLava == true)
-										{
-											tileType = TileProperties.Lava;
-										}
-										else if (isHoney == true)
-                                        {
-                                            tileType = TileProperties.Honey;
-                                        }
-                                        else
-                                        {
-    										tileType = TileProperties.Water;
-										}
-									}
-
-								}
-
-								// Red Wire
-								hasWire = reader.ReadBoolean();
-
-								if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
-									tileType = TileProperties.RedWire;
-
-								// Blue Wire
-								hasWire = reader.ReadBoolean();
-
-								if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
-									tileType = TileProperties.BlueWire;
-
-								// Green Wire
-								hasWire = reader.ReadBoolean();
-
-								if ((hasWire == true) && (SettingsManager.Instance.DrawWires))
-									tileType = TileProperties.GreenWire;
-
-								// Half bricks.
-								reader.ReadBoolean();
+                //                // Slope byte
+                //                reader.ReadByte();
 								
-								// Slope byte
-								reader.ReadByte();
-								
-								// Actuator
-								reader.ReadBoolean();
-								// IsActive
-								reader.ReadBoolean();
+                //                // Actuator
+                //                reader.ReadBoolean();
+                //                // IsActive
+                //                reader.ReadBoolean();
 
-								RLERemaining = reader.ReadInt16();
+                //                RLERemaining = reader.ReadInt16();
 
-								retTiles[col, row] = tileType;
-							}
-							else
-							{
-								if ((tileType >= TileProperties.BackgroundOffset)
-									&& (tileType <= TileProperties.BackgroundOffset + 6))
-								{
-									if (row < header.SurfaceLevel)
-										tileType = TileProperties.BackgroundOffset;
-									else if (row == header.SurfaceLevel)
-										tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-									else if (row < (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-									else if (row == (header.RockLayer + 38))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-									else if (row < (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-									else if (row == (header.MaxTiles.Y - 202))
-										tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-									else
-										tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-								}
+                //                retTiles[col, row] = tileType;
+                //            }
+                //            else
+                //            {
+                //                if ((tileType >= TileProperties.BackgroundOffset)
+                //                    && (tileType <= TileProperties.BackgroundOffset + 6))
+                //                {
+                //                    if (row < header.SurfaceLevel)
+                //                        tileType = TileProperties.BackgroundOffset;
+                //                    else if (row == header.SurfaceLevel)
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+                //                    else if (row < (header.RockLayer + 38))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
+                //                    else if (row == (header.RockLayer + 38))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
+                //                    else if (row < (header.MaxTiles.Y - 202))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
+                //                    else if (row == (header.MaxTiles.Y - 202))
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+                //                    else
+                //                        tileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
+                //                }
 
-								retTiles[col, row] = tileType;
-								RLERemaining--;
-							}
-						}
-					}
-				}
+                //                retTiles[col, row] = tileType;
+                //                RLERemaining--;
+                //            }
+                //        }
+                //    }
+                //}
 
 				ReadChests();
 				ReadSigns();
 				ReadNPCs();
-				ReadNPCNames();
+				//ReadNPCNames();
 				ReadFooter();
-#if (DEBUG == false)
+
 			}
 			catch (Exception e)
 			{
@@ -1276,7 +1139,7 @@ namespace MoreTerra.Structures
 				retTiles = null;
 				throw e;
 			}
-#endif
+
 
 			if (bw != null)
 			{

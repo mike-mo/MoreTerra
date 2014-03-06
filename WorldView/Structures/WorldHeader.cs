@@ -85,6 +85,8 @@
 		private String witchdoctorsName; // 228
 		private String piratesName; // 229
 
+        public int[] sectionPointers;
+
         [CategoryAttribute("General"), ReadOnlyAttribute(true)]
         public int ReleaseNumber
         {

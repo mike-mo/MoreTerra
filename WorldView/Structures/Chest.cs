@@ -46,6 +46,7 @@ namespace MoreTerra.Structures
         private List<Item> items;
 		private ChestType chestType;
 
+
 		#region Constructors
         public Chest(int chestId, Point coordinates)
         {
@@ -70,6 +71,8 @@ namespace MoreTerra.Structures
         }
 
 		#region GetSet Functions
+        public string Name { get; set; }
+
         public Point Coordinates
         {
             get

@@ -78,6 +78,8 @@
 				tileMarkersToAdd.Add(mt, new List<MarkerLoc>());
 			}
 
+        
+
 			if (bw != null)
 				bw.ReportProgress(45, "Processing Chests");
 

@@ -161,7 +161,7 @@
     <Compile Include="Structures\SymbolLoc.cs" />
     <Compile Include="Structures\TileProperties.cs" />
     <Compile Include="Structures\WorldHeader.cs" />
-    <Compile Include="Utilities\WorldFile.cs" />
+    <Compile Include="Structures\WorldFile.cs" />
     <Compile Include="WorldMapper.cs" />
     <Compile Include="FormWorldView.cs">
       <SubType>Form</SubType>
