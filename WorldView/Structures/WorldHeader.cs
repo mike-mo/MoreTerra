@@ -84,6 +84,7 @@
 		private String paintersName; // 227
 		private String witchdoctorsName; // 228
 		private String piratesName; // 229
+        private String stylistName;
 
         public int[] sectionPointers;
 
@@ -1051,6 +1052,19 @@
 				piratesName = value;
 			}
 		}
+
+        [CategoryAttribute("NPC Names"), ReadOnlyAttribute(true)]
+        public String StylistName
+        {
+            get
+            {
+                return stylistName;
+            }
+            set
+            {
+                stylistName = value;
+            }
+        }
 
 
 	}

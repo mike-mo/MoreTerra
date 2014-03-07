@@ -2387,6 +2387,7 @@
     <npc name="Painter" npcImage="227" />
     <npc name="Witch Doctor" npcImage="228" />
     <npc name="Pirate" npcImage="229" />
+    <npc name="Stylist" npcImage="230" />
   </npcs>
   <colors>
     <color name="Unknown" red="255" green="0" blue="255" />
@@ -2512,6 +2513,7 @@
       <marker name="Santa Claus"  />
       <marker name="Spawn"  />
       <marker name="Steampunker"  />
+      <marker name="Stylist"/>
       <marker name="Truffle"  />
       <marker name="Witch Doctor"  />
       <marker name="Wizard"  />

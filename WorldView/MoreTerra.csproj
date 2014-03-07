@@ -224,7 +224,6 @@
   <ItemGroup>
     <None Include="Resources\objects_heart.png" />
     <None Include="Resources\objects_shadow.png" />
-    <None Include="Resources\people_spawn.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\objects_altar.png" />
@@ -239,6 +238,7 @@
     <None Include="Resources\objects_statue.png" />
     <None Include="Resources\objects_tombstone.png" />
     <None Include="Resources\objects_torch.png" />
+    <None Include="Resources\people_spawn.png" />
     <None Include="Resources\SmallCannon.ico" />
     <None Include="Resources\people_mech.png" />
     <None Include="Resources\people_tinker.png" />
@@ -313,6 +313,7 @@
     <None Include="Resources\objects_silvercache.png" />
     <None Include="Resources\objects_coppercache.png" />
     <None Include="Resources\objects_enchantedsword.png" />
+    <None Include="Resources\people_stylist.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />

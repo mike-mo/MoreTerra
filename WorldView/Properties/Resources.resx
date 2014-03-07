@@ -376,6 +376,9 @@
   <data name="Steampunker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\people_steampunker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Stylist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\people_stylist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Tin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ore_tin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
