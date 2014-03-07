@@ -557,17 +557,17 @@ namespace MoreTerra.Structures
 					theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
 
                     theChest.Name = reader.ReadString();
-                    theChest.Type = ChestType.Chest;
+                   
 
-                    //if (chestTypeList != null)
-                    //{
-                    //    if (chestTypeList.ContainsKey(theChest.Coordinates))
-                    //        theChest.Type = chestTypeList[theChest.Coordinates];
-                    //}
-                    //else
-                    //{
-                    //    theChest.Type = ChestType.Chest;
-                    //}
+                    if (chestTypeList != null)
+                    {
+                        if (chestTypeList.ContainsKey(theChest.Coordinates))
+                            theChest.Type = chestTypeList[theChest.Coordinates];
+                    }
+                    else
+                    {
+                        theChest.Type = ChestType.Chest;
+                    }
 
 					for (j = 0; j < maxItems; j++)
 					{
@@ -795,6 +795,7 @@ namespace MoreTerra.Structures
                 short ntileType = TileProperties.BackgroundOffset;
               //  reader.BaseStream.Seek(sectionPointers[1],SeekOrigin.Begin);
                 int run = 0;
+                chestTypeList = new Dictionary<Point, ChestType>();
                 for (int ncolumn = 0; ncolumn < header.MaxTiles.X; ncolumn++)
                 {
                     for (int nrow = 0; nrow < header.MaxTiles.Y; nrow++)
@@ -838,8 +839,15 @@ namespace MoreTerra.Structures
                             ntileType = reader.ReadByte();
                             if (tileImportant[ntileType])
                             {
-                                 reader.ReadInt16();
-                                 reader.ReadInt16();
+                                 var typeX = reader.ReadInt16();
+                                 var typeY = reader.ReadInt16();
+                                 if ((ntileType == TileProperties.Chest) && (typeX % 36 == 0) && (typeY == 0))
+                                 {
+                                     if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
+                                         chestTypeList.Add(new Point(ncolumn, nrow), (ChestType)(typeX / 36));
+                                     else
+                                         chestTypeList.Add(new Point(ncolumn, nrow), ChestType.Unknown);
+                                 }
                             }
                             if ((thirdHeader & 8) == 8)
                                 reader.ReadByte();
