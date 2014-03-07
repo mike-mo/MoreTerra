@@ -1014,26 +1014,26 @@ namespace MoreTerra.Structures
                 //                }
 
                 //                isWall = reader.ReadBoolean();
-                //                if (isWall)
-                //                {
-                //                    wallType = reader.ReadByte();
+                //if (isWall)
+                //{
+                //    wallType = reader.ReadByte();
 
-                //                    if (tileType >= TileProperties.Unknown)
-                //                    {
-                //                        if (wallType + TileProperties.WallOffset > (TileProperties.TYPES - 1))
-                //                        {
-                //                            tileType = TileProperties.Unknown;
-                //                        }
-                //                        else
-                //                        {
-                //                            tileType = (Int16) (wallType + TileProperties.WallOffset);
-                //                        }
-                //                    }
+                //    if (tileType >= TileProperties.Unknown)
+                //    {
+                //        if (wallType + TileProperties.WallOffset > (TileProperties.TYPES - 1))
+                //        {
+                //            tileType = TileProperties.Unknown;
+                //        }
+                //        else
+                //        {
+                //            tileType = (Int16)(wallType + TileProperties.WallOffset);
+                //        }
+                //    }
 
-                //                    // Read in the wall color.
-                //                    if (reader.ReadBoolean())
-                //                        reader.ReadByte();
-                //                }
+                //    // Read in the wall color.
+                //    if (reader.ReadBoolean())
+                //        reader.ReadByte();
+                //}
 
                 //                isLiquid = reader.ReadBoolean();
                 //                if (isLiquid)
