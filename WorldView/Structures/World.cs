@@ -662,21 +662,17 @@ namespace MoreTerra.Structures
 				theNPC.Id = i;
 
 				theNPC.Active = nextNPC;
-                theNPC.Type = (NPCType)Enum.Parse(typeof(NPCType), reader.ReadString().Replace(" ",""));
+
+                if (Enum.TryParse(reader.ReadString().Replace(" ", ""), true, out npcType))
+                    theNPC.Type = npcType;
+                else
+                    theNPC.Type = NPCType.Unknown;
+
 				theNPC.Name = reader.ReadString();
 				theNPC.Position = new PointSingle(reader.ReadSingle(), reader.ReadSingle());
 				theNPC.Homeless = reader.ReadBoolean();
 				theNPC.HomeTile = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-				nameArray = theNPC.Name.Split(' ');
-				nameCrunch = "";
-				for (Int32 j = 0; j < nameArray.Length; j++)
-					nameCrunch += nameArray[j];
-
-                //if (Enum.TryParse<NPCType>(nameCrunch, out npcType))
-                //    theNPC.Type = npcType;
-                //else
-                //    theNPC.Type = NPCType.Unknown;
 					
 				npcs.Add(theNPC);
 				i++;
