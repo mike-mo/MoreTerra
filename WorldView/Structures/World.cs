@@ -850,8 +850,10 @@ namespace MoreTerra.Structures
 
                         }
                         if ((firstHeader & 4) == 4)
-                        {
-                            reader.ReadByte();
+                        { 
+                            wallType = reader.ReadByte();
+                            if (ntileType >= TileProperties.Unknown)
+                                ntileType = (Int16)(wallType + TileProperties.WallOffset);
                             if ((thirdHeader & 16) == 16)
                                 reader.ReadByte();
                         }
