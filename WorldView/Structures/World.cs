@@ -841,6 +841,74 @@ namespace MoreTerra.Structures
                             {
                                  var typeX = reader.ReadInt16();
                                  var typeY = reader.ReadInt16();
+                                 if (ntileType == TileProperties.ExposedGems)
+                                 {
+                                     if (typeX == 0)
+                                         ntileType = TileProperties.Amethyst;
+                                     else if (typeX == 18)
+                                         ntileType = TileProperties.Topaz;
+                                     else if (typeX == 36)
+                                         ntileType = TileProperties.Sapphire;
+                                     else if (typeX == 54)
+                                         ntileType = TileProperties.Emerald;
+                                     else if (typeX == 72)
+                                         ntileType = TileProperties.Ruby;
+                                     else if (typeX == 90)
+                                         ntileType = TileProperties.Diamond;
+                                     else if (typeX == 108)
+                                         ntileType = TileProperties.ExposedGems;
+                                     // If it's 108 we keep it as ExposedGems so it get the Amber marker.
+                                 }
+                                 else if (ntileType == TileProperties.SmallDetritus)
+                                 {
+                                     if ((typeX % 36 == 0) && (typeY == 18))
+                                     {
+                                         int type = typeX / 36;
+
+                                         if (type == 16)
+                                             ntileType = TileProperties.CopperCache;
+                                         else if (type == 17)
+                                             ntileType = TileProperties.SilverCache;
+                                         else if (type == 18)
+                                             ntileType = TileProperties.GoldCache;
+                                         else if (type == 19)
+                                             ntileType = TileProperties.Amethyst;
+                                         else if (type == 20)
+                                             ntileType = TileProperties.Topaz;
+                                         else if (type == 21)
+                                             ntileType = TileProperties.Sapphire;
+                                         else if (type == 22)
+                                             ntileType = TileProperties.Emerald;
+                                         else if (type == 23)
+                                             ntileType = TileProperties.Ruby;
+                                         else if (type == 24)
+                                             ntileType = TileProperties.Diamond;
+                                     }
+                                 }
+                                 else if (ntileType == TileProperties.LargeDetritus)
+                                 {
+                                     if ((typeX % 54 == 0) && (typeY == 0))
+                                     {
+                                         int type = typeX / 54;
+
+                                         if (type == 16 || type == 17)
+                                             ntileType = TileProperties.CopperCache;
+                                         else if (type == 18 || type == 19)
+                                             ntileType = TileProperties.SilverCache;
+                                         else if (type == 20 || type == 21)
+                                             ntileType = TileProperties.GoldCache;
+                                     }
+                                 }
+                                 else if (ntileType == TileProperties.LargeDetritus2)
+                                 {
+                                     if ((typeX % 54 == 0) && (typeY == 0))
+                                     {
+                                         int type = typeX / 54;
+
+                                         if (type == 17)
+                                             ntileType = TileProperties.EnchantedSword;
+                                     }
+                                 }
                                  if ((ntileType == TileProperties.Chest) && (typeX % 36 == 0) && (typeY == 0))
                                  {
                                      if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
@@ -848,6 +916,7 @@ namespace MoreTerra.Structures
                                      else
                                          chestTypeList.Add(new Point(ncolumn, nrow), ChestType.Unknown);
                                  }
+
                             }
                             if ((thirdHeader & 8) == 8)
                                 reader.ReadByte();
