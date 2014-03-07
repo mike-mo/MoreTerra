@@ -23,6 +23,8 @@ namespace MoreTerra
         public MainWindow()
         {
             InitializeComponent();
+            gridWorldFiles.DataContext = WorldFile.ListFiles();
+
         }
     }
 }
