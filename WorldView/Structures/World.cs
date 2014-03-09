@@ -836,7 +836,10 @@ namespace MoreTerra.Structures
 
                         if ((firstHeader & 2) == 2)
                         {
-                            ntileType = reader.ReadByte();
+                            if((firstHeader & 32) == 32)
+                                ntileType = reader.ReadInt16();
+                            else
+                                ntileType = reader.ReadByte();
                             if (tileImportant[ntileType])
                             {
                                  var typeX = reader.ReadInt16();
@@ -1194,7 +1197,7 @@ namespace MoreTerra.Structures
                 //        }
                 //    }
                 //}
-
+              //  reader.BaseStream.Seek(sectionPointers[2], SeekOrigin.Begin);
 				ReadChests();
 				ReadSigns();
 				ReadNPCs();
