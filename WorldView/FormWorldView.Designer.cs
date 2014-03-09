@@ -191,6 +191,7 @@
             // 
             // checkBoxOfficialColors
             // 
+            this.checkBoxOfficialColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxOfficialColors.AutoSize = true;
             this.checkBoxOfficialColors.Checked = true;
             this.checkBoxOfficialColors.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -204,6 +205,9 @@
             // 
             // pictureBox
             // 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.Location = new System.Drawing.Point(6, 108);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(562, 221);
@@ -212,6 +216,7 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(243, 358);
             this.label4.Name = "label4";
@@ -221,8 +226,7 @@
             // 
             // comboBoxCropImage
             // 
-            this.comboBoxCropImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxCropImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxCropImage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCropImage.FormattingEnabled = true;
             this.comboBoxCropImage.Items.AddRange(new object[] {
@@ -236,6 +240,7 @@
             // 
             // checkBoxDrawWires
             // 
+            this.checkBoxDrawWires.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxDrawWires.AutoSize = true;
             this.checkBoxDrawWires.Checked = true;
             this.checkBoxDrawWires.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -248,6 +253,7 @@
             // 
             // checkBoxDrawWalls
             // 
+            this.checkBoxDrawWalls.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxDrawWalls.AutoSize = true;
             this.checkBoxDrawWalls.Checked = true;
             this.checkBoxDrawWalls.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -349,7 +355,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 318F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 401F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(562, 401);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
@@ -1101,6 +1107,7 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.buttonSettingsDelete);
             this.groupBox8.Controls.Add(this.buttonSettingsAddNew);
             this.groupBox8.Controls.Add(this.comboBoxSettings);
@@ -1146,7 +1153,6 @@
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBoxSelectWorld);
             this.Controls.Add(this.tabControlSettings);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MinimumSize = new System.Drawing.Size(502, 486);
             this.Name = "FormWorldView";
             this.Padding = new System.Windows.Forms.Padding(3);
