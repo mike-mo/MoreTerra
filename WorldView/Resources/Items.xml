@@ -426,6 +426,26 @@
     <wall name="Krampus Horn Wallpaper" wallImage="123" color="Unknown" officialColor="#887707" />
     <wall name="Bluegreen Wallpaper" wallImage="124" color="Unknown" officialColor="#084803" />
     <wall name="Grinch Finger Wallpaper" wallImage="125" color="Unknown" officialColor="#758452" />
+    <wall name="Fancy Grey Wallpaper" wallImage="126" color="Unknown" officialColor="#111F41" />
+    <wall name="Ice Floe Wallpaper" wallImage="127" color="Unknown" officialColor="#C0AD8F" />
+    <wall name="Music Wallpaper" wallImage="128" color="Unknown" officialColor="#727283" />
+    <wall name="PurpleRain Wallpaper" wallImage="129" color="Unknown" officialColor="#887707" />
+    <wall name="Rainbow Wallpaper" wallImage="130" color="Unknown" officialColor="#084803" />
+    <wall name="Sparkle Stone Wallpaper" wallImage="131" color="Unknown" officialColor="#758452" />
+    <wall name="Starlit Heaven Wallpaper" wallImage="132" color="Unknown" officialColor="#727283" />
+    <wall name="Bubble Wallpaper" wallImage="133" color="Unknown" officialColor="#887707" />
+    <wall name="CopperPipe Wallpaper" wallImage="134" color="Unknown" officialColor="#084803" />
+    <wall name="Ducky Wallpaper" wallImage="135" color="Unknown" officialColor="#758452" />
+    <wall name="Waterfallr" wallImage="136" color="Unknown" officialColor="#111F41" />
+    <wall name="Lavafall" wallImage="137" color="Unknown" officialColor="#C0AD8F" />
+    <wall name="Ebonwood Fence" wallImage="138" color="Unknown" officialColor="#727283" />
+    <wall name="RichMahogany Fence" wallImage="139" color="Unknown" officialColor="#887707" />
+    <wall name="Pearlwood Fence" wallImage="140" color="Unknown" officialColor="#084803" />
+    <wall name="Shadewood Fence" wallImage="141" color="Unknown" officialColor="#758452" />
+    <wall name="White Dynasty" wallImage="142" color="Unknown" officialColor="#727283" />
+    <wall name="Blue Dynasty" wallImage="143" color="Unknown" officialColor="#887707" />
+    <wall name="Arcane Runes" wallImage="144" color="Unknown" officialColor="#084803" />
+    <wall name="Count" wallImage="145" color="Unknown" officialColor="#758452" />
   </walls>
   <items>
     <item name="1 Second Timer" itemImage="583" />
