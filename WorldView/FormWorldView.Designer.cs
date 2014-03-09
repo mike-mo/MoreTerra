@@ -988,9 +988,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(241, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(231, 13);
+            this.label3.Size = new System.Drawing.Size(199, 13);
             this.label3.TabIndex = 15;
-            this.label3.Text = "by: fperks, noroom, solsund, Jonathan Kaufman";
+            this.label3.Text = "by:  noroom, solsund, Jonathan Kaufman";
             // 
             // label2
             // 

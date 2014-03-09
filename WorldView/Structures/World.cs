@@ -781,6 +781,13 @@ namespace MoreTerra.Structures
 
 				ReadHeader();
 
+                if (reader.BaseStream.Position != sectionPointers[1])
+                {
+                    reader.Close();
+                    throw new Exception("Error reading header. Please let MoreTerra team know!");
+                    
+                }
+
 				MaxX = header.MaxTiles.X;
 				MaxY = header.MaxTiles.Y;
 
@@ -962,11 +969,22 @@ namespace MoreTerra.Structures
                     
                 }
 
-		
 
 
-              //  reader.BaseStream.Seek(sectionPointers[2], SeekOrigin.Begin);
+
+                if (reader.BaseStream.Position != sectionPointers[2])
+                {
+                    reader.Close();
+                    throw new Exception("Error reading tiles. Please let MoreTerra team know!");
+
+                }
 				ReadChests();
+                if (reader.BaseStream.Position != sectionPointers[3])
+                {
+                    reader.Close();
+                    throw new Exception("Error reading chests. Please let MoreTerra team know!");
+
+                }
 				ReadSigns();
 				ReadNPCs();
 				//ReadNPCNames();
