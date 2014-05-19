@@ -282,11 +282,28 @@
     <tile name="Spooky Wood" tileImage="253" color="Unknown" officialColor="#393061" />
     <tile name="Pumpkins" tileImage="254" important="true" color="Unknown" officialColor="#F89E5C" />
 
+    <!-- 1.2.4.1 -->
+    <tile name="Amethyst Gemspark Off" tileImage="255" color="Unknown" officialColor="#56555C" />
+    <tile name="Topaz Gemspark Off" tileImage="256" color="Unknown" officialColor="#EB9617" />
+    <tile name="Sapphire Gemspark Off" tileImage="257" color="Unknown" officialColor="#99832C" />
+    <tile name="Emerald Gemspark Off Wood" tileImage="258" color="Unknown" officialColor="#393061" />
+    <tile name="Ruby Gemspark Off" tileImage="259" important="true" color="Unknown" officialColor="#F89E5C" />
+    <tile name="Diamond Gemspark Off" tileImage="260" important="true" color="Unknown" officialColor="#F89E5C" />
+    <tile name="Amber Gemspark Off" tileImage="261" important="true" color="Unknown" officialColor="#F89E5C" />
+    <tile name="Womannequin" tileImage="262" color="Unknown" officialColor="#56555C" />
+    <tile name="Topaz Gemspark Off" tileImage="263" color="Unknown" officialColor="#EB9617" />
+    <tile name="Sapphire Gemspark Off" tileImage="264" color="Unknown" officialColor="#99832C" />
+    <tile name="Emerald Gemspark Off Wood" tileImage="265" color="Unknown" officialColor="#393061" />
+    <tile name="Ruby Gemspark Off" tileImage="266" important="true" color="Unknown" officialColor="#F89E5C" />
+    <tile name="Diamond Gemspark Off" tileImage="267" important="true" color="Unknown" officialColor="#F89E5C" />
+    <tile name="Amber Gemspark Off" tileImage="268" important="true" color="Unknown" officialColor="#F89E5C" />
     <!-- Tiles after this are a hack and not meant to be kept past testing -->
-    <tile name="Gold Cache" tileImage="255" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
-    <tile name="Silver Cache" tileImage="256" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
-    <tile name="Copper Cache" tileImage="257" color="Unknown" officialColor="#964316" marker="Copper Cache" />
-    <tile name="Enchanted Sword" tileImage="258" color="Unknown" officialColor="#7998EF" marker="Enchanted Sword" />
+    <tile name="Copper Cache" tileImage="330" color="Unknown" officialColor="#964316" marker="Copper Cache" />
+    <tile name="Silver Cache" tileImage="331" color="Unknown" officialColor="#B9C2C3" marker="Silver Cache" />
+    <tile name="Gold Cache" tileImage="332" color="Unknown" officialColor="#B9A417" marker="Gold Cache" />
+    
+    
+    <tile name="Enchanted Sword" tileImage="333" color="Unknown" officialColor="#7998EF" marker="Enchanted Sword" />
   </tiles>
   <walls>
     <wall name="Stone Wall" wallImage="1" color="#424242" officialColor="#343434" />
@@ -445,7 +462,34 @@
     <wall name="White Dynasty" wallImage="142" color="Unknown" officialColor="#727283" />
     <wall name="Blue Dynasty" wallImage="143" color="Unknown" officialColor="#887707" />
     <wall name="Arcane Runes" wallImage="144" color="Unknown" officialColor="#084803" />
-    <wall name="Count" wallImage="145" color="Unknown" officialColor="#758452" />
+    <wall name="Iron Fence" wallImage="145" color="Unknown" officialColor="#887707" />
+    <wall name="Copper Plating" wallImage="146" color="Unknown" officialColor="#084803" />
+    <wall name="Stone Slab" wallImage="147" color="Unknown" officialColor="#758452" />
+    <wall name="Sail" wallImage="148" color="Unknown" officialColor="#727283" />
+    <wall name="Boreal Wood" wallImage="149" color="Unknown" officialColor="#887707" />
+    <wall name="Boreal Wood Fence" wallImage="150" color="Unknown" officialColor="#084803" />
+    <wall name="Palm Wood" wallImage="151" color="Unknown" officialColor="#887707" />
+    <wall name="Palm Wood Fence" wallImage="152" color="Unknown" officialColor="#084803" />
+    <wall name="Amber Gemspark" wallImage="153" color="Unknown" officialColor="#887707" />
+    <wall name="Amethyst Gemspark" wallImage="154" color="Unknown" officialColor="#084803" />
+    <wall name="Diamond Gemspark" wallImage="155" color="Unknown" officialColor="#084803" />
+    <wall name="Emerald Gemspark" wallImage="156" color="Unknown" officialColor="#084803" />
+    <wall name="Amber Gemspark Off" wallImage="157" color="Unknown" officialColor="#887707" />
+    <wall name="Amethyst Gemspark Off" wallImage="158" color="Unknown" officialColor="#084803" />
+    <wall name="Diamond Gemspark Off" wallImage="159" color="Unknown" officialColor="#084803" />
+    <wall name="Emerald Gemspark Off" wallImage="160" color="Unknown" officialColor="#084803" />
+    <wall name="Ruby Gemspark Off" wallImage="161" color="Unknown" officialColor="#084803" />
+    <wall name="Sapphire Gemspark Off" wallImage="162" color="Unknown" officialColor="#084803" />
+    <wall name="Topaz Gemspark Off" wallImage="163" color="Unknown" officialColor="#084803" />
+    <wall name="Ruby Gemspark" wallImage="164" color="Unknown" officialColor="#084803" />
+    <wall name="Sapphire Gemspark" wallImage="165" color="Unknown" officialColor="#084803" />
+    <wall name="Topaz Gemspark" wallImage="166" color="Unknown" officialColor="#084803" />
+    <wall name="Tin Plating" wallImage="167" color="Unknown" officialColor="#084803" />
+    <wall name="Confetti" wallImage="168" color="Unknown" officialColor="#084803" />
+    <wall name="Confetti Black" wallImage="169" color="Unknown" officialColor="#084803" />
+    <wall name="Cave Wall" wallImage="170" color="Unknown" officialColor="#084803" />
+    <wall name="Cave Wall2" wallImage="171" color="Unknown" officialColor="#084803" />
+    <wall name="Count" wallImage="172" color="Unknown" officialColor="#758452" />
   </walls>
   <items>
     <item name="1 Second Timer" itemImage="583" />

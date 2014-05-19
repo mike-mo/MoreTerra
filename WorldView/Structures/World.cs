@@ -5,6 +5,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Timers;
 using MoreTerra.Utilities;
+using System.Text;
 
 namespace MoreTerra.Structures
 {
@@ -269,6 +270,10 @@ namespace MoreTerra.Structures
 
 		private void ReadHeader()
 		{
+            //reader.ReadBytes(8);
+            //var hello = reader.ReadString();
+            //byte[] bytes = reader.ReadBytes(10);
+            //var test = Encoding.Unicode.GetString(bytes);
 			int version = reader.ReadInt32();
             if (version < 94)
                 throw new Exception("Must use version 1.2.3.1 or higher!");
@@ -280,8 +285,9 @@ namespace MoreTerra.Structures
             }
             short tiletypeCount = reader.ReadInt16();
             tileImportant = new bool[tiletypeCount];
-            byte mask = 0x80;
             byte flags = 0;
+            byte mask = 0x80;
+            
             for (int k = 0; k < tiletypeCount; k++)
             {
                 if (mask == 0x80)
@@ -307,7 +313,7 @@ namespace MoreTerra.Structures
 					, "Reading Header");
 
 			header = new WorldHeader();
-
+            header.sectionPointers = sectionPointers;
 			header.ReleaseNumber = version;
 			header.Name = reader.ReadString();
 			header.Id = reader.ReadInt32();
@@ -318,12 +324,11 @@ namespace MoreTerra.Structures
 
 			header.WorldCoords = new Rect(x, w, y, h);
 
-			y = reader.ReadInt32();
-			x = reader.ReadInt32();
-
-			MaxX = x;
-			MaxY = y;
-			header.MaxTiles = new Point(x, y);
+	
+            MaxY = reader.ReadInt32();
+			MaxX = reader.ReadInt32();
+		
+			header.MaxTiles = new Point(MaxX, MaxY);
 
 			header.TreeX = new int[3];
 			header.TreeStyle = new int[4];
@@ -416,42 +421,51 @@ namespace MoreTerra.Structures
 
 			header.OreTiers = new int[3];
 			header.Styles = new byte[8];
-			if (version >= 66)
-			{
-				header.IsRaining = reader.ReadBoolean();
-				header.RainTime = reader.ReadInt32();
-				header.MaxRain = reader.ReadSingle();
+            if (version >= 66)
+            {
+                header.IsRaining = reader.ReadBoolean();
+                header.RainTime = reader.ReadInt32();
+                header.MaxRain = reader.ReadSingle();
 
-				for (i = 0; i < 3; i++)
-				{
-					header.OreTiers[i] = reader.ReadInt32();
-			}
+                for (i = 0; i < 3; i++)
+                {
+                    header.OreTiers[i] = reader.ReadInt32();
+                }
 
-				for (i = 0; i < 8; i++)
-			{
-					header.Styles[i] = reader.ReadByte();
-			}
+                for (i = 0; i < 8; i++)
+                {
+                    header.Styles[i] = reader.ReadByte();
+                }
 
-				header.CloudsActive = reader.ReadInt32();
-				header.NumClouds = reader.ReadInt16();
-				header.WindSpeed = reader.ReadSingle();
-			}
-			else if (version >= 24)
-			{
-				if (header.AltarsDestroyed == 0)
-			{
-					for (i = 0; i < 3; i++)
-					{
-						header.OreTiers[i] = -1;
-					}
-			}
-				else
-			{
-					header.OreTiers[1] = 107;
-					header.OreTiers[1] = 108;
-					header.OreTiers[1] = 111;
-			}
-			}
+                header.CloudsActive = reader.ReadInt32();
+                header.NumClouds = reader.ReadInt16();
+                header.WindSpeed = reader.ReadSingle();
+                List<string> anglerWhoFinishedToday = new List<string>(); 
+                for (int index = reader.ReadInt32(); index > 0; --index)
+                    anglerWhoFinishedToday.Add(reader.ReadString());
+                if (version < 99)
+                    return;
+                var savedAngler = reader.ReadBoolean();
+                if (version < 101)
+                    return;
+                var anglerQuest = reader.ReadInt32();
+            }
+            else if (version >= 24)
+            {
+                if (header.AltarsDestroyed == 0)
+                {
+                    for (i = 0; i < 3; i++)
+                    {
+                        header.OreTiers[i] = -1;
+                    }
+                }
+                else
+                {
+                    header.OreTiers[1] = 107;
+                    header.OreTiers[1] = 108;
+                    header.OreTiers[1] = 111;
+                }
+            }
 				
 			posTiles = stream.Position;
 			progressPosition = stream.Position;
@@ -774,19 +788,12 @@ namespace MoreTerra.Structures
 				readWorldPerc = 45;
 
 				stream = new FileStream(worldPath, FileMode.Open, FileAccess.Read);
-				reader = new BinaryReader(stream);
+				reader = new BinaryReader(stream,Encoding.Default);
 
                 
 
 
 				ReadHeader();
-
-                if (reader.BaseStream.Position != sectionPointers[1])
-                {
-                    reader.Close();
-                    throw new Exception("Error reading header. Please let MoreTerra team know!");
-                    
-                }
 
 				MaxX = header.MaxTiles.X;
 				MaxY = header.MaxTiles.Y;
@@ -969,22 +976,11 @@ namespace MoreTerra.Structures
                     
                 }
 
+				
 
 
-
-                if (reader.BaseStream.Position != sectionPointers[2])
-                {
-                    reader.Close();
-                    throw new Exception("Error reading tiles. Please let MoreTerra team know!");
-
-                }
+              //  reader.BaseStream.Seek(sectionPointers[2], SeekOrigin.Begin);
 				ReadChests();
-                if (reader.BaseStream.Position != sectionPointers[3])
-                {
-                    reader.Close();
-                    throw new Exception("Error reading chests. Please let MoreTerra team know!");
-
-                }
 				ReadSigns();
 				ReadNPCs();
 				//ReadNPCNames();
