@@ -446,6 +446,7 @@
 										rgbValues[tilePos] = color.B;
 										rgbValues[tilePos + 1] = color.G;
 										rgbValues[tilePos + 2] = color.R;
+                                        
 									}
 
 							foundCol = (int)(bounds.X + (bounds.Width / 2));

@@ -423,7 +423,8 @@ namespace MoreTerra.Structures.TerraInfo
 				wall.color = useColor;
                 wall.officialColor = useOfficialColor;
                 wall.transparent = transparent;
-
+                wall.color = wall.transparent ? Color.FromArgb(0,useColor) : useColor;
+                
 				walls.Add(wallImage, wall);
 			}
 		}

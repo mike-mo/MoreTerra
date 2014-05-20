@@ -2451,7 +2451,9 @@
     <npc name="Painter" npcImage="227" />
     <npc name="Witch Doctor" npcImage="228" />
     <npc name="Pirate" npcImage="229" />
-    <npc name="Stylist" npcImage="230" />
+    <npc name="Stylist" npcImage="353" />
+    <npc name="Travelling Merchant" npcImage="368" />
+    <npc name="Angler" npcImage="369" />
   </npcs>
   <colors>
     <color name="Unknown" red="255" green="0" blue="255" />
@@ -2559,6 +2561,7 @@
       <marker name="Titanium"  />
     </markerset>
     <markerset name="People">
+      <marker name="Angler" />
       <marker name="Arms Dealer"  />
       <marker name="Clothier"  />
       <marker name="Cyborg"  />

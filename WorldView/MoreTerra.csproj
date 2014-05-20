@@ -317,6 +317,7 @@
     <None Include="Resources\objects_coppercache.png" />
     <None Include="Resources\objects_enchantedsword.png" />
     <None Include="Resources\people_stylist.png" />
+    <None Include="Resources\people_angler.png" />
     <Content Include="Text Files\Changelog.txt" />
     <None Include="Resources\gem_base.png" />
     <None Include="Resources\objects_base.png" />
