@@ -127,6 +127,7 @@ namespace MoreTerra
                 bool show_help = false;
                 string worldPath = string.Empty;
                 string mapPath = string.Empty;
+                string configName = string.Empty;
 
                 var p = new OptionSet() {
                     { "w|world=", "The path to the {WORLD} to map.",
@@ -135,6 +136,8 @@ namespace MoreTerra
                        v => mapPath = v},
                     { "h|help",  "Show this message and exit.", 
                        v => show_help = v != null },
+                    { "c|config=",  "The named UserSettings to use for this run.", 
+                       v => configName = v }
                 };
 
                 List<string> extra = new List<string>();
@@ -142,7 +145,7 @@ namespace MoreTerra
                 try
                 {
 
-                extra = p.Parse(args);
+                    extra = p.Parse(args);
 
                 }
                 catch (OptionException e)
@@ -174,6 +177,11 @@ namespace MoreTerra
                 }
                 else
                 {
+                    if (!string.IsNullOrWhiteSpace(configName))
+                    {
+                        SettingsManager.Instance.CurrentSettingsName = configName;
+                    }
+
                     Console.WriteLine(Environment.NewLine + "Generating map from:" +
                         Environment.NewLine + " " + worldPath);
 
