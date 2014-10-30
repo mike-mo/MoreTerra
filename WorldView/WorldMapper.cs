@@ -52,9 +52,6 @@
 
         public void ProcessWorld(String worldPath, BackgroundWorker bw)
         {
-			Int32 i;
-           // var worldFile = new WorldFile();
-          //  worldFile.LoadFile(worldPath);
 
 			tiles = world.ReadAndProcessWorld(worldPath, bw);
 			if (tiles == null)
@@ -129,7 +126,7 @@
 				}
 			}
 
-			i = 0;
+			
 			if (bw != null)
 				bw.ReportProgress(50, "Processing Npcs");
 
@@ -152,7 +149,7 @@
 						new Point((Int32) (newNPC.Position.X/16), (Int32) (newNPC.Position.Y/16)), 1));
 				}
 
-				i++;
+				
 			}
 
 			progress = 50;

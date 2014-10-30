@@ -536,10 +536,10 @@ namespace MoreTerra
 
 			tmrMapperProgress.Start();
 
-			#if  (DEBUG == false)
+#if  (!DEBUG)
 			try
 			{
-			#endif
+#endif
 			mapper.OpenWorld();
 
 			//we're drawing a map
@@ -567,7 +567,7 @@ namespace MoreTerra
 			}
 
 			tmrMapperProgress.Stop();
-			#if  (DEBUG == false)
+#if  (!DEBUG)
 			}
 			catch (Exception ex)
 			{
@@ -579,7 +579,7 @@ namespace MoreTerra
 
 				return;
 			}
-			#endif
+#endif
 		}
 
 		private void tmrMapperProgress_Tick(object sender, EventArgs e)

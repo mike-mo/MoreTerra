@@ -26,11 +26,11 @@ namespace MoreTerra.Structures
 		private FileStream stream;
 
 		// Quick lookup for the world sizes.
-		private Int32 MaxX, MaxY;
+		private int MaxX, MaxY;
 
 		// Things to do with showing progress when reading/scanning.
-		private Int32 progress;
-		private Int64 progressPosition;
+		private int progress;
+		private long progressPosition;
 		private BackgroundWorker bw;
 
 		// Lookup table for important tiles.
@@ -208,7 +208,7 @@ namespace MoreTerra.Structures
 				bw = null;
 		}
 
-		#region ReadFunctions
+        #region ReadFunctions
 
 		public void ReadWorld(String world, BackgroundWorker worker = null)
 		{
@@ -755,14 +755,9 @@ namespace MoreTerra.Structures
 
 		public Int16[,] ReadAndProcessWorld(String worldPath, BackgroundWorker worker)
 		{
-			Int32 col, row;
-			bool isTileActive;
-			Int16 tileType = 0;
+
 			Int16[,] retTiles;
-			byte wallType, liquidLevel;
-			bool isLighted, isLava;
-			bool isWall, isLiquid, isHoney;
-			bool hasWire;
+			byte wallType;
 			Timer t = null;
 
 
@@ -1172,7 +1167,7 @@ namespace MoreTerra.Structures
 
 			return chests;
 		}
-		#endregion
+#endregion
 
 		#region SaveFunctions
 		public void SaveWorld(String world)
