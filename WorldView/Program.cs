@@ -63,7 +63,7 @@ namespace MoreTerra
         {
             String error = Global.Instance.Initialize();
 
-#if DEBUG == true
+#if DEBUG
             if (error != String.Empty)
             {
                 MessageBox.Show(error);
@@ -188,7 +188,7 @@ namespace MoreTerra
                     WorldMapper mapper = new WorldMapper();
 
                     Global.Instance.InConsole = true;
-#if (DEBUG == false)
+#if !DEBUG
                     try
                     {
 #endif
@@ -199,7 +199,7 @@ namespace MoreTerra
                     Console.WriteLine("World file closed. Generating PNG...");
                     mapper.CreatePreviewPNG(mapPath, null);
                     Console.WriteLine("Done! Saved to: " + Environment.NewLine + " " + mapPath);
-#if (DEBUG == false)
+#if !DEBUG
                     }
                     catch (Exception ex)
                     {
