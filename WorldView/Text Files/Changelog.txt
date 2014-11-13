@@ -1,0 +1,484 @@
+Release 1.11.5
+=================
+= Compatibility =
+=================
+Updated to add the new tiles/walls in 1.2.2
+
+Release 1.11.4
+=================
+= Compatibility =
+=================
+Updated to add the new tiles/walls in 1.2.1
+
+Release 1.11.3.1
+================
+= New Features =
+================
+Added markers for Copper Cache, Silver Cache and the Enchanted Sword.
+
+=============
+= Bug Fixes =
+=============
+Use Official Colors now no longer tries to change the Draw Wires option instead.
+
+World reading was breaking for people with a stock 1.2 Terraria version.
+
+Changed world name reading so it does not crash the program if you load MoreTerra while Terraria is saving the world.
+
+===================
+= Feature Removal =
+===================
+Scanning for new items has been removed.  Items are no longer saved by name so this was pointless a long time ago.
+The ability to add custom items has also been removed for the same reason.
+
+A lot of unneeded data was removed from the inner database XML file.
+
+Release 1.11.3
+==============
+=New Features=
+==============
+New Markers added for Plantera's Bulb, Heart Fruits and Gold Cache.
+Markers now correctly display for the gems found in rock debris on the floor.
+
+===============
+=Compatibility=
+===============
+Fixed header changes found in Terraria 1.0.3.1
+Added the new items to the item list.
+
+Release 1.11.2
+===========
+=Bug Fixes=
+===========
+We have all markers
+solsund made sure the tile and background colors are correct. (map looks correct with no missing pink)
+Added better error tracking for those having trouble.
+
+
+Release 1.11
+===============
+=Compatibility=
+===============
+Now correctly parses 1.2 wld file.
+
+==============
+=Known Issues=
+==============
+Not all items and tiles are represented correctly.
+
+Release 1.10.2
+===========
+=Bug Fixes=
+===========
+Redid the way I handled the locale issues by removing the floating point values from the data file.
+
+===============
+=Compatibility=
+===============
+Added missing items from Terraria 1.1
+Got the chest reading working with Terraria 1.1.2
+
+==============
+=Optimization=
+==============
+Discovered why the XML file was getting added more than once.  
+
+
+Release 1.10.1
+==============
+=New Features=
+==============
+Added the ability to crop the map to only the playable area.
+
+===========
+=Bug Fixes=
+===========
+Fixed the colors for Gold/Silver.
+
+Fixed locale issues stopping the program from loading.
+
+Fixed an issue that happened when not drawing walls where Lava and Water would vanish.
+
+===============
+=Compatability=
+===============
+All new tiles, walls and NPCs are working.
+
+Release 1.10
+==============
+=New Features=
+==============
+Added a marker for Statues.
+
+Added the option to draw the wiring on the map.
+
+It is now possible to have MoreTerra draw different Markers for each type of Chest/Container.
+
+The chest list now has icons for each chest type.  It only shows them if you have created the
+ list by choosing Draw World though.
+
+Added the version number to the Exception handler, to help make screenshots from bug reports more useful.
+
+Added saving the chest list to basic Text, CSV and XML formats.
+
+Added an option to reset the custom images back to default.
+
+Added an option whether to use the default images or custom ones, for those who changed their images.
+
+Cleaned up the Marker object images.
+
+Redid the settings file for both readability and to add the option to have multiple settings stored.
+
+Removed the ability to resize the window but shrunk the top section down a bit to give the bottom more room.
+
+Dialog boxes now center in the MoreTerra window instead of appearing whereever.
+
+Dialog boxes now respond to Enter/Escape and set the cursor straight into Text boxes.
+
+Added the ability to have multiple settings and easily switch back and forth.
+
+Redid all the tab settings to make keyboard navigation easier.
+
+Dialog boxes now correctly attatch to the main window.
+
+===========
+=Bug Fixes=
+===========
+Fixed the last bug (I hope) in the code for reading backwards to chests.  It should
+ no longer fail for any correctly formed pre-1.1 World file.  1.1 does not work yet.
+
+Refixed the Draw Walls checkbox.
+
+Stopped all the extra pop-up forms from showing on the taskbar.
+
+Fixed a bug that was stopping fully checked parent nodes in the marker list from changing until clicked twice.
+
+Fixed the bug that was causing the "Move All" buttons on the Chest Finder to not turn on properly.
+
+Fixed the bug that was causing the "Remove Custom Item" button to not turn on properly.
+
+Fixed a bug I didn't even know I had fixed.  If a spot had both a wall and water in it any tiles there
+ were getting overwritten on the drawing by the water.  Extra obvious with Jungle gaining Mud wall backgrounds.
+ I only found this as I was comparing a new image to an old one.
+
+=============
+=Refactoring=
+=============
+Changed all places in the code from Symbol to Marker.  Thank god for Visual Studio refactoring.
+
+Redid the way the markers are handled so I could finally stop adding little hacks to get odd things
+ like drawing Npcs or the different chest types in.  Should be useful when it's Herb tracking time too.
+
+Removed SerializableDictionary from the project.  I found it's output too messy, though it was kind of nice
+ to just add new items and not have to do anything else.
+
+===============
+=Compatibility=
+===============
+Added all new tiles and walls.
+
+Rewrote the loading code so it handles the new file format.
+
+==============
+=Optimization=
+==============
+Changed how the icons worked to remove duplicate copies and cut the file size almost in half.
+ That's what I get for assuming it was only adding one for each reference.  Sadly, the new
+ XML data file brings it right back up.
+
+Changed how the Marker drawing code worked to speed up the code when a
+ large # of markers are on.  I'm looking at you Hellstone.
+
+Changed how the tiles get read and processed.  Takes much less memory and
+ runs faster.
+
+Release 1.6.1
+===========
+=Bug Fixes=
+===========
+Finally got the Marker list to show as with three-state checkboxes.
+
+=============
+=Refactoring=
+=============
+Changed the Settings tab to Markers instead.
+
+Added a lot of region statements to help organize the code into easier chunks.
+
+Changed PointInt16 and PointSingle to struct types so they are Value type instead of Reference type.
+
+===============
+=Compatibility=
+===============
+Added the Sawmill.
+
+Release 1.6
+==============
+=New Features=
+==============
+Added "Open image after drawing" checkbox to the list of those saved in the Settings file.
+
+Removed the whole bottom status bar and added a Progress form that allows for outputing status
+ text to the window.
+
+===========
+=Bug Fixes=
+===========
+Fixed a bug I introduced when I shifted WallOffset over that was causing the walls to be drawn one
+ color off.  Aka Stone was drawing as Dirt and Hellstone was drawing as Unknown.
+
+Fixed the tiny bug that was making the Draw Walls checkbox show up as checked when it was not
+ true.
+
+Redid the #'s for reading/processing/drawing the world.  Mainly so that reading the chests,
+ which takes a quarter of a second doesn't take up 20% of the bar.  It now shows amount done
+ by the % of the file read in so far.
+
+=============
+=Refactoring=
+=============
+Completely removed WorldReader from the mix and added a World class instead.  World class
+ handles all loading and saving (not that anything saves) as well as doing tile scanning.
+
+Removed all extra #using definitions from the files.
+
+Added #if/#endif blocks around the try/catch blocks in the code so that when in DEBUG state
+ we can actually see the exceptions with all their useful line numbers.
+
+Changed all the structures over to private with get/set functions.
+
+Changed the Wall names around.  Stone2 to Ebonstone, all brick types now say brick.  Had to
+ do this to differentiate regular Obsidian wall from Obsidian brick walls.
+
+Added a lot of region statements to help organize the code into easier chunks.
+
+===============
+=Compatibility=
+===============
+Added the new items found in chests to the list.
+
+Added all new wall types and tiles.
+
+
+
+
+Release 1.5.5
+==============
+=New Features=
+==============
+Recreated Marker list so that it shows the Marker for each item next to the text for the item.
+
+Added Marker drawing for Hellforges, Signs, Torches, all ores and all NPCs.  Hellforged colored yellow to help
+ stand out against the very dark underworld.  Ore colors are all colored the same as the pixel that would
+ be drawn if the Marker was off.
+
+Added a reader function that will drop to the end of the world file and read in the footer and compare it
+ with the check information found there.  It then puts the stream position back to where it was before it
+ was called.  Useful for finding out if a file is a valid Terraria file.
+
+World name now shows up in the Select World box.
+
+Added a message box that shows up if the version of the file you are loading does not match what this
+ program version is capable of handling.  Can be disabled but will show up again when the another new
+ world version shows up.
+
+Added a button that opens the MoreTerra Application Data/Resources folder to make it easier for people
+ to change the marker icons.
+
+Changed the filter list around.  Now when you move something from one list to the other it removes it
+ from the first list.  Added buttons to move all items at the same time, from one list to the other.
+ Completely reincorporated ItemList.txt into the program again and now there are buttons that allow
+ people to add new items to the list or remove an item no longer needed.  I personally like the fact
+ that MoreTerra can be run from one file alone, without needing anything else in it's directory.
+ Items that were added by the user show up with a * on them.  Of course, when the code catches up
+ those *'s will go back away.
+
+Added a system where it does pop-ups asking you to add objects found in chests that were not
+ already in the list.
+
+Added two items (Breathing Reed, Flipper) to the in-file ItemList.
+
+Added sorting the Chest list in one of three ways.  Also changed the chest list to only fill in based
+ on what items are in the filter list.  You do not need to hit Load Info/Draw again when the filter
+ changes.
+
+Made it so that the Scan item pop-up will not happen in console mode and the version mismatch will only
+ show a message.  We do not want to pause the program waiting for user input in console mode.
+
+Added a system to migrate settings & custom icons to the new folder.
+
+===========
+=Bug Fixes=
+===========
+Fixed a bug where if Draw Walls was turned off it was drawing black instead of Sky color.
+
+Fixed a bug where items that could have a marker on the map were not getting their colors drawn
+ if you turned off drawing of those markers.
+
+Fixed a bug where the InputDirectory was being opened if it did not exist if the Terraria directory
+ did exist.
+
+The new marker drawing code was throwing a very odd out of array range error and I tracked it down to a longstanding
+ bug.  Seems Terraria stores the map height then width but they were being read in as width then height.  Flipped it
+ and the places it references to fix it.
+
+Fixed a bug where the Select World box was not reloading the list when you would change to a new directory.
+
+Fixed the small bug that was stopping the chest filter from loading from the settings properly.
+
+=============
+=Refactoring=
+=============
+Changed the names of the marker PNG files to match the pattern of their type.  This only affects
+ internal names of the files.  The copies found in APPDATA have the same names as before.
+
+Changed every reference from TerrariaWorldViewer to MoreTerra, except for those needed for Migration.
+
+Fixed the spelling of Meteorite and changed the two CorruptionStone items to their in-game names.
+ Also changed UnderworldFurnace over to Hellforge.  Changed Door1 and Door2 to Door & DoorOpen.
+ Changed the three Herb tiles to match the status names from the official Wiki (Immature, Mature, Blooming)
+
+Changed the name of the chest filter list box so that they match each other.  They are now
+ lstAvailableItems and lstFilteredItems.  Bit of a nitpick.  Now to try and keep my hands off
+ off things like "IsWallsDrawable".
+
+Reorganized the files into folders & namespaces.  Structures (data but no real code) are in one.
+ Utilities are in the other.  
+
+==============
+=Optimization=
+==============
+Added a Profiling class so that it is easier to test to see how long certain tasks take.
+
+Added a new property to TileProperties to cache the lookup for what objects are being drawn.  This way
+ it sets it before even reading a single tile so that 
+ one fast Boolean lookup + one costly Dictionary.ContainsKey turns into just one fast Boolean lookup.
+
+Changed marker drawing code so that the check to see if we are drawing them
+ happens before adding them to the list instead of adding markers for
+ everything on the map to a huge list and then filtering there.  Should be faster now.
+
+Added code that will read backwards along the world file to get to the chests faster.  The slowest I ever
+ got the code to run was half a second, which handily beats the 2 to 7 second read time the old way.
+ It does still throw up occasional hiccups when a false positive happens when reading a string but then
+ reads using the old style instead.
+
+Folded the tile reading into ReadWorldTiles directly instead of 20 million calls to GetNextTile.
+
+
+
+
+Release 1.5
+
+==============
+=New Features=
+==============
+Changed the way the Chest Filtering works
+Chest Filter item list is now loaded from ItemList.txt, now it's easy to add new items after an update!
+
+===============
+=Compatibility=
+===============
+Made compatible with 1.0.5 by adding the new tiles.
+Added Terraria 1.0.5 items to the Chest Filter tab.
+
+===========
+=Bug Fixes=
+===========
+Fixed XP compatiblity.
+
+=============
+=Refactoring=
+=============
+Renamed project to MoreTerra.
+
+
+
+
+Future Versions
+================
+= Cleanup TODO =
+================
+The backwards reading system either needs to be gotten working again or it just fully needs to be removed.  Skipping
+ past the tiles instead of reading backwords isn't near as painful these days with the world file RLE compression.
+
+Possibly remove the whole Color tab.
+
+With the chest scanning out FormMessageBoxWithCheckBox seems to be pointless now.
+
+
+==============
+= MAYBE TODO =
+==============
+Add some sort of versioning system to the settings file so we can propogate changes
+ without forcing the user to delete it.  This might not be needed.  The primary headache
+ was that when I tried to add the ore types they'd refuse to load but the list no longer
+ gets populated straight from the Settings file but only pulls the Boolean part from it.
+ Adding new checkboxes works fine.
+ Adding new items to the chest filter works fine as well.
+ Pushing updates to the resource pictures in the Resources directory probably will not be
+ needed once the "Use custom pictures" part is done.
+
+==============
+=    TODO    =
+==============
+Add a TSR type system to the prgram that instead of simply drawing a map and exiting instead
+ monitors that map file and redraws a short bit after the file updates.  Will have to add
+ a keyboard interface, kind of like how the Terraria Server does.  Possibly with an increasing
+ filename & max # of files to keep.  
+
+Change how the settings file is loaded so that people can set things up the way they like
+ and provide that on the command line to use the settings in that file instead.  That way
+ people could potentially run the program twice each cron tick.  Once for one setup and one
+ for another.  Like a map only and a map with items.
+
+Find a way to stuff Min/Max filtering into the new Marker list.  Decided I'll make some items
+ outside of the treeview list for that.  All my ideas about making it show up in the TreeView
+ are too complicated to do.
+
+Reorganize things so that we have proper world objects instead of the horrible broken mix.
+
+Add a way to change the colors of all the tiles as they get drawn.  Change the Markers so that
+ as you change the icons the Markers change too.
+
+Add a popout color option so maps get drawn with only some things in the right colors and the others
+ in a greyscale form.
+
+See if we can manage to get this running under Mono for those users.  Runs (kind of) for me under
+ the windows version of Mono.  A lot of stuff is offset really poorly, some things so far as to
+ switch sides of the Table control they are found in.  Program crashes for some reason when trying
+ to Load Information but doesn't when Drawing a map.  So odd.
+
+Consider adding an herb tracker.  Unlike Mushrooms herbs actually can be found in the file.
+  Whoops, turns out Mushrooms actually _can_ be found in the file.  Thought they were unimportant.
+
+Add a way to remove large numbers of items from the filter list, like maybe to reset it back
+ to where it was by default.  Maybe a set of checkboxes along the bottom that turn on and off
+ what shows up in the list.
+
+Remember to increment version number in project properties!
+
+Get the "Cancel" button on the ProgressBar form working.
+
+Add search to the "available items" chest item list, in winamp's jump to file style (search as you type, pressing enter adds the item)
+ (Sol: I do want a better keyboard interface for the list.  This might not be too hard to implement)
+
+Better colors (gold/copper, silver/cobwebs), generate a color legend somewhere
+ (Sol: Does this need to be on the map?  I have plans to add a Colors tab for custom colors)
+
+Refactor Settings Manager
+ (Sol: What did you have in mind with this?)
+
+Considering / suggestions from reddit:
+
+Auto-generating an image after each auto save (monitor .bak file?)
+ (Sol: Already on my list)
+
+Is it possible to add this in the world info?
+    Chests count
+    Hearts count
+    Iron/Copper/Silver/Gold/Gems Ores count
+ (Sol: All these are possible to add to the world info list box.  However the hearts & gems/ores 
+       would only get generated when doing a full process.  I already had the code counting these
+	   things anyways when I was testing out the new marker system I added.  We could potentially
+	   make it count every single tile type of the map.)
