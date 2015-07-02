@@ -482,6 +482,38 @@ namespace MoreTerra.Structures
 
                 //temp cultist delay
                 reader.ReadInt32();
+
+                int killCountTotal = (int)reader.ReadInt16();
+                for (int killIndex = 0; i < killIndex; i++)
+                {
+                    reader.ReadInt32();
+                }
+
+                //fast forward time
+                reader.ReadBoolean();
+
+
+                //downed fishron
+                reader.ReadBoolean();
+
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+                reader.ReadBoolean();
+
             }
 
 				
@@ -771,10 +803,10 @@ namespace MoreTerra.Structures
 			progressPosition = stream.Position;
 		}
 
-		public Int16[,] ReadAndProcessWorld(String worldPath, BackgroundWorker worker)
+		public int[,] ReadAndProcessWorld(String worldPath, BackgroundWorker worker)
 		{
 
-			Int16[,] retTiles;
+			Int32[,] retTiles;
 			byte wallType;
 			Timer t = null;
 
@@ -812,14 +844,14 @@ namespace MoreTerra.Structures
 				MaxY = header.MaxTiles.Y;
 
 				// Reset MapTile List
-				retTiles = new Int16[MaxX, MaxY];
+				retTiles = new int[MaxX, MaxY];
                // WorldFile wf = new WorldFile();
 
                 if (bw != null)
                     bw.ReportProgress(0, "Reading and Processing Tiles");
 
                 byte firstHeader, secondHeader, thirdHeader = 0;
-                short ntileType = TileProperties.BackgroundOffset;
+                int ntileType = TileProperties.BackgroundOffset;
               //  reader.BaseStream.Seek(sectionPointers[1],SeekOrigin.Begin);
                 int run = 0;
                 chestTypeList = new Dictionary<Point, ChestType>();
@@ -863,8 +895,11 @@ namespace MoreTerra.Structures
 
                         if ((firstHeader & 2) == 2)
                         {
-                            if((firstHeader & 32) == 32)
-                                ntileType = reader.ReadInt16();
+                            if ((firstHeader & 32) == 32)
+                            {
+                                byte num5 = reader.ReadByte();
+                                ntileType = reader.ReadByte() << 8 | num5;
+                            }
                             else
                                 ntileType = reader.ReadByte();
                             if (tileImportant[ntileType])

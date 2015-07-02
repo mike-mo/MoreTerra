@@ -15,7 +15,7 @@
     {
         private List<Chest> chests;
         private Dictionary<MarkerType, List<MarkerLoc>> tileMarkersToAdd;
-        private Int16[,] tiles;
+        private int[,] tiles;
 
 		private World world;
 
@@ -209,7 +209,7 @@
 
 			TileData tileInfo;
 			MarkerType markerType;
-            Int16 tileType;
+            int tileType;
 			Color color;
 
 			if (bw != null)
