@@ -270,24 +270,32 @@ namespace MoreTerra.Structures
 
 		private void ReadHeader()
 		{
-            //reader.ReadBytes(8);
-            //var hello = reader.ReadString();
-            //byte[] bytes = reader.ReadBytes(10);
-            //var test = Encoding.Unicode.GetString(bytes);
+  
 			int version = reader.ReadInt32();
             if (version < 94)
                 throw new Exception("Must use version 1.2.3.1 or higher!");
+
+            ulong fileFormat = reader.ReadUInt64();
+
+            byte fileTypeValue = (byte)(fileFormat >> 56 & (ulong)byte.MaxValue);
+            //Revision
+            uint revision = reader.ReadUInt32();
+
+            //Favorite
+            ulong favorite = reader.ReadUInt64();
+
             short sectionCount = reader.ReadInt16();
             sectionPointers = new int[sectionCount];
             for (int j = 0; j < sectionCount; j++)
             {
                 sectionPointers[j] = reader.ReadInt32();
             }
+            
             short tiletypeCount = reader.ReadInt16();
             tileImportant = new bool[tiletypeCount];
             byte flags = 0;
             byte mask = 0x80;
-            
+
             for (int k = 0; k < tiletypeCount; k++)
             {
                 if (mask == 0x80)
@@ -305,8 +313,8 @@ namespace MoreTerra.Structures
 
 
             }
-			Int32 x, y, w, h;
-			Int32 i;
+            Int32 x, y, w, h;
+            Int32 i;
 
 			if (bw != null)
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
@@ -329,6 +337,14 @@ namespace MoreTerra.Structures
 			MaxX = reader.ReadInt32();
 		
 			header.MaxTiles = new Point(MaxX, MaxY);
+
+            //Expert Mode
+            reader.ReadBoolean();
+
+            //Creation Time
+            reader.ReadInt64();
+
+
 
 			header.TreeX = new int[3];
 			header.TreeStyle = new int[4];
@@ -423,6 +439,12 @@ namespace MoreTerra.Structures
 			header.Styles = new byte[8];
             if (version >= 66)
             {
+                //slime rain time
+                reader.ReadDouble();
+
+                //sundial cooldown
+                reader.ReadByte();
+
                 header.IsRaining = reader.ReadBoolean();
                 header.RainTime = reader.ReadInt32();
                 header.MaxRain = reader.ReadSingle();
@@ -449,23 +471,19 @@ namespace MoreTerra.Structures
                 if (version < 101)
                     return;
                 var anglerQuest = reader.ReadInt32();
+
+                //Saved Stylist
+                reader.ReadBoolean();
+                //Saved Tax Collector
+                reader.ReadBoolean();
+
+                //Inavsion Size Start
+                reader.ReadInt32();
+
+                //temp cultist delay
+                reader.ReadInt32();
             }
-            else if (version >= 24)
-            {
-                if (header.AltarsDestroyed == 0)
-                {
-                    for (i = 0; i < 3; i++)
-                    {
-                        header.OreTiers[i] = -1;
-                    }
-                }
-                else
-                {
-                    header.OreTiers[1] = 107;
-                    header.OreTiers[1] = 108;
-                    header.OreTiers[1] = 111;
-                }
-            }
+
 				
 			posTiles = stream.Position;
 			progressPosition = stream.Position;
