@@ -89,9 +89,44 @@ namespace MoreTerra.Structures
 		#endregion
 	}
 
+	public class TileDataArray
+	{
+		private static TileData unknown;
+		private TileData[] data;
+
+		public TileDataArray(Int32 size)
+		{
+			unknown = new TileData(false, Color.Magenta, Color.Magenta);
+			data = new TileData[size];	
+		}
+
+		public TileData this[int i]
+		{
+			get {
+				if (i < 0 || i >= data.Length)
+					return unknown;
+				return data[i];
+			}
+			set
+			{
+				if (i < 0 || i >= data.Length) return;
+				data[i] = value;
+			}
+		}
+
+		public Int32 Length
+		{
+			get
+			{
+				if (data == null) return 0;
+				return data.Length;
+			}
+		}
+	}
+
 	public class TileProperties
 	{
-		public static TileData[] tileTypeDefs;
+		public static TileDataArray tileTypeDefs;
 
 		public static Int16 Sign;
 		public static Int16 Chest;
@@ -121,14 +156,14 @@ namespace MoreTerra.Structures
 		public static Int16 GreenWire;
 		public static Int16 WallOffset;
 
-		public const int TYPES = 512;
+		public const int TYPES = 1024;
 
 		public static void Initialize()
 		{
 			MarkerType mt;
 			Int16 startPos;
 
-			tileTypeDefs = new TileData[TileProperties.TYPES];
+			tileTypeDefs = new TileDataArray(TileProperties.TYPES);
 
 			startPos = 0;
 			foreach (KeyValuePair<Int32, TileInfo> kvp in Global.Instance.Info.Tiles)
@@ -184,9 +219,9 @@ namespace MoreTerra.Structures
 				}
 
 				tileTypeDefs[kvp.Key] = new TileData(kvp.Value.important, kvp.Value.color, kvp.Value.officialColor, mt);
-				startPos++;
+				if (kvp.Key > startPos) startPos = (Int16) kvp.Key;
 			}
-			TileProperties.Unknown = startPos;
+			TileProperties.Unknown = (Int16) (startPos + 1);
 
 			startPos = (Int16) ((TileProperties.TYPES - 2) - Global.Instance.Info.Walls.Count);
 

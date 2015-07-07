@@ -40,24 +40,6 @@ namespace MoreTerra
         static extern bool AttachConsole(int dwProcessId);
         private const int ATTACH_PARENT_PROCESS = -1;
 
-        static void ReadUpdate()
-        {
-            WebClient wc = new WebClient();
-            String page = wc.DownloadString("http://moreterra.codeplex.com/wikipage?title=Updates");
-            String header = "<div class=\"wikidoc\">";
-            Int32 start = page.IndexOf(header) + header.Length;
-            Int32 end = page.IndexOf("</div>", start);
-
-            String versionString = String.Empty;
-            versionString = page.Substring(start, end - start);
-            versionString = versionString.Replace("&amp;", "&");
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(versionString);
-
-            MessageBox.Show(xmlDoc.InnerXml);
-        }
-
         [STAThread]
         static void Main(string[] args)
         {

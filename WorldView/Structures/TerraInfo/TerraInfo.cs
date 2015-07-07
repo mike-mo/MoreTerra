@@ -1021,7 +1021,7 @@ namespace MoreTerra.Structures.TerraInfo
                 ti = tiles[i];
 
                 // Bit of a hack but this needs to stay in until it's coded properly.
-                if (ti.name == "Gold Cache")
+                if (ti.name == "Copper Cache")
                 {
                     writer.WriteLine();
                     writer.WriteLine("    <!-- Tiles after this are a hack and not meant to be kept past testing -->");

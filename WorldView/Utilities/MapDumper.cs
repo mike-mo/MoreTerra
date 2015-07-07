@@ -20,11 +20,21 @@ namespace MoreTerra.Utilities
             FileStream stream = new FileStream("newTileXML.txt", FileMode.Create);
             StreamWriter writer = new StreamWriter(stream);
 
-            for (int i = 0; i < tiles.Count; i++)
-            {
-                useMap.type = (byte)i;
+			string[] tileNames = null;// Enum.GetNames(typeof(MoreTerra.Enums.TileEnum));
 
-                ti = tiles[i];
+
+			for (int i = 0; i < 420; i++)
+			{
+
+				if (!tiles.TryGetValue(i, out ti))
+				{
+					ti = new TileInfo();
+					ti.name = tileNames[i];
+					ti.tileImage = i;
+					ti.colorName = "Unknown";
+				}
+
+				useMap.type = (ushort)i;
 
                 tileXML = "    <tile ";
                 if (ti.name != null)
@@ -41,6 +51,7 @@ namespace MoreTerra.Utilities
                     tileXML = tileXML + String.Format("color=\"#{0:X2}{1:X2}{2:X2}\" ", ti.color.R, ti.color.G, ti.color.B);
 
                 OfficialColor c = useMap.tileColor(0);
+				if (c == null) c = new OfficialColor(ti.officialColor);
                 tileXML = tileXML + String.Format("officialColor=\"#{0:X2}{1:X2}{2:X2}\" ", c.R, c.G, c.B);
 
                 if (!String.IsNullOrEmpty(ti.markerName))
@@ -63,11 +74,19 @@ namespace MoreTerra.Utilities
             FileStream stream = new FileStream("newWallXML.txt", FileMode.Create);
             StreamWriter writer = new StreamWriter(stream);
 
-            for (int i = 1; i <= walls.Count; i++)
+			string[] wallNames = null;// Enum.GetNames(typeof(MoreTerra.Enums.WallEnum));
+
+			for (int i = 1; i <= 224; i++)
             {
                 useMap.type = (byte)i;
 
-                wi = walls[i];
+				if (!walls.TryGetValue(i, out wi))
+				{
+					wi = new WallInfo();
+					wi.name = wallNames[i];
+					wi.wallImage = i;
+					wi.colorName = "Unknown";
+				}
 
                 tileXML = "    <wall ";
                 if (wi.name != null)
@@ -90,5 +109,20 @@ namespace MoreTerra.Utilities
             }
             writer.Close();
         }
+
+		public static void FixImportance(bool[] importance)
+		{
+			Dictionary<int, TileInfo> tiles = Global.Instance.Info.Tiles;
+
+			for (int i = 0; i < importance.Length; i++)
+			{
+				TileInfo ti = tiles[i];
+
+				if (ti.important != importance[i])
+				{
+					ti.important = importance[i];
+				}
+			}
+		}
     }
 }

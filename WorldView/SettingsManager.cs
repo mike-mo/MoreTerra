@@ -238,7 +238,6 @@ namespace MoreTerra
         public Boolean AddNewSettings(String newName)
         {
             UserSettings us;
-            Int32 i;
 
             if (newName == String.Empty)
                 return false;

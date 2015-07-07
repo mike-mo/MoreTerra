@@ -46,7 +46,7 @@ namespace MoreTerra.Structures
 
 		private Single readWorldPerc = 50;
 
-        int[] sectionPointers;
+		int[] sectionPointers;
 
 		// List generated from reading in chest tiles.
 		private Dictionary<Point, ChestType> chestTypeList;
@@ -167,10 +167,10 @@ namespace MoreTerra.Structures
 		private void Initialize()
 		{
 
-		//	tileImportant = new Boolean[TileProperties.TYPES];
+			//	tileImportant = new Boolean[TileProperties.TYPES];
 
-		//	for (Int32 i = 0; i < TileProperties.TYPES; i++)
-		//		tileImportant[i] = TileProperties.tileTypeDefs[i].IsImportant;
+			//	for (Int32 i = 0; i < TileProperties.TYPES; i++)
+			//		tileImportant[i] = TileProperties.tileTypeDefs[i].IsImportant;
 		}
 
 		public void Clear()
@@ -208,7 +208,7 @@ namespace MoreTerra.Structures
 				bw = null;
 		}
 
-        #region ReadFunctions
+		#region ReadFunctions
 
 		public void ReadWorld(String world, BackgroundWorker worker = null)
 		{
@@ -217,26 +217,26 @@ namespace MoreTerra.Structures
 			try
 			{
 #endif
-				if (worker != null)
-				{
-					bw = worker;
-					progressPosition = 0;
-					t = new Timer(333);
-					t.Elapsed += new ElapsedEventHandler(timer_ReadWorld);
-					t.Start();
-				}
+			if (worker != null)
+			{
+				bw = worker;
+				progressPosition = 0;
+				t = new Timer(333);
+				t.Elapsed += new ElapsedEventHandler(timer_ReadWorld);
+				t.Start();
+			}
 
-				readWorldPerc = 50;
+			readWorldPerc = 50;
 
-				stream = new FileStream(world, FileMode.Open, FileAccess.Read);
-				reader = new BinaryReader(stream);
+			stream = new FileStream(world, FileMode.Open, FileAccess.Read);
+			reader = new BinaryReader(stream);
 
-				ReadHeader();
-				ReadWorldTiles();
-				ReadChests();
-				ReadSigns();
-				ReadNPCs();
-				ReadFooter();
+			ReadHeader();
+			ReadWorldTiles();
+			ReadChests();
+			ReadSigns();
+			ReadNPCs();
+			ReadFooter();
 #if (DEBUG == false)
 			}
 			catch (Exception e)
@@ -253,7 +253,7 @@ namespace MoreTerra.Structures
 			}
 #endif
 
-				if (bw != null)
+			if (bw != null)
 			{
 				t.Stop();
 				bw = null;
@@ -270,58 +270,59 @@ namespace MoreTerra.Structures
 
 		private void ReadHeader()
 		{
-  
+
 			int version = reader.ReadInt32();
-            if (version < 94)
-                throw new Exception("Must use version 1.2.3.1 or higher!");
+			if (version < 94)
+				throw new Exception("Must use version 1.2.3.1 or higher!");
 
-            ulong fileFormat = reader.ReadUInt64();
+			ulong fileFormat = reader.ReadUInt64();
 
-            byte fileTypeValue = (byte)(fileFormat >> 56 & (ulong)byte.MaxValue);
-            //Revision
-            uint revision = reader.ReadUInt32();
+			byte fileTypeValue = (byte)(fileFormat >> 56 & (ulong)byte.MaxValue);
+			//Revision
+			uint revision = reader.ReadUInt32();
 
-            //Favorite
-            ulong favorite = reader.ReadUInt64();
+			//Favorite
+			ulong favorite = reader.ReadUInt64();
 
-            short sectionCount = reader.ReadInt16();
-            sectionPointers = new int[sectionCount];
-            for (int j = 0; j < sectionCount; j++)
-            {
-                sectionPointers[j] = reader.ReadInt32();
-            }
-            
-            short tiletypeCount = reader.ReadInt16();
-            tileImportant = new bool[tiletypeCount];
-            byte flags = 0;
-            byte mask = 0x80;
+			short sectionCount = reader.ReadInt16();
+			sectionPointers = new int[sectionCount];
+			for (int j = 0; j < sectionCount; j++)
+			{
+				sectionPointers[j] = reader.ReadInt32();
+			}
 
-            for (int k = 0; k < tiletypeCount; k++)
-            {
-                if (mask == 0x80)
-                {
-                    flags = reader.ReadByte();
-                    mask = 0x01;
-                }
-                else
-                {
-                    mask <<= 1;
-                }
+			short tiletypeCount = reader.ReadInt16();
+			tileImportant = new bool[tiletypeCount];
+			byte flags = 0;
+			byte mask = 0x80;
 
-                if ((flags & mask) == mask)
-                    tileImportant[k] = true;
+			for (int k = 0; k < tiletypeCount; k++)
+			{
+				if (mask == 0x80)
+				{
+					flags = reader.ReadByte();
+					mask = 0x01;
+				}
+				else
+				{
+					mask <<= 1;
+				}
+
+				if ((flags & mask) == mask)
+					tileImportant[k] = true;
 
 
-            }
-            Int32 x, y, w, h;
-            Int32 i;
+			}
+
+			Int32 x, y, w, h;
+			Int32 i;
 
 			if (bw != null)
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Reading Header");
 
 			header = new WorldHeader();
-            header.sectionPointers = sectionPointers;
+			header.sectionPointers = sectionPointers;
 			header.ReleaseNumber = version;
 			header.Name = reader.ReadString();
 			header.Id = reader.ReadInt32();
@@ -332,17 +333,21 @@ namespace MoreTerra.Structures
 
 			header.WorldCoords = new Rect(x, w, y, h);
 
-	
-            MaxY = reader.ReadInt32();
+
+			MaxY = reader.ReadInt32();
 			MaxX = reader.ReadInt32();
-		
+
 			header.MaxTiles = new Point(MaxX, MaxY);
 
-            //Expert Mode
-            reader.ReadBoolean();
+			//Expert Mode
+			bool expertMode;
+			if (version >= 112)
+				expertMode = reader.ReadBoolean();
 
-            //Creation Time
-            reader.ReadInt64();
+			//Creation Time
+			DateTime creationTime;
+			if (version >= 141)
+				creationTime = DateTime.FromBinary(reader.ReadInt64());
 
 
 
@@ -350,30 +355,27 @@ namespace MoreTerra.Structures
 			header.TreeStyle = new int[4];
 			header.CaveBackX = new int[3];
 			header.CaveBackStyle = new int[4];
-			if (version >= 66)
-			{
-				header.MoonType = reader.ReadByte();
+			header.MoonType = reader.ReadByte();
 
-				for (i = 0; i < 3; i++)
+			for (i = 0; i < 3; i++)
 			{
-					header.TreeX[i] = reader.ReadInt32();
-				}
-				for (i = 0; i < 4; i++)
-				{
-					header.TreeStyle[i] = reader.ReadInt32();
-				}
-				for (i = 0; i < 3; i++)
-				{
-					header.CaveBackX[i] = reader.ReadInt32();
+				header.TreeX[i] = reader.ReadInt32();
 			}
-				for (i = 0; i < 4; i++)
-				{
-					header.CaveBackStyle[i] = reader.ReadInt32();
-				}
-				header.IceBackStyle = reader.ReadInt32();
-				header.JungleBackStyle = reader.ReadInt32();
-				header.HellBackStyle = reader.ReadInt32();
+			for (i = 0; i < 4; i++)
+			{
+				header.TreeStyle[i] = reader.ReadInt32();
 			}
+			for (i = 0; i < 3; i++)
+			{
+				header.CaveBackX[i] = reader.ReadInt32();
+			}
+			for (i = 0; i < 4; i++)
+			{
+				header.CaveBackStyle[i] = reader.ReadInt32();
+			}
+			header.IceBackStyle = reader.ReadInt32();
+			header.JungleBackStyle = reader.ReadInt32();
+			header.HellBackStyle = reader.ReadInt32();
 
 			header.SpawnPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
 			header.SurfaceLevel = reader.ReadDouble();
@@ -382,145 +384,162 @@ namespace MoreTerra.Structures
 			header.IsDayTime = reader.ReadBoolean();
 			header.MoonPhase = reader.ReadInt32();
 			header.IsBloodMoon = reader.ReadBoolean();
-            if (version >= 70)
-                header.IsEclipse = reader.ReadBoolean();
+			header.IsEclipse = reader.ReadBoolean();
 
 			header.DungeonPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
-			if (version >= 66)
-			{
-				header.Crimson = reader.ReadBoolean();
-			}
+			header.Crimson = reader.ReadBoolean();
 			header.IsBoss1Dead = reader.ReadBoolean();
 			header.IsBoss2Dead = reader.ReadBoolean();
 			header.IsBoss3Dead = reader.ReadBoolean();
 
-			if (version >= 66)
-			{
-				header.IsQueenBeeDead = reader.ReadBoolean();
-				header.IsMechBoss1Dead = reader.ReadBoolean();
-				header.IsMechBoss2Dead = reader.ReadBoolean();
-				header.IsMechBoss3Dead = reader.ReadBoolean();
-				header.IsMechBossAnyDead = reader.ReadBoolean();
-				header.IsPlantBossDead = reader.ReadBoolean();
-				header.IsGolemBossDead = reader.ReadBoolean();
-			}
-			if (version >= 0x24)
-			{
-				header.IsGoblinSaved = reader.ReadBoolean();
-				header.IsWizardSaved = reader.ReadBoolean();
-				header.IsMechanicSaved = reader.ReadBoolean();
-				header.IsGoblinArmyDefeated = reader.ReadBoolean();
-				header.IsClownDefeated = reader.ReadBoolean();
-			}
-			if (version >= 0x25)
-			{
-				header.IsFrostDefeated = reader.ReadBoolean();
-			}
-			if (version >= 66)
-			{
-				header.IsPiratesDefeated = reader.ReadBoolean();
-			}
+			header.IsQueenBeeDead = reader.ReadBoolean();
+			header.IsMechBoss1Dead = reader.ReadBoolean();
+			header.IsMechBoss2Dead = reader.ReadBoolean();
+			header.IsMechBoss3Dead = reader.ReadBoolean();
+			header.IsMechBossAnyDead = reader.ReadBoolean();
+			header.IsPlantBossDead = reader.ReadBoolean();
+			header.IsGolemBossDead = reader.ReadBoolean();
+
+			if (version >= 118)
+				header.IsSlimeKingDead = reader.ReadBoolean();
+
+			header.IsGoblinSaved = reader.ReadBoolean();
+			header.IsWizardSaved = reader.ReadBoolean();
+			header.IsMechanicSaved = reader.ReadBoolean();
+			header.IsGoblinArmyDefeated = reader.ReadBoolean();
+			header.IsClownDefeated = reader.ReadBoolean();
+			header.IsFrostDefeated = reader.ReadBoolean();
+			header.IsPiratesDefeated = reader.ReadBoolean();
 			header.IsShadowOrbSmashed = reader.ReadBoolean();
 			header.IsMeteorSpawned = reader.ReadBoolean();
 			header.ShadowOrbsSmashed = reader.ReadByte();
 
-			if (version >= 0x24)
-			{
-				header.AltarsDestroyed = reader.ReadInt32();
-				header.HardMode = reader.ReadBoolean();
-			}
+			header.AltarsDestroyed = reader.ReadInt32();
+			header.HardMode = reader.ReadBoolean();
 
 			header.InvasionDelay = reader.ReadInt32();
 			header.InvasionSize = reader.ReadInt32();
 			header.InvasionType = reader.ReadInt32();
 			header.InvasionPointX = reader.ReadDouble();
 
+			if (version >= 118)
+				header.SlimeRainTime = reader.ReadDouble();
+			if (version >= 113)
+				header.SundialCooldown = (int)reader.ReadByte();
+
 			header.OreTiers = new int[3];
 			header.Styles = new byte[8];
-            if (version >= 66)
-            {
-                //slime rain time
-                reader.ReadDouble();
+			if (version >= 66)
+			{
+				header.IsRaining = reader.ReadBoolean();
+				header.RainTime = reader.ReadInt32();
+				header.MaxRain = reader.ReadSingle();
 
-                //sundial cooldown
-                reader.ReadByte();
+				for (i = 0; i < 3; i++)
+				{
+					header.OreTiers[i] = reader.ReadInt32();
+				}
 
-                header.IsRaining = reader.ReadBoolean();
-                header.RainTime = reader.ReadInt32();
-                header.MaxRain = reader.ReadSingle();
+				for (i = 0; i < 8; i++)
+				{
+					header.Styles[i] = reader.ReadByte();
+				}
 
-                for (i = 0; i < 3; i++)
-                {
-                    header.OreTiers[i] = reader.ReadInt32();
-                }
+				header.CloudsActive = reader.ReadInt32();
+				header.NumClouds = reader.ReadInt16();
+				header.WindSpeed = reader.ReadSingle();
+				List<string> anglerWhoFinishedToday = new List<string>();
+				for (int index = reader.ReadInt32(); index > 0; --index)
+					anglerWhoFinishedToday.Add(reader.ReadString());
+				if (version < 99)
+					return;
+				var savedAngler = reader.ReadBoolean();
+				if (version < 101)
+					return;
+				var anglerQuest = reader.ReadInt32();
 
-                for (i = 0; i < 8; i++)
-                {
-                    header.Styles[i] = reader.ReadByte();
-                }
+				//Saved Stylist
+				reader.ReadBoolean();
+				//Saved Tax Collector
+				reader.ReadBoolean();
 
-                header.CloudsActive = reader.ReadInt32();
-                header.NumClouds = reader.ReadInt16();
-                header.WindSpeed = reader.ReadSingle();
-                List<string> anglerWhoFinishedToday = new List<string>(); 
-                for (int index = reader.ReadInt32(); index > 0; --index)
-                    anglerWhoFinishedToday.Add(reader.ReadString());
-                if (version < 99)
-                    return;
-                var savedAngler = reader.ReadBoolean();
-                if (version < 101)
-                    return;
-                var anglerQuest = reader.ReadInt32();
+				//Inavsion Size Start
+				reader.ReadInt32();
 
-                //Saved Stylist
-                reader.ReadBoolean();
-                //Saved Tax Collector
-                reader.ReadBoolean();
+				//temp cultist delay
+				reader.ReadInt32();
 
-                //Inavsion Size Start
-                reader.ReadInt32();
+				int killCountTotal = (int)reader.ReadInt16();
+				for (int killIndex = 0; killIndex < killCountTotal; killIndex++)
+				{
+					reader.ReadInt32();
+				}
 
-                //temp cultist delay
-                reader.ReadInt32();
-
-                int killCountTotal = (int)reader.ReadInt16();
-                for (int killIndex = 0; i < killIndex; i++)
-                {
-                    reader.ReadInt32();
-                }
-
-                //fast forward time
-                reader.ReadBoolean();
+				//fast forward time
+				reader.ReadBoolean();
 
 
-                //downed fishron
-                reader.ReadBoolean();
+				//downed fishron
+				reader.ReadBoolean();
 
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
-                reader.ReadBoolean();
+				// Martians
+				reader.ReadBoolean();
 
-            }
+				// Cultists
+				reader.ReadBoolean();
 
-				
+				// Moonlord
+				reader.ReadBoolean();
+
+				// Halloween King
+				reader.ReadBoolean();
+
+				// Halloween Tree
+				reader.ReadBoolean();
+
+				// Christmas Ice Queen
+				reader.ReadBoolean();
+
+				// Christmas Santank
+				reader.ReadBoolean();
+
+				// Christmas Tree
+				reader.ReadBoolean();
+
+				// Tower Solar
+				reader.ReadBoolean();
+
+				// Tower Vortex
+				reader.ReadBoolean();
+
+				// Tower Nebula
+				reader.ReadBoolean();
+
+				// Tower Stardust
+				reader.ReadBoolean();
+
+				// Tower Active Solar
+				reader.ReadBoolean();
+
+				// Tower Active Vortex
+				reader.ReadBoolean();
+
+				// Tower Active Nebula
+				reader.ReadBoolean();
+
+				// Tower Active Stardust
+				reader.ReadBoolean();
+
+				// Lunar Apolocyplse is up
+				reader.ReadBoolean();
+
+			}
+
+
 			posTiles = stream.Position;
 			progressPosition = stream.Position;
 
-			
+
 		}
 
 		private void ReadWorldTiles()
@@ -557,7 +576,7 @@ namespace MoreTerra.Structures
 						if (tileImportant[theI] == true)
 						{
 							theTile.Important = true;
-							theTile.Frame = new PointInt16(reader.ReadInt16() ,reader.ReadInt16());
+							theTile.Frame = new PointInt16(reader.ReadInt16(), reader.ReadInt16());
 						}
 						else
 							theTile.Important = false;
@@ -593,76 +612,75 @@ namespace MoreTerra.Structures
 
 		private void ReadChests()
 		{
-			Boolean isChest;
 			Int16 itemCount;
 			Chest theChest = null;
 			Item theItem;
 			Int32 i, j;
-            Int32 maxChests;
-            int maxItems;
+			Int32 maxChests;
+			int maxItems;
 			chests = new List<Chest>();
 
 			if (bw != null)
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Reading Chests");
-			
-            
-                maxChests = reader.ReadInt16();
-                maxItems = reader.ReadInt16();
-          
+
+
+			maxChests = reader.ReadInt16();
+			maxItems = reader.ReadInt16();
+
 
 			for (i = 0; i < maxChests; i++)
 			{
 
-					theChest = new Chest();
-					theChest.ChestId = i;
-					theChest.Active = true;
+				theChest = new Chest();
+				theChest.ChestId = i;
+				theChest.Active = true;
 
-					theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
+				theChest.Coordinates = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-                    theChest.Name = reader.ReadString();
-                   
+				theChest.Name = reader.ReadString();
 
-                    if (chestTypeList != null)
-                    {
-                        if (chestTypeList.ContainsKey(theChest.Coordinates))
-                            theChest.Type = chestTypeList[theChest.Coordinates];
-                    }
-                    else
-                    {
-                        theChest.Type = ChestType.Chest;
-                    }
 
-					for (j = 0; j < maxItems; j++)
-					{
-                        if (header.ReleaseNumber > 68)
+				if (chestTypeList != null)
+				{
+					if (chestTypeList.ContainsKey(theChest.Coordinates))
+						theChest.Type = chestTypeList[theChest.Coordinates];
+				}
+				else
+				{
+					theChest.Type = ChestType.Chest;
+				}
+
+				for (j = 0; j < maxItems; j++)
+				{
+					if (header.ReleaseNumber > 68)
 						itemCount = reader.ReadInt16();
-                        else
-                            itemCount = reader.ReadByte();
+					else
+						itemCount = reader.ReadByte();
 
-						if (itemCount > 0)
+					if (itemCount > 0)
+					{
+						theItem = new Item();
+						theItem.Id = j;
+						theItem.Count = itemCount;
+
+						if (header.ReleaseNumber >= 0x26)
 						{
-							theItem = new Item();
-							theItem.Id = j;
-							theItem.Count = itemCount;
-
-							if (header.ReleaseNumber >= 0x26)
-							{
-								theItem.Name = Global.Instance.Info.GetItemName(reader.ReadInt32());
-							}
-							else
-							{
-								theItem.Name = reader.ReadString();
-							}
-
-							if (header.ReleaseNumber >= 0x24)
-								theItem.Prefix = reader.ReadByte();
-
-							theChest.Items.Add(theItem);
+							theItem.Name = Global.Instance.Info.GetItemName(reader.ReadInt32());
 						}
+						else
+						{
+							theItem.Name = reader.ReadString();
+						}
+
+						if (header.ReleaseNumber >= 0x24)
+							theItem.Prefix = reader.ReadByte();
+
+						theChest.Items.Add(theItem);
 					}
-					chests.Add(theChest);
-				
+				}
+				chests.Add(theChest);
+
 
 				progressPosition = stream.Position;
 			}
@@ -672,7 +690,6 @@ namespace MoreTerra.Structures
 
 		private void ReadSigns()
 		{
-			Boolean isSign;
 			Sign theSign;
 			signs = new List<Sign>(1000);
 
@@ -680,21 +697,21 @@ namespace MoreTerra.Structures
 				bw.ReportProgress((Int32)(((Single)progressPosition / stream.Length) * readWorldPerc)
 					, "Reading Signs");
 
-            int maxSigns = reader.ReadInt16();
+			int maxSigns = reader.ReadInt16();
 
 			for (Int32 i = 0; i < maxSigns; i++)
 			{
 				//isSign = reader.ReadBoolean();
-			
-					theSign = new Sign();
-					theSign.Id = i;
-					theSign.Active = true;
-				
-					theSign.Text = reader.ReadString();
-					theSign.Position = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-					signs.Add(theSign);
-				
+				theSign = new Sign();
+				theSign.Id = i;
+				theSign.Active = true;
+
+				theSign.Text = reader.ReadString();
+				theSign.Position = new Point(reader.ReadInt32(), reader.ReadInt32());
+
+				signs.Add(theSign);
+
 
 				progressPosition = stream.Position;
 			}
@@ -706,8 +723,6 @@ namespace MoreTerra.Structures
 		{
 			Boolean nextNPC;
 			NPC theNPC;
-			String nameCrunch;
-			String[] nameArray;
 			NPCType npcType;
 			Int32 i;
 
@@ -727,17 +742,17 @@ namespace MoreTerra.Structures
 
 				theNPC.Active = nextNPC;
 
-                if (Enum.TryParse(reader.ReadString().Replace(" ", ""), true, out npcType))
-                    theNPC.Type = npcType;
-                else
-                    theNPC.Type = NPCType.Unknown;
+				if (Enum.TryParse(reader.ReadString().Replace(" ", ""), true, out npcType))
+					theNPC.Type = npcType;
+				else
+					theNPC.Type = NPCType.Unknown;
 
 				theNPC.Name = reader.ReadString();
 				theNPC.Position = new PointSingle(reader.ReadSingle(), reader.ReadSingle());
 				theNPC.Homeless = reader.ReadBoolean();
 				theNPC.HomeTile = new Point(reader.ReadInt32(), reader.ReadInt32());
 
-					
+
 				npcs.Add(theNPC);
 				i++;
 
@@ -763,14 +778,14 @@ namespace MoreTerra.Structures
 				header.TinkerersName = reader.ReadString();
 				header.WizardsName = reader.ReadString();
 				header.MechanicsName = reader.ReadString();
-                header.TrufflesName = reader.ReadString();
-                header.SteamPunkersName = reader.ReadString();
-                header.DyeTradersName = reader.ReadString();
-                header.PartyGirlsName = reader.ReadString();
-                header.CyborgsName = reader.ReadString();
-                header.PaintersName = reader.ReadString();
-                header.WitchDoctorsName = reader.ReadString();
-                header.PiratesName = reader.ReadString();
+				header.TrufflesName = reader.ReadString();
+				header.SteamPunkersName = reader.ReadString();
+				header.DyeTradersName = reader.ReadString();
+				header.PartyGirlsName = reader.ReadString();
+				header.CyborgsName = reader.ReadString();
+				header.PaintersName = reader.ReadString();
+				header.WitchDoctorsName = reader.ReadString();
+				header.PiratesName = reader.ReadString();
 			}
 			else
 			{
@@ -823,7 +838,7 @@ namespace MoreTerra.Structures
 					t.Start();
 				}
 
-                
+
 
 				if (SettingsManager.Instance.ShowChestTypes == true)
 					chestTypeList = new Dictionary<Point, ChestType>();
@@ -833,9 +848,9 @@ namespace MoreTerra.Structures
 				readWorldPerc = 45;
 
 				stream = new FileStream(worldPath, FileMode.Open, FileAccess.Read);
-				reader = new BinaryReader(stream,Encoding.Default);
+				reader = new BinaryReader(stream, Encoding.Default);
 
-                
+
 
 
 				ReadHeader();
@@ -845,189 +860,190 @@ namespace MoreTerra.Structures
 
 				// Reset MapTile List
 				retTiles = new int[MaxX, MaxY];
-               // WorldFile wf = new WorldFile();
+				// WorldFile wf = new WorldFile();
 
-                if (bw != null)
-                    bw.ReportProgress(0, "Reading and Processing Tiles");
+				if (bw != null)
+					bw.ReportProgress(0, "Reading and Processing Tiles");
 
-                byte firstHeader, secondHeader, thirdHeader = 0;
-                int ntileType = TileProperties.BackgroundOffset;
-              //  reader.BaseStream.Seek(sectionPointers[1],SeekOrigin.Begin);
-                int run = 0;
-                chestTypeList = new Dictionary<Point, ChestType>();
-                for (int ncolumn = 0; ncolumn < header.MaxTiles.X; ncolumn++)
-                {
-                    for (int nrow = 0; nrow < header.MaxTiles.Y; nrow++)
-                    {
-                        if (run > 0)
-                        {
-                            retTiles[ncolumn, nrow] = ntileType;
-                            run--;
-                            continue;
-                        }
-
-
-                        if (nrow < header.SurfaceLevel)
-                            ntileType = TileProperties.BackgroundOffset;
-                        else if (nrow == header.SurfaceLevel)
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
-                        else if (nrow < (header.RockLayer + 38))
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
-                        else if (nrow == (header.RockLayer + 38))
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
-                        else if (nrow < (header.MaxTiles.Y - 202))
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
-                        else if (nrow == (header.MaxTiles.Y - 202))
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
-                        else
-                            ntileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
-
-                        secondHeader = 0;
-                        thirdHeader = 0;
-
-                        firstHeader = reader.ReadByte();
-                        if ((firstHeader & 1) == 1)
-                        {
-                            secondHeader = reader.ReadByte();
-                            if((secondHeader & 1) == 1)
-                                thirdHeader = reader.ReadByte();
-                        }
-
-                        if ((firstHeader & 2) == 2)
-                        {
-                            if ((firstHeader & 32) == 32)
-                            {
-                                byte num5 = reader.ReadByte();
-                                ntileType = reader.ReadByte() << 8 | num5;
-                            }
-                            else
-                                ntileType = reader.ReadByte();
-                            if (tileImportant[ntileType])
-                            {
-                                 var typeX = reader.ReadInt16();
-                                 var typeY = reader.ReadInt16();
-                                 if (ntileType == TileProperties.ExposedGems)
-                                 {
-                                     if (typeX == 0)
-                                         ntileType = TileProperties.Amethyst;
-                                     else if (typeX == 18)
-                                         ntileType = TileProperties.Topaz;
-                                     else if (typeX == 36)
-                                         ntileType = TileProperties.Sapphire;
-                                     else if (typeX == 54)
-                                         ntileType = TileProperties.Emerald;
-                                     else if (typeX == 72)
-                                         ntileType = TileProperties.Ruby;
-                                     else if (typeX == 90)
-                                         ntileType = TileProperties.Diamond;
-                                     else if (typeX == 108)
-                                         ntileType = TileProperties.ExposedGems;
-                                     // If it's 108 we keep it as ExposedGems so it get the Amber marker.
-                                 }
-                                 else if (ntileType == TileProperties.SmallDetritus)
-                                 {
-                                     if ((typeX % 36 == 0) && (typeY == 18))
-                                     {
-                                         int type = typeX / 36;
-
-                                         if (type == 16)
-                                             ntileType = TileProperties.CopperCache;
-                                         else if (type == 17)
-                                             ntileType = TileProperties.SilverCache;
-                                         else if (type == 18)
-                                             ntileType = TileProperties.GoldCache;
-                                         else if (type == 19)
-                                             ntileType = TileProperties.Amethyst;
-                                         else if (type == 20)
-                                             ntileType = TileProperties.Topaz;
-                                         else if (type == 21)
-                                             ntileType = TileProperties.Sapphire;
-                                         else if (type == 22)
-                                             ntileType = TileProperties.Emerald;
-                                         else if (type == 23)
-                                             ntileType = TileProperties.Ruby;
-                                         else if (type == 24)
-                                             ntileType = TileProperties.Diamond;
-                                     }
-                                 }
-                                 else if (ntileType == TileProperties.LargeDetritus)
-                                 {
-                                     if ((typeX % 54 == 0) && (typeY == 0))
-                                     {
-                                         int type = typeX / 54;
-
-                                         if (type == 16 || type == 17)
-                                             ntileType = TileProperties.CopperCache;
-                                         else if (type == 18 || type == 19)
-                                             ntileType = TileProperties.SilverCache;
-                                         else if (type == 20 || type == 21)
-                                             ntileType = TileProperties.GoldCache;
-                                     }
-                                 }
-                                 else if (ntileType == TileProperties.LargeDetritus2)
-                                 {
-                                     if ((typeX % 54 == 0) && (typeY == 0))
-                                     {
-                                         int type = typeX / 54;
-
-                                         if (type == 17)
-                                             ntileType = TileProperties.EnchantedSword;
-                                     }
-                                 }
-                                 if ((ntileType == TileProperties.Chest) && (typeX % 36 == 0) && (typeY == 0))
-                                 {
-                                     if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
-                                         chestTypeList.Add(new Point(ncolumn, nrow), (ChestType)(typeX / 36));
-                                     else
-                                         chestTypeList.Add(new Point(ncolumn, nrow), ChestType.Unknown);
-                                 }
-
-                            }
-                            if ((thirdHeader & 8) == 8)
-                                reader.ReadByte();
-
-                        }
-                        if ((firstHeader & 4) == 4)
-                        { 
-                            wallType = reader.ReadByte();
-                            if (ntileType >= TileProperties.Unknown)
-                                ntileType = (Int16)(wallType + TileProperties.WallOffset);
-                            if ((thirdHeader & 16) == 16)
-                                reader.ReadByte();
-                        }
-                        if ((firstHeader & 8) == 8)
-                        {
-                            ntileType = TileProperties.Water;
-                            reader.ReadByte();
-                            
-                        }
-                        else if ((firstHeader & 16) == 16)
-                        {
-                            ntileType = TileProperties.Lava;
-                            reader.ReadByte();
-
-                        }
-
-                        if ((firstHeader & 64) == 64)
-                        {
-                           run = reader.ReadByte();
-                        
-                        }
-                         if ((firstHeader & 128) == 128)
-                               run = reader.ReadInt16();
-
-                       
-                        
-                         retTiles[ncolumn, nrow] = ntileType;
-                         
-                    }
-                    
-                }
-
-				
+				byte firstHeader, secondHeader, thirdHeader = 0;
+				int ntileType = TileProperties.BackgroundOffset;
+				//  reader.BaseStream.Seek(sectionPointers[1],SeekOrigin.Begin);
+				int run = 0;
+				chestTypeList = new Dictionary<Point, ChestType>();
+				for (int ncolumn = 0; ncolumn < header.MaxTiles.X; ncolumn++)
+				{
+					for (int nrow = 0; nrow < header.MaxTiles.Y; nrow++)
+					{
+						if (run > 0)
+						{
+							retTiles[ncolumn, nrow] = ntileType;
+							run--;
+							continue;
+						}
 
 
-              //  reader.BaseStream.Seek(sectionPointers[2], SeekOrigin.Begin);
+						if (nrow < header.SurfaceLevel)
+							ntileType = TileProperties.BackgroundOffset;
+						else if (nrow == header.SurfaceLevel)
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 1); // Dirt Transition
+						else if (nrow < (header.RockLayer + 38))
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 2); // Dirt
+						else if (nrow == (header.RockLayer + 38))
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 4); // Rock Transition
+						else if (nrow < (header.MaxTiles.Y - 202))
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 3); // Rock 
+						else if (nrow == (header.MaxTiles.Y - 202))
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 6); // Underworld Transition
+						else
+							ntileType = (Int16)(TileProperties.BackgroundOffset + 5); // Underworld
+
+						secondHeader = 0;
+						thirdHeader = 0;
+
+						firstHeader = reader.ReadByte();
+						if ((firstHeader & 1) == 1)
+						{
+							secondHeader = reader.ReadByte();
+							if ((secondHeader & 1) == 1)
+								thirdHeader = reader.ReadByte();
+						}
+
+						if ((firstHeader & 2) == 2)
+						{
+							if ((firstHeader & 32) == 32)
+							{
+								byte num5 = reader.ReadByte();
+								ntileType = reader.ReadByte() << 8 | num5;
+							}
+							else
+								ntileType = reader.ReadByte();
+
+							if (tileImportant[ntileType])
+							{
+								var typeX = reader.ReadInt16();
+								var typeY = reader.ReadInt16();
+								if (ntileType == TileProperties.ExposedGems)
+								{
+									if (typeX == 0)
+										ntileType = TileProperties.Amethyst;
+									else if (typeX == 18)
+										ntileType = TileProperties.Topaz;
+									else if (typeX == 36)
+										ntileType = TileProperties.Sapphire;
+									else if (typeX == 54)
+										ntileType = TileProperties.Emerald;
+									else if (typeX == 72)
+										ntileType = TileProperties.Ruby;
+									else if (typeX == 90)
+										ntileType = TileProperties.Diamond;
+									else if (typeX == 108)
+										ntileType = TileProperties.ExposedGems;
+									// If it's 108 we keep it as ExposedGems so it get the Amber marker.
+								}
+								else if (ntileType == TileProperties.SmallDetritus)
+								{
+									if ((typeX % 36 == 0) && (typeY == 18))
+									{
+										int type = typeX / 36;
+
+										if (type == 16)
+											ntileType = TileProperties.CopperCache;
+										else if (type == 17)
+											ntileType = TileProperties.SilverCache;
+										else if (type == 18)
+											ntileType = TileProperties.GoldCache;
+										else if (type == 19)
+											ntileType = TileProperties.Amethyst;
+										else if (type == 20)
+											ntileType = TileProperties.Topaz;
+										else if (type == 21)
+											ntileType = TileProperties.Sapphire;
+										else if (type == 22)
+											ntileType = TileProperties.Emerald;
+										else if (type == 23)
+											ntileType = TileProperties.Ruby;
+										else if (type == 24)
+											ntileType = TileProperties.Diamond;
+									}
+								}
+								else if (ntileType == TileProperties.LargeDetritus)
+								{
+									if ((typeX % 54 == 0) && (typeY == 0))
+									{
+										int type = typeX / 54;
+
+										if (type == 16 || type == 17)
+											ntileType = TileProperties.CopperCache;
+										else if (type == 18 || type == 19)
+											ntileType = TileProperties.SilverCache;
+										else if (type == 20 || type == 21)
+											ntileType = TileProperties.GoldCache;
+									}
+								}
+								else if (ntileType == TileProperties.LargeDetritus2)
+								{
+									if ((typeX % 54 == 0) && (typeY == 0))
+									{
+										int type = typeX / 54;
+
+										if (type == 17)
+											ntileType = TileProperties.EnchantedSword;
+									}
+								}
+								if ((ntileType == TileProperties.Chest) && (typeX % 36 == 0) && (typeY == 0))
+								{
+									if ((typeX / 36) <= (Int32)ChestType.LockedFrozenChest)
+										chestTypeList.Add(new Point(ncolumn, nrow), (ChestType)(typeX / 36));
+									else
+										chestTypeList.Add(new Point(ncolumn, nrow), ChestType.Unknown);
+								}
+
+							}
+							if ((thirdHeader & 8) == 8)
+								reader.ReadByte();
+
+						}
+						if ((firstHeader & 4) == 4)
+						{
+							wallType = reader.ReadByte();
+							if (ntileType >= TileProperties.Unknown)
+								ntileType = (Int16)(wallType + TileProperties.WallOffset);
+							if ((thirdHeader & 16) == 16)
+								reader.ReadByte();
+						}
+						if ((firstHeader & 8) == 8)
+						{
+							ntileType = TileProperties.Water;
+							reader.ReadByte();
+
+						}
+						else if ((firstHeader & 16) == 16)
+						{
+							ntileType = TileProperties.Lava;
+							reader.ReadByte();
+
+						}
+
+						if ((firstHeader & 64) == 64)
+						{
+							run = reader.ReadByte();
+
+						}
+						if ((firstHeader & 128) == 128)
+							run = reader.ReadInt16();
+
+
+
+						retTiles[ncolumn, nrow] = ntileType;
+
+					}
+
+				}
+
+
+
+
+				//  reader.BaseStream.Seek(sectionPointers[2], SeekOrigin.Begin);
 				ReadChests();
 				ReadSigns();
 				ReadNPCs();
@@ -1180,20 +1196,20 @@ namespace MoreTerra.Structures
 			try
 			{
 #endif
-				ReadHeader();
+			ReadHeader();
 
-				posChests = new BackwardsScanner(stream, header).SeekToChestsBackwards();
-				
-				if (posChests != 0)
-				{
-					ReadChests();
-				}
-				else
-				{
-					stream.Seek(posTiles, SeekOrigin.Begin);
-					ScanPastWorldTiles();
-					ReadChests();
-				}
+			posChests = new BackwardsScanner(stream, header).SeekToChestsBackwards();
+
+			if (posChests != 0)
+			{
+				ReadChests();
+			}
+			else
+			{
+				stream.Seek(posTiles, SeekOrigin.Begin);
+				ScanPastWorldTiles();
+				ReadChests();
+			}
 #if (DEBUG == false)
 			}
 			catch (Exception e)
@@ -1220,7 +1236,7 @@ namespace MoreTerra.Structures
 
 			return chests;
 		}
-#endregion
+		#endregion
 
 		#region SaveFunctions
 		public void SaveWorld(String world)
@@ -1426,11 +1442,11 @@ namespace MoreTerra.Structures
 		{
 			String error;
 			int strictbool;
-			int i,j;
-            String byteStringOld;
+			int i, j;
+			String byteStringOld;
 			byte[] byteStreamOld;
 			int byteStreamOldLength;
-            String byteString;
+			String byteString;
 			byte[] byteStream;
 			int byteStreamPos;
 			Tile curTile = new Tile();
@@ -1439,7 +1455,7 @@ namespace MoreTerra.Structures
 			byteStreamPos = 0;
 			byteStreamOld = new byte[40];
 			byteStreamOldLength = 0;
-            Int32 tilesRead = 0;
+			Int32 tilesRead = 0;
 			stream = new FileStream(world, FileMode.Open, FileAccess.Read);
 			reader = new BinaryReader(stream);
 
@@ -1452,8 +1468,8 @@ namespace MoreTerra.Structures
 				{
 					if (RLEValue == 0)
 					{
-                        if (tilesRead == 1773)
-                            tilesRead = 1773;
+						if (tilesRead == 1773)
+							tilesRead = 1773;
 
 						byteStreamPos = 0;
 						curTile.Reset();
@@ -1470,234 +1486,234 @@ namespace MoreTerra.Structures
 
 						if (curTile.Active)
 						{
-                            curTile.TileType = reader.ReadByte();
-                            byteStream[byteStreamPos] = curTile.TileType;
-                            byteStreamPos++;
+							curTile.TileType = reader.ReadByte();
+							byteStream[byteStreamPos] = curTile.TileType;
+							byteStreamPos++;
 
-                            if (curTile.TileType >= TileProperties.Unknown)
-                            {
-                                error = String.Format("Failed on the TileType Byte read: 0x{1:X2}", curTile.TileType);
-                            }
+							if (curTile.TileType >= TileProperties.Unknown)
+							{
+								error = String.Format("Failed on the TileType Byte read: 0x{1:X2}", curTile.TileType);
+							}
 
-                            if (Global.Instance.Info.Tiles[(int)curTile.TileType].colorName == "FindImportant")
-                            {
-                                error = String.Format("TileType {0} has unknown importance.", curTile.TileType);
-                            }
+							if (Global.Instance.Info.Tiles[(int)curTile.TileType].colorName == "FindImportant")
+							{
+								error = String.Format("TileType {0} has unknown importance.", curTile.TileType);
+							}
 
-                            if (TileProperties.tileTypeDefs[curTile.TileType].IsImportant)
-                            {
-                                curTile.Important = true;
+							if (TileProperties.tileTypeDefs[curTile.TileType].IsImportant)
+							{
+								curTile.Important = true;
 
-                                PointInt16 p = curTile.Frame;
-                                p.X = reader.ReadInt16();
-                                byteStream[byteStreamPos] = (byte)(p.X & 0xFF);
-                                byteStreamPos++;
-                                byteStream[byteStreamPos] = (byte)((p.X & 0xFF00) >> 8);
-                                byteStreamPos++;
+								PointInt16 p = curTile.Frame;
+								p.X = reader.ReadInt16();
+								byteStream[byteStreamPos] = (byte)(p.X & 0xFF);
+								byteStreamPos++;
+								byteStream[byteStreamPos] = (byte)((p.X & 0xFF00) >> 8);
+								byteStreamPos++;
 
-                                p.Y = reader.ReadInt16();
-                                byteStream[byteStreamPos] = (byte)(p.Y & 0xFF);
-                                byteStreamPos++;
-                                byteStream[byteStreamPos] = (byte)((p.Y & 0xFF00) >> 8);
-                                byteStreamPos++;
+								p.Y = reader.ReadInt16();
+								byteStream[byteStreamPos] = (byte)(p.Y & 0xFF);
+								byteStreamPos++;
+								byteStream[byteStreamPos] = (byte)((p.Y & 0xFF00) >> 8);
+								byteStreamPos++;
 
-                                curTile.Frame = p;
-                            }
-                            else
-                            {
-                                curTile.Important = false;
-                            }
+								curTile.Frame = p;
+							}
+							else
+							{
+								curTile.Important = false;
+							}
 
-                            strictbool = reader.ReadByte();
-                            byteStream[byteStreamPos] = (byte)strictbool;
-                            byteStreamPos++;
+							strictbool = reader.ReadByte();
+							byteStream[byteStreamPos] = (byte)strictbool;
+							byteStreamPos++;
 
-                            if (strictbool > 1)
-                            {
-                                error = String.Format("Failed on the Tile Color Boolean read: 0x{0:X2}", (byte)strictbool);
-                            }
+							if (strictbool > 1)
+							{
+								error = String.Format("Failed on the Tile Color Boolean read: 0x{0:X2}", (byte)strictbool);
+							}
 
-                            if (strictbool >= 1)
-                            {
-                                curTile.TileColor = reader.ReadByte();
-                                byteStream[byteStreamPos] = curTile.TileColor;
-                                byteStreamPos++;
+							if (strictbool >= 1)
+							{
+								curTile.TileColor = reader.ReadByte();
+								byteStream[byteStreamPos] = curTile.TileColor;
+								byteStreamPos++;
 
-                                if (curTile.TileColor == 0)
-                                {
-                                    error = String.Format("Failed on the Tile Color Byte read: 0x{0:X2}", curTile.TileColor);
-                                }
-                            }
+								if (curTile.TileColor == 0)
+								{
+									error = String.Format("Failed on the Tile Color Byte read: 0x{0:X2}", curTile.TileColor);
+								}
+							}
 						}
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Wall Active Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Wall Active Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        if (strictbool >= 1)
-                        {
-                            curTile.WallType = reader.ReadByte();
-                            byteStream[byteStreamPos] = curTile.WallType;
-                            byteStreamPos++;
+						if (strictbool >= 1)
+						{
+							curTile.WallType = reader.ReadByte();
+							byteStream[byteStreamPos] = curTile.WallType;
+							byteStreamPos++;
 
-                            if (curTile.WallType == 0 || curTile.WallType > Global.Instance.Info.Walls.Count)
-                            {
-                                error = String.Format("Failed in the Wall Type Byte read: 0x{0:X2}", curTile.WallType);
-                            }
+							if (curTile.WallType == 0 || curTile.WallType > Global.Instance.Info.Walls.Count)
+							{
+								error = String.Format("Failed in the Wall Type Byte read: 0x{0:X2}", curTile.WallType);
+							}
 
-                            strictbool = reader.ReadByte();
-                            byteStream[byteStreamPos] = (byte)(strictbool);
-                            byteStreamPos++;
+							strictbool = reader.ReadByte();
+							byteStream[byteStreamPos] = (byte)(strictbool);
+							byteStreamPos++;
 
-                            if (strictbool > 1)
-                            {
-                                error = String.Format("Failed in the Wall Color Boolean read: 0x{0:X2}", (byte)strictbool);
-                            }
+							if (strictbool > 1)
+							{
+								error = String.Format("Failed in the Wall Color Boolean read: 0x{0:X2}", (byte)strictbool);
+							}
 
-                            if (strictbool >= 1)
-                            {
-                                curTile.WallColor = reader.ReadByte();
-                                byteStream[byteStreamPos] = curTile.WallColor;
-                                byteStreamPos++;
+							if (strictbool >= 1)
+							{
+								curTile.WallColor = reader.ReadByte();
+								byteStream[byteStreamPos] = curTile.WallColor;
+								byteStreamPos++;
 
-                                if (curTile.WallColor == 0)
-                                {
-                                    error = String.Format("Failed in the Wall Color Byte read: 0x{0:X2}", (byte)strictbool);
-                                }
-                            }
-                        }
+								if (curTile.WallColor == 0)
+								{
+									error = String.Format("Failed in the Wall Color Byte read: 0x{0:X2}", (byte)strictbool);
+								}
+							}
+						}
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Liquid Active Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Liquid Active Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        if (strictbool >= 1)
-                        {
-                            curTile.LiquidLevel = reader.ReadByte();
-                            byteStream[byteStreamPos] = curTile.LiquidLevel;
-                            byteStreamPos++;
+						if (strictbool >= 1)
+						{
+							curTile.LiquidLevel = reader.ReadByte();
+							byteStream[byteStreamPos] = curTile.LiquidLevel;
+							byteStreamPos++;
 
-                            strictbool = reader.ReadByte();
-                            byteStream[byteStreamPos] = (byte)(strictbool);
-                            byteStreamPos++;
+							strictbool = reader.ReadByte();
+							byteStream[byteStreamPos] = (byte)(strictbool);
+							byteStreamPos++;
 
-                            if (strictbool > 1)
-                            {
-                                error = String.Format("Failed in the IsLava Boolean read: 0x{0:X2}", (byte)strictbool);
-                            }
+							if (strictbool > 1)
+							{
+								error = String.Format("Failed in the IsLava Boolean read: 0x{0:X2}", (byte)strictbool);
+							}
 
-                            curTile.Lava = (strictbool == 0) ? false : true;
+							curTile.Lava = (strictbool == 0) ? false : true;
 
-                            strictbool = reader.ReadByte();
-                            byteStream[byteStreamPos] = (byte)(strictbool);
-                            byteStreamPos++;
+							strictbool = reader.ReadByte();
+							byteStream[byteStreamPos] = (byte)(strictbool);
+							byteStreamPos++;
 
-                            if (strictbool > 1)
-                            {
-                                error = String.Format("Failed in the IsHoney Boolean read: 0x{0:X2}", (byte)strictbool);
-                            }
+							if (strictbool > 1)
+							{
+								error = String.Format("Failed in the IsHoney Boolean read: 0x{0:X2}", (byte)strictbool);
+							}
 
-                            curTile.Honey = (strictbool == 0) ? false : true;
-                        }
+							curTile.Honey = (strictbool == 0) ? false : true;
+						}
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Red Wire Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Red Wire Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.RedWire = (strictbool == 0) ? false : true;
+						curTile.RedWire = (strictbool == 0) ? false : true;
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Blue Wire Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Blue Wire Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.BlueWire = (strictbool == 0) ? false : true;
+						curTile.BlueWire = (strictbool == 0) ? false : true;
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Halftile Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Halftile Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.GreenWire = (strictbool == 0) ? false : true;
+						curTile.GreenWire = (strictbool == 0) ? false : true;
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Halftile Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Halftile Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.Halftile = (strictbool == 0) ? false : true;
+						curTile.Halftile = (strictbool == 0) ? false : true;
 
-                        curTile.Slope = reader.ReadByte();
+						curTile.Slope = reader.ReadByte();
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Actuator Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Actuator Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.Actuator = (strictbool == 0) ? false : true;
+						curTile.Actuator = (strictbool == 0) ? false : true;
 
-                        strictbool = reader.ReadByte();
-                        byteStream[byteStreamPos] = (byte)(strictbool);
-                        byteStreamPos++;
+						strictbool = reader.ReadByte();
+						byteStream[byteStreamPos] = (byte)(strictbool);
+						byteStreamPos++;
 
-                        if (strictbool > 1)
-                        {
-                            error = String.Format("Failed in the Inactive Boolean read: 0x{0:X2}", (byte)strictbool);
-                        }
+						if (strictbool > 1)
+						{
+							error = String.Format("Failed in the Inactive Boolean read: 0x{0:X2}", (byte)strictbool);
+						}
 
-                        curTile.Inactive = (strictbool == 0) ? false : true;
+						curTile.Inactive = (strictbool == 0) ? false : true;
 
-                        RLEValue = reader.ReadInt16();
-                        byteStream[byteStreamPos] = (byte)(RLEValue & 0xFF);
-                        byteStreamPos++;
-                        byteStream[byteStreamPos] = (byte)((RLEValue & 0xFF00) >> 8);
-                        byteStreamPos++;
+						RLEValue = reader.ReadInt16();
+						byteStream[byteStreamPos] = (byte)(RLEValue & 0xFF);
+						byteStreamPos++;
+						byteStream[byteStreamPos] = (byte)((RLEValue & 0xFF00) >> 8);
+						byteStreamPos++;
 
-                        for (int k = byteStreamPos; k < byteStream.Length; k++)
-                            byteStream[k] = 0;
+						for (int k = byteStreamPos; k < byteStream.Length; k++)
+							byteStream[k] = 0;
 
-                        for (int k = 0; k < byteStream.Length; k++)
-                            byteStreamOld[k] = byteStream[k];
+						for (int k = 0; k < byteStream.Length; k++)
+							byteStreamOld[k] = byteStream[k];
 
-                        byteStreamOldLength = byteStreamPos;
+						byteStreamOldLength = byteStreamPos;
 
-                        byteString = "";
-                        for (int k = 0; k < byteStreamPos; k++)
-                            byteString = byteString + String.Format("{0:X2} ", byteStream[k]);
+						byteString = "";
+						for (int k = 0; k < byteStreamPos; k++)
+							byteString = byteString + String.Format("{0:X2} ", byteStream[k]);
 
-                        byteStringOld = byteString;
-                        tilesRead++;
+						byteStringOld = byteString;
+						tilesRead++;
 					}
 					else
 					{
@@ -1920,7 +1936,7 @@ namespace MoreTerra.Structures
 						continue;
 
 					badPath:
-						bw.ReportProgress(progress, String.Format("Path #{0} Terminated {1}", readerList[k].id, readerList.Count-1));
+						bw.ReportProgress(progress, String.Format("Path #{0} Terminated {1}", readerList[k].id, readerList.Count - 1));
 
 						// Erase the bad path from the list to process.
 						readerList.RemoveAt(k);
@@ -1959,7 +1975,9 @@ namespace MoreTerra.Structures
 			{
 				for (i = 0; i < readerList.Count; i++)
 					returnList[i] = readerList[i].tileLookup;
-			} else {
+			}
+			else
+			{
 				returnList[0] = readerList[k].tileLookup;
 
 				j = 1;
@@ -1986,25 +2004,25 @@ namespace MoreTerra.Structures
 			{
 				return header;
 			}
-            set
-            {
-                header = value;
-            }
+			set
+			{
+				header = value;
+			}
 		}
 
-        public Dictionary<Point, ChestType> ChestTypeList
-        {
-            get
-            {
-                return chestTypeList;
-            }
-            set
-            {
-                this.chestTypeList = value;
-            }
-        }
+		public Dictionary<Point, ChestType> ChestTypeList
+		{
+			get
+			{
+				return chestTypeList;
+			}
+			set
+			{
+				this.chestTypeList = value;
+			}
+		}
 
-        
+
 
 		public Tile[,] Tiles
 		{
@@ -2020,10 +2038,10 @@ namespace MoreTerra.Structures
 			{
 				return chests;
 			}
-            set
-            {
-                this.chests = value;
-            }
+			set
+			{
+				this.chests = value;
+			}
 		}
 
 		public List<Sign> Signs
@@ -2032,10 +2050,10 @@ namespace MoreTerra.Structures
 			{
 				return signs;
 			}
-            set
-            {
-                this.signs = value;
-            }
+			set
+			{
+				this.signs = value;
+			}
 		}
 
 		public List<NPC> Npcs
@@ -2044,10 +2062,10 @@ namespace MoreTerra.Structures
 			{
 				return npcs;
 			}
-            set
-            {
-                this.npcs = value;
-            }
+			set
+			{
+				this.npcs = value;
+			}
 		}
 
 		public Footer Footer
@@ -2062,25 +2080,25 @@ namespace MoreTerra.Structures
 		public String GetWorldName(String worldFile)
 		{
 			String worldName;
-            String headerName;
-            int headerId;
+			String headerName;
+			int headerId;
 
-            try
-            {
-			stream = new FileStream(worldFile, FileMode.Open, FileAccess.Read);
-			reader = new BinaryReader(stream);
-			backReader = new BackwardsBinaryReader(stream);
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-                return "Error loading worldname";
-            }
-			
-            // Skip the release number.
-            reader.ReadInt32();
-            headerName = reader.ReadString();
-            headerId = reader.ReadInt32();
+			try
+			{
+				stream = new FileStream(worldFile, FileMode.Open, FileAccess.Read);
+				reader = new BinaryReader(stream);
+				backReader = new BackwardsBinaryReader(stream);
+			}
+			catch (Exception e)
+			{
+				e.ToString();
+				return "Error loading worldname";
+			}
+
+			// Skip the release number.
+			reader.ReadInt32();
+			headerName = reader.ReadString();
+			headerId = reader.ReadInt32();
 
 			if (CompareFooter(headerName, headerId) == true)
 				worldName = headerName;
@@ -2104,14 +2122,14 @@ namespace MoreTerra.Structures
 			try
 			{
 #endif
-				footer = new Footer();
+			footer = new Footer();
 
-				footer.Id = backReader.ReadBackwardsInt32();
-				footer.Name = backReader.ReadBackwardsString();
-				footer.Active = backReader.ReadBackwardsBoolean();
-	
-				if (footer.Active == true && footer.Name == worldName && footer.Id == worldId)
-					returnVal = true;
+			footer.Id = backReader.ReadBackwardsInt32();
+			footer.Name = backReader.ReadBackwardsString();
+			footer.Active = backReader.ReadBackwardsBoolean();
+
+			if (footer.Active == true && footer.Name == worldName && footer.Id == worldId)
+				returnVal = true;
 #if (DEBUG == false)
 			}
 			catch (EndOfStreamException e)

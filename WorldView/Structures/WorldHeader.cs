@@ -39,6 +39,7 @@
 		private bool isMechBoss2Dead;
 		private bool isMechBoss3Dead;
 		private bool isMechBossAnyDead;
+		private bool isSlimeKingDead;
 		private bool isPlantBossDead;
 		private bool isGolemBossDead;
 		private bool isGoblinSaved;
@@ -57,6 +58,8 @@
         private int invasionSize;
         private int invasionType;
         private double invasionPointX;
+		private double slimeRainTime;
+		private int sundialCooldown;
 		private bool isRaining;
 		private int rainTime;
 		private Single maxRain;
@@ -500,6 +503,21 @@
 		}
 
 		[CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
+		public bool IsSlimeKingDead
+		{
+			get
+			{
+				return this.isSlimeKingDead;
+			}
+			set
+			{
+				this.isSlimeKingDead = value;
+			}
+		}
+
+
+
+		[CategoryAttribute("Boss Information"), ReadOnlyAttribute(true)]
 		public bool IsPlantBossDead
 		{
 			get
@@ -707,18 +725,43 @@
             }
         }
 
-        [CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
-        public double InvasionPointX
-        {
-            get
-            {
-                return this.invasionPointX;
-            }
-            set
-            {
-                this.invasionPointX = value;
-            }
-        }
+		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
+		public double InvasionPointX
+		{
+			get
+			{
+				return this.invasionPointX;
+			}
+			set
+			{
+				this.invasionPointX = value;
+			}
+		}
+
+		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
+		public double SlimeRainTime
+		{
+			get
+			{
+				return this.slimeRainTime;
+			}
+			set
+			{
+				this.slimeRainTime = value;
+			}
+		}
+		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
+		public int SundialCooldown
+		{
+			get
+			{
+				return this.sundialCooldown;
+			}
+			set
+			{
+				this.sundialCooldown = value;
+			}
+		}
 
 		[CategoryAttribute("Invasion Information"), ReadOnlyAttribute(true)]
 		public Boolean IsGoblinArmyDefeated
