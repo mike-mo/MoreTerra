@@ -325,8 +325,11 @@ namespace MoreTerra.Structures
 			header.sectionPointers = sectionPointers;
 			header.ReleaseNumber = version;
 			header.Name = reader.ReadString();
-			header.Id = reader.ReadInt32();
-			x = reader.ReadInt32();
+            reader.ReadString();
+            var genVersion = reader.ReadUInt64();
+           var headerId = new Guid(reader.ReadBytes(16));
+            reader.ReadInt32();
+            x = reader.ReadInt32();
 			w = reader.ReadInt32();
 			y = reader.ReadInt32();
 			h = reader.ReadInt32();
@@ -349,9 +352,9 @@ namespace MoreTerra.Structures
 			if (version >= 141)
 				creationTime = DateTime.FromBinary(reader.ReadInt64());
 
+           
 
-
-			header.TreeX = new int[3];
+            header.TreeX = new int[3];
 			header.TreeStyle = new int[4];
 			header.CaveBackX = new int[3];
 			header.CaveBackStyle = new int[4];
@@ -533,7 +536,20 @@ namespace MoreTerra.Structures
 				// Lunar Apolocyplse is up
 				reader.ReadBoolean();
 
-			}
+               reader.ReadBoolean();
+               reader.ReadBoolean();
+               reader.ReadInt32();
+                int num2 = reader.ReadInt32();
+
+                for (int index = 0; index < num2; ++index)
+                    reader.ReadInt32();
+
+               reader.ReadBoolean();
+               reader.ReadInt32();
+               reader.ReadSingle();
+               reader.ReadSingle();
+
+            }
 
 
 			posTiles = stream.Position;
