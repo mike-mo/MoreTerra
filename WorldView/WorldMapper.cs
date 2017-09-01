@@ -139,7 +139,7 @@
 				if (newNPC.Type == NPCType.Unknown)
 					continue;
 
-				MarkerType tt = MarkerType.ArmsDealer + (Int32)newNPC.Type;
+				MarkerType tt = MarkerType.Merchant + (Int32)newNPC.Type;
 
 				if (SettingsManager.Instance.DrawMarker(newNPC.Type) == true)
 				{
