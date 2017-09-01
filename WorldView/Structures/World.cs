@@ -549,6 +549,16 @@ namespace MoreTerra.Structures
                reader.ReadSingle();
                reader.ReadSingle();
 
+                //DD2
+                //NPC.savedBartender = 
+                reader.ReadBoolean();
+                //DD2Event.DownedInvasionT1 = 
+                reader.ReadBoolean();
+                //DD2Event.DownedInvasionT2 = 
+                reader.ReadBoolean();
+                //DD2Event.DownedInvasionT3 = 
+                reader.ReadBoolean();
+
             }
 
 
@@ -758,10 +768,13 @@ namespace MoreTerra.Structures
 
 				theNPC.Active = nextNPC;
 
-				if (Enum.TryParse(reader.ReadString().Replace(" ", ""), true, out npcType))
-					theNPC.Type = npcType;
-				else
-					theNPC.Type = NPCType.Unknown;
+                theNPC.Type = (NPCType)reader.ReadInt32();
+                
+
+    //            if (Enum.TryParse(reader.ReadString().Replace(" ", ""), true, out npcType))
+				//	theNPC.Type = npcType;
+				//else
+				//	theNPC.Type = NPCType.Unknown;
 
 				theNPC.Name = reader.ReadString();
 				theNPC.Position = new PointSingle(reader.ReadSingle(), reader.ReadSingle());
