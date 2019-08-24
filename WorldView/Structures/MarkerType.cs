@@ -70,9 +70,17 @@
         WitchDoctor,
 		Wizard,
 		Spawn = 90,
+        Angler,
+        Skeleton,
+        Stylist,
+        Tavernkeep,
+        TaxCollector = 95,
+        TravelingMerchant,
 
-		// Extra space again.
-		Chest = 100,
+
+
+        // Extra space again.
+        Chest = 100,
 		GoldChest,
 		LockedGoldChest,
 		ShadowChest,

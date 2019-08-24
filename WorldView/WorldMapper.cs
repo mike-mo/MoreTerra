@@ -139,7 +139,7 @@
 				if (newNPC.Type == NPCType.Unknown)
 					continue;
 
-				MarkerType tt = MarkerType.Merchant + (Int32)newNPC.Type;
+                Enum.TryParse(newNPC.Type.ToString(), true, out MarkerType tt);
 
 				if (SettingsManager.Instance.DrawMarker(newNPC.Type) == true)
 				{

@@ -899,6 +899,16 @@ namespace MoreTerra.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Skeleton {
+            get {
+                object obj = ResourceManager.GetObject("Skeleton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SkywareChest {
             get {
                 object obj = ResourceManager.GetObject("SkywareChest", resourceCulture);
@@ -942,6 +952,26 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap Stylist {
             get {
                 object obj = ResourceManager.GetObject("Stylist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tavernkeep {
+            get {
+                object obj = ResourceManager.GetObject("Tavernkeep", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TaxCollector {
+            get {
+                object obj = ResourceManager.GetObject("TaxCollector", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1002,6 +1032,16 @@ namespace MoreTerra.Properties {
         internal static System.Drawing.Bitmap TrashCan {
             get {
                 object obj = ResourceManager.GetObject("TrashCan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TravelingMerchant {
+            get {
+                object obj = ResourceManager.GetObject("TravelingMerchant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
