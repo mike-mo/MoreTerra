@@ -2804,9 +2804,13 @@
 			<marker name="Party Girl"  />
 			<marker name="Pirate"  />
 			<marker name="Santa Claus"  />
+			<marker name="Skeleton"  />
 			<marker name="Spawn"  />
 			<marker name="Steampunker"  />
 			<marker name="Stylist"  />
+			<marker name="Tavernkeep"  />
+			<marker name="TaxCollector"  />
+			<marker name="TravelingMerchant"  />
 			<marker name="Truffle"  />
 			<marker name="Witch Doctor"  />
 			<marker name="Wizard"  />

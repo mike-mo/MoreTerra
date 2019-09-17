@@ -965,12 +965,12 @@ namespace MoreTerra
                 {
                     bmp = ResourceManager.Instance.GetMarker(mi.markerImage);
 
-				markerImageList.Images.Add(bmp);
+				    markerImageList.Images.Add(bmp);
 
                     if (kvp.Key == "Containers")
-					chestImageList.Images.Add(bmp);
-			}
-		}
+					    chestImageList.Images.Add(bmp);
+			    }
+		    }
 		}
 
 		private void SetupMarkerListBox()
@@ -1914,7 +1914,7 @@ namespace MoreTerra
 		#region About tabPage functions
 		private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://moreterra.codeplex.com/");
+			System.Diagnostics.Process.Start("https://github.com/mike-mo/MoreTerra");
 		}
 
 		private String GetVersion()

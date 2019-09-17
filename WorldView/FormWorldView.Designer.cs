@@ -1038,7 +1038,7 @@
             this.linkLabelHomepage.Size = new System.Drawing.Size(120, 13);
             this.linkLabelHomepage.TabIndex = 6;
             this.linkLabelHomepage.TabStop = true;
-            this.linkLabelHomepage.Text = "moreterra.codeplex.com";
+            this.linkLabelHomepage.Text = "github.com/mike-mo/MoreTerra";
             // 
             // groupBox1
             // 
