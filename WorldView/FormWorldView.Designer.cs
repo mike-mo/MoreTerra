@@ -1035,7 +1035,7 @@
             this.linkLabelHomepage.AutoSize = true;
             this.linkLabelHomepage.Location = new System.Drawing.Point(264, 118);
             this.linkLabelHomepage.Name = "linkLabelHomepage";
-            this.linkLabelHomepage.Size = new System.Drawing.Size(120, 13);
+            this.linkLabelHomepage.Size = new System.Drawing.Size(157, 13);
             this.linkLabelHomepage.TabIndex = 6;
             this.linkLabelHomepage.TabStop = true;
             this.linkLabelHomepage.Text = "github.com/mike-mo/MoreTerra";
@@ -1080,9 +1080,9 @@
             this.labelWorldName.AutoSize = true;
             this.labelWorldName.Location = new System.Drawing.Point(6, 46);
             this.labelWorldName.Name = "labelWorldName";
-            this.labelWorldName.Size = new System.Drawing.Size(85, 13);
+            this.labelWorldName.Size = new System.Drawing.Size(159, 13);
             this.labelWorldName.TabIndex = 4;
-            this.labelWorldName.Text = "labelWorldName";
+            this.labelWorldName.Text = "Click \"Browse...\" to load a world";
             // 
             // comboBoxWorldFilePath
             // 

@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.IO;
 using System.Timers;
-using MoreTerra.Properties;
 using MoreTerra.Structures;
 using MoreTerra.Utilities;
 using MoreTerra.Structures.TerraInfo;
@@ -19,8 +18,8 @@ namespace MoreTerra
 		private delegate void PopulateWorldTreeDelegate();
 		private delegate void PopulateChestTreeDelegate(TreeNode[] node_array);
 		private delegate DialogResult MessageBoxShowDelegate(String text);
-		private delegate DialogResult MessageBoxShowFullDelegate(String text, String caption,
-			MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
+		private delegate DialogResult MessageBoxShowFullDelegate(String text, String caption, MessageBoxButtons buttons,
+																 MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
 		private delegate DialogResult MessageBoxWithCheckBoxShowDelegate(FormMessageBoxWithCheckBox box);
 
 
@@ -93,7 +92,7 @@ namespace MoreTerra
 			// Output Image groupbox
 			this.buttonBrowseOutput.Click += new System.EventHandler(this.buttonBrowseOutput_Click);
 
-            this.checkBoxOfficialColors.CheckedChanged += new System.EventHandler(this.checkBoxOfficialColors_CheckedChanged);
+			this.checkBoxOfficialColors.CheckedChanged += new System.EventHandler(this.checkBoxOfficialColors_CheckedChanged);
 			this.checkBoxDrawWires.CheckedChanged += new System.EventHandler(this.checkBoxDrawWires_CheckedChanged);
 			this.checkBoxDrawWalls.CheckedChanged += new System.EventHandler(this.checkBoxDrawWalls_CheckedChanged);
 			this.checkBoxOpenImage.CheckedChanged += new System.EventHandler(this.checkBoxOpenImage_CheckedChanged);
@@ -224,7 +223,7 @@ namespace MoreTerra
 		private void SetupMainForm()
 		{
 			// These event handlers do nothing except ironically set SettingsManager back.
-            checkBoxOfficialColors.Checked = SettingsManager.Instance.OfficialColors;
+			checkBoxOfficialColors.Checked = SettingsManager.Instance.OfficialColors;
 			checkBoxDrawWires.Checked = SettingsManager.Instance.DrawWires;
 			checkBoxDrawWalls.Checked = SettingsManager.Instance.DrawWalls;
 			checkBoxOpenImage.Checked = SettingsManager.Instance.OpenImage;
@@ -412,10 +411,10 @@ namespace MoreTerra
 		#endregion
 
 		#region Draw World tabPage functions
-        private void checkBoxOfficialColors_CheckedChanged(object sender, EventArgs e)
-        {
-            SettingsManager.Instance.OfficialColors = checkBoxOfficialColors.Checked;
-        }
+		private void checkBoxOfficialColors_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Instance.OfficialColors = checkBoxOfficialColors.Checked;
+		}
 
 		private void checkBoxDrawWires_CheckedChanged(object sender, EventArgs e)
 		{
@@ -958,19 +957,19 @@ namespace MoreTerra
 
 			foreach (KeyValuePair<String, List<MarkerInfo>> kvp in Global.Instance.Info.MarkerSets)
 			{
-                bmp = ResourceManager.Instance.GetMarker(kvp.Key);
-                markerImageList.Images.Add(bmp);
+				bmp = ResourceManager.Instance.GetMarker(kvp.Key);
+				markerImageList.Images.Add(bmp);
 
-                foreach (MarkerInfo mi in kvp.Value)
-                {
-                    bmp = ResourceManager.Instance.GetMarker(mi.markerImage);
+				foreach (MarkerInfo mi in kvp.Value)
+				{
+					bmp = ResourceManager.Instance.GetMarker(mi.markerImage);
 
-				    markerImageList.Images.Add(bmp);
+					markerImageList.Images.Add(bmp);
 
-                    if (kvp.Key == "Containers")
-					    chestImageList.Images.Add(bmp);
-			    }
-		    }
+					if (kvp.Key == "Containers")
+						chestImageList.Images.Add(bmp);
+				}
+			}
 		}
 
 		private void SetupMarkerListBox()
@@ -1012,13 +1011,13 @@ namespace MoreTerra
 
 					parentNodes.Add(kvp.Key, node);
 
-                foreach (MarkerInfo mi in kvp.Value)
+				foreach (MarkerInfo mi in kvp.Value)
 				{
-                    index++;
-                    node = new TreeNode(mi.name);
-                    node.ImageIndex = index;
-                    node.SelectedImageIndex = index;
-                    markerNodes.Add(mi.name, node);
+					index++;
+					node = new TreeNode(mi.name);
+					node.ImageIndex = index;
+					node.SelectedImageIndex = index;
+					markerNodes.Add(mi.name, node);
 
 					if (markerStates[mi.name].Drawing)
 					{
@@ -1147,7 +1146,7 @@ namespace MoreTerra
 		{
 			if (Global.Instance.SkipEvents)
 				return;
-            
+			
 		}
 
 		private void SetupColorButtons()
